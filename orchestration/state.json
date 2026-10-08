@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "projectRoot": "E:\\project\\odd-ecosys",
+  "isolatedWorkspace": "C:\\Users\\pooja\\.codex\\odd-ecosys-runtime\\workspace",
+  "gitScope": "E:/",
+  "phase": "P00",
+  "task": "baseline-inventory-and-runner-validation",
+  "architecture": "Warmbly candidate; unverified",
+  "releaseReady": false,
+  "lastVerifiedRevision": null,
+  "nextAction": "Validate isolated environment and complete P00 inventory/gates; then remaining P01 defects",
+  "blockers": [
+    "FreeInference key not configured",
+    "Live provider/integration credentials and release validation pending"
+  ],
+  "updatedAt": "2026-10-06T12:30:23.290Z"
+}

@@ -1,0 +1,7 @@
+# Current human authorization — frontend and backend ownership
+
+The latest human explicitly authorizes Codex to implement frontend and backend work. FreeInference must do backend work only. This supersedes earlier instructions saying only FreeInference may author all source and the earlier Codex-frontend-only limit.
+
+Codex owns index.html, css/**, js/**, frontend visual assets and browser/UI tests. FreeInference must not edit these paths. Both Codex and FreeInference may implement backend features and backend tests; assign each backend ticket to one writer and avoid concurrent edits to the same files. FreeInference continues sequentially through the active phase while Codex advances separate backend tickets. Keep endpoint/schema changes compatible with the frontend and synchronize reviewed backend changes with baseline conflict checks and backups. Do not fabricate results or weaken checks. Preserve all 96 original requirements and 24 phase gates and add discovered competitor gaps explicitly.
+
+UI_AND_PARITY_BRIEF.md remains the visual and capability benchmark. The FreeInference runner must use only the configured account model, serialize requests, and continue until the provider enforces its daily quota; do not stop at a smaller local estimate cap or bypass the provider reset. Preserve the configured key file without reading or printing the key. REVIEW_QUEUE.md remains pending feedback. Source sync must preserve concurrent work and all real data/config/credentials. Keep production readiness false until actual gates pass.

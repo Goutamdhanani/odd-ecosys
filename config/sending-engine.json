@@ -1,0 +1,33 @@
+{
+  "warmup_ramp": [
+    { "week": 1, "warmup_per_day": 5,  "cold_per_day": 0 },
+    { "week": 2, "warmup_per_day": 15, "cold_per_day": 0 },
+    { "week": 3, "warmup_per_day": 30, "cold_per_day": 5 },
+    { "week": 4, "warmup_per_day": 40, "cold_per_day": 20 },
+    { "week": 5, "warmup_per_day": 30, "cold_per_day": 50 }
+  ],
+  "warmup_total_days": 35,
+  "max_daily_per_mailbox": 50,
+  "max_daily_per_domain": 150,
+  "min_health_to_send": 40,
+  "bounce_threshold_pct": 5.0,
+  "complaint_threshold_pct": 0.1,
+  "auto_pause_on_threshold": true,
+  "send_window": {
+    "start_hour": 8,
+    "end_hour": 17,
+    "weekdays_only": true,
+    "timezone": "America/Chicago"
+  },
+  "jitter_ms": {
+    "min": 30000,
+    "max": 120000
+  },
+  "ab_testing": {
+    "default_sample_size": 200,
+    "significance_threshold": 0.95,
+    "challenger_pct": 10,
+    "min_sends_before_test": 30,
+    "primary_metric": "replied"
+  }
+}

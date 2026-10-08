@@ -1,0 +1,1634 @@
+[
+  {
+    "id": "F001",
+    "phase": "P06",
+    "description": "Real login/logout/recovery; unauthenticated protected API denied; no default credentials.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F001"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F002",
+    "phase": "P06",
+    "description": "Owner/admin/operator/reviewer/client-viewer RBAC enforced on every sensitive API and UI action.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F002"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F003",
+    "phase": "P06",
+    "description": "Workspace/client tenant isolation for DB, jobs, secrets, exports, search, events and objects; cross-tenant IDs denied.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F003"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F004",
+    "phase": "P06",
+    "description": "Expiring invitations, membership removal, ownership transfer and deactivation invalidate access.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F004"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F005",
+    "phase": "P06",
+    "description": "Session lifecycle, CSRF protection, rate-limited recovery and audit; replay/revocation cases pass.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F005"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F006",
+    "phase": "P06",
+    "description": "MFA and admin recovery with real provider/identity integration; protected operations respect policy.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F006"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F007",
+    "phase": "P06",
+    "description": "OIDC SSO and domain/access controls where configured; key rotation and unavailable IdP fail safely.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F007"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F008",
+    "phase": "P20",
+    "description": "Agency branding/custom domain/client portal with TLS, scoped access, quotas and truthful usage; test certificate/domain setup.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F008"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F009",
+    "phase": "P08",
+    "description": "Lead/list CRUD, bulk operations, tags, ownership and versioned history; no lost edits.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F009"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F010",
+    "phase": "P08",
+    "description": "CSV mapping preview, per-row validation/errors, template/export, BOM/Unicode/quoted field support and formula-safe output.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F010"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F011",
+    "phase": "P08",
+    "description": "Streaming large import with durable progress, cancel/resume and bounded memory; retries do not duplicate rows.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F011"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F012",
+    "phase": "P08",
+    "description": "Real source adapters for discovery/enrichment; provenance, credentials, quotas and source errors visible; no invented inventory.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F012"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F013",
+    "phase": "P08",
+    "description": "Tenant-aware dedup/merge across domain, address and provider identity; aliases/IDNs considered; cross-tenant leakage forbidden.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F013"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F014",
+    "phase": "P08",
+    "description": "Typed custom fields, merge mapping, protected field validation and consent/source metadata.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F014"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F015",
+    "phase": "P08",
+    "description": "Search, filters, segments, sort, stable pagination and bulk selection across pages; workspace totals reconcile.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F015"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F016",
+    "phase": "P08",
+    "description": "Traceable provenance/retention and lawful source policy; opt-outs survive reimport and deletion policy preserves suppression.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F016"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F017",
+    "phase": "P09",
+    "description": "Guarded HTTP research with time/size limits, redirects, DNS rebinding/private IP protections and per-host budgets.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F017"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F018",
+    "phase": "P09",
+    "description": "Sandboxed browser rendering of SPA sites, subresource egress control, cleanup and timeout recovery.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F018"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F019",
+    "phase": "P09",
+    "description": "Observed SSL/viewport/copyright/CMS/analytics/parking signals with evidence and explicit unknowns.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F019"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F020",
+    "phase": "P09",
+    "description": "Actual screenshots with object hash/time/source, preview authorization, retention and freshness; unavailable browser reported.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F020"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F021",
+    "phase": "P09",
+    "description": "Versioned configurable site scoring/confidence and thresholds; derivation reproducible from evidence.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F021"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F022",
+    "phase": "P09",
+    "description": "Evidence review, low-confidence queue and reasoned human override with audit.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F022"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F023",
+    "phase": "P09",
+    "description": "Batch/recheck/staleness/cancel/retry/recover operations with durable progress and no stranded checking records.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F023"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F024",
+    "phase": "P09",
+    "description": "Facebook/source access restrictions represented as unknown; eligible/rejected/review lead decisions remain explainable.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F024"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F025",
+    "phase": "P10",
+    "description": "Syntax/IDN/provider format validation with justified normalization; heuristics cannot pretend a mailbox was probed.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F025"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F026",
+    "phase": "P10",
+    "description": "Observed DNS/MX/null-MX/transient DNS outcomes and provider identification with evidence.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F026"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F027",
+    "phase": "P10",
+    "description": "Actual verifier adapter outcomes; SMTP rejection/timeout/greylisting/port-blocking/catch-all treated accurately.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F027"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F028",
+    "phase": "P10",
+    "description": "Role/free/disposable/accept-all flags and tenant send policy; no blanket false negatives from username entropy.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F028"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F029",
+    "phase": "P10",
+    "description": "Verification TTL/reverify/cache policy, domain throttling, provider circuit breakers and budgets.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F029"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F030",
+    "phase": "P10",
+    "description": "Bulk verification with resume/cancel/per-email results, unknown states and CSV export.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F030"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F031",
+    "phase": "P10",
+    "description": "Verification result schema stores engine/version/time/checks/reasons; UI never shows fabricated score/evidence.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F031"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F032",
+    "phase": "P10",
+    "description": "Send eligibility uses current verified recipient/policy and rechecks after edits/suppression/expiry.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F032"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F033",
+    "phase": "P11",
+    "description": "Real configured Ollama/provider SDK adapters, health, structured results, timeouts and credential failures.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F033"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F034",
+    "phase": "P11",
+    "description": "Subject/body variants, templates, merge fields, language/voice/offer input and deterministic provenance.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F034"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F035",
+    "phase": "P11",
+    "description": "Fact bundle links every factual claim to research evidence; missing facts cannot become invented praise or metrics.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F035"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F036",
+    "phase": "P11",
+    "description": "Prompt-injection/data-exfiltration defenses, output/schema guards, bounded content and forbidden claim checks.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F036"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F037",
+    "phase": "P11",
+    "description": "Fact-check status separates passed/failed/unavailable; unavailable/contradictory checks block auto-send.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F037"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F038",
+    "phase": "P11",
+    "description": "Human review/edit/reject/approve with immutable version, approver, audit, race guard and invalidation on edit.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F038"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F039",
+    "phase": "P11",
+    "description": "Actual AI usage/cost/latency/model/prompt version, budgets and cancellation; estimates explicitly labeled.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F039"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F040",
+    "phase": "P11",
+    "description": "Routing and fallback policy is configured/visible; template use is labeled template, never a successful model call.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F040"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F041",
+    "phase": "P12",
+    "description": "Gmail OAuth connect, refresh, revoke, scope validation and provider quota errors; real test mailbox evidence.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F041"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F042",
+    "phase": "P12",
+    "description": "Microsoft OAuth/Graph connect, refresh, revoke, tenant policy and quota errors; real test mailbox evidence.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F042"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F043",
+    "phase": "P12",
+    "description": "Generic SMTP/IMAP over verified TLS, credential check and real local/live test send and receive.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F043"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F044",
+    "phase": "P12",
+    "description": "Encrypted secrets/tokens, rotation/redaction and no secret fields in API/log/export/UI responses.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F044"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F045",
+    "phase": "P12",
+    "description": "Actual SPF/DKIM/DMARC/return-path/alignment checks with selectors and captured MIME evidence; unknown is visible.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F045"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F046",
+    "phase": "P12",
+    "description": "Bulk onboarding/edit/import, labels/provider groups/domain grouping and partial failure recovery.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F046"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F047",
+    "phase": "P12",
+    "description": "Durable disconnected/warming/active/paused/retired/error lifecycle; provider health cannot be inferred from a green badge.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F047"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F048",
+    "phase": "P14",
+    "description": "Atomic mailbox/domain/provider/tenant caps and reservations; manual overrides audited and policies enforced at transport.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F048"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F049",
+    "phase": "P13",
+    "description": "Multi-step sequences with draft/validate/launch/pause/resume/stop/archive states and authorization.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F049"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F050",
+    "phase": "P13",
+    "description": "Subject/thread behavior, text/sanitized HTML, signatures, safe attachment policy, variable/spintax preview and validation.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F050"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F051",
+    "phase": "P13",
+    "description": "Weighted persisted A/B variants per step, stable recipient assignment and consistent reporting.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F051"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F052",
+    "phase": "P13",
+    "description": "Explicit enrollment/cohort/list membership, no duplicate enrollment or cross-campaign accidental selection.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F052"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F053",
+    "phase": "P13",
+    "description": "Timezone-aware business windows, holidays, per-step delays and DST handling.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F053"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F054",
+    "phase": "P13",
+    "description": "Conditional branches/subsequences, OOO postponement, exclusions and operator-visible transition reasons.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F054"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F055",
+    "phase": "P13",
+    "description": "Stop on reply/opt-out/bounce/compliance conditions across future steps; sender/thread continuity.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F055"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F056",
+    "phase": "P13",
+    "description": "Versioned immutable launched configuration, safe draft edits/cloning and preview/real test-send before launch.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F056"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F057",
+    "phase": "P07",
+    "description": "Persisted workflows/jobs survive restart, cancel, retry and worker failure; no in-memory-only completion.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F057"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F058",
+    "phase": "P14",
+    "description": "Idempotent logical attempts and provider submission reconciliation; ambiguous acceptance is quarantined, never blindly resent.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F058"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F059",
+    "phase": "P14",
+    "description": "Atomic claims/leases/fencing/capacity reservations; multi-worker race does not duplicate a step.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F059"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F060",
+    "phase": "P14",
+    "description": "Final gates for credential, membership, review, verification, suppression, pause, caps and schedule at submission.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F060"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F061",
+    "phase": "P14",
+    "description": "Accepted/rejected/delivered/unknown separated; real evidence updates state; auth/network errors are not bounces.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F061"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F062",
+    "phase": "P14",
+    "description": "Real pacing, backoff, cooldown, fair rotation/provider matching and queue recovery; settings are enforced.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F062"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F063",
+    "phase": "P15",
+    "description": "Actual authorized inbox-placement/auth tests with measured results; no prediction presented as inbox proof.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F063"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F064",
+    "phase": "P15",
+    "description": "Warm-up/volume-ramp policy, real owned/authorized pool evidence and provider restrictions; elapsed days alone cannot prove warm-up.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F064"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F065",
+    "phase": "P16",
+    "description": "Continuous Gmail/Graph/IMAP message sync, incremental cursors, replay/dedup, reconnect and backfill.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F065"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F066",
+    "phase": "P16",
+    "description": "Message-ID/References/In-Reply-To/mailbox/enrollment threading, MIME parsing, multi-recipient support and attribution confidence.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F066"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F067",
+    "phase": "P16",
+    "description": "Real reply/reply-all/forward with sender continuity, sanitized HTML, attachments and provider confirmation.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F067"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F068",
+    "phase": "P16",
+    "description": "Search/filter, labels, owner assignment, notes, unread/archive/reminders and collision-aware team actions.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F068"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F069",
+    "phase": "P16",
+    "description": "Interested/not interested/wrong-person/OOO/opt-out classifier with confidence/review; interested never implies won.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F069"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F070",
+    "phase": "P16",
+    "description": "OOO return-date extraction/review and timed reactivation; genuine reply stops sequence immediately without waiting for AI.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F070"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F071",
+    "phase": "P16",
+    "description": "Authentic DSN hard/soft bounce, complaint/feedback signals and suppression; nonexistent provider support shown unavailable.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F071"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F072",
+    "phase": "P16",
+    "description": "Durable reply-to-opportunity/meeting/task workflows with human approval for external automated replies.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F072"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F073",
+    "phase": "P17",
+    "description": "Signed HTTPS one-click unsubscribe + human page, idempotent POST and tenant-scoped target; GET confirmation does not silently mutate policy.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F073"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F074",
+    "phase": "P17",
+    "description": "Permanent policy-governed suppression via opt-out/complaint/bounce/manual action across imports/campaigns and queued sends.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F074"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F075",
+    "phase": "P17",
+    "description": "Tested identity/address/headers/auth requirements with latest provider guidelines; transport applies the footer/headers policy.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F075"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F076",
+    "phase": "P17",
+    "description": "Global/domain/tenant/campaign/mailbox kill switch persists across restarts and fences workers before new submissions.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F076"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F077",
+    "phase": "P17",
+    "description": "Optional legitimate tracking with signed opaque tokens, stored safe targets, privacy defaults and bot/proxy annotations.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F077"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F078",
+    "phase": "P06",
+    "description": "Safe UI rendering, content sanitization/CSP, path allowlists, upload checks, rate/body limits and secure API boundaries.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F078"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F079",
+    "phase": "P20",
+    "description": "Data retention, export/delete requests, protected suppression tombstones, encryption and object lifecycle applied to all stores.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F079"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F080",
+    "phase": "P06",
+    "description": "Durable audited sensitive actions, minimal/redacted logs and authorized audit queries.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F080"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F081",
+    "phase": "P18",
+    "description": "Event-backed funnel and account/campaign/cohort/workspace metrics; raw ledger reconciles projections.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F081"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F082",
+    "phase": "P18",
+    "description": "Unique replies/opens/clicks separated from total events and machine activity; provenance/unknown delivery shown.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F082"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F083",
+    "phase": "P18",
+    "description": "Sent/accepted/reply/bounce/positive/opportunity/meeting/won rates have defined denominators and time windows.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F083"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F084",
+    "phase": "P18",
+    "description": "Persisted experiment design/variant allocation/minimum samples/confidence; low sample and repeated peeking cannot claim winners.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F084"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F085",
+    "phase": "P18",
+    "description": "Actual provider/AI/provisioning usage, versioned rates and budgets; cost-per-outcome reports unknown inputs honestly.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F085"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F086",
+    "phase": "P18",
+    "description": "Authorized dashboard/filter/timezone reports and streaming/formula-safe CSV exports.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F086"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F087",
+    "phase": "P18",
+    "description": "Rebuildable rollups, late/duplicate/out-of-order event correction and archived-data continuity.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F087"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F088",
+    "phase": "P18",
+    "description": "Data-quality/reconciliation alerts for missing, duplicate, stale and synthetic historical events.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F088"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F089",
+    "phase": "P19",
+    "description": "Versioned OpenAPI, scoped keys, pagination, idempotency, rate quotas, SDK examples and error contracts.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F089"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F090",
+    "phase": "P19",
+    "description": "Signed inbound/outbound webhooks with replay defense, delivery logs, retry/backoff, dedup and DLQ/replay.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F090"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F091",
+    "phase": "P19",
+    "description": "Native CRM and verified external CRM/calendar adapters with remote IDs, conflict policy, real mappings and retries.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F091"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F092",
+    "phase": "P19",
+    "description": "User-configured notifications and workflow actions with authentic delivery receipts and secret management.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F092"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F093",
+    "phase": "P20",
+    "description": "Agency usage quotas/entitlements; real optional billing/invoice and mailbox/domain provisioning adapters, authenticated vendor evidence; no pretend orders or inventory.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F093"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F094",
+    "phase": "P07",
+    "description": "End-to-end batch orchestrator, approval gates, recovery UI, schedules, backpressure and failed-job operations.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F094"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F095",
+    "phase": "P21",
+    "description": "Health/readiness/metrics/traces/alerts, CI, pinned deployment, secret rotation, backups/restores and rollback drills.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F095"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  },
+  {
+    "id": "F096",
+    "phase": "P21",
+    "description": "Documented tested load/SLO envelope, accessibility/browser coverage, error/degraded UX, migration and incident runbooks.",
+    "status": "pending",
+    "implementation": [],
+    "tests": [
+      "T-F096"
+    ],
+    "evidence": [],
+    "liveValidationRequired": true,
+    "liveValidation": "pending",
+    "releaseBlockers": [
+      "Implementation and local/live validation pending"
+    ],
+    "lastVerifiedRevision": null
+  }
+]

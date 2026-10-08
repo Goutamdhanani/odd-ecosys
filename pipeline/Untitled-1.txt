@@ -1,0 +1,1525 @@
+<!DOCTYPE html>
+<html
+  class="
+    dark:scheme-dark
+    dark:text-slate-200
+    overflow-x-hidden
+    scheme-light
+    scroll-pt-[calc(var(--docs-nav-height)+1.5rem)]
+    scroll-smooth
+    text-slate-800
+    windows:dark:[scrollbar-color:var(--color-slate-700)_transparent]
+  "
+  lang="en"
+>
+  <head>
+    <script>
+      (() => {
+        let storedTheme = null
+        const value = localStorage.getItem('theme')
+        if (value === 'light' || value === 'dark') storedTheme = value
+
+        const systemDark = window.matchMedia(
+          '(prefers-color-scheme: dark)'
+        ).matches
+
+        const theme = storedTheme || (systemDark ? 'dark' : 'light')
+        document.documentElement.classList.toggle('dark', theme === 'dark')
+
+        const platform = navigator.userAgentData?.platform || navigator.platform
+        const isWindows = /win/i.test(platform)
+        document.documentElement.classList.toggle('windows', isWindows)
+      })()
+    </script>
+
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<!-- Meta -->
+<title>Emailable API Docs</title><!-- Begin Bridgetown SEO tag v7.0.1 -->
+<meta property="og:title" content="Emailable API Docs" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Reference guides, examples, and client libraries to help you integrate Emailable’s email verification API." />
+<meta property="og:description" content="Reference guides, examples, and client libraries to help you integrate Emailable’s email verification API." />
+<link rel="canonical" href="https://emailable.com/docs/api/" />
+<meta property="og:url" content="https://emailable.com/docs/api/" />
+<meta property="og:site_name" content="Emailable" />
+<meta property="og:image" content="https://emailable.com/images/meta/meta-image.png" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="https://emailable.com/images/meta/meta-image.png" />
+<meta property="twitter:title" content="Emailable API Docs" />
+<meta name="twitter:site" content="@emailablehq" />
+<!-- End Bridgetown SEO tag -->
+
+
+  <!-- Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400..900&display=swap" rel="stylesheet">
+
+<!-- CSS -->
+<link rel="stylesheet" href="/_bridgetown/static/tailwind.YVMXYF-Z.css">
+
+  <!-- Site JS -->
+  <script src="/_bridgetown/static/index.Y546IKOJ.js" defer></script>
+
+  <!-- PostHog -->
+  <script>
+    !function(t,e){var o,n,p,r;e.__SV||(window.posthog && window.posthog.__loaded)||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="ki Ci init qi Hi pr Bi zi Di capture calculateEventProperties Qi register register_once register_for_session unregister unregister_for_session Ki getFeatureFlag getFeatureFlagPayload getFeatureFlagResult getAllFeatureFlags isFeatureEnabled reloadFeatureFlags updateFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSurveysLoaded onSessionId getSurveys getActiveMatchingSurveys renderSurvey displaySurvey cancelPendingSurvey canRenderSurvey canRenderSurveyAsync Xi identify setPersonProperties unsetPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset shutdown setIdentity clearIdentity get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException addExceptionStep captureLog startExceptionAutocapture stopExceptionAutocapture loadToolbar get_property getSessionProperty Ji Gi createPersonProfile setInternalOrTestUser Yi Ai rn opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing get_explicit_consent_status is_capturing clear_opt_in_out_capturing Vi debug mr it getPageViewId captureTraceFeedback captureTraceMetric Oi".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+    posthog.init('phc_3NwTTnptrxMuD66f6kuYmuphgvDTA1zpFY0Ns8fGesp', { 
+      api_host: 'https://h.emailable.com',
+      ui_host: 'https://us.posthog.com',
+      defaults: '2026-05-30'
+    })
+  </script>
+
+  <!-- Cloudflare Turnstile -->
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
+<!-- Apple icon -->
+<link href="/images/app-icons/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180">
+
+<!-- Favicon -->
+<link rel="shortcut icon" href="/images/app-icons/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/images/app-icons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/images/app-icons/favicon-16x16.png">
+
+<!-- Manifest -->
+<link rel="manifest" href="/site.webmanifest">
+
+<!-- Safari tab -->
+<link rel="mask-icon" href="/images/app-icons/safari-pinned-tab.svg" color="#7e61ff">
+
+<!-- Windows tile -->
+<meta name="msapplication-TileColor" content="#251452">
+<meta name="msapplication-TileImage" content="/images/app-icons/mstile-144x144.png">
+
+<meta name="theme-color" content="#ffffff">
+
+
+<!-- JSON LD -->
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://emailable.com/#organization","name":"Emailable","url":"https://emailable.com/","description":"Improve domain reputation and increase the quality of your mailing list by validating emails before sending a campaign, or at the point of capture.","sameAs":["https://www.facebook.com/emailablehq","https://x.com/emailablehq","https://www.linkedin.com/company/emailablehq","https://www.instagram.com/emailablehq","https://github.com/emailable","https://www.npmjs.com/org/emailable","https://pypi.org/user/emailable/","https://www.youtube.com/@emailable","https://www.crunchbase.com/organization/emailable","https://www.wikidata.org/wiki/Q139279422","https://www.capterra.com/p/176754/Emailable/","https://www.getapp.com/it-communications-software/a/emailable/","https://www.g2.com/products/emailable/reviews","https://www.producthunt.com/products/emailable","https://www.trustradius.com/products/emailable/reviews","https://alternativeto.net/software/emailable/"],"logo":{"@type":"ImageObject","url":"https://emailable.com/images/app-icons/emailable-icon--master.png","height":600,"width":600},"contactPoint":[{"@type":"ContactPoint","url":"https://emailable.com/contact","email":"hello@emailable.com","contactType":"sales"},{"@type":"ContactPoint","url":"https://emailable.com/contact","email":"support@emailable.com","contactType":"support"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://emailable.com/"},{"@type":"ListItem","position":2,"name":"Docs","item":"https://emailable.com/docs/"},{"@type":"ListItem","position":3,"name":"Emailable API Docs","item":"https://emailable.com/docs/api/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"Index","dateModified":"2026-08-11T18:08:29.000-04:00","url":"https://emailable.com/docs/api/","image":{"@type":"ImageObject","url":"https://emailable.com/cdn-cgi/image/format=auto/images/meta/meta-image.png"},"publisher":{"@id":"https://emailable.com/#organization"}}</script>
+
+
+<link rel="alternate" href="https://emailable.com/docs/api/" hreflang="x-default"><link rel="alternate" href="https://emailable.com/docs/api/" hreflang="en">
+
+
+  </head>
+
+
+  
+    
+<nav
+  class="
+    bg-white dark:bg-slate-950 border-b max-docs-lg:fixed relative top-0 w-full
+    z-10
+  "
+  id="docs-top-nav"
+>
+
+  <nav-inner class="
+    flex
+    h-(--docs-nav-height)
+    items-center
+    justify-between
+    mx-auto
+    px-content-x
+  ">
+    <docs-logo class="flex items-center gap-[0.5em] text-xl docs-lg:mr-5">
+    <a href="/" class="duration-150 hover:opacity-65">
+      <svg xmlns="http://www.w3.org/2000/svg" class="size-[1.6em] min-w-[1.6em] sm:w-[7.2em] sm:min-w-[7.2em]&#10;                max-sm:hidden" viewBox="0 0 450 100">
+  <defs>
+    <style>
+      .a09ac056-8484-4906-bb7e-02aa8c1d4519 {
+        fill: #ffcb60;
+      }
+
+      .bce4caf5-c423-410e-94fd-6899fd297ab2 {
+        fill: #7e61ff;
+      }
+
+      .b906fad7-0cb6-4b9e-b421-6459596978f0 {
+        fill: #ff5f7d;
+      }
+
+      .b8f55e13-8130-4ae3-8be6-1de6ff44443b {
+        fill: #5a3dbe;
+      }
+
+      .b817c1fc-ae68-4da5-a3d9-7acf6f279d21 {
+        fill: #5fd7aa;
+      }
+
+      .e510e804-38a1-4320-b07f-b3dd375a6eb5 {
+        fill: #3fb3a3;
+      }
+
+      .a8942e7f-e593-4400-9c24-3e4e8a4c0b38 {
+        fill: #ff9c5b;
+      }
+
+      .logo-text path {
+        fill: #33205e;
+      }
+    </style>
+  </defs>
+
+  <path class="a09ac056-8484-4906-bb7e-02aa8c1d4519" d="M50,88.88913V100A49.67168,49.67168,0,0,1,14.64445,85.35586,50.17276,50.17276,0,0,1,6.68222,75.01164l9.64666-5.56877A38.90911,38.90911,0,0,0,50,88.88913Z"/>
+
+  <path class="bce4caf5-c423-410e-94fd-6899fd297ab2" d="M93.32074,24.99205l-9.64446,5.57027a38.91373,38.91373,0,0,0-33.674-19.45145V0A49.67164,49.67164,0,0,1,85.35778,14.64415,50.28143,50.28143,0,0,1,93.32074,24.99205Z"/>
+
+  <path class="b906fad7-0cb6-4b9e-b421-6459596978f0" d="M50.00224,0V11.11087a38.91355,38.91355,0,0,0-33.674,19.444L6.68373,24.98468a50.23912,50.23912,0,0,1,7.963-10.34053A49.6717,49.6717,0,0,1,50.00224,0Z"/>
+
+  <path class="b8f55e13-8130-4ae3-8be6-1de6ff44443b" d="M100,50a49.858,49.858,0,0,1-4.17037,20.05186v.00737l-9.71852-5.61479A38.87822,38.87822,0,0,0,83.674,30.563l9.64445-5.57038A49.657,49.657,0,0,1,100,50Z"/>
+
+  <path class="b817c1fc-ae68-4da5-a3d9-7acf6f279d21" d="M95.82963,70.05923a49.66822,49.66822,0,0,1-5.57039,9.60743L72.91106,69.65183A12.52309,12.52309,0,0,1,66.66667,58.8222V50.24441A16.66311,16.66311,0,0,0,35.5778,41.66667l-9.62963-5.563A27.7777,27.7777,0,0,1,77.77778,50v6.74072a5.02024,5.02024,0,0,0,2.49629,4.33336l5.837,3.37036Z"/>
+
+  <path class="e510e804-38a1-4320-b07f-b3dd375a6eb5" d="M65.22967,73.22962A27.77829,27.77829,0,0,1,25.94817,36.1037l9.62963,5.563a16.54925,16.54925,0,0,0-2.19256,9.71851A16.71849,16.71849,0,0,0,50.26666,66.66667a14.47866,14.47866,0,0,0,3.25186-.31852,17.03968,17.03968,0,0,0,4.81481-1.926Z"/>
+
+  <polygon class="b817c1fc-ae68-4da5-a3d9-7acf6f279d21" points="95.83 70.052 95.83 70.059 86.111 64.444 95.83 70.052"/>
+
+  <path class="a8942e7f-e593-4400-9c24-3e4e8a4c0b38" d="M11.11111,50.00107a38.64293,38.64293,0,0,0,5.21777,19.4418L6.68222,75.01164a50.14459,50.14459,0,0,1,.00445-50.02782l9.64444,5.571A38.63851,38.63851,0,0,0,11.11111,50.00107Z"/>
+
+  <g class="logo-text">
+    <path class="a8b9d0a3-0198-4dda-9570-a8b19d18a66c" d="M137.10074,58.57527c0,1.23348,0,4.23916,1.77288,5.85733a5.41772,5.41772,0,0,0,3.93044,1.31014,5.61084,5.61084,0,0,0,3.23634-.92477,4.19265,4.19265,0,0,0,1.69622-2.31226h13.87222a16.13517,16.13517,0,0,1-3.77573,6.2434c-4.39317,4.54719-10.86725,5.47195-14.9524,5.47195-7.24483,0-11.25193-2.775-13.17951-4.54718C127.467,67.51562,125,63.66184,125,57.49648a19.57054,19.57054,0,0,1,5.62666-14.25829c3.005-2.929,7.70617-5.472,14.71964-5.472,6.47407,0,10.55922,2.31227,13.0262,4.77855,3.54437,3.54507,4.62315,8.63164,4.62315,13.10217,0,1.00142-.07666,2.00355-.15332,2.92832Zm12.8701-7.16748a6.07723,6.07723,0,0,0-1.77288-4.08515,5.85331,5.85331,0,0,0-4.0071-1.38681,6.30544,6.30544,0,0,0-4.39317,1.69553,7.56862,7.56862,0,0,0-1.84954,3.77643Z"/>
+
+    <path class="a8b9d0a3-0198-4dda-9570-a8b19d18a66c" d="M181.18439,38.76836l-1.00213,4.62384c3.77713-4.16181,6.93681-5.626,11.56-5.626,5.08727,0,7.78422,1.54152,10.01983,5.93469,3.93044-4.31652,7.70757-5.93469,12.79344-5.93469,6.93681,0,11.17528,3.93044,11.17528,10.01914a54.23492,54.23492,0,0,1-.61605,7.32149l-2.31227,18.11208H210.16232l2.0809-16.80124c.15471-1.31084.30942-3.00636.30942-3.62241,0-2.775-1.61956-4.47053-4.23986-4.47053-4.08375,0-5.78,2.23492-6.55073,8.47832l-2.00424,16.41586H187.041l2.23561-17.95737a24.0953,24.0953,0,0,0,.23137-2.929c0-2.46629-1.54151-4.0078-4.16181-4.0078-3.69907,0-5.70332,2.69765-6.39742,8.47832l-2.00424,16.41586H164.22914l4.23846-34.45058Z"/>
+
+    <path class="a8b9d0a3-0198-4dda-9570-a8b19d18a66c" d="M270.43046,38.76836,266.192,73.21894H253.47521l.92407-3.77643c-3.93044,3.54507-6.9368,4.77855-11.71466,4.77855-8.70969,0-14.33495-6.32006-14.33495-16.26254,0-11.63731,7.70617-20.19229,18.11208-20.19229,4.85451,0,7.4748,1.15614,11.17527,4.93257l.07666-3.93044ZM256.24882,54.95285c0-4.39317-2.62029-7.16748-6.7821-7.16748-4.62454,0-8.1689,4.0078-8.1689,9.24838,0,4.39317,2.69695,7.24483,6.93541,7.24483C252.85777,64.27858,256.24882,60.34814,256.24882,54.95285Z"/>
+
+    <path class="a8b9d0a3-0198-4dda-9570-a8b19d18a66c" d="M288.54254,38.76836l-4.23986,34.45058H271.5859l4.23986-34.45058Zm-5.16393-21.27177a6.93646,6.93646,0,1,1-6.93681,6.93611A6.90737,6.90737,0,0,1,283.37861,17.49659Z"/>
+
+    <path class="a8b9d0a3-0198-4dda-9570-a8b19d18a66c" d="M308.2714,17.03386l-6.93681,56.18508H288.61781l6.9368-56.18508Z"/>
+
+    <path class="a8b9d0a3-0198-4dda-9570-a8b19d18a66c" d="M348.88734,38.76836l-4.23846,34.45058H331.93209l.92407-3.77643c-3.93044,3.54507-6.93681,4.77855-11.71466,4.77855-8.70969,0-14.335-6.32006-14.335-16.26254,0-11.63731,7.70618-20.19229,18.11209-20.19229,4.85451,0,7.4748,1.15614,11.17527,4.93257l.07665-3.93044ZM334.7057,54.95285c0-4.39317-2.62029-7.16748-6.7821-7.16748-4.62454,0-8.1689,4.0078-8.1689,9.24838,0,4.39317,2.69695,7.24483,6.93541,7.24483C331.31465,64.27858,334.7057,60.34814,334.7057,54.95285Z"/>
+
+    <path class="a8b9d0a3-0198-4dda-9570-a8b19d18a66c" d="M369.695,17.03386l-3.23634,26.05031c4.08375-3.85378,7.39814-5.31794,11.79132-5.31794,8.40166,0,14.2583,6.70545,14.2583,16.49322,0,11.71466-7.39815,19.96161-17.726,19.96161-5.24059,0-8.09225-1.31014-11.86937-5.62666l-.15471,4.62454H350.04138l6.93681-56.18508Zm9.86512,37.919c0-4.39317-2.62029-7.16748-6.7821-7.16748-4.70119,0-8.1689,4.0078-8.1689,9.24838,0,4.39317,2.697,7.24483,6.85876,7.24483C376.16905,64.27858,379.5601,60.34814,379.5601,54.95285Z"/>
+
+    <path class="a8b9d0a3-0198-4dda-9570-a8b19d18a66c" d="M413.39255,17.03386l-6.93681,56.18508H393.739l6.93681-56.18508Z"/>
+
+    <path class="a8b9d0a3-0198-4dda-9570-a8b19d18a66c" d="M424.10509,58.57527c0,1.23348,0,4.23916,1.77288,5.85733a5.41776,5.41776,0,0,0,3.93044,1.31014,5.61084,5.61084,0,0,0,3.23634-.92477,4.1926,4.1926,0,0,0,1.69622-2.31226H448.6132a16.1185,16.1185,0,0,1-3.77574,6.2434c-4.39317,4.54719-10.86724,5.47195-14.95239,5.47195-7.24483,0-11.25193-2.775-13.17952-4.54718-2.23422-2.15826-4.7012-6.012-4.7012-12.1774A19.57054,19.57054,0,0,1,417.631,43.23819c3.005-2.929,7.70618-5.472,14.71964-5.472,6.47408,0,10.55923,2.31227,13.0262,4.77855C448.92122,46.08985,450,51.17642,450,55.647c0,1.00142-.07666,2.00355-.15332,2.92832Zm12.8701-7.16748a6.07723,6.07723,0,0,0-1.77288-4.08515,5.85329,5.85329,0,0,0-4.0071-1.38681,6.30544,6.30544,0,0,0-4.39317,1.69553,7.56862,7.56862,0,0,0-1.84954,3.77643Z"/>
+  </g>
+</svg>
+      <svg xmlns="http://www.w3.org/2000/svg" id="e9dc84bb-e34b-4983-9a2d-6e5ca2f978d2" data-name="Layer 1" viewBox="0 0 100 100" class="size-[1.6em] min-w-[1.6em] sm:hidden">
+  <defs>
+    <style>.bcf5b7ad-9c41-48c3-ac84-d5216a1c8ce5{fill:#ffcb60;}.b3f8ac07-1c47-4a73-b48e-54455ffbd2ed{fill:#7e61ff;}.ac9a4fe0-55db-4438-b547-4e73594171c0{fill:#ff5f7d;}.a8bc5fee-57d3-41b0-8c9c-4d1dbb57f653{fill:#5a3dbe;}.b75e3a70-7209-414a-b917-7915d3712a07{fill:#5fd7aa;}.b3ecf663-164b-4284-be6e-f100a8b1e8a6{fill:#3fb3a3;}.bd956965-f6be-4fcc-af49-295339a8b619{fill:#ff9c5b;}</style>
+  </defs>
+  <path class="bcf5b7ad-9c41-48c3-ac84-d5216a1c8ce5" d="M50,88.88913V100A49.67168,49.67168,0,0,1,14.64445,85.35586,50.17276,50.17276,0,0,1,6.68222,75.01164l9.64666-5.56877A38.90911,38.90911,0,0,0,50,88.88913Z"/>
+  <path class="b3f8ac07-1c47-4a73-b48e-54455ffbd2ed" d="M93.32074,24.99205l-9.64446,5.57027a38.91373,38.91373,0,0,0-33.674-19.45145V0A49.67164,49.67164,0,0,1,85.35778,14.64415,50.28143,50.28143,0,0,1,93.32074,24.99205Z"/>
+  <path class="ac9a4fe0-55db-4438-b547-4e73594171c0" d="M50.00224,0V11.11087a38.91355,38.91355,0,0,0-33.674,19.444L6.68373,24.98468a50.23912,50.23912,0,0,1,7.963-10.34053A49.6717,49.6717,0,0,1,50.00224,0Z"/>
+  <path class="a8bc5fee-57d3-41b0-8c9c-4d1dbb57f653" d="M100,50a49.858,49.858,0,0,1-4.17037,20.05186v.00737l-9.71852-5.61479A38.87822,38.87822,0,0,0,83.674,30.563l9.64445-5.57038A49.657,49.657,0,0,1,100,50Z"/>
+  <path class="b75e3a70-7209-414a-b917-7915d3712a07" d="M95.82963,70.05923a49.66822,49.66822,0,0,1-5.57039,9.60743L72.91106,69.65183A12.52309,12.52309,0,0,1,66.66667,58.8222V50.24441A16.66311,16.66311,0,0,0,35.5778,41.66667l-9.62963-5.563A27.7777,27.7777,0,0,1,77.77778,50v6.74072a5.02024,5.02024,0,0,0,2.49629,4.33336l5.837,3.37036Z"/>
+  <path class="b3ecf663-164b-4284-be6e-f100a8b1e8a6" d="M65.22967,73.22962A27.77829,27.77829,0,0,1,25.94817,36.1037l9.62963,5.563a16.54925,16.54925,0,0,0-2.19256,9.71851A16.71849,16.71849,0,0,0,50.26666,66.66667a14.47866,14.47866,0,0,0,3.25186-.31852,17.03968,17.03968,0,0,0,4.81481-1.926Z"/>
+  <polygon class="b75e3a70-7209-414a-b917-7915d3712a07" points="95.83 70.052 95.83 70.059 86.111 64.444 95.83 70.052"/>
+  <path class="bd956965-f6be-4fcc-af49-295339a8b619" d="M11.11111,50.00107a38.64293,38.64293,0,0,0,5.21777,19.4418L6.68222,75.01164a50.14459,50.14459,0,0,1,.00445-50.02782l9.64444,5.571A38.63851,38.63851,0,0,0,11.11111,50.00107Z"/>
+</svg>
+</a>
+  <divider class="w-px h-[1.2em] relative -top-px bg-slate-200 dark:bg-slate-700"></divider>
+
+    <a href="/docs/api/" class="duration-150 hover:opacity-65">
+      <span class="font-bold bg-linear-to-r text-transparent bg-clip-text from-primary-500 to-cyan-500">API</span>
+</a></docs-logo>
+
+    <button class="group/search-trigger outline-none relative text-sm grow max-w-xs max-docs-sm:hidden ml-5 mr-2.5" data-action="search#show">
+  <input inert="inert" class="control pt-[0.2125em] pb-[0.1875em] text-sm min-h-9 bg-[url(/images/icons/search-bg.svg)] bg-contain bg-left bg-no-repeat pl-[2.5em] dark:group-active/search-trigger:bg-slate-900 dark:group-hover/search-trigger:inset-ring-slate-700 group-active/search-trigger:bg-slate-50 group-hover/search-trigger:inset-ring-slate-300 group-focus-visible/search-trigger:focus-ring pointer-events-none" id="search-trigger" name="search-trigger" placeholder="Search" type="search"></input>
+
+    <kbd data-search-target="macKbd" hidden="hidden" class="bg-slate-50 block dark:bg-slate-900 dark:inset-ring-slate-800 dark:text-slate-300 duration-100 font-sans inset-ring-1 inset-ring-slate-200 leading-none! min-w-[1.75em] no-hover:hidden p-[0.5em] pb-[0.4375em] rounded-[0.3125em] text-center text-slate-600 absolute text-[0.75em] right-[0.625em] top-1/2 -translate-y-1/2">⌘K</kbd>
+
+
+    <kbd data-search-target="nonMacKbd" hidden="hidden" class="bg-slate-50 block dark:bg-slate-900 dark:inset-ring-slate-800 dark:text-slate-300 duration-100 font-sans inset-ring-1 inset-ring-slate-200 leading-none! min-w-[1.75em] no-hover:hidden p-[0.5em] pb-[0.4375em] rounded-[0.3125em] text-center text-slate-600 absolute text-[0.75em] right-[0.625em] top-1/2 -translate-y-1/2">Ctrl+K</kbd>
+
+</button>
+
+    <div class="flex items-center docs-lg:ml-3">
+      <toggle-switch class="block group/toggle-switch group/theme-toggle" data-controller="toggle-switch">
+  <label data-action="keypress.enter-&gt;toggle-switch#toggle" class="group/label flex items-center justify-center gap-3 cursor-pointer
+              outline-hidden" for="theme-toggle" tabindex="0">
+    <input data-action="theme#toggle" data-theme-target="input" class="hidden peer/checkbox" data-toggle-switch-target="input" id="theme-toggle" name="theme-toggle" type="checkbox">
+
+
+
+    <switch class="before:inset-0 before:rounded-full duration-100 h-toggle-switch-height peer-checked/checkbox:[&amp;_toggle-switch-handle]:translate-x-[calc(var(--spacing-toggle-switch-width)-var(--spacing-toggle-switch-handle-size))] before:absolute relative w-toggle-switch-width before:bg-slate-100 dark:before:bg-slate-800">
+      <toggle-switch-handle class="absolute dark:shadow-black/60 duration-200 group-focus-visible/label:focus-ring left-0 rounded-full shadow-slate-900/20 shadow-sm size-toggle-switch-handle-size top-0 translate-y-[calc((var(--spacing-toggle-switch-handle-size)-var(--spacing-toggle-switch-height))/-2)]">
+                  <toggle-switch-handle-inner class="
+            relative overflow-hidden rounded-full size-full bg-white
+            dark:inset-ring-1 dark:bg-slate-900 dark:inset-ring-slate-800
+          ">
+
+            <icon class="flex items-center justify-center size-3/5 absolute left-1/2 top-1/2 duration-300 -translate-x-1/2 ease-in-out-expo -translate-y-1/2 dark:delay-0 dark:translate-y-[135%] delay-300 fill-yellow-600">
+  <svg xmlns="http://www.w3.org/2000/svg" id="uuid-4caeac72-8ee2-4900-a9ed-a6751bb70e2f" viewBox="0 0 100 100">
+  <path d="M75,50c0,13.809-11.191,25-25,25s-25-11.191-25-25,11.191-25,25-25,25,11.191,25,25Z"/>
+  <path d="M71.56006,28.46997c-1.21008-1.20996-1.87012-2.82007-1.87012-4.53003,0-1.71997.66003-3.32996,1.87012-4.54004l4.73999-4.71997c1.20996-1.20996,2.81995-1.87988,4.53003-1.87988,1.70996,0,3.31995.66992,4.52991,1.87988,2.48999,2.48999,2.48999,6.56006,0,9.06006l-4.72998,4.72998c-1.21008,1.20996-2.81995,1.88-4.53003,1.88-1.69995,0-3.30994-.67004-4.53992-1.88Z"/>
+  <path d="M28.44,19.3999c2.5,2.5,2.5,6.57007-.01001,9.08008-1.21997,1.19995-2.83002,1.87-4.52997,1.87-1.71002,0-3.32001-.67004-4.53003-1.88l-4.72998-4.72998c-2.48999-2.5-2.48999-6.57007,0-9.06006,1.20996-1.20996,2.82001-1.87988,4.52997-1.87988s3.32001.66992,4.53003,1.86987l4.73999,4.72998Z"/>
+  <path d="M56.41992,86.87v6.70996c0,3.54004-2.87988,6.42004-6.41992,6.42004s-6.41992-2.88-6.41992-6.42004v-6.70996c0-3.53003,2.87988-6.41003,6.41992-6.41003s6.41992,2.88,6.41992,6.41003Z"/>
+  <path d="M85.35999,76.26001c2.48999,2.5,2.48999,6.56995,0,9.06006-1.20996,1.20996-2.81995,1.87988-4.52991,1.87988-1.71008,0-3.32007-.66992-4.53003-1.87l-4.73999-4.72998c-1.21008-1.20996-1.87012-2.81995-1.87012-4.53992,0-1.71008.66003-3.32007,1.88013-4.54004,1.21997-1.19995,2.82996-1.87012,4.52991-1.87012,1.71008,0,3.31995.67017,4.53003,1.88013l4.72998,4.72998Z"/>
+  <path d="M100,50c0,3.54004-2.88,6.41992-6.41992,6.41992h-6.71008c-3.52991,0-6.41003-2.87988-6.41003-6.41992s2.88013-6.42004,6.41003-6.42004h6.71008c3.53992,0,6.41992,2.88,6.41992,6.42004Z"/>
+  <path d="M28.44,71.53003c1.21002,1.20996,1.87,2.81995,1.87,4.54004,0,1.70996-.65997,3.31995-1.87,4.52991l-4.73999,4.72009c-1.21002,1.20996-2.82001,1.87988-4.53003,1.87988s-3.32001-.66992-4.52997-1.87988c-2.48999-2.49011-2.48999-6.56006,0-9.06006l4.72998-4.72998c1.21002-1.20996,2.82001-1.88013,4.53003-1.88013,1.69995,0,3.31.67017,4.53998,1.88013Z"/>
+  <path d="M13.13,56.41992h-6.71002c-3.53998,0-6.41998-2.87988-6.41998-6.41992s2.88-6.42004,6.41998-6.42004h6.71002c3.52997,0,6.40997,2.88,6.40997,6.42004s-2.88,6.41992-6.40997,6.41992Z"/>
+  <path d="M56.41992,6.41992v6.71008c0,3.52991-2.87988,6.41003-6.41992,6.41003s-6.41992-2.88013-6.41992-6.41003v-6.71008c0-3.53992,2.87988-6.41992,6.41992-6.41992s6.41992,2.88,6.41992,6.41992Z"/>
+</svg>
+</icon>
+
+            <icon class="flex items-center justify-center size-3/5 absolute left-1/2 top-1/2 duration-300 -translate-x-1/2 ease-in-out-expo dark:-translate-y-1/2 dark:delay-300 fill-blue-400 translate-y-[135%]">
+  <svg xmlns="http://www.w3.org/2000/svg" id="uuid-548c1f07-4059-4c50-bfdc-ced64593ff22" viewBox="0 0 100 100">
+  <defs>
+    <style>.uuid-2ccd0d06-ba45-4d53-8c71-0d62ae24fb06{fill-rule:evenodd;}</style>
+  </defs>
+  <path class="uuid-2ccd0d06-ba45-4d53-8c71-0d62ae24fb06" d="M47.07,10c-4.10429,5.80869-6.30546,12.74761-6.3,19.86,0,19.375,16.065,35.085,35.89,35.085,4.715,0,9.215-.89,13.34-2.5-5.385,15.995-20.8,27.555-38.98,27.555-22.65,0-41.02-17.95-41.02-40.09,0-20.84,16.27-37.965,37.07-39.91Z"/>
+</svg>
+</icon>
+          </toggle-switch-handle-inner>
+
+      </toggle-switch-handle>
+    </switch>
+
+</label></toggle-switch>
+      
+
+      <a class="inline-flex items-start gap-[0.625em] relative text-primary-500 font-medium group/text-link duration-100 cursor-pointer hover:text-primary-700 dark:hover:text-primary-300 text-sm *:whitespace-nowrap max-md:hidden ml-2.5" href="https://app.emailable.com/signup">
+  
+
+  
+
+  <text-link-inner class="duration-100 text-pretty leading-normal group-hover/text-link:text-primary-700 dark:group-hover/text-link:text-primary-300">
+    
+
+    <span>Sign Up</span>
+
+    
+  </text-link-inner>
+</a>
+
+      <a class="[&amp;_span]:leading-none button duration-100 focus-visible:outline-hidden focus-visible:ring-3 focus-visible:ring-offset-0 focus-visible:ring-offset-transparent focus-visible:ring-primary-500/35 focus:outline-hidden focus:ring-0 font-semibold gap-[0.5em] group/button inline-flex items-center justify-center relative rounded-[0.5em] text-center transition text-xs text-white active:bg-primary-700 bg-primary-500 focus-visible:bg-primary-600 focus:bg-primary-600 hover:bg-primary-600 min-h-[2.75em] py-[0.5em] px-[1.125em] ml-3.5 whitespace-nowrap max-md:hidden" data-complete="false" href="https://app.emailable.com/signin">
+
+    <span>Log In</span>
+
+  
+</a>
+
+      
+<dropdown data-dropdown-click-outside-enabled-value="false" class="block relative group/dropdown docs-lg:hidden ml-1" data-controller="dropdown" data-dropdown-active-value="false">
+      <button aria-label="Open Menu" class="flex-col flex gap-1.5 group/dropdown-button items-center justify-center rounded-md size-9 z-10 hover-bg hover-bg-scale focus-visible:ring-primary-500/35 focus-visible:ring-3 focus-visible:inset-ring-1 focus-visible:inset-ring-primary-500 hover-bg-slate" data-action="dropdown#toggle" data-dropdown-target="trigger">
+  <span class="block h-0.5 origin-right rounded-sm transition w-5.5 bg-slate-500 dark:group-active/dropdown-button:bg-white dark:group-hover/dropdown-button:bg-slate-300 group-active/dropdown-button:bg-slate-800 group-hover/dropdown-button:bg-slate-600"></span>
+  <span class="block h-0.5 origin-right rounded-sm transition w-5.5 bg-slate-500 dark:group-active/dropdown-button:bg-white dark:group-hover/dropdown-button:bg-slate-300 group-active/dropdown-button:bg-slate-800 group-hover/dropdown-button:bg-slate-600 group-data-[dropdown-active-value=true]/dropdown:scale-x-75 group-hover/dropdown-button:scale-x-75"></span>
+  <span class="block h-0.5 origin-right rounded-sm transition w-5.5 bg-slate-500 dark:group-active/dropdown-button:bg-white dark:group-hover/dropdown-button:bg-slate-300 group-active/dropdown-button:bg-slate-800 group-hover/dropdown-button:bg-slate-600 group-data-[dropdown-active-value=true]/dropdown:scale-x-50 group-hover/dropdown-button:scale-x-50"></span>
+</button>
+
+  <popout class="bg-white dark:inset-ring-slate-800 dark:shadow-black/50 dark:text-slate-100 duration-200 ease-in-out-expo inset-ring-slate-100 ring-0 shadow-lg transition z-1 before:absolute before:bottom-full before:h-2 before:left-0 before:w-full right-0 group-data-[dropdown-active-value=false]/dropdown:opacity-0 group-data-[dropdown-active-value=false]/dropdown:pointer-events-none group-data-[dropdown-active-value=false]/dropdown:-translate-y-1.5 dark:bg-slate-950 fixed flex flex-col h-[calc(100dvh-var(--docs-nav-height))] inset-ring-0 left-0 mt-0 p-0 rounded-none top-(--docs-nav-height) w-screen">
+    
+
+  <div
+    class="
+      absolute bg-white dark:bg-slate-950 left-0 pt-3 px-5 top-0 w-full
+      docs-sm:hidden z-1 before:mask-b before:absolute before:left-0
+      before:w-full before:h-10 before:bg-inherit before:pointer-events-none
+      before:top-full
+    "
+    style="--mask-distance: 2rem;"
+  >
+    <button class="group/search-trigger outline-none relative text-base w-full" data-action="search#show">
+  <input inert="inert" class="control pt-[0.2125em] pb-[0.1875em] text-base min-h-10 bg-[url(/images/icons/search-bg.svg)] bg-contain bg-left bg-no-repeat pl-[2.5em] dark:group-active/search-trigger:bg-slate-900 dark:group-hover/search-trigger:inset-ring-slate-700 group-active/search-trigger:bg-slate-50 group-hover/search-trigger:inset-ring-slate-300 group-focus-visible/search-trigger:focus-ring pointer-events-none" id="search-trigger" name="search-trigger" placeholder="Search" type="search"></input>
+
+    <kbd data-search-target="macKbd" hidden="hidden" class="bg-slate-50 block dark:bg-slate-900 dark:inset-ring-slate-800 dark:text-slate-300 duration-100 font-sans inset-ring-1 inset-ring-slate-200 leading-none! min-w-[1.75em] no-hover:hidden p-[0.5em] pb-[0.4375em] rounded-[0.3125em] text-center text-slate-600 absolute text-[0.75em] right-[0.625em] top-1/2 -translate-y-1/2">⌘K</kbd>
+
+
+    <kbd data-search-target="nonMacKbd" hidden="hidden" class="bg-slate-50 block dark:bg-slate-900 dark:inset-ring-slate-800 dark:text-slate-300 duration-100 font-sans inset-ring-1 inset-ring-slate-200 leading-none! min-w-[1.75em] no-hover:hidden p-[0.5em] pb-[0.4375em] rounded-[0.3125em] text-center text-slate-600 absolute text-[0.75em] right-[0.625em] top-1/2 -translate-y-1/2">Ctrl+K</kbd>
+
+</button>
+  </div>
+
+  <div class="overflow-y-auto grow px-5 w-full overscroll-y-none">
+    
+<nav
+  class="
+    docs-sm:**:text-sm
+    group-data-[toggle-active-value=false]:hidden
+    max-docs-sm:pt-20
+    max-docs-lg:pb-21.5
+    max-docs-lg:pt-5
+  "
+  id="article-nav"
+>
+  <ul class="flex flex-col gap-0.5">
+
+    <li class="flex flex-col">
+      <a href="/docs/api/" class="px-[0.625em] py-[0.375em] rounded-[0.5em] hover-bg hover-bg-slate before:bg-primary-500/15! before:opacity-100 font-semibold text-primary-500" data-active="true">Introduction</a>
+    </li>
+
+    <li class="flex flex-col">
+      <a href="/docs/api/authentication/" class="px-[0.625em] py-[0.375em] rounded-[0.5em] hover-bg hover-bg-slate dark:hover:text-slate-200 dark:text-slate-400 duration-100 hover:text-slate-800 text-slate-600">Authentication</a>
+    </li>
+
+    <li class="flex flex-col">
+      <a href="/docs/api/emails/" class="px-[0.625em] py-[0.375em] rounded-[0.5em] hover-bg hover-bg-slate dark:hover:text-slate-200 dark:text-slate-400 duration-100 hover:text-slate-800 text-slate-600">Emails</a>
+    </li>
+
+    <li class="flex flex-col">
+      <a href="/docs/api/account/" class="px-[0.625em] py-[0.375em] rounded-[0.5em] hover-bg hover-bg-slate dark:hover:text-slate-200 dark:text-slate-400 duration-100 hover:text-slate-800 text-slate-600">Account</a>
+    </li>
+
+    <li class="flex flex-col">
+      <a href="/docs/api/widget/" class="px-[0.625em] py-[0.375em] rounded-[0.5em] hover-bg hover-bg-slate dark:hover:text-slate-200 dark:text-slate-400 duration-100 hover:text-slate-800 text-slate-600">Widget</a>
+    </li>
+
+    <li class="flex flex-col">
+      <a href="/docs/api/oauth/" class="px-[0.625em] py-[0.375em] rounded-[0.5em] hover-bg hover-bg-slate dark:hover:text-slate-200 dark:text-slate-400 duration-100 hover:text-slate-800 text-slate-600">OAuth</a>
+    </li>
+
+    <li class="flex flex-col">
+      <a href="/docs/api/rate-limits/" class="px-[0.625em] py-[0.375em] rounded-[0.5em] hover-bg hover-bg-slate dark:hover:text-slate-200 dark:text-slate-400 duration-100 hover:text-slate-800 text-slate-600">Rate Limits</a>
+    </li>
+
+    <li class="flex flex-col">
+      <a href="/docs/api/status-codes/" class="px-[0.625em] py-[0.375em] rounded-[0.5em] hover-bg hover-bg-slate dark:hover:text-slate-200 dark:text-slate-400 duration-100 hover:text-slate-800 text-slate-600">Status Codes</a>
+    </li>
+</ul>
+</nav>
+
+  </div>
+
+  <div
+    class="
+      absolute bg-white dark:bg-slate-950 bottom-0 md:hidden left-0 p-5 pt-0
+      w-full z-1 before:mask-t before:bg-inherit before:h-10
+      before:pointer-events-none before:left-0 before:bottom-full
+      before:w-full before:absolute
+    "
+    style="--mask-distance: 2rem;"
+  >
+    <button-group class="flex items-center flex-wrap gap-2.5">
+      <a class="[&amp;_span]:leading-none button duration-100 focus-visible:outline-hidden focus-visible:ring-3 focus-visible:ring-offset-0 focus-visible:ring-offset-transparent focus-visible:ring-primary-500/35 focus:outline-hidden focus:ring-0 font-semibold gap-[0.5em] group/button inline-flex items-center justify-center relative rounded-[0.5em] text-center transition text-xs text-white active:bg-primary-700 bg-primary-500 focus-visible:bg-primary-600 focus:bg-primary-600 hover:bg-primary-600 min-h-[3.5em] py-[0.5em] px-[1.5em] flex-1" data-complete="false" href="https://app.emailable.com/signup">
+
+    <span>Sign Up</span>
+
+  <icon class="items-center justify-center inline-block fill-current size-[0.625em] min-w-[0.625em] relative group-hover/button:translate-x-[0.125em] group-disabled/button:translate-x-0 transition-transform">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <g id="a97231cd-8fe3-4b2e-bde5-daeea1e56596" data-name="Content">
+    <path d="M100,50a9.35582,9.35582,0,0,1-3.02,6.88L55.71051,94.84174a9.02788,9.02788,0,0,1-12.75266-.52866l0-.00005a9.02787,9.02787,0,0,1,.52732-12.7586L67.96,59.03H9.34167A9.28949,9.28949,0,0,1,.00147,49.835,9.01317,9.01317,0,0,1,9.03,40.97H67.96L43.48515,18.44552a9.02787,9.02787,0,0,1-.52731-12.75861l0,0A9.02788,9.02788,0,0,1,55.7105,5.15825L96.98,43.12A9.35582,9.35582,0,0,1,100,50Z"/>
+  </g>
+</svg>
+</icon>
+</a>
+
+      <a class="[&amp;_span]:leading-none button duration-100 focus-visible:outline-hidden focus-visible:ring-3 focus-visible:ring-offset-0 focus-visible:ring-offset-transparent focus-visible:ring-primary-500/35 focus:outline-hidden focus:ring-0 font-semibold gap-[0.5em] group/button inline-flex items-center justify-center relative rounded-[0.5em] text-center transition bg-transparent button-outline dark:text-white text-primary-900 active:bg-primary-400/25 active:inset-ring-primary-500 focus-visible:bg-primary-400/15 focus:bg-primary-400/15 focus:inset-ring-primary-500 hover:bg-primary-400/15 inset-ring-primary-500 inset-ring-1 text-xs min-h-[3.5em] py-[0.5em] px-[1.5em] flex-1" data-complete="false" href="https://app.emailable.com/signin">
+
+    <span>Log In</span>
+
+  <icon class="items-center justify-center inline-block fill-current size-[0.625em] min-w-[0.625em] relative group-hover/button:translate-x-[0.125em] group-disabled/button:translate-x-0 transition-transform">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <g id="a97231cd-8fe3-4b2e-bde5-daeea1e56596" data-name="Content">
+    <path d="M100,50a9.35582,9.35582,0,0,1-3.02,6.88L55.71051,94.84174a9.02788,9.02788,0,0,1-12.75266-.52866l0-.00005a9.02787,9.02787,0,0,1,.52732-12.7586L67.96,59.03H9.34167A9.28949,9.28949,0,0,1,.00147,49.835,9.01317,9.01317,0,0,1,9.03,40.97H67.96L43.48515,18.44552a9.02787,9.02787,0,0,1-.52731-12.75861l0,0A9.02788,9.02788,0,0,1,55.7105,5.15825L96.98,43.12A9.35582,9.35582,0,0,1,100,50Z"/>
+  </g>
+</svg>
+</icon>
+</a>
+</button-group>  </div>
+
+</popout></dropdown>
+    </div>
+  </nav-inner>
+</nav>
+
+
+    <page-main class="
+      flex
+      docs-lg:h-[calc(100dvh-var(--docs-nav-height)-1px)]
+      relative
+      z-0
+    ">
+        <aside
+  data-toggle-aria-labels-value="{&quot;active&quot;:&quot;Collapse sidebar and hide article navigation&quot;,&quot;inactive&quot;:&quot;Expand sidebar and show article navigation&quot;}"
+  data-controller="toggle"
+  data-toggle-active-value="false"
+  class="
+    border-r
+    data-[toggle-active-value=false]:min-w-(--docs-side-nav-width-collapsed)
+    data-[toggle-active-value=false]:w-(--docs-side-nav-width-collapsed)
+    group
+    h-full
+    max-docs-lg:hidden
+    min-w-(--docs-side-nav-width-expanded)
+    relative
+    w-(--docs-side-nav-width-expanded)
+  "
+>
+  <button
+    aria-label="Collapse sidebar and hide article navigation"
+    data-action="toggle#toggle"
+    data-toggle-target="trigger"
+    class="-right-3.5 absolute! bg-white border dark:bg-slate-950 duration-100 flex group-data-[toggle-active-value=false]:border-none group-data-[toggle-active-value=false]:right-3.5 group-data-[toggle-active-value=true]:rotate-180 group/button hover-bg-scale hover-bg-slate hover-bg items-center justify-center rounded-full size-7 top-4 transition-colors z-2"
+  >
+    <icon class="flex items-center justify-center fill-current size-2.5 text-slate-600 dark:text-slate-300 duration-100 group-hover/button:text-slate-800 dark:group-hover/button:text-slate-100">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <g id="a97231cd-8fe3-4b2e-bde5-daeea1e56596" data-name="Content">
+    <path d="M100,50a9.35582,9.35582,0,0,1-3.02,6.88L55.71051,94.84174a9.02788,9.02788,0,0,1-12.75266-.52866l0-.00005a9.02787,9.02787,0,0,1,.52732-12.7586L67.96,59.03H9.34167A9.28949,9.28949,0,0,1,.00147,49.835,9.01317,9.01317,0,0,1,9.03,40.97H67.96L43.48515,18.44552a9.02787,9.02787,0,0,1-.52731-12.75861l0,0A9.02788,9.02788,0,0,1,55.7105,5.15825L96.98,43.12A9.35582,9.35582,0,0,1,100,50Z"/>
+  </g>
+</svg>
+</icon>
+  </button>
+
+  <div
+    class="overflow-y-auto h-full px-4 py-5"
+    data-controller="scroll-to-active"
+  >
+    
+<nav
+  class="
+    docs-sm:**:text-sm
+    group-data-[toggle-active-value=false]:hidden
+    max-docs-sm:pt-20
+    max-docs-lg:pb-21.5
+    max-docs-lg:pt-5
+  "
+  id="article-nav"
+>
+  <ul class="flex flex-col gap-0.5">
+
+    <li class="flex flex-col">
+      <a href="/docs/api/" class="px-[0.625em] py-[0.375em] rounded-[0.5em] hover-bg hover-bg-slate before:bg-primary-500/15! before:opacity-100 font-semibold text-primary-500" data-active="true">Introduction</a>
+    </li>
+
+    <li class="flex flex-col">
+      <a href="/docs/api/authentication/" class="px-[0.625em] py-[0.375em] rounded-[0.5em] hover-bg hover-bg-slate dark:hover:text-slate-200 dark:text-slate-400 duration-100 hover:text-slate-800 text-slate-600">Authentication</a>
+    </li>
+
+    <li class="flex flex-col">
+      <a href="/docs/api/emails/" class="px-[0.625em] py-[0.375em] rounded-[0.5em] hover-bg hover-bg-slate dark:hover:text-slate-200 dark:text-slate-400 duration-100 hover:text-slate-800 text-slate-600">Emails</a>
+    </li>
+
+    <li class="flex flex-col">
+      <a href="/docs/api/account/" class="px-[0.625em] py-[0.375em] rounded-[0.5em] hover-bg hover-bg-slate dark:hover:text-slate-200 dark:text-slate-400 duration-100 hover:text-slate-800 text-slate-600">Account</a>
+    </li>
+
+    <li class="flex flex-col">
+      <a href="/docs/api/widget/" class="px-[0.625em] py-[0.375em] rounded-[0.5em] hover-bg hover-bg-slate dark:hover:text-slate-200 dark:text-slate-400 duration-100 hover:text-slate-800 text-slate-600">Widget</a>
+    </li>
+
+    <li class="flex flex-col">
+      <a href="/docs/api/oauth/" class="px-[0.625em] py-[0.375em] rounded-[0.5em] hover-bg hover-bg-slate dark:hover:text-slate-200 dark:text-slate-400 duration-100 hover:text-slate-800 text-slate-600">OAuth</a>
+    </li>
+
+    <li class="flex flex-col">
+      <a href="/docs/api/rate-limits/" class="px-[0.625em] py-[0.375em] rounded-[0.5em] hover-bg hover-bg-slate dark:hover:text-slate-200 dark:text-slate-400 duration-100 hover:text-slate-800 text-slate-600">Rate Limits</a>
+    </li>
+
+    <li class="flex flex-col">
+      <a href="/docs/api/status-codes/" class="px-[0.625em] py-[0.375em] rounded-[0.5em] hover-bg hover-bg-slate dark:hover:text-slate-200 dark:text-slate-400 duration-100 hover:text-slate-800 text-slate-600">Status Codes</a>
+    </li>
+</ul>
+</nav>
+
+  </div>
+</aside>
+
+
+<main
+  id="docs-scroll-container"
+  data-controller="scroll-to-hash"
+  class="
+    @container/main
+    docs-lg:grow
+    docs-lg:h-full
+    docs-lg:overflow-y-auto
+    flex
+    flex-col
+    max-docs-lg:mt-[calc(var(--docs-nav-height)+1px)]
+    max-docs-lg:w-full
+    overflow-x-clip
+    scroll-pt-6
+    scroll-smooth
+  "
+>
+  <main-inner class="@3xl/main:px-content-x-lg flex-col flex grow items-stretch mx-auto px-content-x w-full @6xl/main:px-15 max-w-8xl">
+    <content-main class="grow flex flex-col">
+
+
+      
+<header class="
+  @4xl:grid-cols-2
+  @2xl:min-h-[max(50dvh,500px)]
+  @2xl:py-24
+  @max-2xl:items-center
+  gap-16
+  grid
+  grow
+  justify-center
+  py-15
+  relative
+">
+  <text-block class="max-w-160 relative z-1 @2xl:min-w-90">
+    <h1>API Docs<span class="animate-blink">_</span></h1>
+
+    <p class="leading-normal mb-[1.5em] mt-[0.75em] text-balance text-xl">
+      Reference guides, examples, and client libraries to help you integrate Emailable&#39;s email verification API.
+    </p>
+
+    <button-group class="flex items-center flex-wrap gap-2.5">
+      <a class="[&amp;_span]:leading-none button duration-100 focus-visible:outline-hidden focus-visible:ring-3 focus-visible:ring-offset-0 focus-visible:ring-offset-transparent focus-visible:ring-primary-500/35 focus:outline-hidden focus:ring-0 font-semibold gap-[0.5em] group/button inline-flex items-center justify-center relative rounded-[0.5em] text-center transition text-sm text-white active:bg-primary-700 bg-primary-500 focus-visible:bg-primary-600 focus:bg-primary-600 hover:bg-primary-600 min-h-[3.5em] py-[0.5em] px-[1.5em] @max-2xl:text-sm" data-complete="false" href="#browse-topics">
+
+    <span>Get started</span>
+
+  <icon class="items-center justify-center inline-block fill-current size-[0.625em] min-w-[0.625em] relative group-hover/button:translate-x-[0.125em] group-disabled/button:translate-x-0 transition-transform">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <g id="a97231cd-8fe3-4b2e-bde5-daeea1e56596" data-name="Content">
+    <path d="M100,50a9.35582,9.35582,0,0,1-3.02,6.88L55.71051,94.84174a9.02788,9.02788,0,0,1-12.75266-.52866l0-.00005a9.02787,9.02787,0,0,1,.52732-12.7586L67.96,59.03H9.34167A9.28949,9.28949,0,0,1,.00147,49.835,9.01317,9.01317,0,0,1,9.03,40.97H67.96L43.48515,18.44552a9.02787,9.02787,0,0,1-.52731-12.75861l0,0A9.02788,9.02788,0,0,1,55.7105,5.15825L96.98,43.12A9.35582,9.35582,0,0,1,100,50Z"/>
+  </g>
+</svg>
+</icon>
+</a>
+
+      <a class="[&amp;_span]:leading-none button duration-100 focus-visible:outline-hidden focus-visible:ring-3 focus-visible:ring-offset-0 focus-visible:ring-offset-transparent focus-visible:ring-primary-500/35 focus:outline-hidden focus:ring-0 font-semibold gap-[0.5em] group/button inline-flex items-center justify-center relative rounded-[0.5em] text-center transition bg-transparent button-outline dark:text-white text-primary-900 active:bg-primary-400/25 active:inset-ring-primary-500 focus-visible:bg-primary-400/15 focus:bg-primary-400/15 focus:inset-ring-primary-500 hover:bg-primary-400/15 inset-ring-primary-500 inset-ring-1 text-sm min-h-[3.5em] py-[0.5em] px-[1.5em] @max-2xl:text-sm" data-complete="false" href="/docs/">
+
+    <span>View Help Docs</span>
+
+  <icon class="items-center justify-center inline-block fill-current size-[0.625em] min-w-[0.625em] relative group-hover/button:translate-x-[0.125em] group-disabled/button:translate-x-0 transition-transform">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <g id="a97231cd-8fe3-4b2e-bde5-daeea1e56596" data-name="Content">
+    <path d="M100,50a9.35582,9.35582,0,0,1-3.02,6.88L55.71051,94.84174a9.02788,9.02788,0,0,1-12.75266-.52866l0-.00005a9.02787,9.02787,0,0,1,.52732-12.7586L67.96,59.03H9.34167A9.28949,9.28949,0,0,1,.00147,49.835,9.01317,9.01317,0,0,1,9.03,40.97H67.96L43.48515,18.44552a9.02787,9.02787,0,0,1-.52731-12.75861l0,0A9.02788,9.02788,0,0,1,55.7105,5.15825L96.98,43.12A9.35582,9.35582,0,0,1,100,50Z"/>
+  </g>
+</svg>
+</icon>
+</a>
+</button-group>
+    <div class="mt-10">
+      
+<markdown-actions
+  class="flex items-center text-sm font-medium"
+  data-controller="copy"
+  data-pagefind-ignore="all"
+>
+  <span
+    class="inline-flex items-center h-9.5 rounded-lg inset-ring-1
+           inset-ring-slate-200 dark:inset-ring-slate-700"
+  >
+    <button
+      data-copy-url-param="/docs/api.md"
+      data-action="click->copy#copyFromURL"
+      class="flex items-center gap-2 text-xs transition duration-100
+                     before:transition before:duration-100
+                     text-slate-500 hover:text-slate-700
+                     dark:text-slate-400 dark:hover:text-slate-200 hover-bg hover-bg-slate relative
+             h-full rounded-l-lg px-3 whitespace-nowrap"
+    >
+      <span
+        data-copy-target="copiedTooltipEl"
+        class="absolute inset-0 pointer-events-none"
+      ></span>
+      <icon class="flex items-center justify-center fill-current size-4.5 min-w-4.5">
+  <svg xmlns="http://www.w3.org/2000/svg" id="uuid-f7fd433c-5465-42d2-b0c7-73489f5eae7a" viewBox="0 0 100 100">
+  <path d="M84.94,6h-49.62c-5,0-9.07001,4.07007-9.07001,9.06006v11.18994h-11.19c-4.98999,0-9.06,4.07007-9.06,9.07007v49.61987c0,4.98999,4.07001,9.06006,9.06,9.06006h49.62c5,0,9.07001-4.07007,9.07001-9.06006v-11.18994h11.19c4.98999,0,9.06-4.07007,9.06-9.07007V15.06006c0-4.98999-4.07001-9.06006-9.06-9.06006ZM65.75,84.93994c0,.57007-.48999,1.06006-1.07001,1.06006H15.06c-.57001,0-1.06-.48999-1.06-1.06006v-49.61987c0-.58008.48999-1.07007,1.06-1.07007h11.19v30.42993c0,5,4.07001,9.07007,9.07001,9.07007h30.42999v11.18994ZM86,64.67993c0,.58008-.48999,1.07007-1.06,1.07007h-49.62c-.58002,0-1.07001-.48999-1.07001-1.07007V15.06006c0-.57007.48999-1.06006,1.07001-1.06006h49.62c.57001,0,1.06.48999,1.06,1.06006v49.61987Z"/>
+  <path d="M77.13,39.87c0,2.20996-1.78998,4-4,4h-9v9c0,2.20996-1.78998,4-4,4s-4-1.79004-4-4v-9h-9c-2.21002,0-4-1.79004-4-4,0-2.21008,1.78998-4,4-4h9v-9c0-2.21008,1.78998-4,4-4s4,1.78992,4,4v9h9c2.21002,0,4,1.78992,4,4Z"/>
+</svg>
+</icon>
+      Copy page
+    </button>
+
+    <span class="bg-slate-200 dark:bg-slate-700 h-full w-px"></span>
+
+    <dropdown class="block relative group/dropdown aspect-square h-full" data-controller="dropdown" data-dropdown-active-value="false" data-dropdown-placement-value="bottom-end" data-dropdown-offset-value="8" data-dropdown-strategy-value="fixed">
+          <button
+          aria-label="More options"
+          data-action="click->dropdown#toggle"
+          data-dropdown-target="trigger"
+          class="flex items-center gap-2 text-xs transition duration-100
+                     before:transition before:duration-100
+                     text-slate-500 hover:text-slate-700
+                     dark:text-slate-400 dark:hover:text-slate-200 hover-bg hover-bg-slate size-full
+                 justify-center rounded-r-lg"
+        >
+          <icon class="flex items-center justify-center fill-current size-3 rotate-90 transition-transform duration-200 group-data-[dropdown-active-value=true]/dropdown:-rotate-90">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <g id="ed4be756-c034-4970-9349-50072609f375" data-name="Content">
+    <path d="M26.62036,99.01487l-4.13077-4.49022a3.05022,3.05022,0,0,1,.17964-4.30985L66.38118,50,22.66923,9.7852a3.05022,3.05022,0,0,1-.17964-4.30985L26.62036.98513a3.0502,3.0502,0,0,1,4.31-.17964l48.59224,44.705a6.10039,6.10039,0,0,1,0,8.97894l-48.59224,44.705A3.0502,3.0502,0,0,1,26.62036,99.01487Z"/>
+  </g>
+</svg>
+</icon>
+        </button>
+
+  <popout class="bg-white block dark:bg-slate-900 dark:inset-ring-slate-800 dark:shadow-black/50 dark:text-slate-100 duration-200 ease-in-out-expo inset-ring-1 inset-ring-slate-100 p-1.5 ring-0 rounded-lg shadow-lg transition z-1 left-0 top-0 fixed -translate-y-1.5 data-[active]:opacity-100 data-[active]:pointer-events-auto data-[active]:translate-y-0 opacity-0 pointer-events-none w-max">
+    
+
+      <menu>
+        <ul>
+            <li>
+              <button class="[&amp;&gt;:is(icon,img):first-child]:duration-100 [&amp;&gt;:is(icon,img):first-child]:min-w-[1.5em] [&amp;&gt;:is(icon,img):first-child]:size-[1.5em] dark:text-white flex hover-bg-scale hover-bg outline-hidden px-[0.625em] rounded-[0.375em] text-sm hover-bg-slate w-full items-center gap-[0.75em] py-2 font-normal text-left" data-action="click-&gt;copy#copyFromURL click-&gt;dropdown#close" data-copy-url-param="/docs/api.md" role="button" type="button">
+                      <icon class="flex items-center justify-center fill-current">
+  <svg xmlns="http://www.w3.org/2000/svg" id="uuid-f7fd433c-5465-42d2-b0c7-73489f5eae7a" viewBox="0 0 100 100">
+  <path d="M84.94,6h-49.62c-5,0-9.07001,4.07007-9.07001,9.06006v11.18994h-11.19c-4.98999,0-9.06,4.07007-9.06,9.07007v49.61987c0,4.98999,4.07001,9.06006,9.06,9.06006h49.62c5,0,9.07001-4.07007,9.07001-9.06006v-11.18994h11.19c4.98999,0,9.06-4.07007,9.06-9.07007V15.06006c0-4.98999-4.07001-9.06006-9.06-9.06006ZM65.75,84.93994c0,.57007-.48999,1.06006-1.07001,1.06006H15.06c-.57001,0-1.06-.48999-1.06-1.06006v-49.61987c0-.58008.48999-1.07007,1.06-1.07007h11.19v30.42993c0,5,4.07001,9.07007,9.07001,9.07007h30.42999v11.18994ZM86,64.67993c0,.58008-.48999,1.07007-1.06,1.07007h-49.62c-.58002,0-1.07001-.48999-1.07001-1.07007V15.06006c0-.57007.48999-1.06006,1.07001-1.06006h49.62c.57001,0,1.06.48999,1.06,1.06006v49.61987Z"/>
+  <path d="M77.13,39.87c0,2.20996-1.78998,4-4,4h-9v9c0,2.20996-1.78998,4-4,4s-4-1.79004-4-4v-9h-9c-2.21002,0-4-1.79004-4-4,0-2.21008,1.78998-4,4-4h9v-9c0-2.21008,1.78998-4,4-4s4,1.78992,4,4v9h9c2.21002,0,4,1.78992,4,4Z"/>
+</svg>
+</icon>
+
+    <span class="grow leading-tight mt-px">
+      Copy page
+
+        <span class="block mt-0.5 text-xs font-normal text-slate-500
+                     dark:text-slate-400">
+          Copy page as Markdown for LLMs
+        </span>
+    </span>
+
+</button>            </li>
+            <li>
+              <a target="_blank" class="[&amp;&gt;:is(icon,img):first-child]:duration-100 [&amp;&gt;:is(icon,img):first-child]:min-w-[1.5em] [&amp;&gt;:is(icon,img):first-child]:size-[1.5em] dark:text-white flex hover-bg-scale hover-bg outline-hidden px-[0.625em] rounded-[0.375em] text-sm hover-bg-slate w-full items-center gap-[0.75em] py-2 font-normal text-left" data-action="click-&gt;dropdown#close" href="/docs/api.md">
+                      <icon class="flex items-center justify-center fill-current">
+  <svg xmlns="http://www.w3.org/2000/svg" id="uuid-d6817118-de09-4e0a-b2c4-fa0fbf9b5915" viewBox="0 0 100 100">
+  <path d="M17.3149,65.38462v-30.76923h9.04977l9.04978,11.31222,9.04978-11.31222h9.04978v30.76923h-9.04978v-17.64706l-9.04978,11.31222-9.04978-11.31222v17.64706s-9.04978,0-9.04977,0ZM71.11043,65.38462l-13.57466-14.93213h9.04978v-15.83711h9.04978v15.83711h9.04978l-13.57466,14.93213h0Z"/>
+  <path d="M88,23c3.85983,0,7,3.14017,7,7v40c0,3.85983-3.14017,7-7,7H12c-3.85983,0-7-3.14017-7-7V30c0-3.85983,3.14017-7,7-7h76M88,18H12c-6.6,0-12,5.4-12,12v40c0,6.6,5.4,12,12,12h76c6.6,0,12-5.4,12-12V30c0-6.6-5.4-12-12-12h0Z"/>
+</svg>
+</icon>
+
+    <span class="grow leading-tight mt-px">
+      View as Markdown
+
+        <span class="block mt-0.5 text-xs font-normal text-slate-500
+                     dark:text-slate-400">
+          View this page as raw Markdown
+        </span>
+    </span>
+
+</a>            </li>
+            <li>
+              <a rel="noopener noreferrer" target="_blank" class="[&amp;&gt;:is(icon,img):first-child]:duration-100 [&amp;&gt;:is(icon,img):first-child]:min-w-[1.5em] [&amp;&gt;:is(icon,img):first-child]:size-[1.5em] dark:text-white flex hover-bg-scale hover-bg outline-hidden px-[0.625em] rounded-[0.375em] text-sm hover-bg-slate w-full items-center gap-[0.75em] py-2 font-normal text-left" data-action="click-&gt;dropdown#close" href="https://chatgpt.com/?hints=search&amp;q=Read+https%3A%2F%2Femailable.com%2Fdocs%2Fapi.md+so+I+can+ask+you+questions+about+this+page.">
+                      <icon class="flex items-center justify-center fill-current">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+  <path d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755 0 0 1-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948 0 0 0 .3927-.6813v-6.7369l2.02 1.1686a.071.071 0 0 1 .038.052v5.5826a4.504 4.504 0 0 1-4.4945 4.4944zm-9.6607-4.1254a4.4708 4.4708 0 0 1-.5346-3.0137l.142.0852 4.783 2.7582a.7712.7712 0 0 0 .7806 0l5.8428-3.3685v2.3324a.0804.0804 0 0 1-.0332.0615L9.74 19.9502a4.4992 4.4992 0 0 1-6.1408-1.6464zM2.3408 7.8956a4.485 4.485 0 0 1 2.3655-1.9728V11.6a.7664.7664 0 0 0 .3879.6765l5.8144 3.3543-2.0201 1.1685a.0757.0757 0 0 1-.071 0l-4.8303-2.7865A4.504 4.504 0 0 1 2.3408 7.872zm16.5963 3.8558L13.1038 8.364 15.1192 7.2a.0757.0757 0 0 1 .071 0l4.8303 2.7913a4.4944 4.4944 0 0 1-.6765 8.1042v-5.6772a.79.79 0 0 0-.407-.667zm2.0107-3.0231l-.142-.0852-4.7735-2.7818a.7759.7759 0 0 0-.7854 0L9.409 9.2297V6.8974a.0662.0662 0 0 1 .0284-.0615l4.8303-2.7866a4.4992 4.4992 0 0 1 6.6802 4.66zM8.3065 12.863l-2.02-1.1638a.0804.0804 0 0 1-.038-.0567V6.0742a4.4992 4.4992 0 0 1 7.3757-3.4537l-.142.0805L8.704 5.459a.7948.7948 0 0 0-.3927.6813zm1.0976-2.3654l2.602-1.4998 2.6069 1.4998v2.9994l-2.5974 1.4997-2.6067-1.4997z"/>
+</svg>
+</icon>
+
+    <span class="grow leading-tight mt-px">
+      Open in ChatGPT
+
+        <span class="block mt-0.5 text-xs font-normal text-slate-500
+                     dark:text-slate-400">
+          Ask questions about this page
+        </span>
+    </span>
+
+</a>            </li>
+            <li>
+              <a rel="noopener noreferrer" target="_blank" class="[&amp;&gt;:is(icon,img):first-child]:duration-100 [&amp;&gt;:is(icon,img):first-child]:min-w-[1.5em] [&amp;&gt;:is(icon,img):first-child]:size-[1.5em] dark:text-white flex hover-bg-scale hover-bg outline-hidden px-[0.625em] rounded-[0.375em] text-sm hover-bg-slate w-full items-center gap-[0.75em] py-2 font-normal text-left" data-action="click-&gt;dropdown#close" href="https://claude.ai/new?q=Read+https%3A%2F%2Femailable.com%2Fdocs%2Fapi.md+so+I+can+ask+you+questions+about+this+page.">
+                      <icon class="flex items-center justify-center fill-current">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+  <path d="m4.7144 15.9555 4.7174-2.6471.079-.2307-.079-.1275h-.2307l-.7893-.0486-2.6956-.0729-2.3375-.0971-2.2646-.1214-.5707-.1215-.5343-.7042.0546-.3522.4797-.3218.686.0608 1.5179.1032 2.2767.1578 1.6514.0972 2.4468.255h.3886l.0546-.1579-.1336-.0971-.1032-.0972L6.973 9.8356l-2.55-1.6879-1.3356-.9714-.7225-.4918-.3643-.4614-.1578-1.0078.6557-.7225.8803.0607.2246.0607.8925.686 1.9064 1.4754 2.4893 1.8336.3643.3035.1457-.1032.0182-.0728-.164-.2733-1.3539-2.4467-1.445-2.4893-.6435-1.032-.17-.6194c-.0607-.255-.1032-.4674-.1032-.7285L6.287.1335 6.6997 0l.9957.1336.419.3642.6192 1.4147 1.0018 2.2282 1.5543 3.0296.4553.8985.2429.8318.091.255h.1579v-.1457l.1275-1.706.2368-2.0947.2307-2.6957.0789-.7589.3764-.9107.7468-.4918.5828.2793.4797.686-.0668.4433-.2853 1.8517-.5586 2.9021-.3643 1.9429h.2125l.2429-.2429.9835-1.3053 1.6514-2.0643.7286-.8196.85-.9046.5464-.4311h1.0321l.759 1.1293-.34 1.1657-1.0625 1.3478-.8804 1.1414-1.2628 1.7-.7893 1.36.0729.1093.1882-.0183 2.8535-.607 1.5421-.2794 1.8396-.3157.8318.3886.091.3946-.3278.8075-1.967.4857-2.3072.4614-3.4364.8136-.0425.0304.0486.0607 1.5482.1457.6618.0364h1.621l3.0175.2247.7892.522.4736.6376-.079.4857-1.2142.6193-1.6393-.3886-3.825-.9107-1.3113-.3279h-.1822v.1093l1.0929 1.0686 2.0035 1.8092 2.5075 2.3314.1275.5768-.3218.4554-.34-.0486-2.2039-1.6575-.85-.7468-1.9246-1.621h-.1275v.17l.4432.6496 2.3436 3.5214.1214 1.0807-.17.3521-.6071.2125-.6679-.1214-1.3721-1.9246L14.38 17.959l-1.1414-1.9428-.1397.079-.674 7.2552-.3156.3703-.7286.2793-.6071-.4614-.3218-.7468.3218-1.4753.3886-1.9246.3157-1.53.2853-1.9004.17-.6314-.0121-.0425-.1397.0182-1.4328 1.9672-2.1796 2.9446-1.7243 1.8456-.4128.164-.7164-.3704.0667-.6618.4008-.5889 2.386-3.0357 1.4389-1.882.929-1.0868-.0062-.1579h-.0546l-6.3385 4.1164-1.1293.1457-.4857-.4554.0608-.7467.2307-.2429 1.9064-1.3114Z"/>
+</svg>
+</icon>
+
+    <span class="grow leading-tight mt-px">
+      Open in Claude
+
+        <span class="block mt-0.5 text-xs font-normal text-slate-500
+                     dark:text-slate-400">
+          Ask questions about this page
+        </span>
+    </span>
+
+</a>            </li>
+        </ul>
+      </menu>
+
+</popout></dropdown>  </span>
+</markdown-actions>
+
+    </div>
+
+    <recent-articles class="mt-10" data-article-history-target="recentArticles" data-article-history-template-id="recent-article-listing" hidden="hidden">
+    <h3 class="text-slate-500 uppercase tracking-widest font-medium text-xs">
+      Recently viewed
+    </h3>
+
+    <ul class="mt-3 flex flex-col gap-1"></ul>
+
+          <template data-article-history-target="recentArticleTemplate" data-subcategory="help-docs" data-id="recent-article-listing">
+  <li>
+
+      <a class="inline-flex items-start gap-[0.625em] relative text-primary-500 font-medium group/text-link duration-100 cursor-pointer hover:text-primary-700 dark:hover:text-primary-300" href="#">
+  
+      <icon class="flex items-center justify-center fill-current size-[1em] min-w-[1em] relative top-[0.2125em]">
+  <svg xmlns="http://www.w3.org/2000/svg" id="uuid-ee9862b7-ab20-4151-a89c-c6c9cbc92a75" viewBox="0 0 100 100">
+  <defs>
+    <style>.uuid-a5ed603a-5d8e-40df-84ad-3c43f3af7fc4{fill-rule:evenodd;}</style>
+  </defs>
+  <path d="M24.28572,61.25c0-2.6628,2.15863-4.82143,4.82143-4.82143h12.85714c2.6628,0,4.82143,2.15863,4.82143,4.82143s-2.15863,4.82143-4.82143,4.82143h-12.85714c-2.6628,0-4.82143-2.15863-4.82143-4.82143ZM29.10714,30.71428c-2.6628,0-4.82143,2.15863-4.82143,4.82143s2.15863,4.82143,4.82143,4.82143h38.57143c2.6628,0,4.82143-2.15863,4.82143-4.82143s-2.15863-4.82143-4.82143-4.82143H29.10714Z"/>
+  <path class="uuid-a5ed603a-5d8e-40df-84ad-3c43f3af7fc4" d="M5,78.92857V21.07143c0-8.876,7.19542-16.07143,16.07143-16.07143h57.85714c8.876,0,16.07143,7.19542,16.07143,16.07143v42.89143c-.00073,3.40965-1.35579,6.67938-3.76715,9.09l-18.18,18.18c-2.41062,2.41135-5.68035,3.76642-9.09,3.76715H21.07143c-8.876,0-16.07143-7.19543-16.07143-16.07143h0ZM14.64286,78.92857V21.07143c0-3.5504,2.87817-6.42857,6.42857-6.42857h57.85714c3.5504,0,6.42857,2.87817,6.42857,6.42857v32.14285h-20.89286c-6.2132,0-11.25,5.0368-11.25,11.25v20.89286H21.07143c-3.5504,0-6.42857-2.87817-6.42857-6.42857ZM62.85714,85.35714h1.10571c.85083-.00018,1.66689-.3377,2.26928-.93857l18.18643-18.18643c.60087-.60239.93839-1.41845.93857-2.26928v-1.10571h-20.89286c-.8876,0-1.60714.71954-1.60714,1.60714v20.89286Z"/>
+</svg>
+</icon>
+
+  
+
+  <text-link-inner class="duration-100 text-pretty leading-normal group-hover/text-link:text-primary-700 dark:group-hover/text-link:text-primary-300">
+    
+
+    <span></span>
+
+    <icon class="items-center justify-center fill-current inline-block size-[0.625em] min-w-[0.625em] duration-200 ease-in-out-expo relative -top-px group-hover/text-link:translate-x-1 opacity-0 group-hover/text-link:opacity-100">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="duration-200 ease-in-out-expo group-hover/text-link:fill-primary-700 dark:group-hover/text-link:fill-primary-300">
+  <g id="a97231cd-8fe3-4b2e-bde5-daeea1e56596" data-name="Content">
+    <path d="M100,50a9.35582,9.35582,0,0,1-3.02,6.88L55.71051,94.84174a9.02788,9.02788,0,0,1-12.75266-.52866l0-.00005a9.02787,9.02787,0,0,1,.52732-12.7586L67.96,59.03H9.34167A9.28949,9.28949,0,0,1,.00147,49.835,9.01317,9.01317,0,0,1,9.03,40.97H67.96L43.48515,18.44552a9.02787,9.02787,0,0,1-.52731-12.75861l0,0A9.02788,9.02788,0,0,1,55.7105,5.15825L96.98,43.12A9.35582,9.35582,0,0,1,100,50Z"/>
+  </g>
+</svg>
+</icon>
+  </text-link-inner>
+</a>
+
+  </li>
+</template>
+        <template data-article-history-target="recentArticleTemplate" data-subcategory="api-docs" data-id="recent-article-listing">
+  <li>
+
+      <a class="inline-flex items-start gap-[0.625em] relative text-primary-500 font-medium group/text-link duration-100 cursor-pointer hover:text-primary-700 dark:hover:text-primary-300" href="#">
+  
+      <icon class="flex items-center justify-center fill-current size-[1em] min-w-[1em] relative top-[0.2125em]">
+  <svg xmlns="http://www.w3.org/2000/svg" id="uuid-357217ba-345d-4ead-a12e-709e7a107bc7" viewBox="0 0 100 100">
+  <path d="M78,15c3.8598,0,7,3.14026,7,7v56c0,3.85974-3.1402,7-7,7H22c-3.8598,0-7-3.14026-7-7V22c0-3.85974,3.1402-7,7-7h56M78,6H22c-8.79999,0-16,7.19995-16,16v56c0,8.80005,7.20001,16,16,16h56c8.79999,0,16-7.19995,16-16V22c0-8.80005-7.20001-16-16-16h0Z"/>
+  <path d="M26.85966,65.15196c-1.37115,0-2.73192-.58563-3.67839-1.7216-1.69149-2.02999-1.41736-5.04746.61263-6.73895l11.53824-9.6152-11.53824-9.6152c-2.02999-1.69149-2.30412-4.70896-.61263-6.73895,1.69201-2.02999,4.70844-2.30516,6.73895-.61263l15.132,12.60983c1.29795,1.08405,2.04037,2.67066,2.04037,4.35695s-.74243,3.27291-2.03622,4.35384l-15.13616,12.61294c-.89455.74554-1.98067,1.10897-3.06056,1.10897ZM38.92175,50.06773h.0109-.0109Z"/>
+  <path d="M73.14294,71h-23.39215c-2.64262,0-4.78476-2.14213-4.78476-4.78476s2.14213-4.78476,4.78476-4.78476h23.39215c2.64262,0,4.78476,2.14213,4.78476,4.78476s-2.14213,4.78476-4.78476,4.78476Z"/>
+</svg>
+</icon>
+
+  
+
+  <text-link-inner class="duration-100 text-pretty leading-normal group-hover/text-link:text-primary-700 dark:group-hover/text-link:text-primary-300">
+    
+
+    <span></span>
+
+    <icon class="items-center justify-center fill-current inline-block size-[0.625em] min-w-[0.625em] duration-200 ease-in-out-expo relative -top-px group-hover/text-link:translate-x-1 opacity-0 group-hover/text-link:opacity-100">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="duration-200 ease-in-out-expo group-hover/text-link:fill-primary-700 dark:group-hover/text-link:fill-primary-300">
+  <g id="a97231cd-8fe3-4b2e-bde5-daeea1e56596" data-name="Content">
+    <path d="M100,50a9.35582,9.35582,0,0,1-3.02,6.88L55.71051,94.84174a9.02788,9.02788,0,0,1-12.75266-.52866l0-.00005a9.02787,9.02787,0,0,1,.52732-12.7586L67.96,59.03H9.34167A9.28949,9.28949,0,0,1,.00147,49.835,9.01317,9.01317,0,0,1,9.03,40.97H67.96L43.48515,18.44552a9.02787,9.02787,0,0,1-.52731-12.75861l0,0A9.02788,9.02788,0,0,1,55.7105,5.15825L96.98,43.12A9.35582,9.35582,0,0,1,100,50Z"/>
+  </g>
+</svg>
+</icon>
+  </text-link-inner>
+</a>
+
+  </li>
+</template>
+
+</recent-articles>  </text-block>
+
+  <div class="min-w-0">
+    <code-editor class="dark flex-col flex overflow-hidden border border-slate-500/20 rounded-lg text-sm [scrollbar-color:var(--color-slate-700)_transparent] bg-code shadow-slate-950/50 shadow-none" data-controller="">
+          <code-header class="flex justify-between items-center gap-3 bg-slate-800/50 border-b px-4 py-2 text-slate-200">
+
+    
+          Base URL
+
+</code-header>
+    <code-section class="flex flex-col grow relative border-b border-slate-800 last-of-type:border-b-0">
+      <code-snippet class="flex font-code grow relative group/toolbar-parent">
+
+  <scroll-container class="relative overflow-hidden grow w-auto max-h-[26.25rem]">
+  <scroll-content class="size-full overflow-auto">
+    <pre><code class="language- leading-relaxed">https://api.emailable.com/v1/</code></pre>
+</scroll-content>
+</scroll-container>
+  <tool-bar class="absolute top-3 right-3 z-2 rounded-lg border shadow-sm flex p-1 border-slate-800 shadow-black/60 duration-100 group-hover/toolbar-parent:opacity-100 group-hover/toolbar-parent:pointer-events-auto opacity-0 pointer-events-none bg-slate-900">
+    <button data-action="copy#copyValue" data-controller="copy" data-copy-copy-string-value="https://api.emailable.com/v1/" data-tippy-content="Copy code" class="size-6 hover-bg hover-bg-slate hover-bg-scale rounded-sm flex items-center justify-center group/tool" type="button">
+  <icon class="flex items-center justify-center fill-current size-3/5 text-slate-300 dark:group-hover/tool:fill-slate-100">
+  <svg xmlns="http://www.w3.org/2000/svg" id="uuid-f7fd433c-5465-42d2-b0c7-73489f5eae7a" viewBox="0 0 100 100">
+  <path d="M84.94,6h-49.62c-5,0-9.07001,4.07007-9.07001,9.06006v11.18994h-11.19c-4.98999,0-9.06,4.07007-9.06,9.07007v49.61987c0,4.98999,4.07001,9.06006,9.06,9.06006h49.62c5,0,9.07001-4.07007,9.07001-9.06006v-11.18994h11.19c4.98999,0,9.06-4.07007,9.06-9.07007V15.06006c0-4.98999-4.07001-9.06006-9.06-9.06006ZM65.75,84.93994c0,.57007-.48999,1.06006-1.07001,1.06006H15.06c-.57001,0-1.06-.48999-1.06-1.06006v-49.61987c0-.58008.48999-1.07007,1.06-1.07007h11.19v30.42993c0,5,4.07001,9.07007,9.07001,9.07007h30.42999v11.18994ZM86,64.67993c0,.58008-.48999,1.07007-1.06,1.07007h-49.62c-.58002,0-1.07001-.48999-1.07001-1.07007V15.06006c0-.57007.48999-1.06006,1.07001-1.06006h49.62c.57001,0,1.06.48999,1.06,1.06006v49.61987Z"/>
+  <path d="M77.13,39.87c0,2.20996-1.78998,4-4,4h-9v9c0,2.20996-1.78998,4-4,4s-4-1.79004-4-4v-9h-9c-2.21002,0-4-1.79004-4-4,0-2.21008,1.78998-4,4-4h9v-9c0-2.21008,1.78998-4,4-4s4,1.78992,4,4v9h9c2.21002,0,4,1.78992,4,4Z"/>
+</svg>
+</icon>
+
+          <span
+          class="absolute inset-0 pointer-events-none"
+          data-copy-target="copiedTooltipEl"
+        ></span>
+
+</button></tool-bar></code-snippet>
+</code-section></code-editor>
+    <client-libraries
+      class="mt-12"
+      data-controller="tabs"
+      data-tabs-use-code-language-preference-value="true"
+    >
+      <h2 id="client-libraries" class="text-2xl mb-3">
+        Client Libraries
+      </h2>
+
+
+      <tab-list class="before:absolute before:bottom-0 before:h-px before:left-0 before:w-full relative before:bg-slate-100 dark:before:bg-slate-800">
+  <ul class="flex items-center gap-0.5 pb-2 relative" data-tabs-target="tablist" role="tablist" aria-labelledby="client-libraries">
+    
+          <li>
+              <button aria-controls="ruby" aria-selected="true" id="tab-ruby" class="after:-bottom-2 after:absolute after:bg-primary-500 after:h-0.5 after:left-0 after:w-full dark:data-[active=false]:hover:text-slate-300 dark:data-[active=true]:text-white dark:text-slate-500 data-[active=false]:[&amp;_:is(img,icon)]:opacity-50 data-[active=false]:after:hidden data-[active=false]:hover:[&amp;_:is(img,icon)]:opacity-75 duration-100 group/tab relative tab z-1 data-[active=false]:hover:text-slate-500 data-[active=true]:text-slate-800 text-slate-300 flex flex-col items-center justify-center gap-3 w-20 py-3 rounded-lg hover-bg hover-bg-scale hover-bg-slate" data-action="click-&gt;tabs#toggleTab" data-active="true" data-tab-id="ruby" data-tabs-target="tab" role="tab" type="button">
+              <img alt="Ruby logo" class="size-7" src="/images/third-party-logos/programming-languages/ruby.svg" width="100" height="100">
+              <span class="text-xs text-center leading-none">
+                Ruby
+              </span>
+</button>
+          </li>
+          <li>
+              <button aria-controls="javascript" aria-selected="false" id="tab-javascript" class="after:-bottom-2 after:absolute after:bg-primary-500 after:h-0.5 after:left-0 after:w-full dark:data-[active=false]:hover:text-slate-300 dark:data-[active=true]:text-white dark:text-slate-500 data-[active=false]:[&amp;_:is(img,icon)]:opacity-50 data-[active=false]:after:hidden data-[active=false]:hover:[&amp;_:is(img,icon)]:opacity-75 duration-100 group/tab relative tab z-1 data-[active=false]:hover:text-slate-500 data-[active=true]:text-slate-800 text-slate-300 flex flex-col items-center justify-center gap-3 w-20 py-3 rounded-lg hover-bg hover-bg-scale hover-bg-slate" data-action="click-&gt;tabs#toggleTab" data-active="false" data-tab-id="javascript" data-tabs-target="tab" role="tab" type="button">
+              <img alt="Node.js logo" class="size-7" src="/images/third-party-logos/programming-languages/node-js.svg" width="100" height="100">
+              <span class="text-xs text-center leading-none">
+                Node.js
+              </span>
+</button>
+          </li>
+          <li>
+              <button aria-controls="python" aria-selected="false" id="tab-python" class="after:-bottom-2 after:absolute after:bg-primary-500 after:h-0.5 after:left-0 after:w-full dark:data-[active=false]:hover:text-slate-300 dark:data-[active=true]:text-white dark:text-slate-500 data-[active=false]:[&amp;_:is(img,icon)]:opacity-50 data-[active=false]:after:hidden data-[active=false]:hover:[&amp;_:is(img,icon)]:opacity-75 duration-100 group/tab relative tab z-1 data-[active=false]:hover:text-slate-500 data-[active=true]:text-slate-800 text-slate-300 flex flex-col items-center justify-center gap-3 w-20 py-3 rounded-lg hover-bg hover-bg-scale hover-bg-slate" data-action="click-&gt;tabs#toggleTab" data-active="false" data-tab-id="python" data-tabs-target="tab" role="tab" type="button">
+              <img alt="Python logo" class="size-7" src="/images/third-party-logos/programming-languages/python.svg" width="100" height="100">
+              <span class="text-xs text-center leading-none">
+                Python
+              </span>
+</button>
+          </li>
+
+</ul></tab-list>
+    <tab-panels class="mt-5">
+        <tab-panel aria-controls="ruby" aria-expanded="true" aria-labelledby="tab-ruby" class="data-[active=false]:hidden" data-active="true" data-tab-id="ruby" data-tabs-target="tabpanel" role="tabpanel" id="ruby">
+          <code-editor class="dark flex-col flex overflow-hidden border border-slate-500/20 rounded-lg text-sm [scrollbar-color:var(--color-slate-700)_transparent] bg-code shadow-slate-950/50 shadow-none" data-controller="">
+                <code-header class="flex justify-between items-center gap-3 bg-slate-800/50 border-b px-4 py-2 text-slate-200">
+
+    
+                <a target="_blank" class="inline-flex items-start gap-[0.625em] relative font-medium group/text-link duration-100 cursor-pointer text-white hover:opacity-75" href="https://github.com/emailable/emailable-ruby">
+                      <svg xmlns="http://www.w3.org/2000/svg" id="uuid-e20c97f3-6c8f-40fd-b4fd-59d924d6703e" viewBox="0 0 100 100" class="[&amp;_path]:fill-white! size-[1.25em] translate-y-px">
+  <title>GitHub Logo</title>
+  <defs>
+    <style>.uuid-bb126e07-ef2f-4f22-8483-2dde4329ee16{fill:#171515;}</style>
+  </defs>
+  <path class="uuid-bb126e07-ef2f-4f22-8483-2dde4329ee16" d="M44.38733,1.7763C21.34064,4.28138,2.80309,22.81893.29801,45.36461c-2.50508,23.5477,11.02233,44.59033,31.56395,52.60658,1.50305.50102,3.00609-.50101,3.00609-2.50508v-8.01624s-2.00406.50102-4.50913.50102c-7.01421,0-10.0203-6.01218-10.52131-9.51928-.50101-2.00406-1.50305-3.50711-3.00609-5.01015-1.50305-.50102-2.00406-.50102-2.00406-1.00202,0-1.00203,1.50305-1.00203,2.00406-1.00203,3.00609,0,5.51116,3.50711,6.51319,5.01015,2.50508,4.00812,5.51116,5.01015,7.01421,5.01015,2.00406,0,3.5071-.50102,4.50913-1.00203.50102-3.50711,2.00406-7.01421,5.01015-9.01827-11.52335-2.50508-20.0406-9.01827-20.0406-20.0406,0-5.51117,2.50508-11.02233,6.01218-15.03045-.50101-1.00202-1.00202-3.5071-1.00202-7.01421,0-2.00406,0-5.01015,1.50305-8.01624,0,0,7.01421,0,14.02842,6.5132,2.50508-1.00203,6.01218-1.50305,9.51928-1.50305s7.01421.50101,10.0203,1.50305c6.5132-6.5132,14.02842-6.5132,14.02842-6.5132,1.00203,3.00609,1.00203,6.01218,1.00203,8.01624,0,4.00812-.50102,6.01218-1.00203,7.01421,3.50711,4.00812,6.01218,9.01827,6.01218,15.03045,0,11.02233-8.51726,17.53553-20.0406,20.0406,3.00609,2.50508,5.01015,7.01421,5.01015,11.52334v13.02639c0,1.50304,1.50305,3.00609,3.5071,2.50508,18.53755-7.51523,31.56395-25.55177,31.56395-46.5944C100,21.8169,74.44823-1.7308,44.38733,1.7763Z"/>
+</svg>
+
+  
+
+  <text-link-inner class="duration-100 text-pretty leading-normal">
+    
+
+    <span>emailable-ruby</span>
+
+    <icon class="items-center justify-center fill-current inline-block size-[0.625em] min-w-[0.625em] duration-200 ease-in-out-expo relative -top-px group-hover/text-link:translate-x-1 opacity-0 group-hover/text-link:opacity-100">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="duration-200 ease-in-out-expo">
+  <g id="a97231cd-8fe3-4b2e-bde5-daeea1e56596" data-name="Content">
+    <path d="M100,50a9.35582,9.35582,0,0,1-3.02,6.88L55.71051,94.84174a9.02788,9.02788,0,0,1-12.75266-.52866l0-.00005a9.02787,9.02787,0,0,1,.52732-12.7586L67.96,59.03H9.34167A9.28949,9.28949,0,0,1,.00147,49.835,9.01317,9.01317,0,0,1,9.03,40.97H67.96L43.48515,18.44552a9.02787,9.02787,0,0,1-.52731-12.75861l0,0A9.02788,9.02788,0,0,1,55.7105,5.15825L96.98,43.12A9.35582,9.35582,0,0,1,100,50Z"/>
+  </g>
+</svg>
+</icon>
+  </text-link-inner>
+</a>
+</code-header>
+    <code-section class="flex flex-col grow relative border-b border-slate-800 last-of-type:border-b-0">
+      <code-snippet class="flex font-code grow relative group/toolbar-parent">
+
+  <scroll-container class="relative overflow-hidden grow w-auto max-h-[26.25rem]">
+  <scroll-content class="size-full overflow-auto">
+    <pre><code class="language-bash leading-relaxed">gem install emailable
+</code></pre>
+</scroll-content>
+</scroll-container>
+  <tool-bar class="absolute top-3 right-3 z-2 rounded-lg border shadow-sm flex p-1 border-slate-800 shadow-black/60 duration-100 group-hover/toolbar-parent:opacity-100 group-hover/toolbar-parent:pointer-events-auto opacity-0 pointer-events-none bg-slate-900">
+    <button data-action="copy#copyValue" data-controller="copy" data-copy-copy-string-value="gem install emailable
+" data-tippy-content="Copy code" class="size-6 hover-bg hover-bg-slate hover-bg-scale rounded-sm flex items-center justify-center group/tool" type="button">
+  <icon class="flex items-center justify-center fill-current size-3/5 text-slate-300 dark:group-hover/tool:fill-slate-100">
+  <svg xmlns="http://www.w3.org/2000/svg" id="uuid-f7fd433c-5465-42d2-b0c7-73489f5eae7a" viewBox="0 0 100 100">
+  <path d="M84.94,6h-49.62c-5,0-9.07001,4.07007-9.07001,9.06006v11.18994h-11.19c-4.98999,0-9.06,4.07007-9.06,9.07007v49.61987c0,4.98999,4.07001,9.06006,9.06,9.06006h49.62c5,0,9.07001-4.07007,9.07001-9.06006v-11.18994h11.19c4.98999,0,9.06-4.07007,9.06-9.07007V15.06006c0-4.98999-4.07001-9.06006-9.06-9.06006ZM65.75,84.93994c0,.57007-.48999,1.06006-1.07001,1.06006H15.06c-.57001,0-1.06-.48999-1.06-1.06006v-49.61987c0-.58008.48999-1.07007,1.06-1.07007h11.19v30.42993c0,5,4.07001,9.07007,9.07001,9.07007h30.42999v11.18994ZM86,64.67993c0,.58008-.48999,1.07007-1.06,1.07007h-49.62c-.58002,0-1.07001-.48999-1.07001-1.07007V15.06006c0-.57007.48999-1.06006,1.07001-1.06006h49.62c.57001,0,1.06.48999,1.06,1.06006v49.61987Z"/>
+  <path d="M77.13,39.87c0,2.20996-1.78998,4-4,4h-9v9c0,2.20996-1.78998,4-4,4s-4-1.79004-4-4v-9h-9c-2.21002,0-4-1.79004-4-4,0-2.21008,1.78998-4,4-4h9v-9c0-2.21008,1.78998-4,4-4s4,1.78992,4,4v9h9c2.21002,0,4,1.78992,4,4Z"/>
+</svg>
+</icon>
+
+          <span
+          class="absolute inset-0 pointer-events-none"
+          data-copy-target="copiedTooltipEl"
+        ></span>
+
+</button></tool-bar></code-snippet>
+</code-section></code-editor></tab-panel>        <tab-panel aria-controls="javascript" aria-expanded="false" aria-labelledby="tab-javascript" class="data-[active=false]:hidden" data-active="false" data-tab-id="javascript" data-tabs-target="tabpanel" role="tabpanel" id="javascript">
+          <code-editor class="dark flex-col flex overflow-hidden border border-slate-500/20 rounded-lg text-sm [scrollbar-color:var(--color-slate-700)_transparent] bg-code shadow-slate-950/50 shadow-none" data-controller="">
+                <code-header class="flex justify-between items-center gap-3 bg-slate-800/50 border-b px-4 py-2 text-slate-200">
+
+    
+                <a target="_blank" class="inline-flex items-start gap-[0.625em] relative font-medium group/text-link duration-100 cursor-pointer text-white hover:opacity-75" href="https://github.com/emailable/emailable-node">
+                      <svg xmlns="http://www.w3.org/2000/svg" id="uuid-e20c97f3-6c8f-40fd-b4fd-59d924d6703e" viewBox="0 0 100 100" class="[&amp;_path]:fill-white! size-[1.25em] translate-y-px">
+  <title>GitHub Logo</title>
+  <defs>
+    <style>.uuid-bb126e07-ef2f-4f22-8483-2dde4329ee16{fill:#171515;}</style>
+  </defs>
+  <path class="uuid-bb126e07-ef2f-4f22-8483-2dde4329ee16" d="M44.38733,1.7763C21.34064,4.28138,2.80309,22.81893.29801,45.36461c-2.50508,23.5477,11.02233,44.59033,31.56395,52.60658,1.50305.50102,3.00609-.50101,3.00609-2.50508v-8.01624s-2.00406.50102-4.50913.50102c-7.01421,0-10.0203-6.01218-10.52131-9.51928-.50101-2.00406-1.50305-3.50711-3.00609-5.01015-1.50305-.50102-2.00406-.50102-2.00406-1.00202,0-1.00203,1.50305-1.00203,2.00406-1.00203,3.00609,0,5.51116,3.50711,6.51319,5.01015,2.50508,4.00812,5.51116,5.01015,7.01421,5.01015,2.00406,0,3.5071-.50102,4.50913-1.00203.50102-3.50711,2.00406-7.01421,5.01015-9.01827-11.52335-2.50508-20.0406-9.01827-20.0406-20.0406,0-5.51117,2.50508-11.02233,6.01218-15.03045-.50101-1.00202-1.00202-3.5071-1.00202-7.01421,0-2.00406,0-5.01015,1.50305-8.01624,0,0,7.01421,0,14.02842,6.5132,2.50508-1.00203,6.01218-1.50305,9.51928-1.50305s7.01421.50101,10.0203,1.50305c6.5132-6.5132,14.02842-6.5132,14.02842-6.5132,1.00203,3.00609,1.00203,6.01218,1.00203,8.01624,0,4.00812-.50102,6.01218-1.00203,7.01421,3.50711,4.00812,6.01218,9.01827,6.01218,15.03045,0,11.02233-8.51726,17.53553-20.0406,20.0406,3.00609,2.50508,5.01015,7.01421,5.01015,11.52334v13.02639c0,1.50304,1.50305,3.00609,3.5071,2.50508,18.53755-7.51523,31.56395-25.55177,31.56395-46.5944C100,21.8169,74.44823-1.7308,44.38733,1.7763Z"/>
+</svg>
+
+  
+
+  <text-link-inner class="duration-100 text-pretty leading-normal">
+    
+
+    <span>emailable-node</span>
+
+    <icon class="items-center justify-center fill-current inline-block size-[0.625em] min-w-[0.625em] duration-200 ease-in-out-expo relative -top-px group-hover/text-link:translate-x-1 opacity-0 group-hover/text-link:opacity-100">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="duration-200 ease-in-out-expo">
+  <g id="a97231cd-8fe3-4b2e-bde5-daeea1e56596" data-name="Content">
+    <path d="M100,50a9.35582,9.35582,0,0,1-3.02,6.88L55.71051,94.84174a9.02788,9.02788,0,0,1-12.75266-.52866l0-.00005a9.02787,9.02787,0,0,1,.52732-12.7586L67.96,59.03H9.34167A9.28949,9.28949,0,0,1,.00147,49.835,9.01317,9.01317,0,0,1,9.03,40.97H67.96L43.48515,18.44552a9.02787,9.02787,0,0,1-.52731-12.75861l0,0A9.02788,9.02788,0,0,1,55.7105,5.15825L96.98,43.12A9.35582,9.35582,0,0,1,100,50Z"/>
+  </g>
+</svg>
+</icon>
+  </text-link-inner>
+</a>
+</code-header>
+    <code-section class="flex flex-col grow relative border-b border-slate-800 last-of-type:border-b-0">
+      <code-snippet class="flex font-code grow relative group/toolbar-parent">
+
+  <scroll-container class="relative overflow-hidden grow w-auto max-h-[26.25rem]">
+  <scroll-content class="size-full overflow-auto">
+    <pre><code class="language-bash leading-relaxed">pnpm add emailable
+# or
+npm install emailable
+# or
+yarn add emailable
+</code></pre>
+</scroll-content>
+</scroll-container>
+  <tool-bar class="absolute top-3 right-3 z-2 rounded-lg border shadow-sm flex p-1 border-slate-800 shadow-black/60 duration-100 group-hover/toolbar-parent:opacity-100 group-hover/toolbar-parent:pointer-events-auto opacity-0 pointer-events-none bg-slate-900">
+    <button data-action="copy#copyValue" data-controller="copy" data-copy-copy-string-value="pnpm add emailable
+# or
+npm install emailable
+# or
+yarn add emailable
+" data-tippy-content="Copy code" class="size-6 hover-bg hover-bg-slate hover-bg-scale rounded-sm flex items-center justify-center group/tool" type="button">
+  <icon class="flex items-center justify-center fill-current size-3/5 text-slate-300 dark:group-hover/tool:fill-slate-100">
+  <svg xmlns="http://www.w3.org/2000/svg" id="uuid-f7fd433c-5465-42d2-b0c7-73489f5eae7a" viewBox="0 0 100 100">
+  <path d="M84.94,6h-49.62c-5,0-9.07001,4.07007-9.07001,9.06006v11.18994h-11.19c-4.98999,0-9.06,4.07007-9.06,9.07007v49.61987c0,4.98999,4.07001,9.06006,9.06,9.06006h49.62c5,0,9.07001-4.07007,9.07001-9.06006v-11.18994h11.19c4.98999,0,9.06-4.07007,9.06-9.07007V15.06006c0-4.98999-4.07001-9.06006-9.06-9.06006ZM65.75,84.93994c0,.57007-.48999,1.06006-1.07001,1.06006H15.06c-.57001,0-1.06-.48999-1.06-1.06006v-49.61987c0-.58008.48999-1.07007,1.06-1.07007h11.19v30.42993c0,5,4.07001,9.07007,9.07001,9.07007h30.42999v11.18994ZM86,64.67993c0,.58008-.48999,1.07007-1.06,1.07007h-49.62c-.58002,0-1.07001-.48999-1.07001-1.07007V15.06006c0-.57007.48999-1.06006,1.07001-1.06006h49.62c.57001,0,1.06.48999,1.06,1.06006v49.61987Z"/>
+  <path d="M77.13,39.87c0,2.20996-1.78998,4-4,4h-9v9c0,2.20996-1.78998,4-4,4s-4-1.79004-4-4v-9h-9c-2.21002,0-4-1.79004-4-4,0-2.21008,1.78998-4,4-4h9v-9c0-2.21008,1.78998-4,4-4s4,1.78992,4,4v9h9c2.21002,0,4,1.78992,4,4Z"/>
+</svg>
+</icon>
+
+          <span
+          class="absolute inset-0 pointer-events-none"
+          data-copy-target="copiedTooltipEl"
+        ></span>
+
+</button></tool-bar></code-snippet>
+</code-section></code-editor></tab-panel>        <tab-panel aria-controls="python" aria-expanded="false" aria-labelledby="tab-python" class="data-[active=false]:hidden" data-active="false" data-tab-id="python" data-tabs-target="tabpanel" role="tabpanel" id="python">
+          <code-editor class="dark flex-col flex overflow-hidden border border-slate-500/20 rounded-lg text-sm [scrollbar-color:var(--color-slate-700)_transparent] bg-code shadow-slate-950/50 shadow-none" data-controller="">
+                <code-header class="flex justify-between items-center gap-3 bg-slate-800/50 border-b px-4 py-2 text-slate-200">
+
+    
+                <a target="_blank" class="inline-flex items-start gap-[0.625em] relative font-medium group/text-link duration-100 cursor-pointer text-white hover:opacity-75" href="https://github.com/emailable/emailable-python">
+                      <svg xmlns="http://www.w3.org/2000/svg" id="uuid-e20c97f3-6c8f-40fd-b4fd-59d924d6703e" viewBox="0 0 100 100" class="[&amp;_path]:fill-white! size-[1.25em] translate-y-px">
+  <title>GitHub Logo</title>
+  <defs>
+    <style>.uuid-bb126e07-ef2f-4f22-8483-2dde4329ee16{fill:#171515;}</style>
+  </defs>
+  <path class="uuid-bb126e07-ef2f-4f22-8483-2dde4329ee16" d="M44.38733,1.7763C21.34064,4.28138,2.80309,22.81893.29801,45.36461c-2.50508,23.5477,11.02233,44.59033,31.56395,52.60658,1.50305.50102,3.00609-.50101,3.00609-2.50508v-8.01624s-2.00406.50102-4.50913.50102c-7.01421,0-10.0203-6.01218-10.52131-9.51928-.50101-2.00406-1.50305-3.50711-3.00609-5.01015-1.50305-.50102-2.00406-.50102-2.00406-1.00202,0-1.00203,1.50305-1.00203,2.00406-1.00203,3.00609,0,5.51116,3.50711,6.51319,5.01015,2.50508,4.00812,5.51116,5.01015,7.01421,5.01015,2.00406,0,3.5071-.50102,4.50913-1.00203.50102-3.50711,2.00406-7.01421,5.01015-9.01827-11.52335-2.50508-20.0406-9.01827-20.0406-20.0406,0-5.51117,2.50508-11.02233,6.01218-15.03045-.50101-1.00202-1.00202-3.5071-1.00202-7.01421,0-2.00406,0-5.01015,1.50305-8.01624,0,0,7.01421,0,14.02842,6.5132,2.50508-1.00203,6.01218-1.50305,9.51928-1.50305s7.01421.50101,10.0203,1.50305c6.5132-6.5132,14.02842-6.5132,14.02842-6.5132,1.00203,3.00609,1.00203,6.01218,1.00203,8.01624,0,4.00812-.50102,6.01218-1.00203,7.01421,3.50711,4.00812,6.01218,9.01827,6.01218,15.03045,0,11.02233-8.51726,17.53553-20.0406,20.0406,3.00609,2.50508,5.01015,7.01421,5.01015,11.52334v13.02639c0,1.50304,1.50305,3.00609,3.5071,2.50508,18.53755-7.51523,31.56395-25.55177,31.56395-46.5944C100,21.8169,74.44823-1.7308,44.38733,1.7763Z"/>
+</svg>
+
+  
+
+  <text-link-inner class="duration-100 text-pretty leading-normal">
+    
+
+    <span>emailable-python</span>
+
+    <icon class="items-center justify-center fill-current inline-block size-[0.625em] min-w-[0.625em] duration-200 ease-in-out-expo relative -top-px group-hover/text-link:translate-x-1 opacity-0 group-hover/text-link:opacity-100">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="duration-200 ease-in-out-expo">
+  <g id="a97231cd-8fe3-4b2e-bde5-daeea1e56596" data-name="Content">
+    <path d="M100,50a9.35582,9.35582,0,0,1-3.02,6.88L55.71051,94.84174a9.02788,9.02788,0,0,1-12.75266-.52866l0-.00005a9.02787,9.02787,0,0,1,.52732-12.7586L67.96,59.03H9.34167A9.28949,9.28949,0,0,1,.00147,49.835,9.01317,9.01317,0,0,1,9.03,40.97H67.96L43.48515,18.44552a9.02787,9.02787,0,0,1-.52731-12.75861l0,0A9.02788,9.02788,0,0,1,55.7105,5.15825L96.98,43.12A9.35582,9.35582,0,0,1,100,50Z"/>
+  </g>
+</svg>
+</icon>
+  </text-link-inner>
+</a>
+</code-header>
+    <code-section class="flex flex-col grow relative border-b border-slate-800 last-of-type:border-b-0">
+      <code-snippet class="flex font-code grow relative group/toolbar-parent">
+
+  <scroll-container class="relative overflow-hidden grow w-auto max-h-[26.25rem]">
+  <scroll-content class="size-full overflow-auto">
+    <pre><code class="language-bash leading-relaxed">uv add emailable
+# or
+pip install emailable
+</code></pre>
+</scroll-content>
+</scroll-container>
+  <tool-bar class="absolute top-3 right-3 z-2 rounded-lg border shadow-sm flex p-1 border-slate-800 shadow-black/60 duration-100 group-hover/toolbar-parent:opacity-100 group-hover/toolbar-parent:pointer-events-auto opacity-0 pointer-events-none bg-slate-900">
+    <button data-action="copy#copyValue" data-controller="copy" data-copy-copy-string-value="uv add emailable
+# or
+pip install emailable
+" data-tippy-content="Copy code" class="size-6 hover-bg hover-bg-slate hover-bg-scale rounded-sm flex items-center justify-center group/tool" type="button">
+  <icon class="flex items-center justify-center fill-current size-3/5 text-slate-300 dark:group-hover/tool:fill-slate-100">
+  <svg xmlns="http://www.w3.org/2000/svg" id="uuid-f7fd433c-5465-42d2-b0c7-73489f5eae7a" viewBox="0 0 100 100">
+  <path d="M84.94,6h-49.62c-5,0-9.07001,4.07007-9.07001,9.06006v11.18994h-11.19c-4.98999,0-9.06,4.07007-9.06,9.07007v49.61987c0,4.98999,4.07001,9.06006,9.06,9.06006h49.62c5,0,9.07001-4.07007,9.07001-9.06006v-11.18994h11.19c4.98999,0,9.06-4.07007,9.06-9.07007V15.06006c0-4.98999-4.07001-9.06006-9.06-9.06006ZM65.75,84.93994c0,.57007-.48999,1.06006-1.07001,1.06006H15.06c-.57001,0-1.06-.48999-1.06-1.06006v-49.61987c0-.58008.48999-1.07007,1.06-1.07007h11.19v30.42993c0,5,4.07001,9.07007,9.07001,9.07007h30.42999v11.18994ZM86,64.67993c0,.58008-.48999,1.07007-1.06,1.07007h-49.62c-.58002,0-1.07001-.48999-1.07001-1.07007V15.06006c0-.57007.48999-1.06006,1.07001-1.06006h49.62c.57001,0,1.06.48999,1.06,1.06006v49.61987Z"/>
+  <path d="M77.13,39.87c0,2.20996-1.78998,4-4,4h-9v9c0,2.20996-1.78998,4-4,4s-4-1.79004-4-4v-9h-9c-2.21002,0-4-1.79004-4-4,0-2.21008,1.78998-4,4-4h9v-9c0-2.21008,1.78998-4,4-4s4,1.78992,4,4v9h9c2.21002,0,4,1.78992,4,4Z"/>
+</svg>
+</icon>
+
+          <span
+          class="absolute inset-0 pointer-events-none"
+          data-copy-target="copiedTooltipEl"
+        ></span>
+
+</button></tool-bar></code-snippet>
+</code-section></code-editor></tab-panel>    </tab-panels>
+    </client-libraries>
+  </div>
+</header>
+
+<section id="browse-topics" class="pb-16 @2xl:pb-20">
+  <h2 class="text-2xl mb-6">Browse topics</h2>
+
+  <ul class="grid grid-cols-fit-260 gap-3">
+      <li>
+        <a class="rounded-lg block duration-100 outline-hidden [text-align:initial] data-[selected=true]:bg-primary-50 data-[selected=true]:ring-2 data-[selected=true]:ring-inset data-[selected=true]:ring-primary-500 ring-1 ring-inset ring-slate-200 dark:ring-slate-800 active:bg-primary-50 active:ring-2 active:ring-inset active:ring-primary-500 dark:active:ring-primary-500 dark:focus-visible:bg-slate-900 dark:focus-visible:ring-slate-700 dark:focus:bg-slate-900 dark:focus:ring-slate-700 dark:hover:bg-slate-900 dark:hover:ring-slate-700 focus-visible:bg-slate-50 focus-visible:ring-slate-400 focus:bg-slate-50 focus:ring-slate-400 hover:bg-slate-50 hover:ring-slate-400 p-6 h-full" href="/docs/api/authentication/" tabindex="0">
+          <icon class="flex items-center justify-center fill-current size-10 rounded-lg bg-green-500/15 text-green-500">
+  <svg xmlns="http://www.w3.org/2000/svg" id="uuid-c70807f3-6dcc-4980-af3a-6569b3ef21ea" viewBox="0 0 100 100" class="size-3/5">
+  <path d="M24.05566,96.49707h-13.65576c-3.80469,0-6.8999-3.09473-6.8999-6.89941v-11.43262c0-2.46387.9541-4.78516,2.68604-6.53809l31.61182-31.98145c-1.63574-7.82031-.12744-15.96094,4.28271-22.70801,4.9458-7.54688,12.88428-12.3877,21.78271-13.28418,8.89551-.90723,17.63477,2.24316,23.96631,8.64551s9.43457,15.24512,8.5127,24.26172c-.93652,9.02344-5.77588,17.03223-13.27783,21.98145-6.73389,4.44238-14.8208,5.91406-22.57324,4.19238l-2.14111,2.17285c-1.28857,1.30859-3.08008,2.05859-4.91602,2.05859h-3.36279v3.2998c0,3.80469-3.09521,6.90039-6.8999,6.90039h-2.85596v2.77148c0,3.80469-3.09521,6.90039-6.8999,6.90039h-2.45996v2.75977c0,3.80469-3.09521,6.89941-6.8999,6.89941ZM12.5,87.49707h9.45557v-3.95996c0-3.14258,2.55713-5.69922,5.7002-5.69922h3.65967v-3.97168c0-3.14355,2.55664-5.7002,5.69971-5.7002h4.05615v-4.5c0-3.14355,2.55713-5.7002,5.69971-5.7002h5.78418l5.32227-5.4043,2.64648.86133c5.93848,1.93457,12.34814,1.06152,17.58447-2.39355,5.24219-3.45801,8.625-9.06738,9.28125-15.3916.64697-6.32422-1.5249-12.52734-5.95947-17.01074h0c-4.40674-4.45703-10.47754-6.65332-16.65918-6.01953-6.18896.62402-11.71289,3.99805-15.16016,9.25879-3.44727,5.27441-4.3667,11.77051-2.52002,17.81836l.78418,2.56836L12.58691,77.9541c-.05518.05566-.08691.13281-.08691.21094v9.33203Z"/>
+  <circle cx="67.12315" cy="33.46329" r="6"/>
+</svg>
+</icon>
+          <h3 class="text-base mt-3 mb-1">Authentication</h3>
+          <p class="text-sm">Learn how to authenticate to the Emailable API using API keys and OAuth access tokens.</p>
+</a>      </li>
+      <li>
+        <a class="rounded-lg block duration-100 outline-hidden [text-align:initial] data-[selected=true]:bg-primary-50 data-[selected=true]:ring-2 data-[selected=true]:ring-inset data-[selected=true]:ring-primary-500 ring-1 ring-inset ring-slate-200 dark:ring-slate-800 active:bg-primary-50 active:ring-2 active:ring-inset active:ring-primary-500 dark:active:ring-primary-500 dark:focus-visible:bg-slate-900 dark:focus-visible:ring-slate-700 dark:focus:bg-slate-900 dark:focus:ring-slate-700 dark:hover:bg-slate-900 dark:hover:ring-slate-700 focus-visible:bg-slate-50 focus-visible:ring-slate-400 focus:bg-slate-50 focus:ring-slate-400 hover:bg-slate-50 hover:ring-slate-400 p-6 h-full" href="/docs/api/emails/" tabindex="0">
+          <icon class="flex items-center justify-center fill-current size-10 rounded-lg bg-primary-500/15 text-primary-500">
+  <svg xmlns="http://www.w3.org/2000/svg" id="uuid-450f8e20-2b11-4c15-bb16-8e4bb9f1275c" viewBox="0 0 100 100" class="size-3/5">
+  <path d="M84.54545,14.83275H15.45455c-7.15093,0-12.95455,5.8209-12.95455,12.95455v44.4254c0,7.13364,5.80361,12.95455,12.95455,12.95455h69.09091c7.15093,0,12.95455-5.8209,12.95455-12.95455V27.7873c0-7.13364-5.80361-12.95455-12.95455-12.95455ZM88.86364,72.2127c0,2.38364-1.93454,4.31818-4.31818,4.31818H15.45455c-2.38364,0-4.31818-1.93454-4.31818-4.31818v-29.91638l33.47455,15.94269c1.70998.81187,3.54089,1.2264,5.38908,1.2264s3.6791-.41453,5.38908-1.2264l33.47455-15.94269v29.91638ZM88.86364,32.72727l-37.18823,17.70455c-1.0709.51816-2.27991.51816-3.35081,0L11.13636,32.72727v-4.93997c0-2.38364,1.93454-4.31818,4.31818-4.31818h69.09091c2.38364,0,4.31818,1.93454,4.31818,4.31818v4.93997Z"/>
+</svg>
+</icon>
+          <h3 class="text-base mt-3 mb-1">Emails</h3>
+          <p class="text-sm">Documentation for verifying single email addresses and batches of emails using the Emailable API, including request parameters and response fields.</p>
+</a>      </li>
+      <li>
+        <a class="rounded-lg block duration-100 outline-hidden [text-align:initial] data-[selected=true]:bg-primary-50 data-[selected=true]:ring-2 data-[selected=true]:ring-inset data-[selected=true]:ring-primary-500 ring-1 ring-inset ring-slate-200 dark:ring-slate-800 active:bg-primary-50 active:ring-2 active:ring-inset active:ring-primary-500 dark:active:ring-primary-500 dark:focus-visible:bg-slate-900 dark:focus-visible:ring-slate-700 dark:focus:bg-slate-900 dark:focus:ring-slate-700 dark:hover:bg-slate-900 dark:hover:ring-slate-700 focus-visible:bg-slate-50 focus-visible:ring-slate-400 focus:bg-slate-50 focus:ring-slate-400 hover:bg-slate-50 hover:ring-slate-400 p-6 h-full" href="/docs/api/account/" tabindex="0">
+          <icon class="flex items-center justify-center fill-current size-10 rounded-lg bg-blue-500/15 text-blue-500">
+  <svg xmlns="http://www.w3.org/2000/svg" id="uuid-1f901ef0-1f4f-413a-b13b-92ab1492552b" viewBox="0 0 100 100" class="size-3/5">
+  <path d="M49.99365,11c2.54846,0,5.01288.70764,7.12695,2.04651l.03705.02344.03729.02319c.51349.31824,1.0036.67651,1.45685,1.06494l.02008.01721.02014.01709c3.02051,2.55823,4.75281,6.29285,4.75281,10.24609,0,2.13831-.48511,4.17676-1.44183,6.05847l-.01373.02698-.01349.02698c-.27124.54248-.57574,1.05066-.90503,1.51038l-.03009.04199-.02966.04236c-2.50885,3.58875-6.6275,5.7312-11.01733,5.7312-7.41003,0-13.43848-6.02844-13.43848-13.43835s6.02844-13.43848,13.43848-13.43848M49.99365,2c-12.39038,0-22.43848,10.04797-22.43848,22.43848,0,12.40308,10.0481,22.43835,22.43848,22.43835,7.61597,0,14.34875-3.78882,18.39355-9.57446.61438-.85767,1.16479-1.7793,1.63837-2.72644,1.54883-3.04626,2.41925-6.4895,2.41925-10.13745,0-6.86096-3.08478-13.00488-7.93604-17.11377-.8064-.69116-1.664-1.31836-2.57281-1.88159-3.45593-2.18872-7.55194-3.44312-11.94232-3.44312h0Z"/>
+  <path d="M50.00647,62.72876c9.68378,0,18.92688,1.6593,25.35931,4.55261,5.53778,2.49084,6.703,4.79736,6.703,5.14819v10.36511c-10.26013,4.11121-20.97064,6.19714-31.88422,6.20532-12.21649-.17627-21.80939-1.9812-32.25336-6.14624v-10.33142c.26379-.66565,2.40582-3.30261,9.17926-5.8689,6.58313-2.49414,14.92841-3.92468,22.896-3.92468M50.00647,53.72876c-19.73328,0-41.07526,7.7699-41.07526,18.70081v13.83276c0,1.5105.87036,2.88,2.23999,3.52002,12.58734,5.48975,24.02832,8.00928,38.95038,8.21765,11.53284,0,24.76807-2.09924,38.68164-8.28162,1.38239-.61438,2.26556-2.02246,2.26556-3.54553v-13.74329c0-10.68201-18.34235-18.70081-41.06232-18.70081h0Z"/>
+</svg>
+</icon>
+          <h3 class="text-base mt-3 mb-1">Account</h3>
+          <p class="text-sm">Learn how to use the Emailable API to retrieve account information such as the owner&#39;s email address and remaining credits.</p>
+</a>      </li>
+      <li>
+        <a class="rounded-lg block duration-100 outline-hidden [text-align:initial] data-[selected=true]:bg-primary-50 data-[selected=true]:ring-2 data-[selected=true]:ring-inset data-[selected=true]:ring-primary-500 ring-1 ring-inset ring-slate-200 dark:ring-slate-800 active:bg-primary-50 active:ring-2 active:ring-inset active:ring-primary-500 dark:active:ring-primary-500 dark:focus-visible:bg-slate-900 dark:focus-visible:ring-slate-700 dark:focus:bg-slate-900 dark:focus:ring-slate-700 dark:hover:bg-slate-900 dark:hover:ring-slate-700 focus-visible:bg-slate-50 focus-visible:ring-slate-400 focus:bg-slate-50 focus:ring-slate-400 hover:bg-slate-50 hover:ring-slate-400 p-6 h-full" href="/docs/api/widget/" tabindex="0">
+          <icon class="flex items-center justify-center fill-current size-10 rounded-lg bg-yellow-400/15 text-yellow-400">
+  <svg xmlns="http://www.w3.org/2000/svg" id="uuid-46d91ac5-4a54-4797-988b-294c47d8d5f8" viewBox="0 0 100 100" class="size-3/5">
+  <path d="M11.3,95c-3.46992-.00879-6.29121-2.83008-6.3-6.2877V11.3c.00879-3.46992,2.83008-6.29121,6.2877-6.3h61.2123c3.46992.00879,6.29121,2.83008,6.3,6.2877v11.56377c0,2.48555-2.01445,4.5-4.5,4.5s-4.5-2.01445-4.5-4.5v-8.85146H14v72h55.8v-19.94854c0-2.48555,2.01445-4.5,4.5-4.5s4.5,2.01445,4.5,4.5v22.64854c-.00879,3.46992-2.83008,6.29121-6.2877,6.3H11.3Z"/>
+  <path d="M46.68828,76.14131c-1.5293,0-3.05771-.58184-4.22227-1.74375l-19.82109-19.82197c-1.75781-1.75693-1.75781-4.60635,0-6.36328,1.75605-1.75781,4.60723-1.75781,6.36328,0l17.68096,17.68008,40.6292-40.6292c1.75605-1.75781,4.60723-1.75781,6.36328,0,1.75781,1.75693,1.75781,4.60635,0,6.36328l-42.76758,42.76846c-1.16543,1.16455-2.69561,1.74639-4.22578,1.74639Z"/>
+</svg>
+</icon>
+          <h3 class="text-base mt-3 mb-1">Widget</h3>
+          <p class="text-sm">Learn how to install and configure the Emailable widget to verify email addresses on your website with a simple embed code.</p>
+</a>      </li>
+      <li>
+        <a class="rounded-lg block duration-100 outline-hidden [text-align:initial] data-[selected=true]:bg-primary-50 data-[selected=true]:ring-2 data-[selected=true]:ring-inset data-[selected=true]:ring-primary-500 ring-1 ring-inset ring-slate-200 dark:ring-slate-800 active:bg-primary-50 active:ring-2 active:ring-inset active:ring-primary-500 dark:active:ring-primary-500 dark:focus-visible:bg-slate-900 dark:focus-visible:ring-slate-700 dark:focus:bg-slate-900 dark:focus:ring-slate-700 dark:hover:bg-slate-900 dark:hover:ring-slate-700 focus-visible:bg-slate-50 focus-visible:ring-slate-400 focus:bg-slate-50 focus:ring-slate-400 hover:bg-slate-50 hover:ring-slate-400 p-6 h-full" href="/docs/api/oauth/" tabindex="0">
+          <icon class="flex items-center justify-center fill-current size-10 rounded-lg bg-fuchsia-400/15 text-fuchsia-400">
+  <svg xmlns="http://www.w3.org/2000/svg" id="uuid-66017fd0-876a-457d-85ac-8c345fcbc8dd" viewBox="0 0 100 100" class="size-3/5">
+  <path d="M76.43408,97c-6.31396,0-11.8584-4.00977-13.79785-9.97754l-3.8335-11.68164h-17.70215l-3.53271,11.47949c-1.98535,6.10938-7.56104,10.16797-13.89648,10.16797-1.52344,0-3.03564-.24023-4.49365-.71289-7.52783-2.25879-11.84375-10.40527-9.52637-18.12988L30.16748,13.15625c1.93018-5.99023,7.61035-10.15625,13.8208-10.15625h10.89893c6.23584,0,11.91504,4.11523,13.81104,10.00879l21.54346,64.86328c2.49805,7.68848-1.64941,15.93164-9.23682,18.40137-1.48486.48242-3.02197.72656-4.5708.72656ZM34.4541,66.34082h30.86719l5.87061,17.8877c.73438,2.26074,2.83936,3.77148,5.24219,3.77148.60254,0,1.2041-.0957,1.78711-.28516,2.86914-.93457,4.42676-4.08984,3.47021-7.03418L60.14404,15.80469c-.71533-2.22168-2.92041-3.80469-5.25684-3.80469h-10.89893c-2.31348,0-4.52002,1.63672-5.24658,3.8916l-20.48926,64.90137c-.87256,2.91113.7373,6.03027,3.60742,6.89258.6543.21094,1.23193.30273,1.81152.30273,2.4248,0,4.56104-1.56055,5.31641-3.88281l5.46631-17.76465Z"/>
+</svg>
+</icon>
+          <h3 class="text-base mt-3 mb-1">OAuth</h3>
+          <p class="text-sm">Learn how to use Emailable&#39;s OAuth 2 authorization code and device authorization grant flows to authenticate users and make API requests on their behalf.</p>
+</a>      </li>
+      <li>
+        <a class="rounded-lg block duration-100 outline-hidden [text-align:initial] data-[selected=true]:bg-primary-50 data-[selected=true]:ring-2 data-[selected=true]:ring-inset data-[selected=true]:ring-primary-500 ring-1 ring-inset ring-slate-200 dark:ring-slate-800 active:bg-primary-50 active:ring-2 active:ring-inset active:ring-primary-500 dark:active:ring-primary-500 dark:focus-visible:bg-slate-900 dark:focus-visible:ring-slate-700 dark:focus:bg-slate-900 dark:focus:ring-slate-700 dark:hover:bg-slate-900 dark:hover:ring-slate-700 focus-visible:bg-slate-50 focus-visible:ring-slate-400 focus:bg-slate-50 focus:ring-slate-400 hover:bg-slate-50 hover:ring-slate-400 p-6 h-full" href="/docs/api/rate-limits/" tabindex="0">
+          <icon class="flex items-center justify-center fill-current size-10 rounded-lg bg-red-500/15 text-red-500">
+  <svg xmlns="http://www.w3.org/2000/svg" id="uuid-ab0340e4-1156-466c-bc70-5ee61e34c10c" viewBox="0 0 100 100" class="size-3/5">
+  <path d="M50,54.32239c1.65417,0,3,1.34583,3,3s-1.34583,3-3,3-3-1.34583-3-3,1.34583-3,3-3M50,45.32239c-6.62744,0-12,5.37256-12,12s5.37256,12,12,12,12-5.37268,12-12-5.37256-12-12-12h0Z"/>
+  <path d="M82.17383,93.33691c-1.15137,0-2.30273-.43945-3.18164-1.31836-1.75781-1.75684-1.75781-4.60645,0-6.36328,15.98535-15.98633,15.98535-41.99805,0-57.9834-15.98633-15.98633-41.99805-15.98633-57.98438,0-15.98535,15.98535-15.98535,41.99707,0,57.9834,1.75781,1.75684,1.75781,4.60645,0,6.36328-1.75586,1.75781-4.60742,1.75781-6.36328,0-19.49463-19.49512-19.49463-51.21582,0-70.70996C34.13867,1.8125,65.86133,1.8125,85.35547,21.30859c19.49512,19.49414,19.49512,51.21484,0,70.70996-.87793.87891-2.03027,1.31836-3.18164,1.31836Z"/>
+  <path d="M55.83594,55.98633c-1.15137,0-2.30371-.43945-3.18164-1.31836-1.75781-1.75684-1.75781-4.60645,0-6.36328l16.08398-16.08398c1.75586-1.75781,4.60742-1.75781,6.36328,0,1.75781,1.75684,1.75781,4.60645,0,6.36328l-16.08398,16.08398c-.87793.87891-2.03027,1.31836-3.18164,1.31836Z"/>
+  <path d="M50,35.82227c-2.48535,0-4.5-2.01465-4.5-4.5v-5c0-2.48535,2.01465-4.5,4.5-4.5s4.5,2.01465,4.5,4.5v5c0,2.48535-2.01465,4.5-4.5,4.5Z"/>
+  <path d="M31.61523,43.4375c-1.15137,0-2.30371-.43945-3.18164-1.31836l-3.53516-3.53516c-1.75781-1.75684-1.75781-4.60645,0-6.36328,1.75586-1.75781,4.60742-1.75781,6.36328,0l3.53516,3.53516c1.75781,1.75684,1.75781,4.60645,0,6.36328-.87793.87891-2.03027,1.31836-3.18164,1.31836Z"/>
+  <path d="M24,61.82227h-5c-2.48535,0-4.5-2.01465-4.5-4.5s2.01465-4.5,4.5-4.5h5c2.48535,0,4.5,2.01465,4.5,4.5s-2.01465,4.5-4.5,4.5Z"/>
+  <path d="M81,61.82227h-5c-2.48535,0-4.5-2.01465-4.5-4.5s2.01465-4.5,4.5-4.5h5c2.48535,0,4.5,2.01465,4.5,4.5s-2.01465,4.5-4.5,4.5Z"/>
+  <path d="M71.91992,83.74219c-1.15137,0-2.30371-.43945-3.18164-1.31836l-3.53516-3.53516c-1.75781-1.75684-1.75781-4.60645,0-6.36328,1.75586-1.75781,4.60742-1.75781,6.36328,0l3.53516,3.53516c1.75781,1.75684,1.75781,4.60645,0,6.36328-.87793.87891-2.03027,1.31836-3.18164,1.31836Z"/>
+  <path d="M28.08008,83.74219c-1.15137,0-2.30371-.43945-3.18164-1.31836-1.75781-1.75684-1.75781-4.60645,0-6.36328l3.53516-3.53516c1.75586-1.75781,4.60742-1.75781,6.36328,0,1.75781,1.75684,1.75781,4.60645,0,6.36328l-3.53516,3.53516c-.87793.87891-2.03027,1.31836-3.18164,1.31836Z"/>
+</svg>
+</icon>
+          <h3 class="text-base mt-3 mb-1">Rate Limits</h3>
+          <p class="text-sm">An overview of the rate limits applied to each Emailable API endpoint for standard and enterprise accounts.</p>
+</a>      </li>
+      <li>
+        <a class="rounded-lg block duration-100 outline-hidden [text-align:initial] data-[selected=true]:bg-primary-50 data-[selected=true]:ring-2 data-[selected=true]:ring-inset data-[selected=true]:ring-primary-500 ring-1 ring-inset ring-slate-200 dark:ring-slate-800 active:bg-primary-50 active:ring-2 active:ring-inset active:ring-primary-500 dark:active:ring-primary-500 dark:focus-visible:bg-slate-900 dark:focus-visible:ring-slate-700 dark:focus:bg-slate-900 dark:focus:ring-slate-700 dark:hover:bg-slate-900 dark:hover:ring-slate-700 focus-visible:bg-slate-50 focus-visible:ring-slate-400 focus:bg-slate-50 focus:ring-slate-400 hover:bg-slate-50 hover:ring-slate-400 p-6 h-full" href="/docs/api/status-codes/" tabindex="0">
+          <icon class="flex items-center justify-center fill-current size-10 rounded-lg bg-orange-400/15 text-orange-400">
+  <svg xmlns="http://www.w3.org/2000/svg" id="uuid-b97a7fed-34ab-4cf9-9e19-17b91f50c3ef" viewBox="0 0 100 100" class="size-3/5">
+  <path d="M85.05566,93.93848H14.94434c-5.24219,0-9.93555-2.70996-12.55664-7.24902-2.62109-4.54004-2.62207-9.96094-.00098-14.50098L37.44238,11.4707c2.62109-4.54004,7.31543-7.25,12.55762-7.25s9.93652,2.70996,12.55762,7.25l35.05566,60.71777c2.62109,4.54004,2.62012,9.96094-.00098,14.50098-2.62109,4.53906-7.31445,7.24902-12.55664,7.24902ZM50,13.2207c-.95508,0-3.33008.26758-4.7627,2.75L10.18164,76.68848c-1.43359,2.48242-.47754,4.67383,0,5.5.47754.82715,1.89648,2.75,4.7627,2.75h70.11133c2.86621,0,4.28516-1.92285,4.7627-2.75.47754-.82617,1.43359-3.01758,0-5.5L54.7627,15.9707c-1.43262-2.48242-3.80762-2.75-4.7627-2.75Z"/>
+  <path d="M50,59.5c-2.48535,0-4.5-2.01465-4.5-4.5v-26c0-2.48535,2.01465-4.5,4.5-4.5s4.5,2.01465,4.5,4.5v26c0,2.48535-2.01465,4.5-4.5,4.5Z"/>
+  <circle cx="50" cy="71.733" r="6"/>
+</svg>
+</icon>
+          <h3 class="text-base mt-3 mb-1">Status Codes</h3>
+          <p class="text-sm">A reference of all HTTP status codes returned by the Emailable API and what they mean.</p>
+</a>      </li>
+  </ul>
+</section>
+
+    </content-main>
+  </main-inner>
+
+  <footer class="border-t @container/footer">
+  <div class="mx-auto max-w-8xl">
+    <div
+      class="@2xl/footer:divide-x @2xl/footer:flex @max-2xl/footer:divide-y max-w-8xl mx-auto"
+    >
+
+      <div class="@2xl/footer:flex-1 px-content-x py-content-x-lg w-full @3xl/main:px-content-x-lg @6xl/main:px-15">
+        <media-object class="block @container">
+  <media-object-inner class="flex flex-col items-start @sm:flex-row gap-x-4 gap-y-3">
+    <img class="size-10 min-w-10" src="/images/icons/page--color.svg" width="100" height="100">
+    <media-object-text class="block">
+        <h4 class="text-lg">
+          General help &amp; guides
+        </h4>
+
+      <p class="text-pretty mt-[0.5em] text-sm">
+        Browse our help docs for step-by-step guides and everything you need to get started.
+      </p>
+
+        <a class="inline-flex items-start gap-[0.625em] relative text-primary-500 font-medium group/text-link duration-100 cursor-pointer hover:text-primary-700 dark:hover:text-primary-300 text-sm mt-[0.75em]" href="/docs/">
+  
+
+  
+
+  <text-link-inner class="duration-100 text-pretty leading-normal group-hover/text-link:text-primary-700 dark:group-hover/text-link:text-primary-300">
+    
+
+    <span>View our help docs</span>
+
+    <icon class="items-center justify-center fill-current inline-block size-[0.625em] min-w-[0.625em] duration-200 ease-in-out-expo relative -top-px ml-[0.25em] group-hover/text-link:translate-x-1">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="duration-200 ease-in-out-expo group-hover/text-link:fill-primary-700 dark:group-hover/text-link:fill-primary-300">
+  <g id="a97231cd-8fe3-4b2e-bde5-daeea1e56596" data-name="Content">
+    <path d="M100,50a9.35582,9.35582,0,0,1-3.02,6.88L55.71051,94.84174a9.02788,9.02788,0,0,1-12.75266-.52866l0-.00005a9.02787,9.02787,0,0,1,.52732-12.7586L67.96,59.03H9.34167A9.28949,9.28949,0,0,1,.00147,49.835,9.01317,9.01317,0,0,1,9.03,40.97H67.96L43.48515,18.44552a9.02787,9.02787,0,0,1-.52731-12.75861l0,0A9.02788,9.02788,0,0,1,55.7105,5.15825L96.98,43.12A9.35582,9.35582,0,0,1,100,50Z"/>
+  </g>
+</svg>
+</icon>
+  </text-link-inner>
+</a>
+    </media-object-text>
+  </media-object-inner>
+</media-object>
+      </div>
+
+      <div class="@2xl/footer:flex-1 px-content-x py-content-x-lg w-full @3xl/main:px-content-x-lg @6xl/main:px-15">
+        <media-object class="block @container">
+  <media-object-inner class="flex flex-col items-start @sm:flex-row gap-x-4 gap-y-3">
+    <img class="size-10 min-w-10" src="/images/icons/speech-bubbles--color.svg" width="100" height="100">
+    <media-object-text class="block">
+        <h4 class="text-lg">
+          Need further help?
+        </h4>
+
+      <p class="text-pretty mt-[0.5em] text-sm">
+        Get in touch with our support team for assistance. Our support team is available 24/7.
+      </p>
+
+        <a class="inline-flex items-start gap-[0.625em] relative text-primary-500 font-medium group/text-link duration-100 cursor-pointer hover:text-primary-700 dark:hover:text-primary-300 text-sm mt-[0.75em]" href="mailto:support@emailable.com">
+  
+
+  
+
+  <text-link-inner class="duration-100 text-pretty leading-normal group-hover/text-link:text-primary-700 dark:group-hover/text-link:text-primary-300">
+    
+
+    <span>Contact our support team</span>
+
+    <icon class="items-center justify-center fill-current inline-block size-[0.625em] min-w-[0.625em] duration-200 ease-in-out-expo relative -top-px ml-[0.25em] group-hover/text-link:translate-x-1">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="duration-200 ease-in-out-expo group-hover/text-link:fill-primary-700 dark:group-hover/text-link:fill-primary-300">
+  <g id="a97231cd-8fe3-4b2e-bde5-daeea1e56596" data-name="Content">
+    <path d="M100,50a9.35582,9.35582,0,0,1-3.02,6.88L55.71051,94.84174a9.02788,9.02788,0,0,1-12.75266-.52866l0-.00005a9.02787,9.02787,0,0,1,.52732-12.7586L67.96,59.03H9.34167A9.28949,9.28949,0,0,1,.00147,49.835,9.01317,9.01317,0,0,1,9.03,40.97H67.96L43.48515,18.44552a9.02787,9.02787,0,0,1-.52731-12.75861l0,0A9.02788,9.02788,0,0,1,55.7105,5.15825L96.98,43.12A9.35582,9.35582,0,0,1,100,50Z"/>
+  </g>
+</svg>
+</icon>
+  </text-link-inner>
+</a>
+    </media-object-text>
+  </media-object-inner>
+</media-object>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</main>
+
+    </page-main>
+
+    <dialog data-controller="modal" data-modal-closed-class="not-open:animate-scale-fade-out" data-modal-target="modal" data-search-target="modal" class="[transition:display_0.3s_allow-discrete,overlay_0.3s_allow-discrete,opacity_0.3s] backdrop:[transition:display_0.3s_allow-discrete,overlay_0.3s_allow-discrete,opacity_0.3s] backdrop:bg-slate-950/35 bg-white center-absolute dark:backdrop:bg-black/25 dark:bg-slate-900 dark:inset-ring-1 dark:inset-ring-slate-800 dark:text-slate-100 dark:shadow-black/50 ease-in-out-expo fixed group max-h-[calc(100dvh-2.5rem)] not-open:backdrop:opacity-0 not-open:backdrop:pointer-events-none not-open:opacity-0 not-open:pointer-events-none p-6 rounded-xl shadow-slate-950/25 shadow-xl sm:p-10 w-[calc(100vw-2.5rem)] xs:p-8 z-100 open:animate-scale-fade-in search-modal p-0! max-w-2xl top-10! translate-y-0! overflow-hidden" closedby="any">
+        <button data-action="modal#close" tabindex="0" class="group/kbd outline-none absolute right-3 top-3 z-1">
+    <kbd class="bg-slate-50 block dark:bg-slate-900 dark:inset-ring-slate-800 dark:text-slate-300 duration-100 font-sans inset-ring-1 inset-ring-slate-200 leading-none! min-w-[1.75em] no-hover:hidden p-[0.5em] pb-[0.4375em] rounded-[0.3125em] text-center text-slate-600 dark:group-active/kbd:bg-slate-800 dark:group-active/kbd:inset-ring-slate-600 dark:group-hover/kbd:inset-ring-slate-700 group-active/kbd:bg-slate-100 group-active/kbd:inset-ring-slate-400 group-focus-visible/kbd:focus-ring group-hover/kbd:cursor-pointer group-hover/kbd:inset-ring-slate-300 text-sm">Esc</kbd>
+</button>
+
+  
+
+  <pagefind-config
+    instance="docs"
+    bundle-path="/pagefind/docs/"
+    base-url="/"
+  ></pagefind-config>
+
+  <search-root class="relative flex flex-col" data-search-target="root">
+    <input
+      aria-label="Search"
+      autocomplete="off"
+      data-action="
+        input->search#query
+        focus->search#loadBundle
+        keydown.down->search#focusResults:prevent
+      "
+      data-search-target="input"
+      id="search-input"
+      placeholder="Search"
+      type="text"
+      class="
+        appearance-none
+        bg-transparent
+        border-0
+        dark:placeholder:text-slate-400
+        dark:text-slate-100
+        min-h-[3.25em]
+        no-hover:pr-[1em]
+        outline-0!
+        outline-hidden
+        pb-[0.375em]
+        pl-[3.5em]
+        placeholder:text-slate-500
+        pr-[4em]
+        pt-[0.5em]
+        ring-0
+        w-full
+      "
+    >
+    <search-drawer class="
+      border-t grow overflow-y-auto max-h-[calc(100dvh-8.25rem)] px-5
+    ">
+      <section>
+        <h5
+          class="font-normal mb-2 mt-5 text-slate-500 text-xs"
+          data-search-target="resultsHeading"
+          hidden
+        >
+          Results
+        </h5>
+
+        <p
+          class="text-sm text-slate-800 dark:text-white font-medium mb-5"
+          data-search-target="noResults"
+          hidden
+        >
+          No results for&nbsp;"<span class="font-bold" data-search-target="searchTerm"></span>"
+        </p>
+
+        <pagefind-results
+          class="
+            [&_mark]:bg-cyan-500/25 dark:[&_mark]:text-white has-[li]:mb-5
+          "
+          data-search-target="results"
+          instance="docs"
+        >
+          <script type="text/pagefind-template" data-template="placeholder">
+              <li class="flex gap-3 hover-bg hover-bg-slate items-center px-3 py-2 relative rounded-md focus-visible:focus-ring list-none">
+    <skeleton class="before:absolute before:duration-100 before:inset-0 before:opacity-0 before:pointer-events-none before:rounded-sm before:z-1 data-[loading=true]:*:invisible data-[loading=true]:before:animate-pulse data-[loading=true]:before:opacity-100 overflow-hidden relative before:bg-slate-500/20 rounded-md max-xs:hidden block size-6 min-w-6" data-loading="true"></skeleton>
+    <div class="min-w-0">
+      <skeleton class="before:absolute before:duration-100 before:inset-0 before:opacity-0 before:pointer-events-none before:rounded-sm before:z-1 data-[loading=true]:*:invisible data-[loading=true]:before:animate-pulse data-[loading=true]:before:opacity-100 overflow-hidden relative before:bg-slate-500/20 block h-5 w-60" data-loading="true"></skeleton>
+      <skeleton class="before:absolute before:duration-100 before:inset-0 before:opacity-0 before:pointer-events-none before:rounded-sm before:z-1 data-[loading=true]:*:invisible data-[loading=true]:before:animate-pulse data-[loading=true]:before:opacity-100 overflow-hidden relative before:bg-slate-500/20 block h-4 w-40 mt-1.25" data-loading="true"></skeleton>
+    </div>
+</li>
+          </script>
+        </pagefind-results>
+      </section>
+
+      <section
+        aria-label="Recently viewed"
+        class="my-5 hidden:mt-0"
+        data-article-history-target="recentArticles"
+        data-article-history-template-id="search-entry"
+        data-search-target="recentArticles"
+        hidden
+      >
+        <h3 class="text-slate-500 font-normal text-xs">
+          Recently viewed
+        </h3>
+        <ul class="mt-3 flex flex-col"></ul>
+      </section>
+    </search-drawer>
+  </search-root>
+
+  <icon class="flex items-center justify-center fill-current text-slate-500 size-4.5 absolute left-5 top-4.25 z-1">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <g id="e8025462-6f80-4399-ab4f-ef3bd1200f94" data-name="Content">
+    <path d="M98.12579,88.99061,78.8614,69.72241A43.73436,43.73436,0,0,0,46.55616.0804C45.60739.016,44.6587,0,43.726,0a43.71156,43.71156,0,0,0-3.66637,87.26962c1.206.09657,2.44425.14478,3.65027.14478a43.52508,43.52508,0,0,0,26.018-8.55649L88.99224,98.1261a6.45913,6.45913,0,0,0,9.13355-9.13549ZM43.7099,75.06224A31.355,31.355,0,1,1,75.06662,43.69918,31.35345,31.35345,0,0,1,43.7099,75.06224Z"/>
+  </g>
+</svg>
+</icon>
+
+      <template
+        data-article-history-target="recentArticleTemplate"
+        data-subcategory="api-docs"
+        data-id="search-entry"
+      >
+          <li class="list-none">
+    <a href="#" class="flex gap-3 hover-bg hover-bg-slate items-center px-3 py-2 relative rounded-md focus-visible:focus-ring list-none">
+      <div class="max-xs:hidden flex items-center justify-center size-6 min-w-6">
+        <icon class="flex items-center justify-center fill-current search-result-image-fallback text-slate-400 size-4 min-w-4">
+  <svg xmlns="http://www.w3.org/2000/svg" id="uuid-ee9862b7-ab20-4151-a89c-c6c9cbc92a75" viewBox="0 0 100 100">
+  <defs>
+    <style>.uuid-a5ed603a-5d8e-40df-84ad-3c43f3af7fc4{fill-rule:evenodd;}</style>
+  </defs>
+  <path d="M24.28572,61.25c0-2.6628,2.15863-4.82143,4.82143-4.82143h12.85714c2.6628,0,4.82143,2.15863,4.82143,4.82143s-2.15863,4.82143-4.82143,4.82143h-12.85714c-2.6628,0-4.82143-2.15863-4.82143-4.82143ZM29.10714,30.71428c-2.6628,0-4.82143,2.15863-4.82143,4.82143s2.15863,4.82143,4.82143,4.82143h38.57143c2.6628,0,4.82143-2.15863,4.82143-4.82143s-2.15863-4.82143-4.82143-4.82143H29.10714Z"/>
+  <path class="uuid-a5ed603a-5d8e-40df-84ad-3c43f3af7fc4" d="M5,78.92857V21.07143c0-8.876,7.19542-16.07143,16.07143-16.07143h57.85714c8.876,0,16.07143,7.19542,16.07143,16.07143v42.89143c-.00073,3.40965-1.35579,6.67938-3.76715,9.09l-18.18,18.18c-2.41062,2.41135-5.68035,3.76642-9.09,3.76715H21.07143c-8.876,0-16.07143-7.19543-16.07143-16.07143h0ZM14.64286,78.92857V21.07143c0-3.5504,2.87817-6.42857,6.42857-6.42857h57.85714c3.5504,0,6.42857,2.87817,6.42857,6.42857v32.14285h-20.89286c-6.2132,0-11.25,5.0368-11.25,11.25v20.89286H21.07143c-3.5504,0-6.42857-2.87817-6.42857-6.42857ZM62.85714,85.35714h1.10571c.85083-.00018,1.66689-.3377,2.26928-.93857l18.18643-18.18643c.60087-.60239.93839-1.41845.93857-2.26928v-1.10571h-20.89286c-.8876,0-1.60714.71954-1.60714,1.60714v20.89286Z"/>
+</svg>
+</icon>
+        <div class="search-result-image hidden size-full"></div>
+      </div>
+
+      <div class="min-w-0">
+        <h5 class="min-w-0 font-semibold text-sm truncate article-title">
+          
+        </h5>
+        <p class="min-w-0 truncate text-xs mt-0.5 article-subtitle min-h-4.5">
+          
+        </p>
+      </div>
+</a>  </li>
+
+      </template>
+      <template
+        data-article-history-target="recentArticleTemplate"
+        data-subcategory="help-docs"
+        data-id="search-entry"
+      >
+          <li class="list-none">
+    <a href="#" class="flex gap-3 hover-bg hover-bg-slate items-center px-3 py-2 relative rounded-md focus-visible:focus-ring list-none">
+      <div class="max-xs:hidden flex items-center justify-center size-6 min-w-6">
+        <icon class="flex items-center justify-center fill-current search-result-image-fallback text-slate-400 size-4 min-w-4">
+  <svg xmlns="http://www.w3.org/2000/svg" id="uuid-ee9862b7-ab20-4151-a89c-c6c9cbc92a75" viewBox="0 0 100 100">
+  <defs>
+    <style>.uuid-a5ed603a-5d8e-40df-84ad-3c43f3af7fc4{fill-rule:evenodd;}</style>
+  </defs>
+  <path d="M24.28572,61.25c0-2.6628,2.15863-4.82143,4.82143-4.82143h12.85714c2.6628,0,4.82143,2.15863,4.82143,4.82143s-2.15863,4.82143-4.82143,4.82143h-12.85714c-2.6628,0-4.82143-2.15863-4.82143-4.82143ZM29.10714,30.71428c-2.6628,0-4.82143,2.15863-4.82143,4.82143s2.15863,4.82143,4.82143,4.82143h38.57143c2.6628,0,4.82143-2.15863,4.82143-4.82143s-2.15863-4.82143-4.82143-4.82143H29.10714Z"/>
+  <path class="uuid-a5ed603a-5d8e-40df-84ad-3c43f3af7fc4" d="M5,78.92857V21.07143c0-8.876,7.19542-16.07143,16.07143-16.07143h57.85714c8.876,0,16.07143,7.19542,16.07143,16.07143v42.89143c-.00073,3.40965-1.35579,6.67938-3.76715,9.09l-18.18,18.18c-2.41062,2.41135-5.68035,3.76642-9.09,3.76715H21.07143c-8.876,0-16.07143-7.19543-16.07143-16.07143h0ZM14.64286,78.92857V21.07143c0-3.5504,2.87817-6.42857,6.42857-6.42857h57.85714c3.5504,0,6.42857,2.87817,6.42857,6.42857v32.14285h-20.89286c-6.2132,0-11.25,5.0368-11.25,11.25v20.89286H21.07143c-3.5504,0-6.42857-2.87817-6.42857-6.42857ZM62.85714,85.35714h1.10571c.85083-.00018,1.66689-.3377,2.26928-.93857l18.18643-18.18643c.60087-.60239.93839-1.41845.93857-2.26928v-1.10571h-20.89286c-.8876,0-1.60714.71954-1.60714,1.60714v20.89286Z"/>
+</svg>
+</icon>
+        <div class="search-result-image hidden size-full"></div>
+      </div>
+
+      <div class="min-w-0">
+        <h5 class="min-w-0 font-semibold text-sm truncate article-title">
+          
+        </h5>
+        <p class="min-w-0 truncate text-xs mt-0.5 article-subtitle min-h-4.5">
+          
+        </p>
+      </div>
+</a>  </li>
+
+      </template>
+
+  <template
+    data-article-history-target="recentArticleTemplate"
+    data-id="search-entry"
+    data-search-target="entryTemplate"
+  >
+      <li class="list-none">
+    <a href="#" class="flex gap-3 hover-bg hover-bg-slate items-center px-3 py-2 relative rounded-md focus-visible:focus-ring list-none">
+      <div class="max-xs:hidden flex items-center justify-center size-6 min-w-6">
+        <icon class="flex items-center justify-center fill-current search-result-image-fallback text-slate-400 size-4 min-w-4">
+  <svg xmlns="http://www.w3.org/2000/svg" id="uuid-ee9862b7-ab20-4151-a89c-c6c9cbc92a75" viewBox="0 0 100 100">
+  <defs>
+    <style>.uuid-a5ed603a-5d8e-40df-84ad-3c43f3af7fc4{fill-rule:evenodd;}</style>
+  </defs>
+  <path d="M24.28572,61.25c0-2.6628,2.15863-4.82143,4.82143-4.82143h12.85714c2.6628,0,4.82143,2.15863,4.82143,4.82143s-2.15863,4.82143-4.82143,4.82143h-12.85714c-2.6628,0-4.82143-2.15863-4.82143-4.82143ZM29.10714,30.71428c-2.6628,0-4.82143,2.15863-4.82143,4.82143s2.15863,4.82143,4.82143,4.82143h38.57143c2.6628,0,4.82143-2.15863,4.82143-4.82143s-2.15863-4.82143-4.82143-4.82143H29.10714Z"/>
+  <path class="uuid-a5ed603a-5d8e-40df-84ad-3c43f3af7fc4" d="M5,78.92857V21.07143c0-8.876,7.19542-16.07143,16.07143-16.07143h57.85714c8.876,0,16.07143,7.19542,16.07143,16.07143v42.89143c-.00073,3.40965-1.35579,6.67938-3.76715,9.09l-18.18,18.18c-2.41062,2.41135-5.68035,3.76642-9.09,3.76715H21.07143c-8.876,0-16.07143-7.19543-16.07143-16.07143h0ZM14.64286,78.92857V21.07143c0-3.5504,2.87817-6.42857,6.42857-6.42857h57.85714c3.5504,0,6.42857,2.87817,6.42857,6.42857v32.14285h-20.89286c-6.2132,0-11.25,5.0368-11.25,11.25v20.89286H21.07143c-3.5504,0-6.42857-2.87817-6.42857-6.42857ZM62.85714,85.35714h1.10571c.85083-.00018,1.66689-.3377,2.26928-.93857l18.18643-18.18643c.60087-.60239.93839-1.41845.93857-2.26928v-1.10571h-20.89286c-.8876,0-1.60714.71954-1.60714,1.60714v20.89286Z"/>
+</svg>
+</icon>
+        <div class="search-result-image hidden size-full"></div>
+      </div>
+
+      <div class="min-w-0">
+        <h5 class="min-w-0 font-semibold text-sm truncate article-title">
+          
+        </h5>
+        <p class="min-w-0 truncate text-xs mt-0.5 article-subtitle min-h-4.5">
+          
+        </p>
+      </div>
+</a>  </li>
+
+  </template>
+
+
+</dialog>
+<body class="docs/api/page w-full overflow-x-clip bg-white dark:bg-slate-950" data-action="keydown.esc-&gt;search#hide keydown.meta+k-&gt;search#show keydown.ctrl+k-&gt;search#show" data-api-base-url="https://api.emailable.com" data-article-history-is-article-page-value="false" data-article-history-locale-value="en" data-article-history-id-value="docs" data-controller="article-history crisp theme search site syntax-highlight system-code" data-code-editor-languages-value="[&quot;ruby&quot;,&quot;javascript&quot;,&quot;python&quot;]" data-copied-text="Copied!" data-crisp-website-id-value="4520e27f-23f2-4812-a391-a7463cd02d54" data-search-id-value="docs" data-search-modal-outlet=".search-modal"><script type="text/javascript">
+    adroll_adv_id = "5BQ7U2N33BH4JB5VGIAKAO";
+    adroll_pix_id = "MBB3LTM7YFFVBOSOLZ22CV";
+    adroll_version = "2.0";
+
+    (function(w, d, e, o, a) {
+        w.__adroll_loaded = true;
+        w.adroll = w.adroll || [];
+        w.adroll.f = [ 'setProperties', 'identify', 'track', 'identify_email' ];
+        var roundtripUrl = "https://s.adroll.com/j/" + adroll_adv_id
+                + "/roundtrip.js";
+        for (a = 0; a < w.adroll.f.length; a++) {
+            w.adroll[w.adroll.f[a]] = w.adroll[w.adroll.f[a]] || (function(n) {
+                return function() {
+                    w.adroll.push([ n, arguments ])
+                }
+            })(w.adroll.f[a])
+        }
+
+        e = d.createElement('script');
+        o = d.getElementsByTagName('script')[0];
+        e.async = 1;
+        e.src = roundtripUrl;
+        o.parentNode.insertBefore(e, o);
+    })(window, document);
+    adroll.track("pageView");
+</script><script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/23521823.js"></script><script>
+  !(function () {
+    var cio_proxy_host = "cioa.emailable.com";
+    var analytics = (window.analytics = window.analytics || []);
+    if (!analytics.initialize)
+      if (analytics.invoked)
+        window.console &&
+          console.error &&
+          console.error("Snippet included twice.");
+      else {
+        analytics.invoked = !0;
+        analytics.methods = [
+          "trackSubmit", "trackClick", "trackLink", "trackForm", "pageview",
+          "identify", "reset", "group", "track", "ready", "alias", "debug",
+          "page", "once", "off", "on", "addSourceMiddleware",
+          "addIntegrationMiddleware", "setAnonymousId", "addDestinationMiddleware",
+        ];
+        analytics.factory = function (e) {
+          return function () {
+            var t = Array.prototype.slice.call(arguments);
+            t.unshift(e);
+            analytics.push(t);
+            return analytics;
+          };
+        };
+        for (var e = 0; e < analytics.methods.length; e++) {
+          var key = analytics.methods[e];
+          analytics[key] = analytics.factory(key);
+        }
+        analytics.load = function (key, e) {
+          var t = document.createElement("script");
+          t.type = "text/javascript";
+          t.async = !0;
+          t.src = `https://${cio_proxy_host}/v1/analytics-js/snippet/${key}/analytics.min.js`;
+          var n = document.getElementsByTagName("script")[0];
+          n.parentNode.insertBefore(t, n);
+          analytics._writeKey = key;
+          analytics._loadOptions = e;
+          analytics._cdn = `https://${cio_proxy_host}`;
+        };
+        analytics.SNIPPET_VERSION = "4.15.3";
+        analytics.load("5e0c66e38cc96cc13eea", {
+          integrations: {
+            "Customer.io Data Pipelines": {
+              apiHost: `${cio_proxy_host}/v1`,
+            },
+          }
+        });
+        analytics.page();
+      }
+  })();
+</script></body></html>

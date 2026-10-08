@@ -1,0 +1,47 @@
+{
+  "phrases": [
+    "this domain is for sale",
+    "buy this domain",
+    "domain for sale",
+    "domain parking",
+    "parked free",
+    "this page is parked",
+    "this domain has expired",
+    "domain has been registered",
+    "this domain may be for sale",
+    "purchase this domain",
+    "make an offer on this domain",
+    "domain name is for sale",
+    "is available for purchase",
+    "inquire about this domain",
+    "this website is for sale",
+    "this site is currently unavailable",
+    "coming soon — under construction",
+    "this domain is registered at",
+    "get your own domain",
+    "register your domain",
+    "the domain owner has parked",
+    "future home of something quite cool",
+    "congratulations! you just found a great domain"
+  ],
+  "provider_fingerprints": {
+    "godaddy_parking": ["domaincontrol.com", "parking.godaddy.com", "godaddy.com/forsale"],
+    "sedo": ["sedo.com", "sedoparking.com", "sedo domain parking"],
+    "afternic": ["afternic.com", "afternic domain"],
+    "dan_com": ["dan.com", "undeveloped.com"],
+    "parkingcrew": ["parkingcrew.net", "parkingcrew.com", "skenzo.com"],
+    "bodis": ["bodis.com", "click.php"],
+    "hugedomains": ["hugedomains.com"],
+    "namecheap_parking": ["namecheap.com/domains/parking", "parkingpage.namecheap.com"],
+    "above_com": ["above.com"],
+    "domainnamesales": ["domainnamesales.com"]
+  },
+  "html_markers": [
+    "data-parking-page",
+    "domain-for-sale",
+    "id=\"parkingLander\"",
+    "class=\"parking\"",
+    "domainlander",
+    "dsaParkingPage"
+  ]
+}

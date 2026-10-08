@@ -1,0 +1,19 @@
+{
+  "smtp_timeout_ms": 10000,
+  "concurrency": 3,
+  "delay_between_domains_ms": 2000,
+  "delay_between_emails_ms": 500,
+  "suppress_disposable": true,
+  "suppress_invalid_syntax": true,
+  "suppress_no_mx": true,
+  "suppress_role_accounts": false,
+  "flag_catch_all_as": "risky",
+  "flag_free_provider_as": "deliverable",
+  "role_account_prefixes": [
+    "info", "admin", "support", "sales", "contact", "help",
+    "office", "billing", "accounts", "team", "hello",
+    "webmaster", "postmaster", "hostmaster", "abuse", "noreply",
+    "no-reply", "mailer-daemon", "marketing", "media", "press",
+    "jobs", "careers", "hr", "recruitment"
+  ]
+}

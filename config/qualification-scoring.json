@@ -1,0 +1,35 @@
+{
+  "thresholds": {
+    "outdated_max": 40,
+    "modern_min": 70
+  },
+  "signal_weights": {
+    "ssl_valid": 10,
+    "viewport_meta": 10,
+    "copyright_recent": 15,
+    "has_analytics": 5,
+    "modern_cms": 10,
+    "responsive_images": 5,
+    "fast_load": 10,
+    "structured_data": 5,
+    "custom_domain_email": 5,
+    "social_links": 5,
+    "last_modified_recent": 10,
+    "https_redirect": 10
+  },
+  "confidence_penalties": {
+    "ssl_check_failed": 20,
+    "html_truncated": 15,
+    "unresolved_signal": 10,
+    "near_threshold": 25,
+    "threshold_proximity": 5
+  },
+  "copyright_year_recent_within": 2,
+  "last_modified_recent_days": 365,
+  "spa_text_threshold": 200,
+  "circuit_breaker_max_failures": 3,
+  "fetch_timeout_ms": 10000,
+  "concurrency": 5,
+  "freshness_window_days": 60,
+  "checking_stuck_minutes": 15
+}

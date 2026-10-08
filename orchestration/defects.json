@@ -1,0 +1,284 @@
+[
+  {
+    "id": "B01",
+    "description": "`pipeline/sending-engine.js`, `sendTestEmail()`: missing SMTP credentials records a simulated `sent` event and returns `ok:true`.",
+    "acceptance": "Return actionable disconnected error; zero send/delivery records. Test API and UI with empty, partial, invalid, and revoked credentials.",
+    "status": "verified_local",
+    "tests": [
+      "tests/sending.test.mjs",
+      "tests/sending-api.test.mjs",
+      "UI browser check: partial SMTP credentials"
+    ],
+    "evidence": [
+      {
+        "command": "npm test (node --test tests/*.test.mjs)",
+        "evidenceFile": "orchestration/evidence/test-run-codex-backend-2026-10-06-v3.log",
+        "result": "42/42 pass, exit 0",
+        "recordedAt": "2026-10-06T18:14:45.2700901Z",
+        "note": "Covers actual loopback SMTP handshake, empty/partial/invalid settings, and rejected auth. Browser check covers the Test SMTP UI with partial credentials. Live/revoked provider mailbox credentials remain unverified."
+      },
+      {
+        "command": "Playwright browser acceptance against isolated UI servers",
+        "evidenceFile": "X:\\odd-ecosys-runtime\\ui-checks\\results.json",
+        "result": "9 routes, 3 viewport widths, batch create and partial-credential SMTP UI passed; 0 page errors",
+        "recordedAt": "2026-10-06T18:14:45.2700901Z",
+        "note": "Mutations used only the disposable port 3001 database."
+      },
+      {
+        "command": "npm test (node --test tests/*.test.mjs)",
+        "evidenceFile": "orchestration/evidence/test-run-codex-backend-2026-10-06-v4.log",
+        "result": "43/43 pass, exit 0",
+        "recordedAt": "2026-10-06T18:16:28.3727325Z",
+        "note": "Empty/partial/invalid SMTP settings fail closed; local loopback SMTP handshake and authentication rejection are exercised; API and UI responses were checked. This verifies local behavior only. External provider mailbox credentials remain a P22 live-validation item."
+      }
+    ]
+  },
+  {
+    "id": "B02",
+    "description": "Same file, `processSendQueue()`: `Math.random()` supplies send success and simulated soft bounces when credentials are absent.",
+    "acceptance": "Delete production simulation branch. Missing transport never becomes sent/delivered/bounced. Real provider errors have classified causes.",
+    "status": "pending",
+    "tests": [],
+    "evidence": []
+  },
+  {
+    "id": "B03",
+    "description": "Real SMTP path inserts `delivered` immediately after Nodemailer returns.",
+    "acceptance": "Record provider acceptance; delivery is separately verified from authentic delivery evidence, otherwise unknown. Test delayed DSN and no-DSN cases.",
+    "status": "pending",
+    "tests": [],
+    "evidence": []
+  },
+  {
+    "id": "B04",
+    "description": "`checkDomainDns()`: `dkim_ok` inferred from SPF + DMARC presence.",
+    "acceptance": "Discover/configure actual selector, check key and captured message signature/alignment; missing selector is unknown. SPF/DMARC presence is not authentication success.",
+    "status": "pending",
+    "tests": [],
+    "evidence": []
+  },
+  {
+    "id": "B05",
+    "description": "Same DNS logic looks up a website/domain A record and treats every successful DNSBL response as a listing; errors imply not listed.",
+    "acceptance": "Distinguish sender IP/domain lists, query permissions, error codes, unavailable checks and actual evidence. Do not call this mailbox blacklist proof.",
+    "status": "pending",
+    "tests": [],
+    "evidence": []
+  },
+  {
+    "id": "B06",
+    "description": "`pipeline/personalizer.js`, `callBedrock()` simply returns null.",
+    "acceptance": "Implement official provider SDK adapter or mark disabled; no claim that cloud polishing ran. Live test with configured credentials before declaring enabled support.",
+    "status": "pending",
+    "tests": [],
+    "evidence": []
+  },
+  {
+    "id": "B07",
+    "description": "`factCheckDraft()` returns `passed:true` on Ollama failure.",
+    "acceptance": "Store `unavailable` and block automatic approval/send; human review cannot falsely turn a missing check into AI-verified evidence.",
+    "status": "pending",
+    "tests": [],
+    "evidence": []
+  },
+  {
+    "id": "B08",
+    "description": "`server.js` analytics estimates tokens/cost from copy counts (`*380`, `*0.003`) and a constant cost-per-reply numerator.",
+    "acceptance": "Store actual request usage and dated rate-card provenance. Label unavoidable estimates; unknown usage remains null. No fabricated calls/tokens/spend.",
+    "status": "pending",
+    "tests": [],
+    "evidence": []
+  },
+  {
+    "id": "B09",
+    "description": "`pipeline/crm-sync.js`: generic `upsertLead` mutation and local fallback return `synced:true`; HTTP 200 is accepted without inspecting GraphQL errors.",
+    "acceptance": "Verify real pinned CRM schema, persist remote IDs, inspect response errors, maintain retry/conflict status. Failure/offline means not synchronized.",
+    "status": "pending",
+    "tests": [],
+    "evidence": []
+  },
+  {
+    "id": "B10",
+    "description": "CLI imports `runPersonalizationBatch`, but module exports `personalizeBatch`.",
+    "acceptance": "Fix import/call; prove the ESM CLI starts for every command. This static import can break the entire CLI before its switch executes.",
+    "status": "pending",
+    "tests": [],
+    "evidence": []
+  },
+  {
+    "id": "B11",
+    "description": "CLI/package script mismatch: `import`, `seed`, `batch-status`, `template` are advertised without switch cases.",
+    "acceptance": "Implement truthful supported commands; validation and nonzero exit codes; production seed prohibited. Test every package script.",
+    "status": "pending",
+    "tests": [],
+    "evidence": []
+  },
+  {
+    "id": "B12",
+    "description": "UI qualification/verification cancel wrappers call non-batch `/cancel`; server only handles batch-scoped cancel. Batch-close wrapper also lacks a matching handler in the inspected server.",
+    "acceptance": "Canonical API contracts and actual lifecycle endpoints; contract tests exercise UI calls against running handlers.",
+    "status": "pending",
+    "tests": [],
+    "evidence": []
+  },
+  {
+    "id": "B13",
+    "description": "`js/api.js` replaces network/HTTP failure with empty/default success-shaped values.",
+    "acceptance": "Explicit discriminated errors; UI distinguishes empty data, offline, unauthorized, partial, timeout, and successful zero counts.",
+    "status": "pending",
+    "tests": [],
+    "evidence": []
+  },
+  {
+    "id": "B14",
+    "description": "`queueSends()` joins multiple personalizations and chooses their existing variant; it does not visibly consume `assignVariant()` or enforce campaign batch enrollment.",
+    "acceptance": "Durable unique enrollment/step/variant assignment and campaign membership; one logical send per eligible enrollment/step.",
+    "status": "pending",
+    "tests": [],
+    "evidence": []
+  },
+  {
+    "id": "B15",
+    "description": "Queue limits use already-sent counts, not atomic reservations; processor has no durable claim/recheck of pause, suppression, approval, or capacity at transmission.",
+    "acceptance": "Atomic reservations/claims and a final serialized policy gate shared with stop/unsubscribe controls; concurrency/crash/race tests.",
+    "status": "pending",
+    "tests": [],
+    "evidence": []
+  },
+  {
+    "id": "B16",
+    "description": "Queue writes ISO timestamps but compares with SQLite `datetime('now')`; pacing is reduced to a max 1.5-second sleep while config says 30–120 seconds; window settings are not enforced in that path.",
+    "acceptance": "Canonical time types, timezone/DST-aware durable scheduler, real pacing/caps; tests for same-day due times and restarts.",
+    "status": "pending",
+    "tests": [],
+    "evidence": []
+  },
+  {
+    "id": "B17",
+    "description": "`updateSend` writes `sent_at` for failed sends; runtime throws become `soft_bounce` regardless of cause.",
+    "acceptance": "Separate attempted/accepted/sent/delivered/failed timestamps, auth/network/provider/DSN error taxonomy.",
+    "status": "pending",
+    "tests": [],
+    "evidence": []
+  },
+  {
+    "id": "B18",
+    "description": "Compliance helper functions exist but the real send path sends a mailto unsubscribe header rather than using the HTTPS token/footer helpers.",
+    "acceptance": "Apply verified current sender policy; tested MIME with real business identity/address and HTTPS one-click semantics.",
+    "status": "pending",
+    "tests": [],
+    "evidence": []
+  },
+  {
+    "id": "B19",
+    "description": "Warm-up eligibility is inferred from elapsed days; calendar ramp is not evidence of actual warm-up activity or inbox placement.",
+    "acceptance": "Separate scheduled volume ramp from measured warm-up/placement results. Require explicit policy and evidence; never synthesize received/opened/replied events.",
+    "status": "pending",
+    "tests": [],
+    "evidence": []
+  },
+  {
+    "id": "B20",
+    "description": "`reply-tracker.js` stores message headers but attributes replies to latest send by address; interested reply changes status to `won`.",
+    "acceptance": "Thread/mailbox/message references with fallback confidence; interested != opportunity won or meeting booked. Cancellation must not wait for AI.",
+    "status": "implemented_unverified",
+    "tests": [
+      "tests/reply-tracker.test.mjs"
+    ],
+    "evidence": [
+      {
+        "command": "npm test (node --test tests/*.test.mjs)",
+        "evidenceFile": "orchestration/evidence/test-run-codex-backend-2026-10-06-v5.log",
+        "result": "49/49 pass, exit 0; B20 focused tests 6/6 pass",
+        "recordedAt": "2026-10-06T18:30:14.6478343Z",
+        "note": "In-Reply-To attribution honors receiving mailbox; ambiguous address fallback stays unattributed; duplicate Message-ID is idempotent; classifier failure remains unclassified; interested replies do not mark a sale won. Live mailbox/webhook integration remains unverified."
+      }
+    ]
+  },
+  {
+    "id": "B21",
+    "description": "`archiver.js` declares terminal states but archives all batch leads; deletes related rows without full relationship/schema preservation.",
+    "acceptance": "Eligible lifecycle guards, transactional complete preservation, restore/reconciliation and FK tests. Never archive active sequence recipients.",
+    "status": "pending",
+    "tests": [],
+    "evidence": []
+  },
+  {
+    "id": "B22",
+    "description": "`database.js` catches migration errors silently; archive fields diverge; failed migration can leave partial schema.",
+    "acceptance": "Versioned transactional migrations with explicit failure and rollback; test old snapshots and all columns/relationships.",
+    "status": "pending",
+    "tests": [],
+    "evidence": []
+  },
+  {
+    "id": "B23",
+    "description": "Server has no visible authentication/tenant boundary; wildcard CORS; raw project directory static serving; no body-size cap.",
+    "acceptance": "Auth/RBAC/tenant isolation, static asset allowlist, strict input limits and secure transport. DB/config/source/secret downloads must be denied.",
+    "status": "pending",
+    "tests": [],
+    "evidence": []
+  },
+  {
+    "id": "B24",
+    "description": "Crawling protection differs across fetch, enrichment, screenshot and browser paths. A DNS check followed by ordinary fetch needs rebinding review.",
+    "acceptance": "Central sandbox/egress policy including redirects, DNS/IP pinning where appropriate, IPv6, browser subresources and cloud metadata.",
+    "status": "pending",
+    "tests": [],
+    "evidence": []
+  },
+  {
+    "id": "B25",
+    "description": "Raw data is interpolated into HTML templates; click handler redirects to arbitrary supplied URL; tracking has sequential IDs.",
+    "acceptance": "Safe rendering/sanitization, opaque signed tracking identifiers and stored redirect targets, no open redirect or forged analytics.",
+    "status": "pending",
+    "tests": [],
+    "evidence": []
+  },
+  {
+    "id": "B26",
+    "description": "Verification suspicious-name heuristic can reject an address before DNS/SMTP and populate unobserved MX/check fields.",
+    "acceptance": "Pattern suspicion is a flag; SMTP/MX outputs require observed evidence. Provider refusal/timeouts remain unknown, not nonexistent.",
+    "status": "implemented_unverified",
+    "tests": [
+      "tests/email-verifier.test.mjs"
+    ],
+    "evidence": [
+      {
+        "command": "node --test tests/email-verifier.test.mjs",
+        "evidenceFile": "orchestration/evidence/test-run-codex-backend-2026-10-06-v3.log",
+        "result": "2/2 pass, exit 0",
+        "recordedAt": "2026-10-06T18:14:45.2700901Z",
+        "note": "Unusual digit-heavy, consonant-heavy, and repeated-character local parts pass syntax validation; malformed addresses still fail. External DNS/SMTP deliverability checks remain environment-dependent and unverified."
+      },
+      {
+        "command": "npm test (node --test tests/*.test.mjs)",
+        "evidenceFile": "orchestration/evidence/test-run-codex-backend-2026-10-06-v4.log",
+        "result": "43/43 pass, exit 0; B26 focused tests 3/3 pass",
+        "recordedAt": "2026-10-06T18:16:28.3727325Z",
+        "note": "Reacher result remains risky when SMTP evidence is null; deliverable requires explicit SMTP acceptance; MX host comes only from the observed response. Live DNS/SMTP validation remains unverified."
+      }
+    ]
+  },
+  {
+    "id": "B27",
+    "description": "Verifier cache refresh interval keeps completed CLI process alive",
+    "acceptance": "All CLI commands exit after completion without force-exit",
+    "status": "implemented_unverified",
+    "tests": [
+      "tests/cli.test.mjs"
+    ],
+    "evidence": []
+  },
+  {
+    "id": "B28",
+    "description": "Dependency audit found high vulnerabilities in nodemailer, undici and cheerio dependency paths",
+    "acceptance": "Dependency updates are pinned/reconciled and tests plus audit pass",
+    "status": "implemented_unverified",
+    "tests": [
+      "npm test",
+      "npm audit"
+    ],
+    "evidence": []
+  }
+]

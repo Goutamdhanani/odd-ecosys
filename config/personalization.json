@@ -1,0 +1,46 @@
+{
+  "ollama": {
+    "base_url": "http://localhost:11434",
+    "draft_model": "llama3.1",
+    "factcheck_model": "llama3.1",
+    "timeout_ms": 30000,
+    "enabled": true
+  },
+  "bedrock": {
+    "region": "us-east-1",
+    "polish_model": "anthropic.claude-3-5-sonnet-20241022-v2:0",
+    "vision_model": "anthropic.claude-3-5-sonnet-20241022-v2:0",
+    "enabled": false,
+    "fallback_to_ollama": true
+  },
+  "guardrails": {
+    "max_body_words": 130,
+    "min_body_words": 40,
+    "max_subject_chars": 60,
+    "spam_trigger_words": [
+      "free", "guarantee", "act now", "limited time", "click here",
+      "buy now", "urgent", "winner", "congratulations", "no obligation",
+      "risk free", "make money", "100%", "cash", "earn extra",
+      "work from home", "miracle", "amazing offer", "special promotion",
+      "once in a lifetime"
+    ],
+    "banned_openers": [
+      "I noticed your business",
+      "I came across your",
+      "I hope this email finds you",
+      "My name is",
+      "I'm reaching out because"
+    ],
+    "required_merge_fields": ["{{business_name}}"],
+    "hallucination_check": true
+  },
+  "approval": {
+    "first_n_per_niche": 20,
+    "auto_approve_after": true
+  },
+  "variants": ["A", "B"],
+  "variant_voice": {
+    "A": "peer-to-peer casual — brief, direct, uses specifics",
+    "B": "professional-curious — crisp, implies insight"
+  }
+}

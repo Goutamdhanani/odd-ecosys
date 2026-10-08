@@ -1,0 +1,1810 @@
+{
+  "generatedAt": "2026-10-06T12:30:23.330Z",
+  "projectRoot": "E:\\project\\odd-ecosys",
+  "gitScope": "E:/",
+  "excludedPrivateDirectories": [
+    "data",
+    "node_modules"
+  ],
+  "files": [
+    {
+      "path": ".gitignore",
+      "bytes": 137,
+      "sha256": "8dc34884969f972835abd982923d2a2a0386397726da6320e1a0471a88e0f771"
+    },
+    {
+      "path": "config/parking-signatures.json",
+      "bytes": 1550,
+      "sha256": "98e0cdc21b8312731d5fe820cc23843f5707e269f9e06df0da066844f45cc0ec"
+    },
+    {
+      "path": "config/personalization.json",
+      "bytes": 1373,
+      "sha256": "56ccf6c4722e2ac08dbdf1d455ec3d9b66b34ae9ca9ca10e523a69770992af5c"
+    },
+    {
+      "path": "config/qualification-scoring.json",
+      "bytes": 825,
+      "sha256": "59e0d17c3525761ac3f1c5f8ed24f475e2785832160c8ae802701a6686bbce1a"
+    },
+    {
+      "path": "config/sending-engine.json",
+      "bytes": 911,
+      "sha256": "49902bee9ff4e3ddcb3842ef74601d5d9ade1e90d9b2d1803e831c07a044ab63"
+    },
+    {
+      "path": "config/verification-rules.json",
+      "bytes": 642,
+      "sha256": "e1d6779ce771e2a0c90817d23bf8f026f60921c95362bea37b2055f7151a0314"
+    },
+    {
+      "path": "css/main.css",
+      "bytes": 48608,
+      "sha256": "82557354609ab0324aef925cb5094d8e76915f0238ac02ec7d30e4a534e89b0c"
+    },
+    {
+      "path": "index.html",
+      "bytes": 3255,
+      "sha256": "1fbad87f7dcf9b1b5b1c617f717d0bd663831d1d70febeb79811439d88bd7ea4"
+    },
+    {
+      "path": "js/analytics.js",
+      "bytes": 14637,
+      "sha256": "87f80eb75ed0a79c17bd4c422b91a02131f316b503976317d8639752bc2bfb82"
+    },
+    {
+      "path": "js/api.js",
+      "bytes": 10489,
+      "sha256": "0b5de915081c2bbfade9880ea074cf6e3c61f9f4223fc8c73ca411512b9cb564"
+    },
+    {
+      "path": "js/app.js",
+      "bytes": 11315,
+      "sha256": "0176361a9d5e7bf8fd8218574430e0e52324ccc5bae082602bc0f63b82edd3af"
+    },
+    {
+      "path": "js/batches.js",
+      "bytes": 8667,
+      "sha256": "4b1906fecb99471bde253206ebb56544736b5ed23e3d2159671fa89f7fa98430"
+    },
+    {
+      "path": "js/campaigns.js",
+      "bytes": 11013,
+      "sha256": "6c8c1a08db47407d5cb889a2e926bf2a2b1284eebe9dd1559f5538d7143aee33"
+    },
+    {
+      "path": "js/dashboard.js",
+      "bytes": 10573,
+      "sha256": "3073c332ec9e10b4ad53f1ed07f5c3dc9e695dc0e2371f2238cccba4d2095929"
+    },
+    {
+      "path": "js/data.js",
+      "bytes": 23163,
+      "sha256": "6d5a25202233e276506796836ad8809053f822a5a94e0e93be7cbc46cf6ebef6"
+    },
+    {
+      "path": "js/leads.js",
+      "bytes": 10278,
+      "sha256": "4112d2843a3994887d9abb6f021af770cd630cf8cc9f9bd4aabe0fcc88d57456"
+    },
+    {
+      "path": "js/mailboxes.js",
+      "bytes": 27083,
+      "sha256": "6cdd21386b13fc1a1e482975cbd31450beffce025cbac93c5862ddba96514111"
+    },
+    {
+      "path": "js/personalization.js",
+      "bytes": 19661,
+      "sha256": "287adcc5ac606639db280cdd50656d9197f43327206953c237b0f663e18345c6"
+    },
+    {
+      "path": "js/qualification.js",
+      "bytes": 20646,
+      "sha256": "217299836ff805a1f9d1344c57f87766c941e6d41b404834e9d9a87c5d03799d"
+    },
+    {
+      "path": "js/utils.js",
+      "bytes": 2127,
+      "sha256": "aef5386fe2507e759bff8b6c1b03df915eb231559647e5f956ced27574110070"
+    },
+    {
+      "path": "js/verification.js",
+      "bytes": 25939,
+      "sha256": "2ef7a32cae7c229cb00a91c9efcf1b884482b6eed771fa6ef4c84156cfb65367"
+    },
+    {
+      "path": "ORCHESTRATOR_GLM_5_3.md",
+      "bytes": 101303,
+      "sha256": "c4949ef1223acaed03600c8e7cafb5a0a8eee58bae065a581d6ffb591d7b6c54"
+    },
+    {
+      "path": "package-lock.json",
+      "bytes": 29278,
+      "sha256": "fc33cf109cdf8279c371308ff56eebdf7ea009c9214617ebf707b742c0c22613"
+    },
+    {
+      "path": "package.json",
+      "bytes": 1302,
+      "sha256": "9478d3bf646aada5a2e8d477e0b53136c0966349ca45247668bf9751dcfb3489"
+    },
+    {
+      "path": "pipeline/ab-testing.js",
+      "bytes": 12394,
+      "sha256": "c3302f98faa95e192a18d328ea122bf32058515d50e7da6176c18e08cbf1dc2e"
+    },
+    {
+      "path": "pipeline/archiver.js",
+      "bytes": 4397,
+      "sha256": "03fa42d6695592d08f6f404af42216eeb80f360f5d2ac0ec0e4903e534ade19d"
+    },
+    {
+      "path": "pipeline/batch-manager.js",
+      "bytes": 3765,
+      "sha256": "780746e7433df3aa9aae9e0573fba8511db12ce6c048ff8aa345f35c27546fe4"
+    },
+    {
+      "path": "pipeline/cli.js",
+      "bytes": 8534,
+      "sha256": "401dfd307ee0eb2ed93d4927427d792a82c9fadd0478624eb259bf44f1f52a88"
+    },
+    {
+      "path": "pipeline/compliance.js",
+      "bytes": 5444,
+      "sha256": "3080391e13f98de4c4799913462b527152666dcee079cf4b6edb573b6470b450"
+    },
+    {
+      "path": "pipeline/crm-sync.js",
+      "bytes": 5832,
+      "sha256": "87ce1b176489f9d10a6886b779a85ae9c6848c89d7965b7d5ad1bbe93ac76c5c"
+    },
+    {
+      "path": "pipeline/csv-importer.js",
+      "bytes": 6676,
+      "sha256": "1331e8978a792a19ef56dcd4d638ed17097ef2f4a24a7374870836fcf0f12999"
+    },
+    {
+      "path": "pipeline/database.js",
+      "bytes": 12608,
+      "sha256": "29defa1c803a88dbfc3d859805641a34cd153d151eb9bc1d41167d64fa97edea"
+    },
+    {
+      "path": "pipeline/dedup.js",
+      "bytes": 4431,
+      "sha256": "2cbee5d439ddcdb5df9a45d4b17caeffc6639572bf91d554b3ed5e6507e2e53d"
+    },
+    {
+      "path": "pipeline/email-verifier.js",
+      "bytes": 33942,
+      "sha256": "b32c05bc1170ac245e200c26a45f3b2c91f8ed4f0bcfc906c6e0e43957bc189d"
+    },
+    {
+      "path": "pipeline/enricher.js",
+      "bytes": 8051,
+      "sha256": "885133d63126c021484fb1d9917a001238f1702f435ce90715f0450aafa113c5"
+    },
+    {
+      "path": "pipeline/lead-discovery.js",
+      "bytes": 12210,
+      "sha256": "ec665bb25174f18212480eb3c693b88a619cb1661fdf557bfd4a8d87db398d54"
+    },
+    {
+      "path": "pipeline/personalizer.js",
+      "bytes": 27128,
+      "sha256": "34fa69ce86f1a5e62e1ae22975c1c9b5adfc72d064f1022274a6fde9192e0596"
+    },
+    {
+      "path": "pipeline/qualifier.js",
+      "bytes": 32798,
+      "sha256": "e4e9ff64ba69cbe0c375ea48d0cd0f5b0237f2b69fa3af511486449124408aed"
+    },
+    {
+      "path": "pipeline/reply-tracker.js",
+      "bytes": 9797,
+      "sha256": "8a71120096dadbb25368c917882faece862c40f3ac974e338140992f2c4e9e85"
+    },
+    {
+      "path": "pipeline/scraper.js",
+      "bytes": 9014,
+      "sha256": "49b25eb8c2a6b3d09c679d01e950b13d4873197ca8bbc0e805c281e9e9940bf5"
+    },
+    {
+      "path": "pipeline/screenshot.js",
+      "bytes": 3635,
+      "sha256": "2e6027ff1c88024132f995ddc683911f7274bac234726e41592f93b989a03694"
+    },
+    {
+      "path": "pipeline/seed.js",
+      "bytes": 12116,
+      "sha256": "7f3baae7872abff03ad21e816a4fb7d9af07b7c4b9e2bc970ff86e9893944d8e"
+    },
+    {
+      "path": "pipeline/sending-engine.js",
+      "bytes": 32663,
+      "sha256": "825d16eb1fec3d6168de5a36c840ffdd764637904cdefc668b581d2c19f160c8"
+    },
+    {
+      "path": "pipeline/ssrf-guard.js",
+      "bytes": 3871,
+      "sha256": "ca3444c7eceb6f8f97e66f2008b15fea04b5364d69b4a813bd6768ea03c0b8da"
+    },
+    {
+      "path": "pipeline/Untitled-1.txt",
+      "bytes": 124534,
+      "sha256": "82ae58abb3f3767047cd2ed769bde8c36c6cad097113eae70755230bdc0ff603"
+    },
+    {
+      "path": "plan.md",
+      "bytes": 48978,
+      "sha256": "ac3544b9df6fc2a6580243047decc3a0276e2a17ae6b68266c0759a65e38a422"
+    },
+    {
+      "path": "PROJECT_ANALYSIS.md",
+      "bytes": 35276,
+      "sha256": "08f779aa4d8b8a6bde8af483d958f3de35ff52bfb3832c7399e6a1c1d587f6cd"
+    },
+    {
+      "path": "real.md",
+      "bytes": 48978,
+      "sha256": "ac3544b9df6fc2a6580243047decc3a0276e2a17ae6b68266c0759a65e38a422"
+    },
+    {
+      "path": "server.js",
+      "bytes": 47332,
+      "sha256": "a6f1c6f205a7245627e082bd3bee3094cd04a60d205d92ffb071ac4b0391ab48"
+    },
+    {
+      "path": "tests/cli.test.mjs",
+      "bytes": 3266,
+      "sha256": "8e38c996f99f5806440ced1fdc9734d6aa0eebf7ccbc4271027a5bd0ad68d2ee"
+    },
+    {
+      "path": "tests/gateway.test.mjs",
+      "bytes": 3112,
+      "sha256": "9eb1051fd00d7ffab3e6a7bb8825af0973f5e8212419c2924f543c4dfbe1cd44"
+    },
+    {
+      "path": "tests/sending.test.mjs",
+      "bytes": 5963,
+      "sha256": "6a0872902bc5a74f7327349ed10516526d71f239841e1cc5fbff15d0fecba850"
+    },
+    {
+      "path": "tools/freeinference/backup.mjs",
+      "bytes": 2079,
+      "sha256": "36b2cafeab8849ac037f3f5a0d81dde867fa37df25dac12078cba5ba66fe9f50"
+    },
+    {
+      "path": "tools/freeinference/bootstrap.mjs",
+      "bytes": 7390,
+      "sha256": "2d01fdcbb38566f8b8fe0abcaa2ea9a99f881496761e35e003a988db21d4e25a"
+    },
+    {
+      "path": "tools/freeinference/Dockerfile",
+      "bytes": 667,
+      "sha256": "10f430586a0d775f93786e4013ea5c6c8c240a8808197a7df18dbb9c269af84c"
+    },
+    {
+      "path": "tools/freeinference/establish-state.mjs",
+      "bytes": 7238,
+      "sha256": "a6403a835cc97921c418af13efcebc0bfb0f0d04afddad45b66a1e3d081c8daf"
+    },
+    {
+      "path": "tools/freeinference/gateway.mjs",
+      "bytes": 6631,
+      "sha256": "379ffbcfe67095b7cafd0d3d6940c57aef53399f90ded6adaa2b1d4730cad7f8"
+    },
+    {
+      "path": "tools/freeinference/probe.mjs",
+      "bytes": 738,
+      "sha256": "61f9e40c21474b1ad580b2615140deace329266767614c3d78093a9c1490955f"
+    },
+    {
+      "path": "tools/freeinference/README.md",
+      "bytes": 6382,
+      "sha256": "e267e58f162f32c4a19ede1ddf2241a3603b6ecc5407b2d66872a86897d77988"
+    },
+    {
+      "path": "tools/freeinference/runner.mjs",
+      "bytes": 11678,
+      "sha256": "33ff7cdb9f74c3dabfdf9cdc26ea44d16984f91ec588213bab9eb95afdcbab85"
+    },
+    {
+      "path": "tools/freeinference/Start-Runner.ps1",
+      "bytes": 722,
+      "sha256": "2d5816d5a509c60b6d47674797c9f47ba8203d0093502e224f7b162db866cd7a"
+    }
+  ],
+  "exports": [
+    {
+      "file": "js/analytics.js",
+      "name": "renderAnalytics"
+    },
+    {
+      "file": "js/app.js",
+      "name": "navigate"
+    },
+    {
+      "file": "js/batches.js",
+      "name": "renderBatches"
+    },
+    {
+      "file": "js/campaigns.js",
+      "name": "renderCampaigns"
+    },
+    {
+      "file": "js/dashboard.js",
+      "name": "renderDashboard"
+    },
+    {
+      "file": "js/leads.js",
+      "name": "renderLeads"
+    },
+    {
+      "file": "js/mailboxes.js",
+      "name": "renderMailboxes"
+    },
+    {
+      "file": "js/personalization.js",
+      "name": "renderPersonalization"
+    },
+    {
+      "file": "js/qualification.js",
+      "name": "renderQualification"
+    },
+    {
+      "file": "js/utils.js",
+      "name": "animateCounter"
+    },
+    {
+      "file": "js/utils.js",
+      "name": "relTime"
+    },
+    {
+      "file": "js/utils.js",
+      "name": "fmtNum"
+    },
+    {
+      "file": "js/utils.js",
+      "name": "fmtPct"
+    },
+    {
+      "file": "js/verification.js",
+      "name": "renderVerification"
+    },
+    {
+      "file": "pipeline/ab-testing.js",
+      "name": "zTest"
+    },
+    {
+      "file": "pipeline/ab-testing.js",
+      "name": "getVariantStats"
+    },
+    {
+      "file": "pipeline/ab-testing.js",
+      "name": "autoPromoteWinners"
+    },
+    {
+      "file": "pipeline/ab-testing.js",
+      "name": "assignVariant"
+    },
+    {
+      "file": "pipeline/ab-testing.js",
+      "name": "getAllCampaignStats"
+    },
+    {
+      "file": "pipeline/ab-testing.js",
+      "name": "getCampaignTimeline"
+    },
+    {
+      "file": "pipeline/archiver.js",
+      "name": "archiveBatch"
+    },
+    {
+      "file": "pipeline/archiver.js",
+      "name": "getArchiveStats"
+    },
+    {
+      "file": "pipeline/batch-manager.js",
+      "name": "createBatch"
+    },
+    {
+      "file": "pipeline/batch-manager.js",
+      "name": "startProcessingBatch"
+    },
+    {
+      "file": "pipeline/batch-manager.js",
+      "name": "closeBatch"
+    },
+    {
+      "file": "pipeline/batch-manager.js",
+      "name": "updateBatchLeadCount"
+    },
+    {
+      "file": "pipeline/batch-manager.js",
+      "name": "getBatchStats"
+    },
+    {
+      "file": "pipeline/batch-manager.js",
+      "name": "listBatches"
+    },
+    {
+      "file": "pipeline/batch-manager.js",
+      "name": "getOpenBatch"
+    },
+    {
+      "file": "pipeline/compliance.js",
+      "name": "generateUnsubscribeToken"
+    },
+    {
+      "file": "pipeline/compliance.js",
+      "name": "verifyUnsubscribeToken"
+    },
+    {
+      "file": "pipeline/compliance.js",
+      "name": "getComplianceHeaders"
+    },
+    {
+      "file": "pipeline/compliance.js",
+      "name": "appendComplianceFooter"
+    },
+    {
+      "file": "pipeline/compliance.js",
+      "name": "isSuppressed"
+    },
+    {
+      "file": "pipeline/compliance.js",
+      "name": "suppressEmail"
+    },
+    {
+      "file": "pipeline/compliance.js",
+      "name": "validateSendCompliance"
+    },
+    {
+      "file": "pipeline/compliance.js",
+      "name": "listSuppressed"
+    },
+    {
+      "file": "pipeline/crm-sync.js",
+      "name": "syncLeadToCRM"
+    },
+    {
+      "file": "pipeline/crm-sync.js",
+      "name": "emergencyKillSwitch"
+    },
+    {
+      "file": "pipeline/crm-sync.js",
+      "name": "blacklistDomain"
+    },
+    {
+      "file": "pipeline/crm-sync.js",
+      "name": "getCRMControlPlaneStatus"
+    },
+    {
+      "file": "pipeline/csv-importer.js",
+      "name": "importFromCsv"
+    },
+    {
+      "file": "pipeline/csv-importer.js",
+      "name": "generateTemplate"
+    },
+    {
+      "file": "pipeline/database.js",
+      "name": "getDb"
+    },
+    {
+      "file": "pipeline/database.js",
+      "name": "initDb"
+    },
+    {
+      "file": "pipeline/database.js",
+      "name": "closeDb"
+    },
+    {
+      "file": "pipeline/database.js",
+      "name": "getDbStats"
+    },
+    {
+      "file": "pipeline/dedup.js",
+      "name": "normalizeDomain"
+    },
+    {
+      "file": "pipeline/dedup.js",
+      "name": "normalizePhone"
+    },
+    {
+      "file": "pipeline/dedup.js",
+      "name": "checkDuplicate"
+    },
+    {
+      "file": "pipeline/dedup.js",
+      "name": "deduplicateLeads"
+    },
+    {
+      "file": "pipeline/email-verifier.js",
+      "name": "getVerificationStatus"
+    },
+    {
+      "file": "pipeline/email-verifier.js",
+      "name": "getReacherStatus"
+    },
+    {
+      "file": "pipeline/email-verifier.js",
+      "name": "verifyEmail"
+    },
+    {
+      "file": "pipeline/email-verifier.js",
+      "name": "verifyBatch"
+    },
+    {
+      "file": "pipeline/email-verifier.js",
+      "name": "cancelVerification"
+    },
+    {
+      "file": "pipeline/email-verifier.js",
+      "name": "getVerificationResults"
+    },
+    {
+      "file": "pipeline/email-verifier.js",
+      "name": "reverifyEmailById"
+    },
+    {
+      "file": "pipeline/email-verifier.js",
+      "name": "getVerificationDistribution"
+    },
+    {
+      "file": "pipeline/enricher.js",
+      "name": "enrichLead"
+    },
+    {
+      "file": "pipeline/enricher.js",
+      "name": "enrichLeadsBatch"
+    },
+    {
+      "file": "pipeline/lead-discovery.js",
+      "name": "discoverLeads"
+    },
+    {
+      "file": "pipeline/lead-discovery.js",
+      "name": "importLeads"
+    },
+    {
+      "file": "pipeline/personalizer.js",
+      "name": "getPersonalizationStatus"
+    },
+    {
+      "file": "pipeline/personalizer.js",
+      "name": "cancelPersonalization"
+    },
+    {
+      "file": "pipeline/personalizer.js",
+      "name": "runGuardrails"
+    },
+    {
+      "file": "pipeline/personalizer.js",
+      "name": "personalizeBatch"
+    },
+    {
+      "file": "pipeline/personalizer.js",
+      "name": "approvePersonalization"
+    },
+    {
+      "file": "pipeline/personalizer.js",
+      "name": "rejectPersonalization"
+    },
+    {
+      "file": "pipeline/personalizer.js",
+      "name": "editPersonalization"
+    },
+    {
+      "file": "pipeline/personalizer.js",
+      "name": "getAwaitingApproval"
+    },
+    {
+      "file": "pipeline/personalizer.js",
+      "name": "getPersonalizationStats"
+    },
+    {
+      "file": "pipeline/personalizer.js",
+      "name": "getPersonalizationList"
+    },
+    {
+      "file": "pipeline/personalizer.js",
+      "name": "testOllamaConnection"
+    },
+    {
+      "file": "pipeline/qualifier.js",
+      "name": "getQualificationStatus"
+    },
+    {
+      "file": "pipeline/qualifier.js",
+      "name": "qualifyLead"
+    },
+    {
+      "file": "pipeline/qualifier.js",
+      "name": "qualifyBatch"
+    },
+    {
+      "file": "pipeline/qualifier.js",
+      "name": "cancelQualification"
+    },
+    {
+      "file": "pipeline/qualifier.js",
+      "name": "requalifyLead"
+    },
+    {
+      "file": "pipeline/qualifier.js",
+      "name": "getStaleLeads"
+    },
+    {
+      "file": "pipeline/qualifier.js",
+      "name": "requeueStaleLeads"
+    },
+    {
+      "file": "pipeline/qualifier.js",
+      "name": "recoverStuckLeads"
+    },
+    {
+      "file": "pipeline/qualifier.js",
+      "name": "getQualificationResults"
+    },
+    {
+      "file": "pipeline/qualifier.js",
+      "name": "getSiteStatusDistribution"
+    },
+    {
+      "file": "pipeline/qualifier.js",
+      "name": "getSpotCheckLeads"
+    },
+    {
+      "file": "pipeline/reply-tracker.js",
+      "name": "classifyReplySentiment"
+    },
+    {
+      "file": "pipeline/reply-tracker.js",
+      "name": "ingestInboundReply"
+    },
+    {
+      "file": "pipeline/reply-tracker.js",
+      "name": "recordOpenEvent"
+    },
+    {
+      "file": "pipeline/reply-tracker.js",
+      "name": "recordClickEvent"
+    },
+    {
+      "file": "pipeline/reply-tracker.js",
+      "name": "getReplySentimentAnalytics"
+    },
+    {
+      "file": "pipeline/reply-tracker.js",
+      "name": "materializeDailyRollup"
+    },
+    {
+      "file": "pipeline/scraper.js",
+      "name": "generateQueryFile"
+    },
+    {
+      "file": "pipeline/scraper.js",
+      "name": "runScraper"
+    },
+    {
+      "file": "pipeline/scraper.js",
+      "name": "parseScraperResults"
+    },
+    {
+      "file": "pipeline/scraper.js",
+      "name": "ensureDockerImage"
+    },
+    {
+      "file": "pipeline/scraper.js",
+      "name": "isDockerAvailable"
+    },
+    {
+      "file": "pipeline/screenshot.js",
+      "name": "getScreenshotPath"
+    },
+    {
+      "file": "pipeline/screenshot.js",
+      "name": "captureScreenshot"
+    },
+    {
+      "file": "pipeline/screenshot.js",
+      "name": "getRenderedPage"
+    },
+    {
+      "file": "pipeline/seed.js",
+      "name": "seedDatabase"
+    },
+    {
+      "file": "pipeline/sending-engine.js",
+      "name": "getSendingStatus"
+    },
+    {
+      "file": "pipeline/sending-engine.js",
+      "name": "cancelSending"
+    },
+    {
+      "file": "pipeline/sending-engine.js",
+      "name": "checkDomainDns"
+    },
+    {
+      "file": "pipeline/sending-engine.js",
+      "name": "verifyMailboxDns"
+    },
+    {
+      "file": "pipeline/sending-engine.js",
+      "name": "testMailboxSmtp"
+    },
+    {
+      "file": "pipeline/sending-engine.js",
+      "name": "sendTestEmail"
+    },
+    {
+      "file": "pipeline/sending-engine.js",
+      "name": "recomputeHealthScores"
+    },
+    {
+      "file": "pipeline/sending-engine.js",
+      "name": "getWarmupInfo"
+    },
+    {
+      "file": "pipeline/sending-engine.js",
+      "name": "processWarmupTransitions"
+    },
+    {
+      "file": "pipeline/sending-engine.js",
+      "name": "selectMailbox"
+    },
+    {
+      "file": "pipeline/sending-engine.js",
+      "name": "checkAutoThresholds"
+    },
+    {
+      "file": "pipeline/sending-engine.js",
+      "name": "queueSends"
+    },
+    {
+      "file": "pipeline/sending-engine.js",
+      "name": "processSendQueue"
+    },
+    {
+      "file": "pipeline/sending-engine.js",
+      "name": "addMailbox"
+    },
+    {
+      "file": "pipeline/sending-engine.js",
+      "name": "updateMailbox"
+    },
+    {
+      "file": "pipeline/sending-engine.js",
+      "name": "pauseMailbox"
+    },
+    {
+      "file": "pipeline/sending-engine.js",
+      "name": "activateMailbox"
+    },
+    {
+      "file": "pipeline/sending-engine.js",
+      "name": "retireMailbox"
+    },
+    {
+      "file": "pipeline/sending-engine.js",
+      "name": "deleteMailbox"
+    },
+    {
+      "file": "pipeline/sending-engine.js",
+      "name": "createCampaign"
+    },
+    {
+      "file": "pipeline/sending-engine.js",
+      "name": "getCampaigns"
+    },
+    {
+      "file": "pipeline/sending-engine.js",
+      "name": "getMailboxFleet"
+    },
+    {
+      "file": "pipeline/sending-engine.js",
+      "name": "getSendQueue"
+    },
+    {
+      "file": "pipeline/sending-engine.js",
+      "name": "getSendStats"
+    },
+    {
+      "file": "pipeline/ssrf-guard.js",
+      "name": "validateUrl"
+    },
+    {
+      "file": "pipeline/ssrf-guard.js",
+      "name": "safeFetch"
+    },
+    {
+      "file": "tools/freeinference/gateway.mjs",
+      "name": "classifyFailure"
+    },
+    {
+      "file": "tools/freeinference/gateway.mjs",
+      "name": "nextReset"
+    },
+    {
+      "file": "tools/freeinference/gateway.mjs",
+      "name": "validateKey"
+    },
+    {
+      "file": "tools/freeinference/gateway.mjs",
+      "name": "validateChat"
+    },
+    {
+      "file": "tools/freeinference/gateway.mjs",
+      "name": "startGateway"
+    }
+  ],
+  "routeExpressions": [
+    {
+      "file": "server.js",
+      "line": 140,
+      "expression": "if (pathname === '/api/batches' && method === 'GET') {",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 148,
+      "expression": "if (pathname === '/api/batches' && method === 'POST') {",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 157,
+      "expression": "const batchMatch = pathname.match(/^\\/api\\/batches\\/(\\d+)$/);",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 165,
+      "expression": "if (pathname === '/api/leads' && method === 'GET') {",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 205,
+      "expression": "const leadMatch = pathname.match(/^\\/api\\/leads\\/(\\d+)$/);",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 222,
+      "expression": "if (pathname === '/api/stats/discovery' && method === 'GET') {",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 266,
+      "expression": "if (pathname === '/api/stats/funnel' && method === 'GET') {",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 283,
+      "expression": "if (pathname === '/api/stats/analytics' && method === 'GET') {",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 363,
+      "expression": "if (pathname === '/api/suppression' && method === 'GET') {",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 370,
+      "expression": "if (pathname === '/api/suppression' && method === 'POST') {",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 383,
+      "expression": "if (pathname === '/api/events' && method === 'GET') {",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 396,
+      "expression": "const batchArchiveMatch = pathname.match(/^\\/api\\/batches\\/(\\d+)\\/archive$/);",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 405,
+      "expression": "if (pathname === '/api/stats/archive' && method === 'GET') {",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 411,
+      "expression": "if (pathname === '/api/unsubscribe') {",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 438,
+      "expression": "if (pathname === '/api/replies/ingest' && method === 'POST') {",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 447,
+      "expression": "if (pathname === '/api/replies/sentiment-breakdown' && method === 'GET') {",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 453,
+      "expression": "const openTrackMatch = pathname.match(/^\\/api\\/track\\/open\\/(\\d+)$/);",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 468,
+      "expression": "const clickTrackMatch = pathname.match(/^\\/api\\/track\\/click\\/(\\d+)$/);",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 478,
+      "expression": "const crmSyncMatch = pathname.match(/^\\/api\\/crm\\/sync\\/(\\d+)$/);",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 485,
+      "expression": "if (pathname === '/api/crm/kill-switch' && method === 'POST') {",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 492,
+      "expression": "if (pathname === '/api/crm/blacklist-domain' && method === 'POST') {",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 500,
+      "expression": "if (pathname === '/api/crm/status' && method === 'GET') {",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 523,
+      "expression": "const batchStartMatch = pathname.match(/^\\/api\\/qualify\\/batch\\/(\\d+)$/);",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 538,
+      "expression": "const batchCancelMatch = pathname.match(/^\\/api\\/qualify\\/batch\\/(\\d+)\\/cancel$/);",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 545,
+      "expression": "if (pathname === '/api/qualify/status' && method === 'GET') {",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 550,
+      "expression": "const resultsMatch = pathname.match(/^\\/api\\/qualify\\/results\\/(\\d+)$/);",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 561,
+      "expression": "const leadMatch = pathname.match(/^\\/api\\/qualify\\/lead\\/(\\d+)$/);",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 573,
+      "expression": "if (pathname === '/api/qualify/recheck-stale' && method === 'POST') {",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 581,
+      "expression": "if (pathname === '/api/qualify/stale-count' && method === 'GET') {",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 588,
+      "expression": "const spotCheckMatch = pathname.match(/^\\/api\\/qualify\\/spot-check\\/(\\d+)$/);",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 597,
+      "expression": "if (pathname === '/api/leads/site-status-distribution' && method === 'GET') {",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 613,
+      "expression": "const batchMatch = pathname.match(/^\\/api\\/verify\\/batch\\/(\\d+)$/);",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 623,
+      "expression": "const cancelMatch = pathname.match(/^\\/api\\/verify\\/batch\\/(\\d+)\\/cancel$/);",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 630,
+      "expression": "if (method === 'GET' && pathname === '/api/verify/status') {",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 635,
+      "expression": "const resultsMatch = pathname.match(/^\\/api\\/verify\\/results\\/(\\d+)$/);",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 645,
+      "expression": "const emailMatch = pathname.match(/^\\/api\\/verify\\/email\\/(\\d+)$/);",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 658,
+      "expression": "if (method === 'POST' && pathname === '/api/verify/single') {",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 667,
+      "expression": "if (method === 'GET' && pathname === '/api/verify/distribution') {",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 673,
+      "expression": "if (method === 'GET' && pathname === '/api/verify/reacher-status') {",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 690,
+      "expression": "if (method === 'GET' && pathname === '/api/sending/mailboxes') {",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 695,
+      "expression": "if (method === 'POST' && pathname === '/api/sending/mailboxes') {",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 703,
+      "expression": "const updateMatch = pathname.match(/^\\/api\\/sending\\/mailboxes\\/(\\d+)$/);",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 717,
+      "expression": "const verifyDnsMatch = pathname.match(/^\\/api\\/sending\\/mailboxes\\/(\\d+)\\/verify-dns$/);",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 724,
+      "expression": "const testSmtpMatch = pathname.match(/^\\/api\\/sending\\/mailboxes\\/(\\d+)\\/test-smtp$/);",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 731,
+      "expression": "const sendTestMatch = pathname.match(/^\\/api\\/sending\\/mailboxes\\/(\\d+)\\/send-test$/);",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 745,
+      "expression": "const pauseMatch = pathname.match(/^\\/api\\/sending\\/mailboxes\\/(\\d+)\\/pause$/);",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 751,
+      "expression": "const activateMatch = pathname.match(/^\\/api\\/sending\\/mailboxes\\/(\\d+)\\/activate$/);",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 757,
+      "expression": "const retireMatch = pathname.match(/^\\/api\\/sending\\/mailboxes\\/(\\d+)\\/retire$/);",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 763,
+      "expression": "if (method === 'POST' && pathname === '/api/sending/health-recompute') {",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 769,
+      "expression": "if (method === 'POST' && pathname === '/api/sending/warmup-check') {",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 777,
+      "expression": "if (method === 'GET' && pathname === '/api/sending/campaigns') {",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 782,
+      "expression": "if (method === 'POST' && pathname === '/api/sending/campaigns') {",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 790,
+      "expression": "const variantsMatch = pathname.match(/^\\/api\\/sending\\/campaigns\\/(\\d+)\\/variants$/);",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 796,
+      "expression": "const timelineMatch = pathname.match(/^\\/api\\/sending\\/campaigns\\/(\\d+)\\/timeline$/);",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 805,
+      "expression": "const queueMatch = pathname.match(/^\\/api\\/sending\\/queue\\/(\\d+)$/);",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 814,
+      "expression": "if (method === 'POST' && pathname === '/api/sending/process') {",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 822,
+      "expression": "if (method === 'POST' && pathname === '/api/sending/cancel') {",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 827,
+      "expression": "if (method === 'GET' && pathname === '/api/sending/status') {",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 832,
+      "expression": "const viewQueueMatch = pathname.match(/^\\/api\\/sending\\/queue\\/(\\d+)$/);",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 838,
+      "expression": "if (method === 'GET' && pathname === '/api/sending/stats') {",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 845,
+      "expression": "if (method === 'POST' && pathname === '/api/sending/ab/auto-promote') {",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 851,
+      "expression": "const assignMatch = pathname.match(/^\\/api\\/sending\\/ab\\/assign\\/(\\d+)$/);",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 857,
+      "expression": "if (method === 'POST' && pathname === '/api/sending/threshold-check') {",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 872,
+      "expression": "const batchMatch = pathname.match(/^\\/api\\/personalize\\/batch\\/(\\d+)$/);",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 882,
+      "expression": "if (method === 'POST' && pathname === '/api/personalize/cancel') {",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 887,
+      "expression": "if (method === 'GET' && pathname === '/api/personalize/status') {",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 892,
+      "expression": "if (method === 'GET' && pathname === '/api/personalize/list') {",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 903,
+      "expression": "if (method === 'GET' && pathname === '/api/personalize/awaiting') {",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 909,
+      "expression": "if (method === 'GET' && pathname === '/api/personalize/stats') {",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 915,
+      "expression": "const approveMatch = pathname.match(/^\\/api\\/personalize\\/approve\\/(\\d+)$/);",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 921,
+      "expression": "const rejectMatch = pathname.match(/^\\/api\\/personalize\\/reject\\/(\\d+)$/);",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 928,
+      "expression": "const editMatch = pathname.match(/^\\/api\\/personalize\\/(\\d+)$/);",
+      "coverage": "unverified"
+    },
+    {
+      "file": "server.js",
+      "line": 935,
+      "expression": "if (method === 'GET' && pathname === '/api/personalize/ollama-test') {",
+      "coverage": "unverified"
+    }
+  ],
+  "actionExpressions": [
+    {
+      "file": "js/analytics.js",
+      "line": 36,
+      "expression": "<button class=\"btn btn-ghost btn-sm\" onclick=\"window.__exportAnalyticsCSV()\">↓ Export CSV</button>",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/app.js",
+      "line": 91,
+      "expression": "<div class=\"nav-item\" data-view=\"${item.id}\" onclick=\"window.__nav('${item.id}')\">",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/app.js",
+      "line": 123,
+      "expression": "<button class=\"icon-btn\" title=\"Refresh\" onclick=\"window.__nav(location.hash.replace('#','') || 'dashboard')\">",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/app.js",
+      "line": 150,
+      "expression": "window.addEventListener('hashchange', () => {",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/app.js",
+      "line": 192,
+      "expression": "document.addEventListener('DOMContentLoaded', init);",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/batches.js",
+      "line": 34,
+      "expression": "<button class=\"btn btn-primary btn-sm\" onclick=\"window.__batchCreate()\">+ New Batch</button>",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/batches.js",
+      "line": 70,
+      "expression": "<button class=\"btn btn-primary btn-sm\" onclick=\"window.__batchSubmit()\">Create Cohort</button>",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/batches.js",
+      "line": 71,
+      "expression": "<button class=\"btn btn-ghost btn-sm\" onclick=\"document.getElementById('batch-create-form').style.display='none'\">Cancel</button>",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/batches.js",
+      "line": 171,
+      "expression": "<button class=\"btn btn-ghost btn-sm\" onclick=\"window.__batchStartQualify(${b.id})\">◎ Run Qualification</button>",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/batches.js",
+      "line": 172,
+      "expression": "<button class=\"btn btn-ghost btn-sm\" onclick=\"window.__nav('verification')\">✉ Verify Emails</button>",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/batches.js",
+      "line": 173,
+      "expression": "<button class=\"btn btn-ghost btn-sm\" onclick=\"window.__nav('personalization')\">✍ Personalize</button>",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/batches.js",
+      "line": 174,
+      "expression": "<button class=\"btn btn-ghost btn-sm\" style=\"color:var(--system-orange)\" onclick=\"window.__batchClose(${b.id})\">Close Cohort</button>",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/batches.js",
+      "line": 175,
+      "expression": "<button class=\"btn btn-ghost btn-sm\" style=\"color:var(--system-purple)\" onclick=\"window.__batchArchive(${b.id},'${(b.name||'').replace(/'/g,\"\\\\'\")}')\">📦 Archive & VACUUM</button>",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/batches.js",
+      "line": 178,
+      "expression": "<button class=\"btn btn-ghost btn-sm\" style=\"margin-left:auto;color:var(--system-purple)\" onclick=\"window.__batchArchive(${b.id},'${(b.name||'').replace(/'/g,\"\\\\'\")}')\">Re-Archive</button>",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/campaigns.js",
+      "line": 25,
+      "expression": "<button class=\"btn btn-ghost btn-sm\" onclick=\"window.__abAutoPromote()\">🏆 Auto-Promote Winners</button>",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/campaigns.js",
+      "line": 26,
+      "expression": "<button class=\"btn btn-primary btn-sm\" onclick=\"window.__campaignCreate()\">+ New Campaign</button>",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/campaigns.js",
+      "line": 53,
+      "expression": "<button class=\"btn btn-primary btn-sm\" onclick=\"window.__campaignSubmit()\">Create</button>",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/campaigns.js",
+      "line": 54,
+      "expression": "<button class=\"btn btn-ghost btn-sm\" onclick=\"document.getElementById('campaign-create-form').style.display='none'\">Cancel</button>",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/campaigns.js",
+      "line": 75,
+      "expression": "<button onclick=\"document.getElementById('ab-detail').style.display='none'\" style=\"background:none;border:none;color:var(--text-muted);cursor:pointer\">✕</button>",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/campaigns.js",
+      "line": 175,
+      "expression": "<button class=\"btn btn-ghost btn-sm\" onclick=\"window.__viewAB(${c.id},'${c.name.replace(/'/g,\"\\\\'\")}')\">📊 A/B Analysis</button>",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/campaigns.js",
+      "line": 176,
+      "expression": "<button class=\"btn btn-ghost btn-sm\" onclick=\"window.__queueSends(${c.id})\">→ Queue Sends</button>",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/campaigns.js",
+      "line": 177,
+      "expression": "<button class=\"btn btn-ghost btn-sm\" onclick=\"window.__processSends()\">▶ Process Queue</button>",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/dashboard.js",
+      "line": 72,
+      "expression": "<button class=\"btn btn-ghost btn-sm\" onclick=\"window.__nav('batches')\">View Batches →</button>",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/dashboard.js",
+      "line": 73,
+      "expression": "<button class=\"btn btn-primary btn-sm\" id=\"dash-new-batch\" onclick=\"window.__dashNewBatch()\">+ New Batch</button>",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/dashboard.js",
+      "line": 147,
+      "expression": "<button class=\"btn btn-ghost btn-sm\" onclick=\"window.__nav('batches')\">All batches →</button>",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/dashboard.js",
+      "line": 152,
+      "expression": "No active batches — <button class=\"btn-link\" onclick=\"window.__dashNewBatch()\">create one</button> to start processing",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/leads.js",
+      "line": 83,
+      "expression": "<button class=\"btn btn-ghost btn-sm\" onclick=\"window.__leadReset()\">Reset</button>",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/leads.js",
+      "line": 115,
+      "expression": "<tr class=\"lead-row\" onclick=\"window.__leadDetail(${l.id})\">",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/leads.js",
+      "line": 134,
+      "expression": "<td onclick=\"event.stopPropagation()\">",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/leads.js",
+      "line": 137,
+      "expression": "<button class=\"btn-xs\" onclick=\"window.__requalify(${l.id})\" title=\"Re-qualify\">◎</button>` : ''}",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/leads.js",
+      "line": 138,
+      "expression": "<button class=\"btn-xs\" onclick=\"window.__leadDetail(${l.id})\" title=\"View detail\">→</button>",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/leads.js",
+      "line": 150,
+      "expression": "<button class=\"btn btn-ghost btn-sm\" onclick=\"window.__leadPage(${_page - 1})\" ${_page === 0 ? 'disabled' : ''}>← Prev</button>",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/leads.js",
+      "line": 152,
+      "expression": "<button class=\"btn btn-ghost btn-sm\" onclick=\"window.__leadPage(${_page + 1})\" ${_page >= pages - 1 ? 'disabled' : ''}>Next →</button>",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/leads.js",
+      "line": 161,
+      "expression": "<button onclick=\"document.getElementById('lead-detail-drawer').style.display='none'\" class=\"drawer-close\">✕</button>",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/mailboxes.js",
+      "line": 46,
+      "expression": "<button class=\"btn btn-ghost btn-sm\" onclick=\"window.__recomputeFleetHealth()\">",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/mailboxes.js",
+      "line": 49,
+      "expression": "<button class=\"btn btn-ghost btn-sm\" onclick=\"window.__checkFleetWarmup()\">",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/mailboxes.js",
+      "line": 52,
+      "expression": "<button class=\"btn btn-primary btn-sm\" onclick=\"window.__openAddMailboxModal()\">",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/mailboxes.js",
+      "line": 151,
+      "expression": "<button onclick=\"window.__closeAddMailboxModal()\" class=\"drawer-close\">✕</button>",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/mailboxes.js",
+      "line": 210,
+      "expression": "<button class=\"btn btn-ghost btn-sm\" onclick=\"window.__closeAddMailboxModal()\">Cancel</button>",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/mailboxes.js",
+      "line": 211,
+      "expression": "<button class=\"btn btn-primary btn-sm\" id=\"btn-save-mailbox\" onclick=\"window.__submitSaveMailbox()\">",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/mailboxes.js",
+      "line": 223,
+      "expression": "<button onclick=\"document.getElementById('modal-test-email').style.display='none'\" class=\"drawer-close\">✕</button>",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/mailboxes.js",
+      "line": 241,
+      "expression": "<button class=\"btn btn-ghost btn-sm\" onclick=\"document.getElementById('modal-test-email').style.display='none'\">Cancel</button>",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/mailboxes.js",
+      "line": 242,
+      "expression": "<button class=\"btn btn-primary btn-sm\" id=\"btn-send-test-action\" onclick=\"window.__executeSendTest()\">",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/mailboxes.js",
+      "line": 254,
+      "expression": "<button onclick=\"document.getElementById('modal-dns-sheet').style.display='none'\" class=\"drawer-close\">✕</button>",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/mailboxes.js",
+      "line": 505,
+      "expression": "<button class=\"btn-xs\" style=\"margin-left:auto\" onclick=\"window.__runDnsCheck(${m.id},'${m.domain}')\" title=\"Lookup real DNS records\">",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/mailboxes.js",
+      "line": 524,
+      "expression": "<button class=\"btn-xs\" onclick=\"window.__testSmtpHandshake(${m.id},'${m.email}')\" title=\"Test SMTP connection\">",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/mailboxes.js",
+      "line": 527,
+      "expression": "<button class=\"btn-xs\" onclick=\"window.__openSendTestModal(${m.id},'${m.email}')\" title=\"Send a test message\">",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/mailboxes.js",
+      "line": 532,
+      "expression": "<button class=\"btn-xs\" style=\"color:${m.warmup_status === 'paused' ? 'var(--system-green)' : 'var(--system-orange)'}\" onclick=\"window.__toggleMailboxStatus(${m.id},'${m.warmup_status}')\">",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/mailboxes.js",
+      "line": 535,
+      "expression": "<button class=\"btn-xs\" style=\"color:var(--system-red)\" onclick=\"window.__deleteMailbox(${m.id},'${m.email}')\">",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/personalization.js",
+      "line": 42,
+      "expression": "<div id=\"ollama-status\" class=\"ollama-status-pill\" onclick=\"window.__checkOllama()\">",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/personalization.js",
+      "line": 48,
+      "expression": "<button id=\"pers-run-btn\" class=\"btn-primary\" onclick=\"window.__persRun()\">",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/personalization.js",
+      "line": 51,
+      "expression": "<button id=\"pers-cancel-btn\" class=\"btn-danger\" onclick=\"window.__persCancel()\" style=\"display:none;\">",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/personalization.js",
+      "line": 75,
+      "expression": "<button class=\"verify-tab\" data-filter=\"all\" onclick=\"window.__persFilter(this,'all')\">All</button>",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/personalization.js",
+      "line": 76,
+      "expression": "<button class=\"verify-tab active\" data-filter=\"awaiting\" onclick=\"window.__persFilter(this,'awaiting')\">",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/personalization.js",
+      "line": 79,
+      "expression": "<button class=\"verify-tab\" data-filter=\"approved\" onclick=\"window.__persFilter(this,'approved')\">",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/personalization.js",
+      "line": 82,
+      "expression": "<button class=\"verify-tab\" data-filter=\"failed\" onclick=\"window.__persFilter(this,'failed')\">",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/personalization.js",
+      "line": 101,
+      "expression": "<button onclick=\"window.__persCloseEdit()\" style=\"background:none;border:none;color:var(--text-muted);font-size:1.2rem;cursor:pointer;\">✕</button>",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/personalization.js",
+      "line": 111,
+      "expression": "<button class=\"btn-secondary\" onclick=\"window.__persCloseEdit()\">Cancel</button>",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/personalization.js",
+      "line": 112,
+      "expression": "<button class=\"btn-primary\" onclick=\"window.__persSaveEdit()\">Save & Approve</button>",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/personalization.js",
+      "line": 120,
+      "expression": "document.getElementById('pers-batch-select')?.addEventListener('change', e => {",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/personalization.js",
+      "line": 137,
+      "expression": "document.getElementById('edit-body')?.addEventListener('input', updateWordCount);",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/personalization.js",
+      "line": 393,
+      "expression": "<button class=\"btn-xs\" style=\"color:var(--emerald);border-color:rgba(16,185,129,0.3)\" onclick=\"window.__persApprove(${v.id})\">✓ Approve</button>",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/personalization.js",
+      "line": 394,
+      "expression": "<button class=\"btn-xs\" style=\"color:var(--rose);border-color:rgba(244,63,94,0.3)\" onclick=\"window.__persReject(${v.id})\">✗ Reject</button>",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/personalization.js",
+      "line": 396,
+      "expression": "<button class=\"btn-xs\" onclick=\"window.__persEdit(${v.id},'${escHtml(v.subject_line)}',\\`${escHtml(v.body_text)}\\`)\">✎ Edit</button>",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/qualification.js",
+      "line": 107,
+      "expression": "<button class=\"btn btn-ghost btn-sm\" id=\"btn-recheck-stale\" onclick=\"window.__recheckStaleLeads()\">",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/qualification.js",
+      "line": 110,
+      "expression": "<button class=\"btn btn-primary btn-sm\" id=\"btn-run-qualify\" onclick=\"window.__runBatchQualification()\">",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/qualification.js",
+      "line": 113,
+      "expression": "<button class=\"btn btn-danger btn-sm\" id=\"btn-cancel-qualify\" style=\"display:none\" onclick=\"window.__cancelBatchQualification()\">",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/qualification.js",
+      "line": 153,
+      "expression": "onclick=\"window.__filterBySiteStatus('${key}')\">",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/qualification.js",
+      "line": 171,
+      "expression": "<div class=\"tab-item ${_activeFilter === 'all' ? 'active' : ''}\" onclick=\"window.__filterBySiteStatus('all')\">",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/qualification.js",
+      "line": 175,
+      "expression": "<div class=\"tab-item ${_activeFilter === k ? 'active' : ''}\" onclick=\"window.__filterBySiteStatus('${k}')\">",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/qualification.js",
+      "line": 237,
+      "expression": "<button class=\"btn btn-ghost btn-xs\" onclick=\"window.__requalifyLead(${l.id})\">",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/qualification.js",
+      "line": 322,
+      "expression": "<tr class=\"lead-row ${isExpanded ? 'expanded' : ''}\" onclick=\"window.__toggleLeadRow(${l.id})\">",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/qualification.js",
+      "line": 329,
+      "expression": "${l.website_url ? `<a href=\"${l.website_url}\" target=\"_blank\" onclick=\"event.stopPropagation()\">${l.website_url}</a>` : '<span style=\"color:var(--text-muted)\">No Website</span>'}",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/qualification.js",
+      "line": 356,
+      "expression": "<td class=\"td-right\" onclick=\"event.stopPropagation()\">",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/qualification.js",
+      "line": 357,
+      "expression": "<button class=\"btn btn-ghost btn-xs\" onclick=\"window.__requalifyLead(${l.id})\">",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/verification.js",
+      "line": 47,
+      "expression": "<button id=\"verify-run-btn\" class=\"btn-primary\" onclick=\"window.__verifyRun()\">",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/verification.js",
+      "line": 50,
+      "expression": "<button id=\"verify-cancel-btn\" class=\"btn-danger\" onclick=\"window.__verifyCancel()\" style=\"display:none;\">",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/verification.js",
+      "line": 88,
+      "expression": "<button id=\"verify-quick-btn\" class=\"btn-secondary\" onclick=\"window.__verifyQuick()\">Verify</button>",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/verification.js",
+      "line": 95,
+      "expression": "<button class=\"verify-tab active\" data-filter=\"\" onclick=\"window.__verifyFilter(this, '')\">All</button>",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/verification.js",
+      "line": 96,
+      "expression": "<button class=\"verify-tab\" data-filter=\"deliverable\" onclick=\"window.__verifyFilter(this, 'deliverable')\">",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/verification.js",
+      "line": 99,
+      "expression": "<button class=\"verify-tab\" data-filter=\"risky\" onclick=\"window.__verifyFilter(this, 'risky')\">",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/verification.js",
+      "line": 102,
+      "expression": "<button class=\"verify-tab\" data-filter=\"undeliverable\" onclick=\"window.__verifyFilter(this, 'undeliverable')\">",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/verification.js",
+      "line": 105,
+      "expression": "<button class=\"verify-tab\" data-filter=\"unknown\" onclick=\"window.__verifyFilter(this, 'unknown')\">",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/verification.js",
+      "line": 127,
+      "expression": "document.getElementById('verify-batch-select')?.addEventListener('change', (e) => {",
+      "coverage": "unverified"
+    },
+    {
+      "file": "js/verification.js",
+      "line": 347,
+      "expression": "<button class=\"btn-xs\" onclick=\"window.__reverifyEmail(${r.id})\" title=\"Re-verify\">↻</button>",
+      "coverage": "unverified"
+    }
+  ],
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "runner:start": "node tools/freeinference/runner.mjs",
+    "runner:status": "node tools/freeinference/runner.mjs --status",
+    "runner:stop": "node tools/freeinference/runner.mjs --stop",
+    "start": "node server.js",
+    "dev": "node server.js",
+    "pipeline:discover": "node pipeline/cli.js discover",
+    "pipeline:import": "node pipeline/cli.js import",
+    "pipeline:seed": "node pipeline/cli.js seed",
+    "pipeline:batches": "node pipeline/cli.js batch-status",
+    "pipeline:stats": "node pipeline/cli.js stats",
+    "pipeline:template": "node pipeline/cli.js template",
+    "pipeline:help": "node pipeline/cli.js help"
+  },
+  "coverageStatus": "Source extraction; dynamic route/action resolution and full test mapping still pending"
+}

@@ -1,0 +1,376 @@
+[
+  {
+    "id": "P00",
+    "description": "Establish the real baseline and safe workspace",
+    "dependencies": [],
+    "status": "in_progress",
+    "requirements": [],
+    "evidence": [],
+    "blockers": []
+  },
+  {
+    "id": "P01",
+    "description": "Eliminate fake success and stabilize existing entry points",
+    "dependencies": [
+      "P00"
+    ],
+    "status": "pending",
+    "requirements": [],
+    "evidence": [],
+    "blockers": []
+  },
+  {
+    "id": "P02",
+    "description": "Audit and adopt the reusable core",
+    "dependencies": [
+      "P01"
+    ],
+    "status": "pending",
+    "requirements": [],
+    "evidence": [],
+    "blockers": []
+  },
+  {
+    "id": "P03",
+    "description": "Build real development and test infrastructure",
+    "dependencies": [
+      "P02"
+    ],
+    "status": "pending",
+    "requirements": [],
+    "evidence": [],
+    "blockers": []
+  },
+  {
+    "id": "P04",
+    "description": "Design data contracts and migrate safely",
+    "dependencies": [
+      "P03"
+    ],
+    "status": "pending",
+    "requirements": [],
+    "evidence": [],
+    "blockers": []
+  },
+  {
+    "id": "P05",
+    "description": "Integrate core through truthful contracts",
+    "dependencies": [
+      "P04"
+    ],
+    "status": "pending",
+    "requirements": [],
+    "evidence": [],
+    "blockers": []
+  },
+  {
+    "id": "P06",
+    "description": "Identity, tenancy, access and safe surfaces",
+    "dependencies": [
+      "P05"
+    ],
+    "status": "pending",
+    "requirements": [
+      "F001",
+      "F002",
+      "F003",
+      "F004",
+      "F005",
+      "F006",
+      "F007",
+      "F078",
+      "F080"
+    ],
+    "evidence": [],
+    "blockers": []
+  },
+  {
+    "id": "P07",
+    "description": "Durable orchestrator and operator job control",
+    "dependencies": [
+      "P06"
+    ],
+    "status": "pending",
+    "requirements": [
+      "F057",
+      "F094"
+    ],
+    "evidence": [],
+    "blockers": []
+  },
+  {
+    "id": "P08",
+    "description": "Complete lead intake, discovery and list operations",
+    "dependencies": [
+      "P07"
+    ],
+    "status": "pending",
+    "requirements": [
+      "F009",
+      "F010",
+      "F011",
+      "F012",
+      "F013",
+      "F014",
+      "F015",
+      "F016"
+    ],
+    "evidence": [],
+    "blockers": []
+  },
+  {
+    "id": "P09",
+    "description": "Production website research and qualification",
+    "dependencies": [
+      "P08"
+    ],
+    "status": "pending",
+    "requirements": [
+      "F017",
+      "F018",
+      "F019",
+      "F020",
+      "F021",
+      "F022",
+      "F023",
+      "F024"
+    ],
+    "evidence": [],
+    "blockers": []
+  },
+  {
+    "id": "P10",
+    "description": "Reliable email verification and eligibility",
+    "dependencies": [
+      "P09"
+    ],
+    "status": "pending",
+    "requirements": [
+      "F025",
+      "F026",
+      "F027",
+      "F028",
+      "F029",
+      "F030",
+      "F031",
+      "F032"
+    ],
+    "evidence": [],
+    "blockers": []
+  },
+  {
+    "id": "P11",
+    "description": "Real AI drafting, facts, reviews and usage",
+    "dependencies": [
+      "P10"
+    ],
+    "status": "pending",
+    "requirements": [
+      "F033",
+      "F034",
+      "F035",
+      "F036",
+      "F037",
+      "F038",
+      "F039",
+      "F040"
+    ],
+    "evidence": [],
+    "blockers": []
+  },
+  {
+    "id": "P12",
+    "description": "Mailbox connections and real domain evidence",
+    "dependencies": [
+      "P11"
+    ],
+    "status": "pending",
+    "requirements": [
+      "F041",
+      "F042",
+      "F043",
+      "F044",
+      "F045",
+      "F046",
+      "F047"
+    ],
+    "evidence": [],
+    "blockers": []
+  },
+  {
+    "id": "P13",
+    "description": "Campaigns, steps and follow-up behavior",
+    "dependencies": [
+      "P12"
+    ],
+    "status": "pending",
+    "requirements": [
+      "F049",
+      "F050",
+      "F051",
+      "F052",
+      "F053",
+      "F054",
+      "F055",
+      "F056"
+    ],
+    "evidence": [],
+    "blockers": []
+  },
+  {
+    "id": "P14",
+    "description": "Correct send scheduling, atomic policy gates and transport",
+    "dependencies": [
+      "P13"
+    ],
+    "status": "pending",
+    "requirements": [
+      "F048",
+      "F058",
+      "F059",
+      "F060",
+      "F061",
+      "F062"
+    ],
+    "evidence": [],
+    "blockers": []
+  },
+  {
+    "id": "P15",
+    "description": "Real deliverability checks and honest warm-up",
+    "dependencies": [
+      "P14"
+    ],
+    "status": "pending",
+    "requirements": [
+      "F063",
+      "F064"
+    ],
+    "evidence": [],
+    "blockers": []
+  },
+  {
+    "id": "P16",
+    "description": "Full unified inbox and incoming mail correctness",
+    "dependencies": [
+      "P15"
+    ],
+    "status": "pending",
+    "requirements": [
+      "F065",
+      "F066",
+      "F067",
+      "F068",
+      "F069",
+      "F070",
+      "F071",
+      "F072"
+    ],
+    "evidence": [],
+    "blockers": []
+  },
+  {
+    "id": "P17",
+    "description": "Unsubscribe, suppression, emergency stop and tracking",
+    "dependencies": [
+      "P16"
+    ],
+    "status": "pending",
+    "requirements": [
+      "F073",
+      "F074",
+      "F075",
+      "F076",
+      "F077"
+    ],
+    "evidence": [],
+    "blockers": []
+  },
+  {
+    "id": "P18",
+    "description": "Event-backed reporting, experiments and real cost accounting",
+    "dependencies": [
+      "P17"
+    ],
+    "status": "pending",
+    "requirements": [
+      "F081",
+      "F082",
+      "F083",
+      "F084",
+      "F085",
+      "F086",
+      "F087",
+      "F088"
+    ],
+    "evidence": [],
+    "blockers": []
+  },
+  {
+    "id": "P19",
+    "description": "APIs, webhooks, CRM and workflow integrations",
+    "dependencies": [
+      "P18"
+    ],
+    "status": "pending",
+    "requirements": [
+      "F089",
+      "F090",
+      "F091",
+      "F092"
+    ],
+    "evidence": [],
+    "blockers": []
+  },
+  {
+    "id": "P20",
+    "description": "Agency portal, privacy, entitlements and provisioning",
+    "dependencies": [
+      "P19"
+    ],
+    "status": "pending",
+    "requirements": [
+      "F008",
+      "F079",
+      "F093"
+    ],
+    "evidence": [],
+    "blockers": []
+  },
+  {
+    "id": "P21",
+    "description": "Production operations, security review and measured capacity",
+    "dependencies": [
+      "P20"
+    ],
+    "status": "pending",
+    "requirements": [
+      "F095",
+      "F096"
+    ],
+    "evidence": [],
+    "blockers": []
+  },
+  {
+    "id": "P22",
+    "description": "Complete feature-by-feature validation, controlled live proof and final audit",
+    "dependencies": [
+      "P21"
+    ],
+    "status": "pending",
+    "requirements": [],
+    "evidence": [],
+    "blockers": []
+  },
+  {
+    "id": "P23",
+    "description": "Release candidate, cutover and handover",
+    "dependencies": [
+      "P22"
+    ],
+    "status": "pending",
+    "requirements": [],
+    "evidence": [],
+    "blockers": []
+  }
+]
