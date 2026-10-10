@@ -14,6 +14,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { getDb } from './database.js';
+import { beginAiUsageRequest, finishAiUsageRequest } from './ai-usage.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -39,7 +40,28 @@ let _state = {
   stats: { drafted: 0, guardrail_failed: 0, polished: 0, factcheck_failed: 0, approved: 0 },
 };
 
-export function getPersonalizationStatus() { return { ..._state }; }
+export function getPersonalizationStatus() {
+  return { ..._state, providers: getPersonalizationProviderStatus() };
+}
+
+export function getPersonalizationProviderStatus(config = getConfig()) {
+  const bedrock = config.bedrock || {};
+  const region = process.env.AWS_REGION || bedrock.region || null;
+  const modelId = typeof bedrock.polish_model === 'string' ? bedrock.polish_model.trim() : '';
+  const enabled = bedrock.enabled === true;
+  const status = !enabled ? 'disabled'
+    : !region || !modelId ? 'configuration_missing'
+      : 'enabled_unverified';
+  return {
+    bedrock: {
+      status,
+      enabled,
+      modelId: modelId || null,
+      region,
+      credentials: 'not_checked',
+    },
+  };
+}
 export function cancelPersonalization() {
   if (_state.active) { _state.cancelling = true; return true; }
   return false;
@@ -49,8 +71,10 @@ export function cancelPersonalization() {
 //  OLLAMA HELPER
 // ══════════════════════════════════════════════════════════════
 
-async function callOllama(prompt, model, config = getConfig()) {
+async function callOllama(prompt, model, config = getConfig(), operation = 'generation') {
   const url = `${config.ollama.base_url}/api/generate`;
+  const modelId = model || config.ollama.draft_model;
+  const usageRequestId = beginAiUsageRequest({ provider: 'ollama', operation, modelId });
 
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), config.ollama.timeout_ms);
@@ -59,17 +83,28 @@ async function callOllama(prompt, model, config = getConfig()) {
     const res = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ model: model || config.ollama.draft_model, prompt, stream: false }),
+      body: JSON.stringify({ model: modelId, prompt, stream: false }),
       signal: controller.signal,
     });
-    clearTimeout(timer);
-    if (!res.ok) throw new Error(`Ollama HTTP ${res.status}`);
+    if (!res.ok) {
+      throw Object.assign(new Error(`Ollama HTTP ${res.status}`), { code: `OLLAMA_HTTP_${res.status}` });
+    }
     const data = await res.json();
+    finishAiUsageRequest(usageRequestId, {
+      status: 'succeeded',
+      inputTokens: data.prompt_eval_count,
+      outputTokens: data.eval_count,
+    });
     return data.response?.trim() || '';
   } catch (err) {
-    clearTimeout(timer);
-    if (err.name === 'AbortError') throw new Error('Ollama timeout');
+    finishAiUsageRequest(usageRequestId, {
+      status: 'failed',
+      errorCode: err.code || (err.name === 'AbortError' ? 'OLLAMA_TIMEOUT' : 'OLLAMA_REQUEST_FAILED'),
+    });
+    if (err.name === 'AbortError') throw Object.assign(new Error('Ollama timeout'), { code: 'OLLAMA_TIMEOUT' });
     throw err;
+  } finally {
+    clearTimeout(timer);
   }
 }
 
@@ -131,7 +166,7 @@ SUBJECT: [subject line]
 BODY:
 [email body — include {{business_name}} at least once, end with a soft call to action — one question or a 15-minute offer]`;
 
-  const response = await callOllama(prompt, config.ollama.draft_model);
+  const response = await callOllama(prompt, config.ollama.draft_model, config, 'personalization_draft');
   return parseOllamaDraft(response, variant);
 }
 
@@ -209,6 +244,12 @@ export function runGuardrails(draft, factBundle) {
   };
 }
 
+export function acceptPolishedDraft(originalDraft, polishedDraft, factBundle) {
+  if (!polishedDraft?.polished) return polishedDraft || originalDraft;
+  if (runGuardrails(polishedDraft, factBundle).passed) return polishedDraft;
+  return { ...originalDraft, polished: false, polished_by: 'rejected_guardrails' };
+}
+
 // ══════════════════════════════════════════════════════════════
 //  STEP 3 — POLISH PASS (Bedrock → Ollama fallback)
 // ══════════════════════════════════════════════════════════════
@@ -222,9 +263,12 @@ async function polishSubjectLine(draft, factBundle, config = getConfig()) {
       const polished = await callBedrock(draft, factBundle, config);
       if (polished) return polished;
     } catch (err) {
-      // Bedrock failure is recorded, then the configured Ollama fallback runs.
       // Nothing is labeled as "Bedrock polished" unless the SDK call succeeded.
-      console.warn(`  Bedrock failed (${err.message}), falling back to Ollama`);
+      const fallbackEnabled = config.bedrock.fallback_to_ollama !== false;
+      console.warn(`  Bedrock failed (${err.message}); ${fallbackEnabled ? 'using configured Ollama fallback' : 'keeping the original draft'}`);
+      if (!fallbackEnabled) {
+        return { ...draft, polished: false, polished_by: 'none', polish_status: 'unavailable' };
+      }
     }
   }
 
@@ -244,7 +288,7 @@ Rewrite ONLY the subject line to be:
 
 Output ONLY the new subject line, nothing else.`;
 
-  const response = await callOllama(prompt, config.ollama.draft_model, config);
+  const response = await callOllama(prompt, config.ollama.draft_model, config, 'subject_polish');
   const newSubject = response.replace(/^["']|["']$/g, '').trim();
 
   if (newSubject && newSubject.length < 80) {
@@ -260,11 +304,19 @@ export { polishSubjectLine };
 // (AWS_ACCESS_KEY_ID / AWS_SECRET_ACCESS_KEY / AWS_SESSION_TOKEN / AWS_REGION
 // or a configured profile). Without credentials the adapter fails truthfully;
 // it never returns a fabricated result.
-export async function callBedrock(draft, factBundle, config) {
-  const { BedrockRuntimeClient, InvokeModelCommand } = await import('@aws-sdk/client-bedrock-runtime');
-
-  const region = process.env.AWS_REGION || config.bedrock.region || 'us-east-1';
-  const modelId = config.bedrock.polish_model;
+export async function callBedrock(draft, factBundle, config = getConfig(), sdkOverride = null) {
+  if (config?.bedrock?.enabled !== true) {
+    throw Object.assign(new Error('Bedrock subject-line polishing is disabled.'), { code: 'BEDROCK_DISABLED' });
+  }
+  const region = process.env.AWS_REGION || config.bedrock.region;
+  const modelId = typeof config.bedrock.polish_model === 'string' ? config.bedrock.polish_model.trim() : '';
+  if (!region || !modelId) {
+    throw Object.assign(new Error('Bedrock requires a model ID and AWS region.'), { code: 'BEDROCK_CONFIGURATION_MISSING' });
+  }
+  const { BedrockRuntimeClient, InvokeModelCommand } = sdkOverride || await import('@aws-sdk/client-bedrock-runtime');
+  if (typeof BedrockRuntimeClient !== 'function' || typeof InvokeModelCommand !== 'function') {
+    throw Object.assign(new Error('Bedrock SDK adapter exports are unavailable.'), { code: 'BEDROCK_SDK_UNAVAILABLE' });
+  }
 
   const prompt = `Rewrite ONLY the subject line of this cold email. Under 50 characters.
 Reference one specific business fact. No spam words, no exclamation marks.
@@ -274,7 +326,7 @@ Subject: "${draft.subject_line}"
 Body: "${draft.body_text}"
 Business facts: ${JSON.stringify(factBundle)}`;
 
-  const client = new BedrockRuntimeClient({ region });
+  const client = new BedrockRuntimeClient({ region, maxAttempts: 1 });
   const command = new InvokeModelCommand({
     modelId,
     contentType: 'application/json',
@@ -286,12 +338,38 @@ Business facts: ${JSON.stringify(factBundle)}`;
     }),
   });
 
-  const response = await client.send(command);
-  const parsed = JSON.parse(new TextDecoder().decode(response.body));
-  const text = parsed.content?.[0]?.text?.replace(/^["']|["']$/g, '').trim() || '';
+  const timeoutMs = Math.max(1000, Math.min(Number(config.bedrock.timeout_ms) || 30000, 120000));
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  const usageRequestId = beginAiUsageRequest({ provider: 'bedrock', operation: 'subject_polish', modelId, region });
+  let text = '';
+  try {
+    const response = await client.send(command, { abortSignal: controller.signal });
+    let parsed;
+    try { parsed = JSON.parse(new TextDecoder().decode(response.body)); }
+    catch { throw Object.assign(new Error('Bedrock returned malformed JSON.'), { code: 'BEDROCK_INVALID_RESPONSE' }); }
+    finishAiUsageRequest(usageRequestId, {
+      status: 'succeeded',
+      inputTokens: parsed.usage?.input_tokens,
+      outputTokens: parsed.usage?.output_tokens,
+      providerRequestId: response.$metadata?.requestId || parsed.id || null,
+    });
+    text = (parsed.content || []).filter(block => typeof block.text === 'string').map(block => block.text).join('').replace(/^\s*["']|["']\s*$/g, '').trim();
+  } catch (error) {
+    finishAiUsageRequest(usageRequestId, {
+      status: 'failed',
+      errorCode: error.code || (controller.signal.aborted ? 'BEDROCK_TIMEOUT' : 'BEDROCK_REQUEST_FAILED'),
+    });
+    if (controller.signal.aborted) throw Object.assign(new Error('Bedrock request timed out.'), { code: 'BEDROCK_TIMEOUT' });
+    throw error;
+  } finally {
+    clearTimeout(timer);
+    client.destroy?.();
+  }
 
-  if (!text || text.length >= 80) {
-    throw new Error('Bedrock returned an unusable subject line');
+  const maxSubjectChars = Number(config.guardrails?.max_subject_chars) || 60;
+  if (!text || text.length > maxSubjectChars || /[\r\n]/.test(text)) {
+    throw Object.assign(new Error('Bedrock returned an unusable subject line.'), { code: 'BEDROCK_INVALID_SUBJECT' });
   }
 
   return {
@@ -327,7 +405,7 @@ ${factsStr}
 Response (CLEAN or list of unsupported claims, one per line):`;
 
   try {
-    const response = await callOllama(prompt, config.ollama.factcheck_model);
+    const response = await callOllama(prompt, config.ollama.factcheck_model, config, 'fact_check');
     const clean = response.trim().toUpperCase() === 'CLEAN'
       || response.trim().toLowerCase().startsWith('clean');
 
@@ -415,6 +493,7 @@ export async function personalizeBatch(batchId, options = {}) {
 
     try {
       const factBundle = buildFactBundle(lead);
+      let factCheckUnavailableForLead = false;
       db.prepare("UPDATE leads SET status = 'personalizing', updated_at = datetime('now') WHERE id = ?").run(lead.id);
 
       // Personalize each variant
@@ -434,7 +513,7 @@ export async function personalizeBatch(batchId, options = {}) {
         }
 
         // STEP 2: Guardrails
-        const guardrailResult = runGuardrails(draft, factBundle);
+      const guardrailResult = runGuardrails(draft, factBundle);
         if (!guardrailResult.passed) {
           _state.stats.guardrail_failed++;
           console.log(`   ✗  [${variant}] Guardrail failed: ${guardrailResult.failures.join(', ')}`);
@@ -455,12 +534,23 @@ export async function personalizeBatch(batchId, options = {}) {
           if (polished.polished) _state.stats.polished++;
         } catch { /* skip polish, use draft subject */ }
 
+        // Polish output is still untrusted generated copy. Do not preserve the
+        // pre-polish guardrail pass if the final subject fails existing rules.
+        const validatedPolish = acceptPolishedDraft(draft, polished, factBundle);
+        if (polished.polished && validatedPolish.polished !== true) {
+          polished = validatedPolish;
+          _state.stats.polished = Math.max(0, _state.stats.polished - 1);
+        } else {
+          polished = validatedPolish;
+        }
+
         // STEP 4: Fact-check
         const factCheck = await factCheckDraft(polished, factBundle);
         if (factCheck.status === 'failed') {
           _state.stats.factcheck_failed++;
           console.log(`   ⚠  [${variant}] Fact-check issues: ${factCheck.issues.slice(0,2).join('; ')}`);
         } else if (factCheck.status === 'unavailable') {
+          factCheckUnavailableForLead = true;
           _state.stats.factcheck_unavailable = (_state.stats.factcheck_unavailable || 0) + 1;
           console.log(`   ⚠  [${variant}] Fact-check UNAVAILABLE (${factCheck.error}) — auto-approval blocked`);
         }
@@ -488,7 +578,11 @@ export async function personalizeBatch(batchId, options = {}) {
       }
 
       // Update lead status
-      const finalStatus = personalizingCount < config.approval.first_n_per_niche
+      // Keep failed AI checks in the review lifecycle as well as withholding
+      // approval on each personalization row. A queued lead is presented as
+      // send-ready in other parts of the application, so an unavailable
+      // fact-check must leave the lead in the explicit approval queue.
+      const finalStatus = personalizingCount < config.approval.first_n_per_niche || factCheckUnavailableForLead
         ? 'awaiting_approval' : 'queued';
       updateLeadStatus.run(finalStatus, lead.id);
       personalizingCount++;

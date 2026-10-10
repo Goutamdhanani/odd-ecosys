@@ -4,7 +4,7 @@
 // ============================================================
 
 import { Stats, fmtNum, fmtPct, relTime } from './api.js';
-import { icon, notify } from './ui.js';
+import { escapeHtml, icon, notify } from './ui.js';
 
 export async function renderAnalytics(container) {
   container.innerHTML = `<div class="loading-state"><div class="spinner"></div><span>Loading real-time analytics…</span></div>`;
@@ -17,7 +17,7 @@ export async function renderAnalytics(container) {
   const timeline = analyticsData.timeline || [];
   const sentiment = analyticsData.sentiment || { interested: 0, not_interested: 0, out_of_office: 0, wrong_person: 0, unsubscribe_request: 0, total: 0 };
   const niches = analyticsData.niches || [];
-  const aiCost = analyticsData.aiCost || { ollama_calls: 0, bedrock_calls: 0, bedrock_usd: null, bedrock_tokens: null, cost_per_lead: null, tasks: [] };
+  const aiCost = analyticsData.aiCost || { ollama_calls: 0, bedrock_calls: 0, cost_usd: null, total_tokens: null, cost_per_lead: null, tasks: [] };
 
   const totalSent = (funnel.sent || 0) + (funnel.replied || 0) + (funnel.won || 0) + (funnel.lost || 0);
 
@@ -44,7 +44,7 @@ export async function renderAnalytics(container) {
       { label: 'Total Leads Tracked', val: fmtNum(Object.values(funnel).reduce((a,b)=>a+b,0)), sub: 'in active database', color: 'var(--system-blue)' },
       { label: 'Emails Sent', val: fmtNum(totalSent), sub: 'across active mailboxes', color: 'var(--system-purple)' },
       { label: 'Total Replies', val: fmtNum((funnel.replied || 0) + (funnel.won || 0)), sub: 'inbound responses', color: 'var(--system-green)' },
-      { label: 'Recorded AI cost', val: aiCost.bedrock_usd == null ? '—' : '$' + aiCost.bedrock_usd.toFixed(2), sub: aiCost.bedrock_usd == null ? 'No measured cost available' : 'Reported provider usage', color: 'var(--system-orange)' },
+      { label: 'AI provider requests', val: fmtNum(aiCost.request_count || 0), sub: 'since request tracking began', color: 'var(--system-blue)' },
     ].map(k => `
     <div class="kpi-card" style="--accent-color:${k.color}">
       <div class="kpi-label">${k.label}</div>
@@ -79,8 +79,8 @@ export async function renderAnalytics(container) {
   <!-- AI Cost breakdown -->
   <div class="glass-panel mb-16 animate-in">
     <div class="panel-header">
-      <span class="panel-title"><span class="dot" style="background:var(--system-purple)"></span>AI Cost & Token Accounting</span>
-      <span class="panel-hint">Measured usage when available</span>
+      <span class="panel-title"><span class="dot" style="background:var(--system-purple)"></span>AI Requests & Usage</span>
+      <span class="panel-hint">Provider-reported tokens · dated rates only</span>
     </div>
     <div class="panel-body" id="ai-cost-area">
       ${renderAICostHtml(aiCost)}
@@ -241,17 +241,21 @@ function renderSentimentHtml(sentiment) {
 }
 
 // ── AI Cost Breakdown ─────────────────────────────────────────
-function renderAICostHtml(aiCost) {
+export function renderAICostHtml(aiCost) {
   const tasks = aiCost.tasks || [];
   const maxCalls = Math.max(1, ...tasks.map(t => t.calls || 0));
+  const tokenText = value => value == null ? 'unknown' : fmtNum(value);
+  const inputText = value => value == null ? 'unknown' : fmtNum(value);
+  const usageNote = escapeHtml(aiCost.usage_note || 'Provider usage is recorded per request where returned.');
+  const rateNote = escapeHtml(aiCost.rate_card_note || 'Cost remains unknown without a matching dated rate card.');
 
   return `
   <div class="grid cols-4 mb-16" style="gap:12px">
     ${[
-      { label: 'Ollama draft records', val: fmtNum(aiCost.ollama_calls || 0), color: 'var(--system-green)', sub: 'Attributed output rows · not API requests' },
-      { label: 'Bedrock draft records', val: fmtNum(aiCost.bedrock_calls || 0), color: 'var(--system-purple)', sub: 'Attributed output rows · not API requests' },
-      { label: 'Bedrock Tokens', val: aiCost.bedrock_tokens == null ? 'unknown' : fmtNum(aiCost.bedrock_tokens), color: 'var(--system-blue)', sub: 'no stored usage yet' },
-      { label: 'Blended Cost / Lead', val: aiCost.cost_per_lead == null ? 'unknown' : '$' + aiCost.cost_per_lead.toFixed(4), color: 'var(--system-orange)', sub: 'no stored usage yet' },
+      { label: 'Ollama requests', val: fmtNum(aiCost.ollama_calls || 0), color: 'var(--system-green)', sub: 'Recorded provider attempts' },
+      { label: 'Bedrock requests', val: fmtNum(aiCost.bedrock_calls || 0), color: 'var(--system-purple)', sub: 'Recorded provider attempts' },
+      { label: 'Measured AI tokens', val: tokenText(aiCost.total_tokens), color: 'var(--system-blue)', sub: aiCost.total_tokens == null ? 'Incomplete or unavailable provider usage' : 'Input plus output tokens reported by providers' },
+      { label: 'Recorded AI cost', val: aiCost.cost_usd == null ? 'unknown' : '$' + aiCost.cost_usd.toFixed(6), color: 'var(--system-orange)', sub: aiCost.cost_usd == null ? 'No complete dated rate card' : 'Calculated from request usage and saved rate cards' },
     ].map(k => `
     <div style="background:rgba(255,255,255,0.03);border:1px solid var(--glass-border);border-radius:var(--radius-sm);padding:14px">
       <div style="font-size:0.72rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:6px">${k.label}</div>
@@ -259,6 +263,8 @@ function renderAICostHtml(aiCost) {
       <div style="font-size:0.72rem;color:var(--text-secondary);margin-top:4px">${k.sub}</div>
     </div>`).join('')}
   </div>
+
+  <div class="panel-hint" style="margin:0 0 14px">${usageNote} ${rateNote}</div>
 
   <div style="display:flex;flex-direction:column;gap:12px">
     ${tasks.map(t => `
@@ -268,15 +274,16 @@ function renderAICostHtml(aiCost) {
           <span class="site-status-chip" style="${t.tier==='ollama'?'color:var(--system-green);border-color:rgba(48,209,88,0.3)':'color:var(--system-purple);border-color:rgba(191,90,242,0.3)'}">
             ${t.tier.toUpperCase()}
           </span>
-          <span style="font-size:0.82rem;color:var(--text-secondary)">${t.name}</span>
+          <span style="font-size:0.82rem;color:var(--text-secondary)">${escapeHtml(t.name)} <span style="color:var(--text-muted)">· ${escapeHtml(t.model || '')}</span></span>
         </div>
         <div style="display:flex;gap:12px;align-items:center">
-          <span style="font-size:0.75rem;color:var(--text-muted);font-family:var(--mono)">${(t.calls || 0).toLocaleString()} calls</span>
+          <span style="font-size:0.75rem;color:var(--text-muted);font-family:var(--mono)">${fmtNum(t.calls || 0)} requests · ${fmtNum(t.failed || 0)} failed</span>
           <span style="font-size:0.78rem;font-weight:700;color:${t.tier==='bedrock'?'var(--system-purple)':'var(--system-green)'};width:70px;text-align:right;font-family:var(--mono)">
-            ${t.cost_usd == null ? 'unknown' : '$' + t.cost_usd.toFixed(2)}
+            ${t.cost_usd == null ? 'unknown' : '$' + t.cost_usd.toFixed(6)}
           </span>
         </div>
       </div>
+      <div style="font-size:0.72rem;color:var(--text-muted);margin:0 0 5px">Input ${inputText(t.input_tokens)} · output ${inputText(t.output_tokens)} tokens · ${t.succeeded ? fmtNum(t.succeeded) + ' responses' : 'no successful responses'}</div>
       <div class="progress-track" style="height:6px">
         <div class="progress-fill" style="width:${Math.round(((t.calls || 0) / maxCalls) * 100)}%;background:${t.tier==='ollama'?'var(--system-green)':'var(--system-purple)'}"></div>
       </div>

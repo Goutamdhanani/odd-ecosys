@@ -1,21 +1,20 @@
 // ============================================================
-//  ODD-ECOSYS Pipeline — Google Maps Scraper (Docker wrapper)
+//  ODD-ECOSYS Pipeline — legacy Google Maps scraper (disabled)
 //  Wraps gosom/google-maps-scraper Docker image
 // ============================================================
 
-import { exec } from 'child_process';
-import { promisify } from 'util';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { parse } from 'csv-parse/sync';
 
-const execAsync = promisify(exec);
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const QUERIES_DIR = path.join(__dirname, 'queries');
 const DATA_DIR = path.join(__dirname, '..', 'data');
+
+export const GOOGLE_MAPS_SCRAPER_DISABLED = 'Automated Google Maps scraping is disabled; use an authorized source CSV or connector.';
 
 // Ensure directories exist
 if (!fs.existsSync(QUERIES_DIR)) fs.mkdirSync(QUERIES_DIR, { recursive: true });
@@ -63,77 +62,12 @@ export function generateQueryFile(niche, geography, options = {}) {
 }
 
 /**
- * Run the Google Maps scraper via Docker.
- * @param {string} queryFilePath - Path to the query file
- * @param {object} [options]
- * @param {number} [options.depth=1] - Scraping depth
- * @param {number} [options.concurrency=2] - Number of concurrent scrapers
- * @param {string} [options.exitOnInactivity='3m'] - Timeout for inactivity
- * @param {boolean} [options.extractEmails=true] - Extract emails from websites
- * @returns {Promise<object[]>} Array of raw lead objects
+ * Automated Google Maps extraction is intentionally disabled.
+ * @returns {Promise<never>}
  */
-export async function runScraper(queryFilePath, options = {}) {
-  const {
-    depth = 1,
-    concurrency = 2,
-    exitOnInactivity = '3m',
-    extractEmails = true,
-  } = options;
-
-  const resultsFilename = `results_${Date.now()}.csv`;
-  const resultsPath = path.join(DATA_DIR, resultsFilename);
-
-  // Create empty results file (Docker needs it to exist)
-  fs.writeFileSync(resultsPath, '', 'utf-8');
-
-  // Convert Windows paths to Docker-compatible paths
-  const dockerQueryPath = queryFilePath.replace(/\\/g, '/');
-  const dockerResultsPath = resultsPath.replace(/\\/g, '/');
-
-  const emailFlag = extractEmails ? '-email' : '';
-
-  const cmd = [
-    'docker run --rm',
-    `-v "${dockerQueryPath}:/queries.txt"`,
-    `-v "${dockerResultsPath}:/results.csv"`,
-    'gosom/google-maps-scraper',
-    '-input /queries.txt',
-    '-results /results.csv',
-    `-depth ${depth}`,
-    `-c ${concurrency}`,
-    `-exit-on-inactivity ${exitOnInactivity}`,
-    emailFlag,
-  ].filter(Boolean).join(' ');
-
-  console.log(`\n🔍 Running Google Maps scraper...`);
-  console.log(`   Queries: ${queryFilePath}`);
-  console.log(`   Output:  ${resultsPath}`);
-  console.log(`   Command: ${cmd}\n`);
-
-  try {
-    const { stdout, stderr } = await execAsync(cmd, {
-      timeout: 600000, // 10 minute timeout
-      maxBuffer: 50 * 1024 * 1024, // 50 MB buffer
-    });
-
-    if (stderr) {
-      console.log(`⚠️  Scraper stderr: ${stderr.slice(0, 500)}`);
-    }
-    if (stdout) {
-      console.log(`📝 Scraper output: ${stdout.slice(0, 500)}`);
-    }
-  } catch (error) {
-    // If Docker isn't available or scraper fails, return empty
-    console.error(`\n❌ Scraper failed: ${error.message}`);
-    console.log(`\n💡 Tip: If Docker isn't running, use CSV import instead:`);
-    console.log(`   node pipeline/cli.js import --csv ./data/your-leads.csv\n`);
-    return [];
-  }
-
-  // Parse results CSV
-  return parseScraperResults(resultsPath);
+export async function runScraper() {
+  throw new Error(GOOGLE_MAPS_SCRAPER_DISABLED);
 }
-
 /**
  * Parse the scraper's CSV output into structured lead objects.
  * @param {string} csvPath - Path to the CSV file
@@ -234,35 +168,12 @@ function parseAddress(address) {
 }
 
 /**
- * Pull the Docker image if not already present.
+ * Do not install the retired third-party Google Maps scraper automatically.
+ * @returns {Promise<never>}
  */
 export async function ensureDockerImage() {
-  try {
-    console.log('📦 Checking for Google Maps scraper Docker image...');
-    await execAsync('docker image inspect gosom/google-maps-scraper', { timeout: 15000 });
-    console.log('✅ Docker image already present.');
-    return true;
-  } catch {
-    try {
-      console.log('⬇️  Pulling gosom/google-maps-scraper image...');
-      await execAsync('docker pull gosom/google-maps-scraper', { timeout: 300000 });
-      console.log('✅ Docker image pulled successfully.');
-      return true;
-    } catch (error) {
-      console.error(`❌ Failed to pull Docker image: ${error.message}`);
-      return false;
-    }
-  }
+  throw new Error(GOOGLE_MAPS_SCRAPER_DISABLED);
 }
-
-/**
- * Check if Docker is available and running.
- */
 export async function isDockerAvailable() {
-  try {
-    await execAsync('docker info', { timeout: 10000 });
-    return true;
-  } catch {
-    return false;
-  }
+  return false;
 }

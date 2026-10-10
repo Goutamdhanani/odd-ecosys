@@ -4,14 +4,17 @@
 //  quick-verify tool, and domain health view
 // ============================================================
 
-import { Batches, relTime } from './api.js';
-import { icon } from './ui.js';
+import { Batches, Verify, relTime } from './api.js';
+import { icon, notify, userFacingError } from './ui.js';
+import { downloadBlobFile } from './download.js';
+import { renderQuickVerificationError, renderQuickVerificationResult, renderVerificationResultRow } from './verification-result-view.js';
 
 // ── State ────────────────────────────────────────────────────
 let _pollInterval = null;
 let _selectedBatch = null;
 let _activeFilter = null;
 let _batches = [];
+let _activeVerificationBatch = null;
 
 // ── Render ───────────────────────────────────────────────────
 export async function renderVerification(container) {
@@ -49,6 +52,7 @@ export async function renderVerification(container) {
         <button id="verify-run-btn" class="btn btn-primary btn-sm" ${_selectedBatch ? '' : 'disabled title="Create a batch first"'} onclick="window.__verifyRun()">
           ${icon('shield', 15)} Verify emails
         </button>
+        <button id="verify-export-btn" class="btn btn-ghost btn-sm" type="button" ${_selectedBatch ? '' : 'disabled'} onclick="window.__verifyExport()" title="Export all matching batch results, including rows beyond this page">${icon('download', 15)} Export CSV</button>
         <button id="verify-cancel-btn" class="btn-danger" onclick="window.__verifyCancel()" style="display:none;">
           <span class="btn-icon">⏹</span> Cancel
         </button>
@@ -127,18 +131,24 @@ export async function renderVerification(container) {
 
   // Wire up events
   document.getElementById('verify-batch-select')?.addEventListener('change', (e) => {
-    _selectedBatch = parseInt(e.target.value);
+    _selectedBatch = parseInt(e.target.value) || null;
+    const exportButton = document.getElementById('verify-export-btn');
+    if (exportButton) exportButton.disabled = !_selectedBatch;
     loadResults();
+    loadDistribution();
+    refreshVerificationStatus();
   });
 
   window.__verifyRun = startVerification;
   window.__verifyCancel = cancelVerification;
+  window.__verifyExport = exportVerificationResults;
   window.__verifyQuick = quickVerify;
   window.__verifyFilter = filterResults;
 
   // Initial load
   loadResults();
   loadDistribution();
+  refreshVerificationStatus();
 }
 
 // ── Status Cards ─────────────────────────────────────────────
@@ -180,20 +190,46 @@ async function startVerification() {
   if (progressWrap) progressWrap.style.display = 'block';
 
   try {
-    await fetch(`/api/verify/batch/${_selectedBatch}`, { method: 'POST' });
-    startPolling();
+    const result = await Verify.startBatch(_selectedBatch);
+    renderVerificationProgress(result);
+    if (result.active) startPolling();
+    else { stopPolling(); loadResults(); loadDistribution(); }
   } catch (err) {
     console.error('Failed to start verification:', err);
     if (runBtn) runBtn.style.display = 'inline-flex';
     if (cancelBtn) cancelBtn.style.display = 'none';
-    if (progressWrap) progressWrap.style.display = 'none';
+    if (progressWrap) progressWrap.style.display = 'block';
+    const current = document.getElementById('verify-progress-current');
+    if (current) current.textContent = userFacingError(err, 'Verification could not start. Try again.');
   }
 }
 
+async function exportVerificationResults() {
+  if (!_selectedBatch) return;
+  const button = document.getElementById('verify-export-btn');
+  if (button) button.disabled = true;
+  try {
+    const { blob, filename } = await Verify.exportCsv(_selectedBatch, _activeFilter || undefined);
+    downloadBlobFile(blob, filename);
+    notify('Verification results exported.');
+  } catch (error) {
+    notify(error.message || 'Could not export verification results.', 'error');
+  } finally {
+    if (button) button.disabled = !_selectedBatch;
+  }
+}
 async function cancelVerification() {
   try {
-    await fetch(`/api/verify/batch/${_selectedBatch}/cancel`, { method: 'POST' });
-  } catch { /* ignore */ }
+    const batchId = _activeVerificationBatch || _selectedBatch;
+    const result = await Verify.cancelBatch(batchId);
+    notify(result?.cancelling
+      ? 'Cancellation requested. The active check will stop at its next safe checkpoint.'
+      : 'There is no active verification job to cancel.', result?.cancelling ? 'info' : 'warning');
+    await pollStatus();
+  } catch (error) {
+    const current = document.getElementById('verify-progress-current');
+    if (current) current.textContent = userFacingError(error, 'Could not cancel verification. Try again.');
+  }
 }
 
 // ── Polling ──────────────────────────────────────────────────
@@ -213,35 +249,74 @@ function stopPolling() {
   if (cancelBtn) cancelBtn.style.display = 'none';
 }
 
+async function refreshVerificationStatus() {
+  try {
+    const data = await Verify.status(_selectedBatch);
+    renderVerificationProgress(data);
+    if (data.active) startPolling();
+    else stopPolling();
+  } catch (error) {
+    const current = document.getElementById('verify-progress-current');
+    if (current) current.textContent = error.message;
+  }
+}
+
+function renderVerificationProgress(data) {
+  const runBtn = document.getElementById('verify-run-btn');
+  const cancelBtn = document.getElementById('verify-cancel-btn');
+  const progressWrap = document.getElementById('verify-progress-wrap');
+  const fill = document.getElementById('verify-progress-fill');
+  const text = document.getElementById('verify-progress-text');
+  const current = document.getElementById('verify-progress-current');
+  const active = data.active === true;
+  _activeVerificationBatch = active ? Number(data.batchId) : null;
+  if (runBtn) runBtn.disabled = !_selectedBatch || active;
+  if (cancelBtn) cancelBtn.style.display = active ? 'inline-flex' : 'none';
+  if (progressWrap) progressWrap.style.display = data.jobId ? 'block' : 'none';
+  if (!data.jobId) return;
+
+  const total = Number(data.total) || 0;
+  const processed = Number(data.processed) || 0;
+  const pct = total > 0 ? Math.min(100, Math.round((processed / total) * 100)) : (data.status === 'completed' ? 100 : 0);
+  if (fill) fill.style.width = `${pct}%`;
+  const label = data.status === 'completed' ? 'Completed'
+    : data.status === 'cancel_requested' ? 'Cancellation requested'
+      : data.status === 'cancelled' ? 'Cancelled'
+        : data.status === 'interrupted' ? 'Interrupted after restart'
+          : data.status === 'failed' ? 'Failed'
+            : active ? 'In progress' : data.status || 'Verification';
+  if (text) text.textContent = `${label} · ${processed}/${total} contacts · ${pct}%`;
+  if (current) {
+    if (data.errorMessage) current.textContent = data.errorMessage;
+    else if (active && data.currentEmail) current.textContent = `Checking: ${data.currentEmail}`;
+    else if (active && Number(data.batchId) !== Number(_selectedBatch)) current.textContent = `This job is running for batch #${data.batchId}.`;
+    else if (data.status === 'interrupted') current.textContent = 'The interrupted job was not restarted to avoid repeating provider checks. Start a new run to process remaining contacts.';
+    else current.textContent = '';
+  }
+}
+
 async function pollStatus() {
   try {
-    const res = await fetch('/api/verify/status');
-    const data = await res.json();
-
-    if (!data.active && data.processed > 0) {
+    const data = await Verify.status(_selectedBatch);
+    renderVerificationProgress(data);
+    if (!data.active) {
       stopPolling();
-      loadResults();
-      loadDistribution();
+      if (data.jobId) {
+        loadResults();
+        loadDistribution();
+      }
       return;
     }
-
-    if (!data.active) return;
-
-    const fill = document.getElementById('verify-progress-fill');
-    const text = document.getElementById('verify-progress-text');
-    const current = document.getElementById('verify-progress-current');
-    const pct = data.total > 0 ? Math.round((data.processed / data.total) * 100) : 0;
-
-    if (fill) fill.style.width = `${pct}%`;
-    if (text) text.textContent = `${data.processed}/${data.total} emails verified (${pct}%)`;
-    if (current) current.textContent = data.currentEmail ? `Checking: ${data.currentEmail}` : '';
 
     // Also refresh results periodically
     if (data.processed > 0 && data.processed % 5 === 0) {
       loadResults();
       loadDistribution();
     }
-  } catch { /* ignore */ }
+  } catch (error) {
+    const current = document.getElementById('verify-progress-current');
+    if (current) current.textContent = userFacingError(error, 'Could not read verification progress.');
+  }
 }
 
 // ── Load Results ─────────────────────────────────────────────
@@ -249,11 +324,7 @@ async function loadResults() {
   if (!_selectedBatch) return;
 
   try {
-    let url = `/api/verify/results/${_selectedBatch}?limit=200`;
-    if (_activeFilter) url += `&status=${_activeFilter}`;
-
-    const res = await fetch(url);
-    const data = await res.json();
+    const data = await Verify.results(_selectedBatch, { limit: 200, status: _activeFilter || undefined });
 
     const container = document.getElementById('verify-results');
     if (!container) return;
@@ -275,6 +346,7 @@ async function loadResults() {
             <th>Email</th>
             <th>Business</th>
             <th>Status</th>
+            <th>Verifier score</th>
             <th>MX</th>
             <th>Checks</th>
             <th>Flags</th>
@@ -291,72 +363,19 @@ async function loadResults() {
       </div>`;
 
   } catch (err) {
-    console.error('Failed to load results:', err);
+    const container = document.getElementById('verify-results');
+    if (container) container.innerHTML = `<div class="empty-state"><p>${userFacingError(err, 'Verification results could not load.')}</p></div>`;
   }
 }
 
 function renderResultRow(r) {
-  const statusClass = {
-    deliverable: 'badge-deliverable',
-    risky: 'badge-risky',
-    undeliverable: 'badge-undeliverable',
-    unknown: 'badge-unknown',
-  }[r.verification_status] || 'badge-unknown';
-
-  const statusIcon = {
-    deliverable: '✓',
-    risky: '⚠',
-    undeliverable: '✗',
-    unknown: '?',
-  }[r.verification_status] || '?';
-
-  // Parse flags
-  const flags = [];
-  if (r.is_role_account) flags.push('<span class="flag-tag role">Role</span>');
-  if (r.is_free_provider) flags.push('<span class="flag-tag free">Free</span>');
-  if (r.is_disposable) flags.push('<span class="flag-tag disposable">Disposable</span>');
-  if (r.is_catch_all) flags.push('<span class="flag-tag catchall">Catch-all</span>');
-
-  // Parse checks
-  let checks = {};
-  try { checks = JSON.parse(r.verification_json || '{}').checks || {}; } catch { /* */ }
-
-  const checkIcons = ['regex', 'mx', 'disposable', 'smtp'].map(k => {
-    const v = checks[k];
-    if (v === true) return `<span class="check-dot pass" title="${k}: pass">✓</span>`;
-    if (v === false) return `<span class="check-dot fail" title="${k}: fail">✗</span>`;
-    return `<span class="check-dot skip" title="${k}: skipped">–</span>`;
-  }).join('');
-
-  const timeAgo = r.verified_at ? relTime(r.verified_at) : '—';
-
-  return `
-    <tr class="verify-row" data-id="${r.id}">
-      <td class="cell-email">
-        <span class="email-text">${r.email}</span>
-      </td>
-      <td>${r.business_name || '—'}</td>
-      <td>
-        <span class="status-badge ${statusClass}">
-          ${statusIcon} ${r.verification_status || 'unknown'}
-        </span>
-      </td>
-      <td class="cell-mx">${r.mx_host || '—'}</td>
-      <td class="cell-checks">${checkIcons}</td>
-      <td class="cell-flags">${flags.join('') || '—'}</td>
-      <td class="cell-time">${timeAgo}</td>
-      <td>
-        <button class="btn-xs" onclick="window.__reverifyEmail(${r.id})" title="Re-verify">↻</button>
-      </td>
-    </tr>`;
+  return renderVerificationResultRow(r, relTime);
 }
 
 // ── Load Distribution ────────────────────────────────────────
 async function loadDistribution() {
   try {
-    const url = _selectedBatch ? `/api/verify/distribution?batch_id=${_selectedBatch}` : '/api/verify/distribution';
-    const res = await fetch(url);
-    const data = await res.json();
+    const data = await Verify.distribution(_selectedBatch);
 
     const counts = { deliverable: 0, risky: 0, undeliverable: 0, unknown: 0 };
     for (const row of data) {
@@ -378,8 +397,7 @@ async function loadDistribution() {
 
   // Update Reacher status badge
   try {
-    const rRes = await fetch('/api/verify/reacher-status');
-    const rData = await rRes.json();
+    const rData = await Verify.reacherStatus();
     const badge = document.getElementById('reacher-engine-badge');
     if (badge) {
       if (rData.available) {
@@ -411,108 +429,16 @@ async function quickVerify() {
   resultEl.style.display = 'none';
 
   try {
-    const res = await fetch('/api/verify/single', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email }),
-    });
-    const data = await res.json();
-    const r = data.result;
-
-    const statusClass = {
-      deliverable: 'badge-deliverable',
-      risky: 'badge-risky',
-      undeliverable: 'badge-undeliverable',
-      unknown: 'badge-unknown',
-    }[r.verification_status] || 'badge-unknown';
-
-    const smtpDisplay = r.checks.smtp === true
-      ? '<span style="color:var(--system-green);font-weight:600">✓ Accepted (250 OK)</span>'
-      : r.checks.smtp === false
-        ? '<span style="color:var(--system-red);font-weight:600">✗ Rejected (Mailbox Does Not Exist)</span>'
-        : '<span style="color:var(--system-orange)">⚠ Unconfirmed (Port 25 Socket Blocked)</span>';
-
-    const score = r.score ?? (r.verification_status === 'deliverable' ? 95 : r.verification_status === 'risky' ? 65 : 0);
-    const scoreColor = score >= 80 ? 'var(--system-green)' : score >= 50 ? 'var(--system-orange)' : 'var(--system-red)';
-    const attrs = r.attributes || {
-      free: r.is_free_provider || false,
-      role: r.is_role_account || false,
-      disposable: r.is_disposable || false,
-      accept_all: r.is_catch_all || false,
-      tag: false,
-      numerical_characters: 0,
-      alphabetical_characters: (r.email.split('@')[0] || '').length,
-      unicode_symbols: 0,
-      mailbox_full: false,
-      no_reply: false,
-      secure_email_gateway: false,
-    };
-    const ms = r.mail_server || {
-      smtp_provider: r.is_free_provider ? 'Google' : 'Custom Mail Server',
-      mx_record: r.mx_host || '—',
-      implicit_mx_record: false,
-    };
-
-    resultEl.innerHTML = `
-      <div class="audit-card-container" style="background:var(--bg-elevated);border:1px solid var(--glass-border);border-radius:var(--radius-md);padding:16px;margin-top:12px">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--border)">
-          <div>
-            <div style="font-size:0.72rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em">Deliverability Audit Score</div>
-            <div style="font-size:2.2rem;font-weight:800;color:${scoreColor};font-family:var(--mono);line-height:1">
-              ${score} <span style="font-size:0.95rem;color:var(--text-secondary);font-weight:500">/ 100 (${r.score_multiplier || '0.95x'})</span>
-            </div>
-          </div>
-          <div style="text-align:right">
-            <span class="status-badge ${statusClass}" style="font-size:0.85rem;padding:6px 14px;letter-spacing:0.04em">${(r.general?.state || r.verification_status).toUpperCase()}</span>
-            <div style="font-size:0.75rem;color:var(--text-secondary);margin-top:5px">Reason: <strong style="color:var(--text-primary)">${r.general?.reason || 'Accepted Email'}</strong></div>
-          </div>
-        </div>
-
-        <div class="grid cols-3 gap-12" style="font-size:0.78rem">
-          <!-- General & Domain -->
-          <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05);border-radius:var(--radius-sm);padding:12px">
-            <div style="font-weight:700;margin-bottom:8px;color:var(--system-blue);font-size:0.82rem">General & Domain</div>
-            <div class="quick-detail" style="margin-bottom:4px"><strong>Domain:</strong> ${r.general?.domain || (r.email.split('@')[1])}</div>
-            <div class="quick-detail" style="margin-bottom:4px"><strong>State:</strong> ${r.general?.state || 'Deliverable'}</div>
-            <div class="quick-detail" style="margin-bottom:4px"><strong>Reason:</strong> ${r.general?.reason || 'Accepted Email'}</div>
-            <div class="quick-detail" style="margin-bottom:4px"><strong>Syntax:</strong> ${r.checks.regex ? '✓ Valid RFC' : '✗ Invalid Format'}</div>
-          </div>
-
-          <!-- Attributes -->
-          <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05);border-radius:var(--radius-sm);padding:12px">
-            <div style="font-weight:700;margin-bottom:8px;color:var(--system-purple);font-size:0.82rem">Attributes</div>
-            <div class="quick-detail" style="margin-bottom:3px"><strong>Free:</strong> ${attrs.free ? 'Yes' : 'No'} (${r.score_multiplier || '0.95x'})</div>
-            <div class="quick-detail" style="margin-bottom:3px"><strong>Role:</strong> ${attrs.role ? 'Yes' : 'No'}</div>
-            <div class="quick-detail" style="margin-bottom:3px"><strong>Disposable:</strong> ${attrs.disposable ? '⚠ Yes' : 'No'}</div>
-            <div class="quick-detail" style="margin-bottom:3px"><strong>Accept-All:</strong> ${attrs.accept_all ? 'Yes' : 'No'}</div>
-            <div class="quick-detail" style="margin-bottom:3px"><strong>Tag (+):</strong> ${attrs.tag ? 'Yes' : 'No'}</div>
-            <div class="quick-detail" style="margin-bottom:3px"><strong>Alphabetical Chars:</strong> ${attrs.alphabetical_characters ?? 0}</div>
-            <div class="quick-detail" style="margin-bottom:3px"><strong>Numerical Chars:</strong> ${attrs.numerical_characters ?? 0}</div>
-            <div class="quick-detail" style="margin-bottom:3px"><strong>Unicode Symbols:</strong> ${attrs.unicode_symbols ?? 0}</div>
-            <div class="quick-detail" style="margin-bottom:3px"><strong>Mailbox Full:</strong> ${attrs.mailbox_full ? 'Yes' : 'No'}</div>
-            <div class="quick-detail" style="margin-bottom:3px"><strong>No Reply:</strong> ${attrs.no_reply ? 'Yes' : 'No'}</div>
-            <div class="quick-detail" style="margin-bottom:3px"><strong>Secure Gateway:</strong> ${attrs.secure_email_gateway ? 'Yes' : 'No'}</div>
-          </div>
-
-          <!-- Mail Server -->
-          <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05);border-radius:var(--radius-sm);padding:12px">
-            <div style="font-weight:700;margin-bottom:8px;color:var(--system-green);font-size:0.82rem">Mail Server</div>
-            <div class="quick-detail" style="margin-bottom:4px"><strong>SMTP Provider:</strong> ${ms.smtp_provider || 'Google'}</div>
-            <div class="quick-detail" style="margin-bottom:4px"><strong>MX Record:</strong> ${ms.mx_record || r.mx_host || '—'}</div>
-            <div class="quick-detail" style="margin-bottom:4px"><strong>Implicit MX Record:</strong> ${ms.implicit_mx_record ? 'Yes' : 'No'}</div>
-            <div class="quick-detail" style="margin-bottom:4px"><strong>SMTP Socket:</strong> ${smtpDisplay}</div>
-          </div>
-        </div>
-      </div>`;
+    const data = await Verify.verifySingle(email);
+    resultEl.innerHTML = renderQuickVerificationResult(data.result);
     resultEl.style.display = 'block';
   } catch (err) {
-    resultEl.innerHTML = `<div class="quick-result-error">Error: ${err.message}</div>`;
+    resultEl.innerHTML = renderQuickVerificationError(userFacingError(err, 'Email verification could not be completed.'));
     resultEl.style.display = 'block';
   } finally {
     if (btn) { btn.disabled = false; btn.textContent = 'Verify'; }
   }
 }
-
 // ── Filter ───────────────────────────────────────────────────
 function filterResults(tabEl, filter) {
   _activeFilter = filter || null;
@@ -523,12 +449,16 @@ function filterResults(tabEl, filter) {
 
 // ── Re-verify single ────────────────────────────────────────
 window.__reverifyEmail = async function(id) {
+  const trigger = document.activeElement instanceof HTMLButtonElement ? document.activeElement : null;
+  if (trigger) trigger.disabled = true;
   try {
-    await fetch(`/api/verify/email/${id}`, { method: 'POST' });
-    loadResults();
-    loadDistribution();
+    await Verify.reVerify(id);
+    await Promise.all([loadResults(), loadDistribution()]);
+    notify('Email verification completed.');
   } catch (err) {
-    console.error('Re-verify error:', err);
+    notify(userFacingError(err, 'Email could not be re-verified.'), 'error');
+  } finally {
+    if (trigger?.isConnected) trigger.disabled = false;
   }
 };
 

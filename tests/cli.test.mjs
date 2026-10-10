@@ -27,6 +27,25 @@ test('unknown commands and missing arguments exit unsuccessfully', () => {
   assert.equal(cli(['import']).status, 1);
   assert.equal(cli(['template']).status, 1);
 });
+test('lead discovery refuses the unofficial Google Maps scraper without creating a batch', () => {
+  const discoveryDbPath = path.join(directory, 'discovery-safety.db');
+  const result = cli(['discover', '--niche', 'dentists', '--geo', 'Pune'], { ODD_DB_PATH: discoveryDbPath });
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /Automated Google Maps scraping is disabled/);
+  assert.match(result.stderr, /authorized to use/);
+  const db = new Database(discoveryDbPath, { readonly: true });
+  try {
+    assert.equal(db.prepare('SELECT COUNT(*) AS n FROM batches').get().n, 0);
+    assert.equal(db.prepare('SELECT COUNT(*) AS n FROM leads').get().n, 0);
+  } finally { db.close(); }
+});
+test('legacy scraper exports fail closed before attempting Docker or writing results', async () => {
+  const { GOOGLE_MAPS_SCRAPER_DISABLED, runScraper, ensureDockerImage, isDockerAvailable } = await import('../pipeline/scraper.js');
+  await assert.rejects(runScraper(path.join(directory, 'unused-query.txt')), new RegExp(GOOGLE_MAPS_SCRAPER_DISABLED));
+  await assert.rejects(ensureDockerImage(), new RegExp(GOOGLE_MAPS_SCRAPER_DISABLED));
+  assert.equal(await isDockerAvailable(), false);
+  assert.equal(existsSync(path.join(directory, 'unused-query.txt')), false);
+});
 test('fixture seed is refused outside test environment without creating a DB', () => {
   const unsafePath = path.join(directory, 'must-not-create.db');
   const result = cli(['seed'], { NODE_ENV: 'production', ODD_DB_PATH: unsafePath });

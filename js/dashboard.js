@@ -1,9 +1,10 @@
 import { Stats, Batches, Events, Sending, relTime, fmtNum } from './api.js';
 import { escapeHtml, icon, notify, openDialog } from './ui.js';
+import { dashboardLeadTotal } from './dashboard-metrics.js';
 
 const stages = [['discovered', 'Discovered', '01'], ['site_checked', 'Qualified', '02'], ['verified', 'Verified', '03'], ['awaiting_approval', 'In review', '04'], ['queued', 'Queued', '05'], ['sent', 'Sent', '06'], ['replied', 'Replied', '07'], ['won', 'Won', '08']];
 const eventsConfig = {
-  replied: ['mail', 'Reply received'], opened: ['activity', 'Open signal'], delivered: ['check', 'Delivery confirmed'], sent: ['send', 'Email accepted'], verified: ['shield', 'Email verified'], site_check: ['globe', 'Site checked'], approved: ['check', 'Copy approved'], discovered: ['people', 'Lead discovered'], hard_bounce: ['activity', 'Hard bounce'], soft_bounce: ['activity', 'Soft bounce'], spam_complaint: ['shield', 'Complaint'], send_failed: ['activity', 'Send failed'],
+  replied: ['mail', 'Reply received'], opened: ['activity', 'Open signal'], delivered: ['check', 'Delivery confirmed'], sent: ['send', 'Email accepted'], send_submission_uncertain: ['activity', 'SMTP outcome unknown — review required'], verified: ['shield', 'Email verified'], site_check: ['globe', 'Site checked'], approved: ['check', 'Copy approved'], discovered: ['people', 'Lead discovered'], hard_bounce: ['activity', 'Hard bounce'], soft_bounce: ['activity', 'Soft bounce'], spam_complaint: ['shield', 'Complaint'], send_failed: ['activity', 'Send failed'],
 };
 
 export async function renderDashboard(container) {
@@ -18,7 +19,7 @@ export async function renderDashboard(container) {
   const eventList = Array.isArray(events) ? events : [];
   const mailboxes = Array.isArray(mailboxResult.data) ? mailboxResult.data : mailboxResult.data?.mailboxes;
   const mailboxCount = Array.isArray(mailboxes) ? mailboxes.length : null;
-  const totalLeads = Object.values(f).reduce((sum, value) => sum + (Number(value) || 0), 0);
+  const totalLeads = dashboardLeadTotal(f);
   const sentCount = Number(s.sent) || 0; const replyCount = Number(f.replied) || 0;
   const replyRate = sentCount ? `${(replyCount / sentCount * 100).toFixed(1)}%` : '—';
   const activeBatches = batchList.filter(batch => !['closed', 'archived'].includes(batch.status));

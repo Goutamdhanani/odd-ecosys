@@ -5,13 +5,47 @@
 // ============================================================
 
 import { Sending, fmtNum, relTime } from './api.js';
-import { icon } from './ui.js';
+import { confirmAction, escapeHtml, icon, notify, showFieldError } from './ui.js';
 
 let _mailboxes = [];
 let _activeMailboxForTest = null;
+let _activeMailboxForImap = null;
 let _activeDnsModalData = null;
+const mailboxModalIds = ['modal-add-mailbox', 'modal-imap-config', 'modal-test-email', 'modal-dns-sheet'];
+const mailboxModalOrigins = new WeakMap();
+
+function presentMailboxModal(modal) {
+  if (!modal) return;
+  if (!mailboxModalOrigins.has(modal)) {
+    const placeholder = document.createComment('mailbox-modal-origin');
+    modal.parentNode?.insertBefore(placeholder, modal);
+    mailboxModalOrigins.set(modal, placeholder);
+    document.body.append(modal);
+  }
+  modal.style.display = 'flex';
+}
+
+function dismissMailboxModal(modalOrId) {
+  const modal = typeof modalOrId === 'string' ? document.getElementById(modalOrId) : modalOrId;
+  if (!modal) return;
+  modal.style.display = 'none';
+  const placeholder = mailboxModalOrigins.get(modal);
+  if (!placeholder) return;
+  if (placeholder.parentNode) {
+    placeholder.parentNode.insertBefore(modal, placeholder);
+    placeholder.remove();
+  } else {
+    modal.remove();
+  }
+  mailboxModalOrigins.delete(modal);
+}
+
+function dismissAllMailboxModals() {
+  mailboxModalIds.forEach(dismissMailboxModal);
+}
 
 export async function renderMailboxes(container) {
+  window.__closeMailboxModals?.();
   container.innerHTML = `<div class="loading-state"><div class="spinner"></div><span>Loading mailbox fleet…</span></div>`;
 
   const data = await Sending.mailboxes();
@@ -23,7 +57,9 @@ export async function renderMailboxes(container) {
   const retired  = _mailboxes.filter(m => m.warmup_status === 'retired');
 
   const totalTodaySent = _mailboxes.reduce((s, m) => s + (m.today_sent || 0), 0);
+  const totalTodayReserved = _mailboxes.reduce((s, m) => s + (m.today_reserved || 0), 0);
   const totalCapacity = eligible.reduce((s, m) => s + (m.daily_limit || 0), 0);
+  const capacityUsedToday = totalTodaySent + totalTodayReserved;
   const avgHealth = eligible.length > 0
     ? Math.round(eligible.reduce((s, m) => s + (m.health_score || 0), 0) / eligible.length)
     : null;
@@ -68,7 +104,7 @@ export async function renderMailboxes(container) {
   <div class="kpi-grid-4 mb-16">
     ${[
       { label: 'Active Mailboxes',  val: eligible.length, sub: `${totalCapacity} daily capacity`, color: 'var(--system-green)', icon: '✓' },
-      { label: "Today's Sends",     val: totalTodaySent,  sub: `${totalCapacity > 0 ? Math.round((totalTodaySent/totalCapacity)*100) : 0}% capacity used`, color: 'var(--system-blue)', icon: '→' },
+      { label: "Today's Sends",     val: totalTodaySent,  sub: `${totalTodayReserved} reserved · ${totalCapacity > 0 ? Math.round((capacityUsedToday/totalCapacity)*100) : 0}% of daily cap used`, color: 'var(--system-blue)', icon: '→' },
       { label: 'Average health score', val: avgHealth ?? '—', sub: avgHealth === null ? 'No active mailbox observations' : 'Derived fleet score · not inbox placement', color: 'var(--system-cyan)', icon: '◎' },
       { label: 'Warming Mailboxes', val: warming.length,  sub: 'in warmup ramp', color: 'var(--system-orange)', icon: '⏳' },
     ].map(k => `
@@ -98,7 +134,8 @@ export async function renderMailboxes(container) {
       </div>` : `
       <div style="display:flex;flex-direction:column;gap:12px">
         ${eligible.map(m => {
-          const usedPct = m.daily_limit > 0 ? Math.min(100, Math.round(((m.today_sent || 0) / m.daily_limit) * 100)) : 0;
+          const used = (m.today_sent || 0) + (m.today_reserved || 0);
+          const usedPct = m.daily_limit > 0 ? Math.min(100, Math.round((used / m.daily_limit) * 100)) : 0;
           const barColor = m.health_score >= 80 ? 'var(--system-green)' : m.health_score >= 50 ? 'var(--system-orange)' : 'var(--system-red)';
           return `
           <div>
@@ -108,7 +145,7 @@ export async function renderMailboxes(container) {
                 ${m.from_name ? `<span style="color:var(--text-muted);font-weight:400;margin-left:6px">("${m.from_name}")</span>` : ''}
               </span>
               <span style="font-size:0.75rem;color:var(--text-secondary)">
-                ${m.today_sent || 0} / ${m.daily_limit} sent (${usedPct}%) · Score: <strong style="color:${barColor}">${m.health_score}</strong>
+                ${m.today_sent || 0} accepted + ${m.today_reserved || 0} reserved / ${m.daily_limit} daily cap (${usedPct}%) · Score: <strong style="color:${barColor}">${m.health_score}</strong>
               </span>
             </div>
             <div class="progress-track" style="height:7px">
@@ -153,20 +190,20 @@ export async function renderMailboxes(container) {
         <button onclick="window.__closeAddMailboxModal()" class="drawer-close">✕</button>
       </div>
       <div class="pers-modal-body">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
+        <div class="mailbox-connection-fields">
           <div>
-            <label class="form-label">Email Address *</label>
+            <label class="form-label" for="new-mb-email">Email Address *</label>
             <input id="new-mb-email" type="email" class="filter-input" placeholder="outreach@yourdomain.com" style="width:100%" oninput="window.__onEmailChange(this.value)" />
           </div>
           <div>
-            <label class="form-label">From Display Name</label>
+            <label class="form-label" for="new-mb-fromname">From Display Name</label>
             <input id="new-mb-fromname" type="text" class="filter-input" placeholder="Alex Rivers" style="width:100%" />
           </div>
         </div>
 
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
+        <div class="mailbox-connection-fields">
           <div>
-            <label class="form-label">Email Provider Preset</label>
+            <label class="form-label" for="new-mb-provider">Email Provider Preset</label>
             <select id="new-mb-provider" class="filter-select" style="width:100%" onchange="window.__onProviderPresetChange(this.value)">
               <option value="gmail">Google Workspace / Gmail</option>
               <option value="outlook">Microsoft 365 / Outlook</option>
@@ -175,7 +212,7 @@ export async function renderMailboxes(container) {
             </select>
           </div>
           <div>
-            <label class="form-label">Daily Send Limit</label>
+            <label class="form-label" for="new-mb-limit">Daily Send Limit</label>
             <input id="new-mb-limit" type="number" class="filter-input" value="40" style="width:100%" />
           </div>
         </div>
@@ -184,23 +221,24 @@ export async function renderMailboxes(container) {
           <div style="font-size:0.75rem;font-weight:700;color:var(--text-primary);margin-bottom:10px;text-transform:uppercase;letter-spacing:0.05em">
             SMTP Transmission Credentials (Optional for Live Sending)
           </div>
-          <div style="display:grid;grid-template-columns:2fr 1fr;gap:10px;margin-bottom:10px">
+          <p style="font-size:0.72rem;line-height:1.5;color:var(--text-secondary);margin:0 0 12px">The server encrypts saved passwords at rest. Configure its private credential key before saving a password; the key is never shown in this workspace.</p>
+          <div class="mailbox-connection-host-port">
             <div>
-              <label class="form-label">SMTP Host</label>
+              <label class="form-label" for="new-mb-host">SMTP Host</label>
               <input id="new-mb-host" type="text" class="filter-input" placeholder="smtp.yourdomain.com" style="width:100%" />
             </div>
             <div>
-              <label class="form-label">Port</label>
+              <label class="form-label" for="new-mb-port">Port</label>
               <input id="new-mb-port" type="number" class="filter-input" value="587" style="width:100%" />
             </div>
           </div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <div class="mailbox-connection-fields mailbox-connection-credentials">
             <div>
-              <label class="form-label">SMTP Username</label>
+              <label class="form-label" for="new-mb-user">SMTP Username</label>
               <input id="new-mb-user" type="text" class="filter-input" placeholder="username or email" style="width:100%" />
             </div>
             <div>
-              <label class="form-label">SMTP Password / App Key</label>
+              <label class="form-label" for="new-mb-pass">SMTP Password / App Key</label>
               <input id="new-mb-pass" type="password" class="filter-input" placeholder="••••••••••••" style="width:100%" />
             </div>
           </div>
@@ -217,12 +255,40 @@ export async function renderMailboxes(container) {
     </div>
   </div>
 
+  <!-- IMAP receive configuration -->
+  <div id="modal-imap-config" class="pers-modal" style="display:none">
+    <div class="pers-modal-content">
+      <div class="pers-modal-header">
+        <span class="pers-modal-title" id="imap-config-title">Configure inbound mail</span>
+        <button onclick="window.__dismissMailboxModal('modal-imap-config')" class="drawer-close">✕</button>
+      </div>
+      <div class="pers-modal-body">
+        <p style="font-size:0.78rem;line-height:1.55;color:var(--text-secondary);margin:0 0 14px">IMAP passwords are encrypted with the server credential key. Connections require a valid TLS certificate; STARTTLS is mandatory when selected. Manual Inbox sync reads messages without marking them as read.</p>
+        <div class="mailbox-connection-host-port">
+          <div><label class="form-label" for="imap-host">IMAP Host</label><input id="imap-host" class="filter-input" placeholder="imap.yourdomain.com" style="width:100%" /></div>
+          <div><label class="form-label" for="imap-port">Port</label><input id="imap-port" type="number" min="1" max="65535" class="filter-input" value="993" style="width:100%" /></div>
+        </div>
+        <div style="margin-bottom:10px"><label class="form-label" for="imap-mode">TLS mode</label><select id="imap-mode" class="filter-select" style="width:100%"><option value="implicit">Implicit TLS (usually 993)</option><option value="starttls">Required STARTTLS (usually 143)</option></select></div>
+        <div class="mailbox-connection-fields mailbox-connection-credentials">
+          <div><label class="form-label" for="imap-user">IMAP Username</label><input id="imap-user" class="filter-input" autocomplete="username" style="width:100%" /></div>
+          <div><label class="form-label" for="imap-pass">IMAP Password / App Key</label><input id="imap-pass" type="password" class="filter-input" autocomplete="new-password" placeholder="Leave blank to keep the saved password" style="width:100%" /></div>
+        </div>
+        <div style="margin-top:10px"><label class="form-label" for="imap-aliases">Mailbox aliases</label><textarea id="imap-aliases" class="pers-textarea" rows="2" placeholder="replies@yourdomain.com, team@yourdomain.com" style="width:100%"></textarea><small style="color:var(--text-secondary)">Separate addresses with commas or new lines. Replies addressed to these aliases are matched back to this mailbox.</small></div>
+        <div id="imap-config-feedback" style="display:none;font-size:0.78rem;padding:8px 12px;border-radius:var(--radius-xs);margin-top:12px" role="status"></div>
+      </div>
+      <div class="pers-modal-footer">
+        <button class="btn btn-ghost btn-sm" onclick="window.__dismissMailboxModal('modal-imap-config')">Cancel</button>
+        <button class="btn btn-primary btn-sm" id="btn-save-imap-config" onclick="window.__saveImapConfig()">Save IMAP settings</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Send Test Email Modal -->
   <div id="modal-test-email" class="pers-modal" style="display:none">
     <div class="pers-modal-content">
       <div class="pers-modal-header">
         <span class="pers-modal-title" id="test-email-modal-title">Send Live Test Email</span>
-        <button onclick="document.getElementById('modal-test-email').style.display='none'" class="drawer-close">✕</button>
+        <button onclick="window.__dismissMailboxModal('modal-test-email')" class="drawer-close">✕</button>
       </div>
       <div class="pers-modal-body">
         <div style="margin-bottom:12px">
@@ -240,7 +306,7 @@ export async function renderMailboxes(container) {
         <div id="test-email-result" style="display:none;padding:10px 14px;border-radius:var(--radius-xs);font-size:0.8rem;margin-top:10px"></div>
       </div>
       <div class="pers-modal-footer">
-        <button class="btn btn-ghost btn-sm" onclick="document.getElementById('modal-test-email').style.display='none'">Cancel</button>
+        <button class="btn btn-ghost btn-sm" onclick="window.__dismissMailboxModal('modal-test-email')">Cancel</button>
         <button class="btn btn-primary btn-sm" id="btn-send-test-action" onclick="window.__executeSendTest()">
           🚀 Transmit Email
         </button>
@@ -253,7 +319,7 @@ export async function renderMailboxes(container) {
     <div class="pers-modal-content" style="max-width:600px">
       <div class="pers-modal-header">
         <span class="pers-modal-title" id="dns-modal-title">Live DNS Security Records</span>
-        <button onclick="document.getElementById('modal-dns-sheet').style.display='none'" class="drawer-close">✕</button>
+        <button onclick="window.__dismissMailboxModal('modal-dns-sheet')" class="drawer-close">✕</button>
       </div>
       <div class="pers-modal-body" id="dns-modal-body">
         Loading DNS records…
@@ -262,27 +328,29 @@ export async function renderMailboxes(container) {
   </div>`;
 
   // Global window bindings
+  window.__dismissMailboxModal = dismissMailboxModal;
+  window.__closeMailboxModals = dismissAllMailboxModals;
+
   window.__recomputeFleetHealth = async () => {
     await Sending.recomputeHealth();
     renderMailboxes(container);
   };
 
   window.__checkFleetWarmup = async () => {
-    const res = await Sending.warmupCheck();
-    if (res?.transitioned?.length > 0) {
-      alert(`🎉 ${res.transitioned.length} mailbox(es) reached target warmup and are now eligible!`);
-    } else {
-      alert('Warmup check complete. All mailboxes running on schedule.');
-    }
-    renderMailboxes(container);
+    try {
+      const res = await Sending.warmupCheck();
+      if (res?.transitioned?.length > 0) notify(`${res.transitioned.length} mailbox(es) reached their target warmup and are now eligible.`, 'success');
+      else notify('Warmup check complete. Mailboxes remain on their current schedules.', 'info');
+      await renderMailboxes(container);
+    } catch (error) { notify(error.message || 'Could not check mailbox warmup status.', 'error'); }
   };
 
   window.__openAddMailboxModal = () => {
-    document.getElementById('modal-add-mailbox').style.display = 'flex';
+    presentMailboxModal(document.getElementById('modal-add-mailbox'));
   };
 
   window.__closeAddMailboxModal = () => {
-    document.getElementById('modal-add-mailbox').style.display = 'none';
+    dismissMailboxModal('modal-add-mailbox');
   };
 
   window.__onEmailChange = (val) => {
@@ -320,27 +388,40 @@ export async function renderMailboxes(container) {
     const feedback = document.getElementById('add-mb-feedback');
 
     if (!email || !email.includes('@')) {
-      alert('Please enter a valid email address.');
+      showFieldError(document.getElementById('new-mb-email'), 'Enter a valid mailbox email address.');
+      document.getElementById('new-mb-email')?.focus();
       return;
     }
 
     const btn = document.getElementById('btn-save-mailbox');
     if (btn) btn.textContent = 'Saving & Verifying DNS…';
 
-    const result = await Sending.addMailbox({
-      email,
-      from_name: fromName,
-      provider,
-      daily_limit: parseInt(limit) || 40,
-      smtp_host: host,
-      smtp_port: parseInt(port) || 587,
-      smtp_user: user,
-      smtp_pass: pass,
-    });
-
-    if (btn) btn.textContent = 'Connect & Verify';
-    window.__closeAddMailboxModal();
-    renderMailboxes(container);
+    if (btn) btn.disabled = true;
+    if (feedback) { feedback.style.display = 'none'; feedback.textContent = ''; }
+    try {
+      const result = await Sending.addMailbox({
+        email,
+        from_name: fromName,
+        provider,
+        daily_limit: parseInt(limit) || 40,
+        smtp_host: host,
+        smtp_port: parseInt(port) || 587,
+        smtp_user: user,
+        smtp_pass: pass,
+      });
+      if (!result?.ok) throw new Error(result?.error || 'Mailbox could not be saved.');
+      window.__closeAddMailboxModal();
+      await renderMailboxes(container);
+    } catch (error) {
+      if (feedback) {
+        feedback.textContent = error.message || 'Mailbox could not be saved.';
+        feedback.style.display = 'block';
+        feedback.style.color = 'var(--system-red)';
+        feedback.setAttribute('role', 'alert');
+      }
+    } finally {
+      if (btn) { btn.textContent = 'Connect & Verify'; btn.disabled = false; }
+    }
   };
 
   window.__toggleMailboxStatus = async (id, currentStatus) => {
@@ -353,16 +434,19 @@ export async function renderMailboxes(container) {
   };
 
   window.__deleteMailbox = async (id, email) => {
-    if (!confirm(`Delete mailbox ${email}?`)) return;
-    await Sending.deleteMailbox(id);
-    renderMailboxes(container);
+    if (!await confirmAction({ title: 'Delete mailbox', message: `Delete ${email}? Saved send history and mailbox attribution will remain.` , confirmLabel: 'Delete mailbox', danger: true })) return;
+    try {
+      await Sending.deleteMailbox(id);
+      notify(`Mailbox ${email} deleted.`, 'success');
+      await renderMailboxes(container);
+    } catch (error) { notify(error.message || 'Could not delete this mailbox.', 'error'); }
   };
 
   window.__runDnsCheck = async (id, domain) => {
     const modal = document.getElementById('modal-dns-sheet');
     const body  = document.getElementById('dns-modal-body');
     const title = document.getElementById('dns-modal-title');
-    modal.style.display = 'flex';
+    presentMailboxModal(modal);
     title.textContent = `Live DNS Security — ${domain}`;
     body.innerHTML = '<div class="loading-state"><div class="spinner"></div><span>Querying DNS TXT, MX & DNSBL…</span></div>';
 
@@ -374,11 +458,70 @@ export async function renderMailboxes(container) {
   };
 
   window.__testSmtpHandshake = async (id, email) => {
-    const res = await Sending.testSmtp(id);
-    if (res.ok) {
-      alert(`✅ ${res.message}`);
-    } else {
-      alert(`❌ SMTP Test Failed:\n${res.error || res.message}`);
+    try {
+      const res = await Sending.testSmtp(id);
+      if (res.ok) notify(res.message || 'SMTP connection test succeeded.', 'success');
+      else notify(`SMTP test failed: ${res.error || res.message || 'The server did not accept the test.'}`, 'error');
+    } catch (error) { notify(`SMTP test failed: ${error.message || 'The connection could not be tested.'}`, 'error'); }
+  };
+
+  window.__openImapConfig = (id, email) => {
+    const mailbox = _mailboxes.find(item => Number(item.id) === Number(id));
+    if (!mailbox) return;
+    _activeMailboxForImap = Number(id);
+    document.getElementById('imap-config-title').textContent = `Inbound mail — ${email}`;
+    document.getElementById('imap-host').value = mailbox.imap_host || '';
+    document.getElementById('imap-port').value = mailbox.imap_port || (mailbox.imap_secure ? 993 : 143);
+    document.getElementById('imap-mode').value = mailbox.imap_secure ? 'implicit' : 'starttls';
+    document.getElementById('imap-user').value = mailbox.imap_user || '';
+    document.getElementById('imap-pass').value = '';
+    document.getElementById('imap-aliases').value = Array.isArray(mailbox.imap_aliases) ? mailbox.imap_aliases.join(', ') : '';
+    const feedback = document.getElementById('imap-config-feedback');
+    feedback.style.display = 'none';
+    feedback.textContent = '';
+    presentMailboxModal(document.getElementById('modal-imap-config'));
+  };
+
+  window.__saveImapConfig = async () => {
+    if (!_activeMailboxForImap) return;
+    const host = document.getElementById('imap-host').value.trim();
+    const port = Number(document.getElementById('imap-port').value);
+    const user = document.getElementById('imap-user').value.trim();
+    const pass = document.getElementById('imap-pass').value;
+    const aliases = document.getElementById('imap-aliases').value.split(/[;,\r\n]+/).map(address => address.trim()).filter(Boolean);
+    const mode = document.getElementById('imap-mode').value;
+    const feedback = document.getElementById('imap-config-feedback');
+    const button = document.getElementById('btn-save-imap-config');
+    if (!host || !Number.isInteger(port) || port < 1 || port > 65535 || !user) {
+      feedback.textContent = 'Enter a valid IMAP host, port, and username.';
+      feedback.style.display = 'block';
+      feedback.style.color = 'var(--system-red)';
+      return;
+    }
+    button.disabled = true;
+    button.textContent = 'Saving securely…';
+    try {
+      const settings = { imap_host: host, imap_port: port, imap_user: user, imap_secure: mode === 'implicit', imap_aliases: aliases };
+      if (pass) settings.imap_pass = pass;
+      await Sending.updateMailbox(_activeMailboxForImap, settings);
+      dismissMailboxModal('modal-imap-config');
+      await renderMailboxes(container);
+    } catch (error) {
+      feedback.textContent = error.message || 'IMAP settings could not be saved.';
+      feedback.style.display = 'block';
+      feedback.style.color = 'var(--system-red)';
+    } finally {
+      button.disabled = false;
+      button.textContent = 'Save IMAP settings';
+    }
+  };
+
+  window.__testImap = async (id) => {
+    try {
+      const result = await Sending.testImap(id);
+      notify(`IMAP verified over ${result.tlsMode === 'implicit_tls' ? 'implicit TLS' : 'required STARTTLS'} with a valid server certificate. INBOX contains ${result.messageCount} messages.`, 'success');
+    } catch (error) {
+      notify(`IMAP connection failed: ${error.message || 'Check the server and credentials.'}`, 'error');
     }
   };
 
@@ -389,7 +532,7 @@ export async function renderMailboxes(container) {
     const resultBox = document.getElementById('test-email-result');
     if (resultBox) resultBox.style.display = 'none';
     title.textContent = `Send Test Email from ${email}`;
-    modal.style.display = 'flex';
+    presentMailboxModal(modal);
   };
 
   window.__executeSendTest = async () => {
@@ -401,33 +544,30 @@ export async function renderMailboxes(container) {
     const btn       = document.getElementById('btn-send-test-action');
 
     if (!recipient) {
-      alert('Please enter a recipient email address.');
+      showFieldError(document.getElementById('test-recipient-email'), 'Enter the address that should receive this test message.');
+      document.getElementById('test-recipient-email')?.focus();
       return;
     }
 
-    if (btn) btn.textContent = 'Transmitting…';
-    const res = await Sending.sendTest(_activeMailboxForTest, {
-      toEmail: recipient,
-      subject,
-      body,
-    });
-
-    if (btn) btn.textContent = '🚀 Transmit Email';
-
-    if (resultBox) {
+    if (btn) { btn.textContent = 'Transmitting…'; btn.disabled = true; }
+    try {
+      const res = await Sending.sendTest(_activeMailboxForTest, { toEmail: recipient, subject, body });
+      if (!resultBox) return;
       resultBox.style.display = 'block';
       if (res.ok) {
         resultBox.style.background = 'rgba(48,209,88,0.15)';
         resultBox.style.border = '1px solid rgba(48,209,88,0.3)';
         resultBox.style.color = 'var(--system-green)';
-        resultBox.innerHTML = `✓ Transmitted successfully!<br><span class="mono" style="font-size:0.72rem;color:var(--text-secondary)">Message-ID: ${res.messageId} (${res.mode})</span>`;
+        resultBox.innerHTML = `✓ Transmitted successfully!<br><span class="mono" style="font-size:0.72rem;color:var(--text-secondary)">Message-ID: ${escapeHtml(res.messageId)} (${escapeHtml(res.mode)})</span>`;
       } else {
         resultBox.style.background = 'rgba(255,69,58,0.15)';
         resultBox.style.border = '1px solid rgba(255,69,58,0.3)';
         resultBox.style.color = 'var(--system-red)';
         resultBox.textContent = `Failed: ${res.error || 'Unknown transmission error'}`;
       }
-    }
+    } catch (error) {
+      if (resultBox) { resultBox.style.display = 'block'; resultBox.style.color = 'var(--system-red)'; resultBox.textContent = `Test failed: ${error.message || 'The server did not return a result.'}`; }
+    } finally { if (btn) { btn.textContent = '🚀 Transmit Email'; btn.disabled = false; } }
   };
 
   // Animate health rings after paint
@@ -442,20 +582,32 @@ export async function renderMailboxes(container) {
   }, 100));
 }
 
-function renderMailboxCard(m) {
+export function renderMailboxCard(m) {
   const score = Math.round(m.health_score || 100);
   const color = score >= 80 ? 'var(--system-green)' : score >= 50 ? 'var(--system-orange)' : 'var(--system-red)';
   const r = 26;
   const circ = 2 * Math.PI * r;
+  const dkimAuthenticated = m.dkim_status === 'aligned_verified';
+  const dkimRejected = m.dkim_status === 'unaligned_verified';
+  const dkimEvidence = dkimAuthenticated ? true : dkimRejected ? false : null;
+  const domainDnsblStatus = m.domain_dnsbl_status || m.blacklist_status || 'not_checked';
+  const inboxSyncSummary = !m.imap_configured
+    ? 'IMAP is not configured. Add inbound IMAP settings to receive messages.'
+    : m.imap_last_sync_error
+      ? `Last sync attempt failed${m.imap_last_sync_attempt_at ? ` ${relTime(m.imap_last_sync_attempt_at)}` : ''}: ${escapeHtml(m.imap_last_sync_error)}${m.imap_last_sync_success_at ? ` · Last successful sync ${relTime(m.imap_last_sync_success_at)}` : ''}`
+      : m.imap_last_sync_success_at
+        ? `Last successful sync ${relTime(m.imap_last_sync_success_at)} · ${fmtNum(m.imap_last_sync_imported || 0)} new · ${fmtNum(m.imap_last_sync_duplicates || 0)} already recorded · ${fmtNum(m.imap_last_sync_skipped || 0)} skipped`
+        : 'No Inbox sync recorded yet. Open Inbox and sync this mailbox to retrieve messages.';
 
   const dnsItems = [
     { label: 'SPF', ok: !!m.spf_ok },
-    { label: 'DKIM', ok: !!m.dkim_ok },
+    { label: 'DKIM', ok: dkimEvidence, title: m.dkim_status === 'signature_unverified'
+      ? 'A DNS selector key was observed; outgoing message signing and alignment are not verified.'
+      : 'Outgoing DKIM signature and alignment have not been verified.' },
     { label: 'DMARC', ok: !!m.dmarc_ok },
+    { label: 'A-RECORD DNSBL', ok: domainDnsblStatus === 'not_listed' ? true : domainDnsblStatus === 'listed' ? false : null,
+      title: `Domain A-record DNSBL: ${domainDnsblStatus}. This does not establish the SMTP relay's outbound IP reputation.` },
   ];
-  if (m.blacklisted) {
-    dnsItems.push({ label: 'BLACKLISTED', ok: false });
-  }
 
   const isConfigured = !!(m.smtp_host || m.smtp_user);
   const statusBadge = m.warmup_status === 'eligible'
@@ -496,13 +648,18 @@ function renderMailboxCard(m) {
     <div class="mailbox-meta">
       <div class="mailbox-email">${m.email}</div>
       <div class="mailbox-domain">
-        ${m.from_name ? `<strong>${m.from_name}</strong> · ` : ''}${m.domain} · ${m.provider || 'smtp'}
+        ${m.from_name ? `<strong>${m.from_name}</strong> · ` : ''}${m.domain} · ${m.provider || 'smtp'} · ${m.imap_configured ? 'IMAP connected' : 'IMAP not configured'}
+      </div>
+
+      <div class="mailbox-inbox-status" role="status" style="font-size:0.76rem;line-height:1.45;color:var(--text-secondary);margin-top:8px">
+        <span>${inboxSyncSummary}</span>
+        <a href="#inbox" class="btn-xs" style="margin-left:8px" aria-label="Open received mail for ${escapeHtml(m.email)}">View Inbox →</a>
       </div>
 
       <div class="mailbox-dns">
         ${dnsItems.map(d => `
-        <span class="dns-chip ${d.ok ? 'ok' : 'fail'}">
-          ${d.label} ${d.ok ? '✓' : '✗'}
+        <span class="dns-chip ${d.ok === true ? 'ok' : d.ok === false ? 'fail' : 'unknown'}"${d.title ? ` title="${escapeHtml(d.title)}"` : ''}>
+          ${d.label} ${d.ok === true ? '✓' : d.ok === false ? '✗' : '?'}
         </span>`).join('')}
         <button class="btn-xs" style="margin-left:auto" onclick="window.__runDnsCheck(${m.id},'${m.domain}')" title="Lookup real DNS records">
           🔍 DNS Records
@@ -514,10 +671,10 @@ function renderMailboxCard(m) {
       <div class="credit-bar-wrap">
         <div class="credit-bar-label">
           <span>Today's Volume</span>
-          <span class="mono">${m.today_sent || 0} / ${m.daily_limit || 0} sent</span>
+          <span class="mono">${m.today_sent || 0} accepted + ${m.today_reserved || 0} reserved / ${m.daily_limit || 0}</span>
         </div>
         <div class="credit-bar-track">
-          <div class="credit-bar-fill" style="width:${m.daily_limit > 0 ? Math.min(100, Math.round(((m.today_sent || 0) / m.daily_limit) * 100)) : 0}%;background:${color}"></div>
+          <div class="credit-bar-fill" style="width:${m.daily_limit > 0 ? Math.min(100, Math.round((((m.today_sent || 0) + (m.today_reserved || 0)) / m.daily_limit) * 100)) : 0}%;background:${color}"></div>
         </div>
       </div>
 
@@ -525,6 +682,12 @@ function renderMailboxCard(m) {
         <div style="display:flex;gap:6px">
           <button class="btn-xs" onclick="window.__testSmtpHandshake(${m.id},'${m.email}')" title="Test SMTP connection">
             🔌 Test SMTP
+          </button>
+          <button class="btn-xs" onclick="window.__openImapConfig(${m.id},'${m.email}')" title="Configure encrypted inbound IMAP credentials">
+            ⚙ IMAP settings
+          </button>
+          <button class="btn-xs" onclick="window.__testImap(${m.id})" title="Verify IMAP authentication and TLS">
+            ↓ Test IMAP
           </button>
           <button class="btn-xs" onclick="window.__openSendTestModal(${m.id},'${m.email}')" title="Send a test message">
             ✉ Send Test
@@ -543,7 +706,19 @@ function renderMailboxCard(m) {
   </div>`;
 }
 
-function renderDnsSheetBody(dnsData) {
+export function renderDnsSheetBody(dnsData) {
+  const domainDnsblStatus = dnsData.domain_dnsbl_status || dnsData.blacklist_status || 'not_checked';
+  const domainDnsblLabels = {
+    listed: ['✗ LISTED', 'var(--system-red)'],
+    not_listed: ['✓ NOT LISTED', 'var(--system-green)'],
+    unavailable: ['⚠ UNAVAILABLE', 'var(--system-orange)'],
+    not_checked: ['— NOT CHECKED', 'var(--text-secondary)'],
+    unknown: ['? UNKNOWN', 'var(--text-secondary)'],
+  };
+  const [domainDnsblLabel, domainDnsblColor] = domainDnsblLabels[domainDnsblStatus] || domainDnsblLabels.unknown;
+  const dkimDetail = dnsData.dkim_key_status === 'published'
+    ? `A valid DNS selector key was observed${dnsData.dkim_selector ? ` at “${escapeHtml(dnsData.dkim_selector)}”` : ''}; this app has not verified a captured outgoing DKIM signature or its alignment.`
+    : 'No verified outgoing DKIM signature or alignment evidence is available.';
   return `
   <div style="display:flex;flex-direction:column;gap:14px">
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px">
@@ -555,9 +730,10 @@ function renderDnsSheetBody(dnsData) {
       </div>
       <div class="kpi-card" style="padding:12px">
         <div class="kpi-label">DKIM Status</div>
-        <div style="font-weight:700;color:${dnsData.dkim_ok ? 'var(--system-green)' : 'var(--system-orange)'}">
-          ${dnsData.dkim_ok ? '✓ ALIGNED' : '⏳ UNCONFIRMED'}
+        <div aria-label="DKIM signature and alignment unverified" style="font-weight:700;color:var(--system-orange)">
+          ⏳ SIGNATURE / ALIGNMENT UNVERIFIED
         </div>
+        <div style="font-size:11px;color:var(--text-secondary);margin-top:6px;line-height:1.5">${dkimDetail}</div>
       </div>
       <div class="kpi-card" style="padding:12px">
         <div class="kpi-label">DMARC Policy</div>
@@ -566,12 +742,37 @@ function renderDnsSheetBody(dnsData) {
         </div>
       </div>
       <div class="kpi-card" style="padding:12px">
-        <div class="kpi-label">DNSBL Blacklist</div>
-        <div style="font-weight:700;color:${dnsData.blacklisted ? 'var(--system-red)' : 'var(--system-green)'}">
-          ${dnsData.blacklisted ? '✗ LISTED' : '✓ CLEAN'}
+        <div class="kpi-label">Domain A-record DNSBL</div>
+        <div style="font-weight:700;color:${domainDnsblColor}">
+          ${domainDnsblLabel}
         </div>
       </div>
     </div>
+
+    <div role="note" style="padding:12px 14px;border:1px solid rgba(255,190,80,0.25);border-radius:var(--radius-sm);background:rgba(255,190,80,0.06);color:var(--text-secondary);font-size:0.78rem;line-height:1.5">
+      <strong style="color:var(--system-orange)">SMTP sender-IP reputation: UNKNOWN.</strong>
+      The configured relay's actual outbound IP was not observed. The DNSBL checks below query only the listed domain A-record address${(dnsData.domain_a_records || []).length === 1 ? '' : 'es'} and do not establish whether the mailbox's sending IP is listed.
+    </div>
+
+    ${(dnsData.domain_a_records || []).length ? `
+    <div style="background:rgba(0,0,0,0.3);border:1px solid var(--glass-border);padding:10px 14px;border-radius:var(--radius-sm)">
+      <div style="font-size:0.7rem;font-weight:700;color:var(--text-muted);text-transform:uppercase">Queried domain IPv4 addresses</div>
+      <div class="mono" style="font-size:0.78rem;color:var(--system-cyan);word-break:break-all;margin-top:4px">${dnsData.domain_a_records.map(ip => escapeHtml(ip)).join(', ')}${dnsData.domain_a_records_truncated ? ` (${Number(dnsData.dnsbl_unchecked_domain_ip_count) || 'additional'} additional addresses not checked)` : ''}</div>
+    </div>` : ''}
+
+    ${(dnsData.dnsbl_checks || []).length ? `
+    <div style="background:rgba(0,0,0,0.3);border:1px solid var(--glass-border);padding:10px 14px;border-radius:var(--radius-sm)">
+      <div style="font-size:0.7rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;margin-bottom:8px">Observed DNSBL responses</div>
+      ${(dnsData.dnsbl_checks || []).map(check => {
+        const outcomeLabel = check.outcome === 'listed' ? 'LISTED' : check.outcome === 'not_listed' ? 'NOT LISTED' : check.outcome === 'unavailable' ? 'UNAVAILABLE' : 'NOT CHECKED';
+        const outcomeColor = check.outcome === 'listed' ? 'var(--system-red)' : check.outcome === 'not_listed' ? 'var(--system-green)' : 'var(--system-orange)';
+        const detail = check.response_codes?.length ? `Response: ${check.response_codes.map(code => escapeHtml(code)).join(', ')}` : check.error ? `Reason: ${escapeHtml(check.error)}` : '';
+        return `<div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start;font-size:0.76rem;margin-bottom:7px">
+          <span><span class="mono">${escapeHtml(check.checked_ip || '')}</span> · <span class="mono">${escapeHtml(check.blocklist || '')}</span>${detail ? `<br><span style="font-size:0.68rem;color:var(--text-muted)">${detail}</span>` : ''}</span>
+          <strong style="white-space:nowrap;color:${outcomeColor}">${outcomeLabel}</strong>
+        </div>`;
+      }).join('')}
+    </div>` : ''}
 
     ${dnsData.spf_record ? `
     <div style="background:rgba(0,0,0,0.3);border:1px solid var(--glass-border);padding:10px 14px;border-radius:var(--radius-sm)">

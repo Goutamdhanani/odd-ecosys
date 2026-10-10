@@ -43,3 +43,20 @@ test('B26: Reacher output stays unconfirmed without SMTP evidence and never fabr
   assert.equal(confirmed.verification_status, 'deliverable');
   assert.equal(confirmed.checks.smtp, true);
 });
+
+test('Gmail is classified as a free Google provider without claiming port 25 is blocked', () => {
+  const result = buildAuditResult('goutamdhanani@gmail.com', {
+    syntax: { is_valid_syntax: true, username: 'goutamdhanani', domain: 'gmail.com' },
+    mx: { accepts_mail: true, records: [{ exchange: 'gmail-smtp-in.l.google.com' }] },
+    misc: { is_disposable: false, is_role_account: false },
+    smtp: { can_connect_smtp: false, is_deliverable: null, is_catch_all: null, reason: 'smtp_connection_failed:ECONNREFUSED' },
+  }, {});
+
+  assert.equal(result.verification_status, 'risky', 'provider recognition must not be mistaken for mailbox-existence proof');
+  assert.equal(result.is_free_provider, true);
+  assert.equal(result.mail_server.smtp_provider, 'Google');
+  assert.equal(result.mx_host, 'gmail-smtp-in.l.google.com');
+  assert.equal(result.checks.smtp, null);
+  assert.equal(result.general.reason, 'SMTP Connection Unavailable');
+  assert.ok(!result.reasons.includes('smtp_unconfirmed_port25_blocked'));
+});

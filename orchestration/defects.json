@@ -53,41 +53,106 @@
     "id": "B04",
     "description": "`checkDomainDns()`: `dkim_ok` inferred from SPF + DMARC presence.",
     "acceptance": "Discover/configure actual selector, check key and captured message signature/alignment; missing selector is unknown. SPF/DMARC presence is not authentication success.",
-    "status": "pending",
-    "tests": [],
-    "evidence": []
+    "status": "implemented_unverified",
+    "tests": [
+      "tests/truthfulness.test.mjs",
+      "tests/sending.test.mjs",
+      "tests/sending-api.test.mjs"
+    ],
+    "evidence": [
+      {
+        "command": "node --test --test-reporter=spec tests/truthfulness.test.mjs tests/sending.test.mjs tests/sending-api.test.mjs",
+        "result": "34/34 pass, exit 0",
+        "recordedAt": "2026-10-09T15:28:59Z",
+        "note": "Synthetic DNS and a generated RSA public key verify selector/key parsing, unknown authentication state, durable persistence, legacy pass masking, and Mailbox Fleet rendering. Provider-signed message capture/signature/alignment verification is not implemented or live-validated."
+      }
+    ]
   },
   {
     "id": "B05",
     "description": "Same DNS logic looks up a website/domain A record and treats every successful DNSBL response as a listing; errors imply not listed.",
     "acceptance": "Distinguish sender IP/domain lists, query permissions, error codes, unavailable checks and actual evidence. Do not call this mailbox blacklist proof.",
-    "status": "pending",
-    "tests": [],
-    "evidence": []
+    "status": "implemented_unverified",
+    "tests": [
+      "tests/truthfulness.test.mjs",
+      "tests/sending-api.test.mjs",
+      "tests/sending.test.mjs",
+      "tests/campaign-preflight.test.mjs"
+    ],
+    "evidence": [
+      {
+        "command": "node --test --test-concurrency=1 --test-reporter=spec tests/truthfulness.test.mjs tests/sending-api.test.mjs tests/sending.test.mjs tests/campaign-preflight.test.mjs",
+        "result": "43/43 pass, exit 0; JavaScript syntax checks and git diff --check passed",
+        "recordedAt": "2026-10-09T15:37:09Z",
+        "note": "Injected DNS fixtures covered every observed domain A address (bounded at eight), exact queried-IP/list attribution, documented Spamhaus listing, not-listed and special query-error codes, resolver failures, no A record, incomplete coverage, SQLite persistence, the HTTP DNS-verification and fleet APIs, and rendered Mailbox Fleet/details. The ambiguous mailbox-level blacklist field is no longer used for domain evidence or exposed by the fleet API; SMTP sender-IP reputation remains unknown. Existing sending and campaign-preflight regressions also passed. No public DNSBL, external SMTP service, live mailbox, recipient, credential or database was contacted. Source revision 099b4c4f71fe858a3e8e6d07d6888d87e1416f9e; work remains uncommitted and release review is pending."
+      }
+    ]
   },
   {
     "id": "B06",
     "description": "`pipeline/personalizer.js`, `callBedrock()` simply returns null.",
     "acceptance": "Implement official provider SDK adapter or mark disabled; no claim that cloud polishing ran. Live test with configured credentials before declaring enabled support.",
-    "status": "pending",
-    "tests": [],
-    "evidence": []
+    "status": "implemented_unverified",
+    "tests": [
+      "tests/personalization-bedrock.test.mjs",
+      "tests/personalization-provider-ui.test.mjs",
+      "tests/sending-api.test.mjs"
+    ],
+    "evidence": [
+      {
+        "command": "node --test --test-concurrency=1 --test-reporter=spec tests/personalization-bedrock.test.mjs tests/personalization-provider-ui.test.mjs tests/truthfulness.test.mjs tests/sending-api.test.mjs tests/sending.test.mjs tests/campaign-preflight.test.mjs",
+        "result": "50/50 pass, exit 0; JavaScript syntax checks and git diff --check passed",
+        "recordedAt": "2026-10-09T15:42:41Z",
+        "note": "The Bedrock API/UI report disabled by default and enabled configuration as credentials-unverified. Deterministic SDK-boundary tests verify one-attempt InvokeModel request construction, response parsing, timeout wiring, subject length/guardrail rejection, and disabled-mode no-call behavior. Existing AWS default model had passed its listed EOL; configuration now uses the documented Sonnet 5 US inference profile, which supports bedrock-runtime Invoke. The provider remains disabled. No AWS credentials were checked, no Bedrock request was made, and no live provider result is claimed. Edge browser test, disposable API/test environment, and loopback sending/campaign regressions passed. Source revision 099b4c4f71fe858a3e8e6d07d6888d87e1416f9e; work remains uncommitted and release review is pending."
+      }
+    ]
   },
   {
     "id": "B07",
     "description": "`factCheckDraft()` returns `passed:true` on Ollama failure.",
     "acceptance": "Store `unavailable` and block automatic approval/send; human review cannot falsely turn a missing check into AI-verified evidence.",
-    "status": "pending",
-    "tests": [],
-    "evidence": []
+    "status": "implemented_unverified",
+    "tests": [
+      "tests/personalizer-factcheck.test.mjs",
+      "tests/truthfulness.test.mjs",
+      "tests/campaign-audience.test.mjs",
+      "tests/campaign-preflight.test.mjs",
+      "tests/sending.test.mjs",
+      "tests/sending-api.test.mjs"
+    ],
+    "evidence": [
+      {
+        "command": "node --check pipeline/personalizer.js; node --check tests/personalizer-factcheck.test.mjs; node --test --test-concurrency=1 --test-reporter=spec tests/personalizer-factcheck.test.mjs tests/truthfulness.test.mjs tests/campaign-audience.test.mjs tests/campaign-preflight.test.mjs tests/sending.test.mjs tests/sending-api.test.mjs; git diff --check",
+        "result": "48/48 tests passed, exit 0; syntax checks and git diff --check passed",
+        "recordedAt": "2026-10-09T15:48:38Z",
+        "note": "A local HTTP failure sink returned 503 for the two synthetic contact's Ollama draft, polish and fact-check requests; no remote provider was contacted. With 20 prior copy rows so automatic approval would otherwise be enabled, both new copies persisted fact_check_status=unavailable, fact_check_passed=0 and approved=0; the lead remained awaiting_approval, campaign policy returned approval_required, eligible-recipient selection was empty, and no send rows were created. Existing approval tests confirm a human approval does not rewrite unavailable evidence. SMTP and campaign preflight loopback regressions passed. No live database, mailbox, credential, provider or recipient was used. Base revision 099b4c4f71fe858a3e8e6d07d6888d87e1416f9e; changes remain uncommitted and pending review."
+      }
+    ]
   },
   {
     "id": "B08",
     "description": "`server.js` analytics estimates tokens/cost from copy counts (`*380`, `*0.003`) and a constant cost-per-reply numerator.",
     "acceptance": "Store actual request usage and dated rate-card provenance. Label unavoidable estimates; unknown usage remains null. No fabricated calls/tokens/spend.",
-    "status": "pending",
-    "tests": [],
-    "evidence": []
+    "status": "implemented_unverified",
+    "tests": [
+      "tests/ai-usage.test.mjs",
+      "tests/personalization-bedrock.test.mjs",
+      "tests/personalization-provider-ui.test.mjs",
+      "tests/personalizer-factcheck.test.mjs",
+      "tests/truthfulness.test.mjs",
+      "tests/campaign-audience.test.mjs",
+      "tests/campaign-preflight.test.mjs",
+      "tests/sending.test.mjs",
+      "tests/sending-api.test.mjs"
+    ],
+    "evidence": [
+      {
+        "command": "node --check pipeline/ai-usage.js pipeline/personalizer.js pipeline/database.js server.js js/analytics.js tests/ai-usage.test.mjs tests/personalization-bedrock.test.mjs tests/personalizer-factcheck.test.mjs; node --test --test-concurrency=1 --test-reporter=spec tests/ai-usage.test.mjs tests/personalization-bedrock.test.mjs tests/personalization-provider-ui.test.mjs tests/personalizer-factcheck.test.mjs tests/truthfulness.test.mjs tests/campaign-audience.test.mjs tests/campaign-preflight.test.mjs tests/sending.test.mjs tests/sending-api.test.mjs; git diff --check",
+        "result": "Syntax checks passed; 55/55 focused tests passed, exit 0; git diff --check passed",
+        "recordedAt": "2026-10-09T16:01:47Z",
+        "note": "A loopback Ollama sink generated six actual provider responses for synthetic contacts. Durable analytics captured returned token counts and exact operation/provider attribution. A dated synthetic Bedrock rate card was snapshotted and its calculation verified; unpriced Ollama kept aggregate cost unknown. The disposable HTTP analytics server returned persisted events and the UI rendered request/token/pricing caveats. Adjacent failure, campaign, suppression and SMTP safety tests passed. No live provider, credential, mailbox, database or recipient was used. Base revision 099b4c4f71fe858a3e8e6d07d6888d87e1416f9e; review pending."
+      }
+    ]
   },
   {
     "id": "B09",

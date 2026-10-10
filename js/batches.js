@@ -4,6 +4,7 @@
 //  Terminal Lead Archival & SQLite VACUUM Defragmentation
 // ============================================================
 import { Batches, Qualify, Stats, relTime, fmtNum } from './api.js';
+import { confirmAction, notify } from './ui.js';
 
 export async function renderBatches(container) {
   container.innerHTML = `<div class="loading-state"><div class="spinner"></div><span>Loading cohorts…</span></div>`;
@@ -102,17 +103,17 @@ export async function renderBatches(container) {
     window.__nav('qualification');
   };
   window.__batchClose = async (id) => {
-    if (!confirm('Close this batch?')) return;
-    await Batches.close(id);
-    renderBatches(container);
+    if (!await confirmAction({ title: 'Close batch', message: 'Closing stops new leads from being added. Existing records and history are retained.', confirmLabel: 'Close batch', danger: true })) return;
+    try { await Batches.close(id); notify('Batch closed; its records were retained.'); await renderBatches(container); }
+    catch (error) { notify(error.message || 'Could not close this batch.', 'error'); }
   };
   window.__batchArchive = async (id, name) => {
-    if (!confirm(`Archive Batch "${name}" and run SQLite VACUUM?\nThis moves terminal leads to leads_archive and defragments storage.`)) return;
-    const res = await Batches.archive(id);
-    if (res?.ok) {
-      alert(`✅ Archived ${res.archivedLeads} leads and ${res.archivedSends} sends to cold archive storage.`);
-    }
-    renderBatches(container);
+    if (!await confirmAction({ title: `Archive batch “${name}”`, message: 'Terminal leads and send events move to archive storage. SQLite VACUUM may take a short time; active records remain in the batch.', confirmLabel: 'Archive batch', danger: true })) return;
+    try {
+      const res = await Batches.archive(id);
+      if (res?.ok) notify(`Archived ${res.archivedLeads} leads and ${res.archivedSends} send events.`, 'success');
+      await renderBatches(container);
+    } catch (error) { notify(error.message || 'Could not archive this batch.', 'error'); }
   };
 }
 

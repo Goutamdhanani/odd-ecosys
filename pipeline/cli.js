@@ -3,7 +3,7 @@
 //  Comprehensive CLI for all 9 pipeline phases & control plane
 //
 //  Usage:
-//    node pipeline/cli.js discover --niche "dentists" --geo "Austin TX"
+//    node pipeline/cli.js discover --niche "dentists" --geo "Austin TX" (disabled until an approved source is configured)
 //    node pipeline/cli.js import --csv ./data/leads.csv --batch-name "Test"
 //    node pipeline/cli.js qualify --batch-id 4
 //    node pipeline/cli.js verify --batch-id 4
@@ -27,7 +27,7 @@ import { verifyBatch, verifyEmail as verifySingleEmail } from './email-verifier.
 import { personalizeBatch } from './personalizer.js';
 import { seedDatabase } from './seed.js';
 import { generateTemplate } from './csv-importer.js';
-import { queueSends, processSendQueue, recomputeHealthScores } from './sending-engine.js';
+import { queueSends, processSendQueue, recomputeHealthScores, getCampaignPreflight } from './sending-engine.js';
 import { ingestInboundReply } from './reply-tracker.js';
 import { suppressEmail, listSuppressed } from './compliance.js';
 import { archiveBatch, getArchiveStats } from './archiver.js';
@@ -141,7 +141,10 @@ async function main() {
       case 'queue-sends': {
         const campaignId = parseInt(args['campaign-id'] || args.c || 1);
         const limit = parseInt(args.limit || 50);
-        const res = await queueSends(campaignId, { limit });
+        const review = getCampaignPreflight(campaignId);
+        console.log('Campaign preflight:', review.counts, review.blockers);
+        if (!review.ready) throw new Error('Campaign preflight has blockers; resolve them before queueing.');
+        const res = await queueSends(campaignId, { limit, reviewHash: review.reviewHash });
         console.log('✅ Sends queued:', res);
         break;
       }
@@ -216,7 +219,7 @@ function printHelp() {
   console.log(`
 ODD-ECOSYS Pipeline CLI
 Commands:
-  discover      --niche "dentists" --geo "Austin TX"
+  discover      disabled: use an authorized source CSV until a permitted provider is configured
   import        --csv ./data/leads.csv --batch-name "My Batch"
                 --skip-enrichment (no external website requests)
   seed          fixture database only: NODE_ENV=test and ODD_DB_PATH required

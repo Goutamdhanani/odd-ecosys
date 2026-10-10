@@ -37,23 +37,21 @@ export function archiveBatch(batchId) {
   const insertLeadArchive = db.prepare(`
     INSERT OR REPLACE INTO leads_archive (
       id, batch_id, business_name, category, address, city, state, country,
-      phone, website_url, facebook_url, email, source, site_status, site_score,
+      phone, website_url, facebook_url, email, source, source_details, source_url,
+      consent_recorded_at, consent_method, consent_evidence_url, site_status, site_score,
       site_reasons, fb_active, status, disqualification_reason, rating, reviews,
       discovered_at, updated_at
-    ) VALUES (
-      ?, ?, ?, ?, ?, ?, ?, ?,
-      ?, ?, ?, ?, ?, ?, ?,
-      ?, ?, ?, ?, ?, ?,
-      ?, ?
-    )
+    ) VALUES (${Array(28).fill('?').join(',')})
   `);
 
   const deleteLead = db.prepare('DELETE FROM leads WHERE id = ?');
 
   const insertSendArchive = db.prepare(`
     INSERT OR REPLACE INTO sends_archive (
-      id, lead_id, mailbox_id, campaign_id, personalization_id, variant, scheduled_at, sent_at, status
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+      id, lead_id, mailbox_id, campaign_id, campaign_launch_id, personalization_id,
+      campaign_step_id, variant, subject_snapshot, body_snapshot, in_reply_to_message_id,
+      scheduled_at, sent_at, status
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `);
 
   const deleteSend = db.prepare('DELETE FROM sends WHERE id = ?');
@@ -64,7 +62,9 @@ export function archiveBatch(batchId) {
       // Archive related sends
       const sends = db.prepare('SELECT * FROM sends WHERE lead_id = ?').all(lead.id);
       for (const s of sends) {
-        insertSendArchive.run(s.id, s.lead_id, s.mailbox_id, s.campaign_id, s.personalization_id, s.variant, s.scheduled_at, s.sent_at, s.status);
+        insertSendArchive.run(s.id, s.lead_id, s.mailbox_id, s.campaign_id, s.campaign_launch_id,
+          s.personalization_id, s.campaign_step_id, s.variant, s.subject_snapshot, s.body_snapshot,
+          s.in_reply_to_message_id, s.scheduled_at, s.sent_at, s.status);
         deleteSend.run(s.id);
         archivedSendsCount++;
       }
@@ -72,7 +72,8 @@ export function archiveBatch(batchId) {
       // Archive lead
       insertLeadArchive.run(
         lead.id, lead.batch_id, lead.business_name, lead.category, lead.address, lead.city, lead.state, lead.country,
-        lead.phone, lead.website_url, lead.facebook_url, lead.email, lead.source, lead.site_status, lead.site_score,
+        lead.phone, lead.website_url, lead.facebook_url, lead.email, lead.source, lead.source_details, lead.source_url,
+        lead.consent_recorded_at, lead.consent_method, lead.consent_evidence_url, lead.site_status, lead.site_score,
         lead.site_reasons, lead.fb_active, lead.status, lead.disqualification_reason, lead.rating, lead.reviews,
         lead.discovered_at, lead.updated_at
       );

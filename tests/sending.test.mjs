@@ -1,3 +1,4 @@
+import './support/all-hours-send-window.js';
 import { test, beforeEach, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtempSync, rmSync } from 'node:fs';
@@ -7,19 +8,22 @@ import { SMTPServer } from 'smtp-server';
 
 const directory = mkdtempSync(path.join(tmpdir(), 'odd-smtp-'));
 process.env.ODD_DB_PATH = path.join(directory, 'fixture.db');
+process.env.NODE_ENV = 'test';
 const { initDb, closeDb } = await import('../pipeline/database.js');
 const { sendTestEmail, testMailboxSmtp, processSendQueue } = await import('../pipeline/sending-engine.js');
 const db = initDb();
 beforeEach(() => {
-  db.exec('DELETE FROM events; DELETE FROM sends; DELETE FROM personalizations; DELETE FROM lead_emails; DELETE FROM leads; DELETE FROM mailboxes; DELETE FROM campaigns;');
+  db.exec('DELETE FROM events; DELETE FROM sends; DELETE FROM personalizations; DELETE FROM lead_emails; DELETE FROM suppression_list; DELETE FROM leads; DELETE FROM mailboxes; DELETE FROM campaigns;');
 });
 after(() => { closeDb(); rmSync(directory, { recursive: true, force: true }); });
 
 function fixture(smtp = {}) {
   db.prepare("INSERT INTO leads(id,business_name,email,status) VALUES (1,'Fixture','recipient@example.test','queued')").run();
-  db.prepare("INSERT INTO mailboxes(id,email,domain,smtp_host,smtp_port,smtp_user,smtp_pass,smtp_secure) VALUES (1,'sender@example.test','example.test',?,?,?,?,0)")
+  db.prepare("INSERT INTO lead_emails(lead_id,email,verification_status) VALUES (1,'recipient@example.test','deliverable')").run();
+  db.prepare("INSERT INTO mailboxes(id,email,domain,warmup_status,daily_limit,smtp_host,smtp_port,smtp_user,smtp_pass,smtp_secure) VALUES (1,'sender@example.test','example.test','eligible',100,?,?,?,?,0)")
     .run(smtp.host || null, smtp.port || 587, smtp.user || null, smtp.pass || null);
   db.prepare("INSERT INTO campaigns(id,name) VALUES (1,'Fixture')").run();
+  db.prepare("INSERT INTO campaign_enrollments(campaign_id,lead_id) VALUES (1,1)").run();
   db.prepare("INSERT INTO personalizations(id,lead_id,subject_line,body_text,approved,guardrail_passed) VALUES (1,1,'Fixture subject','Fixture body',1,1)").run();
   db.prepare("INSERT INTO sends(id,lead_id,mailbox_id,campaign_id,personalization_id,scheduled_at) VALUES (1,1,1,1,1,?)")
     .run(new Date(Date.now() - 60000).toISOString());
@@ -171,8 +175,30 @@ test('SMTP authentication and recipient rejection cannot produce successful send
     } finally { await smtp.close(); }
   }
 });
+
+test('pre-SMTP policy gate cancels sends after verification becomes stale or an address is suppressed', async () => {
+  fixture();
+  db.prepare("UPDATE lead_emails SET verification_status='unknown' WHERE lead_id=1").run();
+  const unverified = await processSendQueue({ limit: 1 });
+  assert.equal(unverified.sent, 0);
+  assert.equal(unverified.failed, 0);
+  assert.equal(unverified.blocked, 1);
+  assert.equal(db.prepare('SELECT status FROM sends WHERE id=1').get().status, 'cancelled');
+  assert.equal(JSON.parse(db.prepare("SELECT meta_json FROM events WHERE event_type='send_blocked'").get().meta_json).reason, 'verification_required');
+
+  beforeFixtureReset();
+  fixture();
+  db.prepare("INSERT INTO suppression_list(email,reason) VALUES ('recipient@example.test','unsubscribe_request')").run();
+  const suppressed = await processSendQueue({ limit: 1 });
+  assert.equal(suppressed.sent, 0);
+  assert.equal(suppressed.blocked, 1);
+  assert.equal(db.prepare('SELECT status FROM sends WHERE id=1').get().status, 'cancelled');
+  assert.equal(JSON.parse(db.prepare("SELECT meta_json FROM events WHERE event_type='send_blocked'").get().meta_json).reason, 'suppressed');
+  assert.equal(db.prepare("SELECT COUNT(*) AS n FROM events WHERE event_type='send_failed'").get().n, 0);
+});
+
 function beforeFixtureReset() {
-  db.exec('DELETE FROM events; DELETE FROM sends; DELETE FROM personalizations; DELETE FROM leads; DELETE FROM mailboxes; DELETE FROM campaigns;');
+  db.exec('DELETE FROM events; DELETE FROM sends; DELETE FROM personalizations; DELETE FROM lead_emails; DELETE FROM suppression_list; DELETE FROM leads; DELETE FROM mailboxes; DELETE FROM campaigns;');
 }
 
 const partialConfigs = [

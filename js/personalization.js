@@ -4,12 +4,14 @@
 //  copy editor, guardrail details, fact-check results
 // ============================================================
 import { Batches, Personalize, relTime, fmtNum } from './api.js';
+import { escapeHtml, notify, userFacingError } from './ui.js';
 
 let _batches = [];
 let _selectedBatch = null;
 let _activeFilter = 'awaiting';
 let _pollInterval = null;
 let _editingId = null;
+let _editingTrigger = null;
 
 export async function renderPersonalization(container) {
   container.innerHTML = `<div class="loading-state"><div class="spinner"></div><span>Loading personalization engine…</span></div>`;
@@ -41,6 +43,9 @@ export async function renderPersonalization(container) {
       <div class="pers-header-right">
         <div id="ollama-status" class="ollama-status-pill" onclick="window.__checkOllama()">
           <span class="pulse-dot muted"></span> checking Ollama…
+        </div>
+        <div id="bedrock-status" class="ollama-status-pill" role="status" aria-live="polite" style="cursor:default">
+          <span class="pulse-dot muted"></span> checking Bedrock…
         </div>
         <select id="pers-batch-select" class="batch-select">
           ${_batches.length ? '' : '<option value="">Create a batch to begin</option>'}
@@ -95,16 +100,16 @@ export async function renderPersonalization(container) {
     </div>
 
     <!-- Edit modal (hidden) -->
-    <div id="pers-edit-modal" class="pers-modal" style="display:none;">
+    <div id="pers-edit-modal" class="pers-modal" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="pers-edit-title">
       <div class="pers-modal-content">
         <div class="pers-modal-header">
-          <span class="pers-modal-title">Edit Email Copy</span>
+          <span class="pers-modal-title" id="pers-edit-title">Edit Email Copy</span>
           <button onclick="window.__persCloseEdit()" style="background:none;border:none;color:var(--text-muted);font-size:1.2rem;cursor:pointer;">✕</button>
         </div>
         <div class="pers-modal-body">
-          <label class="pers-field-label">Subject Line</label>
+          <label class="pers-field-label" for="edit-subject">Subject Line</label>
           <input id="edit-subject" type="text" class="quick-tool-input" style="width:100%;margin-bottom:12px;" />
-          <label class="pers-field-label">Email Body</label>
+          <label class="pers-field-label" for="edit-body">Email Body</label>
           <textarea id="edit-body" class="pers-textarea" rows="10"></textarea>
           <div id="edit-word-count" style="font-size:0.7rem;color:var(--text-muted);text-align:right;margin-top:4px;"></div>
         </div>
@@ -134,11 +139,23 @@ export async function renderPersonalization(container) {
   window.__persCloseEdit = closeEdit;
   window.__persSaveEdit = saveEdit;
 
+  const editModal = document.getElementById('pers-edit-modal');
+  editModal?.addEventListener('click', event => {
+    if (event.target === editModal) closeEdit();
+  });
+  editModal?.addEventListener('keydown', event => {
+    if (event.key !== 'Escape') return;
+    event.preventDefault();
+    event.stopPropagation();
+    closeEdit();
+  });
+
   // Auto-update word count in textarea
   document.getElementById('edit-body')?.addEventListener('input', updateWordCount);
 
   // Initial load
   checkOllamaStatus();
+  checkBedrockStatus();
   loadList();
   loadStats();
 }
@@ -150,8 +167,7 @@ async function checkOllamaStatus() {
   el.innerHTML = `<span class="pulse-dot warning"></span> checking…`;
 
   try {
-    const res = await fetch('/api/personalize/ollama-test');
-    const data = await res.json();
+    const data = await Personalize.ollamaTest();
 
     if (data.connected) {
       const models = data.models.join(', ') || 'no models';
@@ -164,6 +180,31 @@ async function checkOllamaStatus() {
     }
   } catch {
     el.innerHTML = `<span class="pulse-dot warning"></span> Ollama offline`;
+  }
+}
+
+export async function checkBedrockStatus() {
+  const el = document.getElementById('bedrock-status');
+  if (!el) return;
+  try {
+    const data = await Personalize.status();
+    const provider = data.providers?.bedrock;
+    if (provider?.status === 'disabled') {
+      el.innerHTML = '<span class="pulse-dot muted"></span> Bedrock polish disabled';
+      el.title = 'Cloud subject-line polishing is disabled in the private personalization configuration.';
+      el.style.borderColor = 'var(--glass-border)';
+    } else if (provider?.status === 'enabled_unverified') {
+      el.innerHTML = '<span class="pulse-dot warning"></span> Bedrock enabled · credentials untested';
+      el.title = `Model ${escapeHtml(provider.modelId || 'unknown')} · region ${escapeHtml(provider.region || 'unknown')}. Credentials are checked only during a provider request.`;
+      el.style.borderColor = 'rgba(245,158,11,0.3)';
+    } else {
+      el.innerHTML = '<span class="pulse-dot warning"></span> Bedrock configuration incomplete';
+      el.title = 'Set a model ID and AWS region before enabling Bedrock polishing.';
+      el.style.borderColor = 'rgba(245,158,11,0.3)';
+    }
+  } catch {
+    el.innerHTML = '<span class="pulse-dot muted"></span> Bedrock status unavailable';
+    el.title = 'The server did not return personalization provider status.';
   }
 }
 
@@ -197,17 +238,30 @@ async function startPersonalization() {
   if (progressWrap) progressWrap.style.display = 'block';
 
   try {
-    await fetch(`/api/personalize/batch/${_selectedBatch}`, { method: 'POST' });
+    await Personalize.startBatch(_selectedBatch);
     startPolling();
+    await pollStatus();
   } catch (err) {
     if (runBtn) runBtn.style.display = 'inline-flex';
     if (cancelBtn) cancelBtn.style.display = 'none';
     if (progressWrap) progressWrap.style.display = 'none';
+    notify(err?.message || 'Personalization could not start.', 'error');
   }
 }
 
 async function cancelPersonalization() {
-  await fetch('/api/personalize/cancel', { method: 'POST' }).catch(() => {});
+  const button = document.getElementById('pers-cancel-btn');
+  if (button) button.disabled = true;
+  try {
+    const result = await Personalize.cancel();
+    notify(result?.cancelled
+      ? 'Personalization cancellation requested.'
+      : 'There is no active personalization run to cancel.', result?.cancelled ? 'info' : 'warning');
+  } catch (error) {
+    notify(error?.message || 'Personalization could not be cancelled.', 'error');
+  } finally {
+    if (button?.isConnected) button.disabled = false;
+  }
 }
 
 // ── Polling ───────────────────────────────────────────────────
@@ -218,8 +272,7 @@ function startPolling() {
 
 async function pollStatus() {
   try {
-    const res = await fetch('/api/personalize/status');
-    const data = await res.json();
+    const data = await Personalize.status();
 
     if (!data.active && data.processed > 0) {
       stopPolling();
@@ -260,12 +313,10 @@ async function loadList() {
   if (!container) return;
 
   try {
-    let url = `/api/personalize/list?limit=100`;
-    if (_selectedBatch) url += `&batch_id=${_selectedBatch}`;
-    if (_activeFilter && _activeFilter !== 'all') url += `&status=${_activeFilter}`;
-
-    const res = await fetch(url);
-    const items = await res.json();
+    const params = { limit: 100 };
+    if (_selectedBatch) params.batch_id = _selectedBatch;
+    if (_activeFilter && _activeFilter !== 'all') params.status = _activeFilter;
+    const items = await Personalize.list(params);
 
     if (!items || items.length === 0) {
       container.innerHTML = `
@@ -289,18 +340,14 @@ async function loadList() {
     ).join('');
 
   } catch (err) {
-    container.innerHTML = `<div class="empty-state"><p style="color:var(--rose)">Error loading: ${err.message}</p></div>`;
+    container.innerHTML = `<div class="empty-state"><p style="color:var(--rose)">${escapeHtml(userFacingError(err, 'Personalizations could not load.'))}</p></div>`;
   }
 }
 
 // ── Load Stats ────────────────────────────────────────────────
 async function loadStats() {
   try {
-    let url = '/api/personalize/stats';
-    if (_selectedBatch) url += `?batch_id=${_selectedBatch}`;
-
-    const res = await fetch(url);
-    const stats = await res.json();
+    const stats = await Personalize.stats(_selectedBatch);
 
     const cardsEl = document.getElementById('pers-stats-cards');
     if (cardsEl) {
@@ -406,20 +453,37 @@ function escHtml(str) {
 
 // ── Approve / Reject ──────────────────────────────────────────
 async function approveItem(id) {
-  await fetch(`/api/personalize/approve/${id}`, { method: 'POST' }).catch(() => {});
-  loadList();
-  loadStats();
+  const trigger = document.activeElement instanceof HTMLButtonElement ? document.activeElement : null;
+  if (trigger) trigger.disabled = true;
+  try {
+    await Personalize.approve(id);
+    await Promise.all([loadList(), loadStats()]);
+    notify('Personalization approved.');
+  } catch (error) {
+    notify(error?.message || 'Personalization could not be approved.', 'error');
+  } finally {
+    if (trigger?.isConnected) trigger.disabled = false;
+  }
 }
 
 async function rejectItem(id) {
-  await fetch(`/api/personalize/reject/${id}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ reason: 'human_rejected' }) }).catch(() => {});
-  loadList();
-  loadStats();
+  const trigger = document.activeElement instanceof HTMLButtonElement ? document.activeElement : null;
+  if (trigger) trigger.disabled = true;
+  try {
+    await Personalize.reject(id, 'human_rejected');
+    await Promise.all([loadList(), loadStats()]);
+    notify('Personalization rejected.');
+  } catch (error) {
+    notify(error?.message || 'Personalization could not be rejected.', 'error');
+  } finally {
+    if (trigger?.isConnected) trigger.disabled = false;
+  }
 }
 
 // ── Edit Modal ────────────────────────────────────────────────
 function openEdit(id, subject, body) {
   _editingId = id;
+  _editingTrigger = document.activeElement instanceof HTMLElement ? document.activeElement : null;
   const modal = document.getElementById('pers-edit-modal');
   const subjectInput = document.getElementById('edit-subject');
   const bodyInput = document.getElementById('edit-body');
@@ -427,12 +491,16 @@ function openEdit(id, subject, body) {
   if (subjectInput) subjectInput.value = subject;
   if (bodyInput) { bodyInput.value = body; updateWordCount(); }
   if (modal) modal.style.display = 'flex';
+  subjectInput?.focus();
 }
 
 function closeEdit() {
   _editingId = null;
   const modal = document.getElementById('pers-edit-modal');
   if (modal) modal.style.display = 'none';
+  const trigger = _editingTrigger;
+  _editingTrigger = null;
+  if (trigger?.isConnected) trigger.focus();
 }
 
 async function saveEdit() {
@@ -441,16 +509,12 @@ async function saveEdit() {
   const body = document.getElementById('edit-body')?.value;
 
   try {
-    await fetch(`/api/personalize/${_editingId}`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ subject_line: subject, body_text: body }),
-    });
+    await Personalize.edit(_editingId, { subject_line: subject, body_text: body });
     closeEdit();
-    loadList();
-    loadStats();
+    await Promise.all([loadList(), loadStats()]);
+    notify('Personalization saved and approved.');
   } catch (err) {
-    alert(`Save failed: ${err.message}`);
+    notify(err?.message || 'Personalization could not be saved.', 'error');
   }
 }
 

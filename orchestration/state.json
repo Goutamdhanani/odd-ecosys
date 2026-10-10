@@ -1,17 +1,30 @@
 {
   "schemaVersion": 1,
   "projectRoot": "E:\\project\\odd-ecosys",
-  "isolatedWorkspace": "C:\\Users\\pooja\\.codex\\odd-ecosys-runtime\\workspace",
+  "isolatedWorkspace": "E:\\odd-ecosys-build-worktree",
   "gitScope": "E:/",
   "phase": "P00",
-  "task": "baseline-inventory-and-runner-validation",
+  "task": "ALL-WARM-001-separate-mailbox-warmup-ramp-from-evidence",
   "architecture": "Warmbly candidate; unverified",
   "releaseReady": false,
   "lastVerifiedRevision": null,
-  "nextAction": "Validate isolated environment and complete P00 inventory/gates; then remaining P01 defects",
+  "nextAction": "ALL-WARM-001 resumes from suspension: separate the ramp schedule from authentic source-attributed mailbox evidence and remove elapsed-time-only promotion to campaign-send eligibility; disposable SQLite/browser only; no live mailbox or SMTP; releaseReady=false",
+  "developmentAuthorization": {
+    "kind": "human_override",
+    "authorizedAt": "2026-10-09",
+    "source": "LUNA_CONTINUOUS_PRODUCT_BUILD_20261009 (1).md",
+    "scope": "Isolated product development across L02-L25",
+    "supersedes": "Historical P02-only development-sequencing restriction",
+    "phaseAcceptanceChanged": false,
+    "releaseReady": false
+  },
   "blockers": [
     "FreeInference key not configured",
-    "Live provider/integration credentials and release validation pending"
+    "Default local Ollama endpoint is unreachable from the current host",
+    "Live provider/integration credentials and release validation pending",
+    "ALL-LEAD-022 EEPC adapter blocked before page access: robots.txt returned the HTML app shell (200 text/html), so no directory records were fetched",
+    "ALL-LEAD-042 CBAM directory source is skipped: guarded robots preflight could not resolve cbam.eepcindia.org; no directory records were requested",
+    "EPCH: only a one-page live pilot has been measured; broader source pagination and the 120-business acceptance evaluation remain incomplete"
   ],
-  "updatedAt": "2026-10-06T12:30:23.290Z"
+  "updatedAt": "2026-10-10T11:28:51.4689322+05:30"
 }
