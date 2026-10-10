@@ -41,6 +41,7 @@ after(async () => {
     new Promise(resolve => smtp.close(resolve)),
   ]);
   closeDb();
+  delete process.env.ODD_DB_PATH;
   rmSync(directory, { recursive: true, force: true });
 });
 

@@ -7,9 +7,160 @@
 import { getDb, initDb } from './database.js';
 import { createBatch, updateBatchLeadCount, startProcessingBatch, getBatchStats } from './batch-manager.js';
 import { deduplicateLeads, normalizeDomain, normalizePhone } from './dedup.js';
-import { generateQueryFile, runScraper, isDockerAvailable, ensureDockerImage } from './scraper.js';
+import { generateQueryFile, runScraper, isDockerAvailable, ensureDockerImage, scrapeLeadsMultiMethod } from './scraper.js';
 import { enrichLeadsBatch } from './enricher.js';
 import { importFromCsv } from './csv-importer.js';
+
+// ── Discovery run state ───────────────────────────────────────
+let _discoveryState = {
+  active: false,
+  jobId: null,
+  batchId: null,
+  batchName: null,
+  method: 'combined', // 'combined' | 'google_maps' | 'web_search'
+  step: 'idle', // 'idle' | 'scraping' | 'enriching' | 'deduping' | 'inserting' | 'qualifying' | 'verifying' | 'done' | 'error' | 'cancelled'
+  progress: 0,
+  scrapedCount: 0,
+  emailsFoundCount: 0,
+  insertedCount: 0,
+  duplicatesCount: 0,
+  qualifiedCount: 0,
+  verifiedCount: 0,
+  deliverableCount: 0,
+  currentQuery: null,
+  error: null,
+  cancelling: false,
+  startedAt: null,
+  completedAt: null,
+  duration: 0,
+  autoQualify: false,
+  autoVerify: false,
+};
+
+export function getDiscoveryStatus() {
+  return { ..._discoveryState };
+}
+
+export function cancelDiscovery() {
+  if (_discoveryState.active) {
+    _discoveryState.cancelling = true;
+    return true;
+  }
+  return false;
+}
+
+/**
+ * Start a 1-click discovery job in the background.
+ */
+export async function startDiscoveryJob(config) {
+  if (_discoveryState.active) {
+    throw new Error('A scraping and lead discovery job is already currently running.');
+  }
+
+  const {
+    niche,
+    geography,
+    limit = 25,
+    method = 'combined',
+    autoQualify = false,
+    autoVerify = false,
+    deepScan = true,
+    filterClosed = true,
+    gridSize = 5,
+  } = config;
+  const batchName = `${capitalize(niche)} — ${geography}`;
+
+  _discoveryState = {
+    active: true,
+    jobId: Date.now().toString(),
+    batchId: null,
+    batchName,
+    method,
+    step: 'scraping',
+    progress: 15,
+    scrapedCount: 0,
+    emailsFoundCount: 0,
+    insertedCount: 0,
+    duplicatesCount: 0,
+    qualifiedCount: 0,
+    verifiedCount: 0,
+    deliverableCount: 0,
+    currentQuery: `${niche} in ${geography}`,
+    error: null,
+    cancelling: false,
+    startedAt: Date.now(),
+    completedAt: null,
+    duration: 0,
+    autoQualify: !!autoQualify,
+    autoVerify: !!autoVerify,
+  };
+
+  // Launch async pipeline in background
+  (async () => {
+    try {
+      const summary = await discoverLeads({
+        niche,
+        geography,
+        options: { limit, method, deepScan, filterClosed, gridSize },
+      });
+
+      if (_discoveryState.cancelling) {
+        _discoveryState.active = false;
+        _discoveryState.step = 'cancelled';
+        return;
+      }
+
+      const batchId = summary?.batch?.id;
+      if (batchId && (autoQualify || autoVerify)) {
+        if (autoQualify && !_discoveryState.cancelling) {
+          _discoveryState.step = 'qualifying';
+          _discoveryState.progress = 85;
+          console.log(`🚀 Step 4/5: Auto-qualifying Batch #${batchId} directly...`);
+          const { qualifyBatch } = await import('./qualifier.js');
+          await qualifyBatch(batchId);
+          try {
+            const db = getDb();
+            const qualifiedRow = db.prepare("SELECT COUNT(*) as count FROM leads WHERE batch_id = ? AND status = 'qualified'").get(batchId);
+            _discoveryState.qualifiedCount = qualifiedRow ? qualifiedRow.count : 0;
+          } catch {}
+        }
+
+        if (autoVerify && !_discoveryState.cancelling) {
+          _discoveryState.step = 'verifying';
+          _discoveryState.progress = 92;
+          console.log(`🚀 Step 5/5: Auto-verifying emails for Batch #${batchId}...`);
+          const { verifyBatch } = await import('./email-verifier.js');
+          await verifyBatch(batchId, {
+            onProgress: (p) => {
+              _discoveryState.verifiedCount = p.processed;
+              _discoveryState.deliverableCount = p.deliverable;
+            }
+          });
+          try {
+            const db = getDb();
+            const verifiedRow = db.prepare("SELECT COUNT(*) as count FROM lead_emails le JOIN leads l ON le.lead_id = l.id WHERE l.batch_id = ?").get(batchId);
+            const deliverableRow = db.prepare("SELECT COUNT(*) as count FROM lead_emails le JOIN leads l ON le.lead_id = l.id WHERE l.batch_id = ? AND le.verification_status = 'deliverable'").get(batchId);
+            _discoveryState.verifiedCount = verifiedRow ? verifiedRow.count : 0;
+            _discoveryState.deliverableCount = deliverableRow ? deliverableRow.count : 0;
+          } catch {}
+        }
+      }
+
+      _discoveryState.active = false;
+      _discoveryState.step = 'done';
+      _discoveryState.progress = 100;
+      _discoveryState.completedAt = Date.now();
+      _discoveryState.duration = _discoveryState.completedAt - _discoveryState.startedAt;
+    } catch (err) {
+      console.error('❌ Lead Discovery job error:', err);
+      _discoveryState.active = false;
+      _discoveryState.step = 'error';
+      _discoveryState.error = err.message;
+    }
+  })();
+
+  return { started: true, jobId: _discoveryState.jobId, batchName };
+}
 
 /**
  * Run the full lead discovery pipeline.
@@ -47,27 +198,26 @@ export async function discoverLeads(config) {
   if (!dryRun) {
     batch = createBatch(batchName, 'discovery');
     startProcessingBatch(batch.id);
+    _discoveryState.batchId = batch.id;
     console.log(`   Created batch #${batch.id}: "${batchName}"\n`);
   } else {
     batch = { id: 0, name: batchName };
     console.log(`   [DRY RUN] Would create batch: "${batchName}"\n`);
   }
 
-  // Step 2: Scrape leads from Google Maps
-  console.log('🔍 Step 2/5: Discovering leads...');
-  let rawLeads = [];
+  // Step 2: Scrape leads via multi-method scraper
+  console.log(`🔍 Step 2/5: Discovering leads via multi-method (${options.method || 'combined'})...`);
+  _discoveryState.step = 'scraping';
+  _discoveryState.progress = 25;
+  let rawLeads = await scrapeLeadsMultiMethod({
+    niche,
+    geography,
+    method: options.method || 'combined',
+    limit,
+    options: { depth: scraperDepth, ...options },
+  });
 
-  const dockerAvailable = await isDockerAvailable();
-  if (dockerAvailable) {
-    await ensureDockerImage();
-    const queryFile = generateQueryFile(niche, geography);
-    rawLeads = await runScraper(queryFile, { depth: scraperDepth });
-  } else {
-    console.log('   ⚠️  Docker not available. Skipping Google Maps scraper.');
-    console.log('   💡 Use CSV import instead: node pipeline/cli.js import --csv <file>\n');
-  }
-
-  if (rawLeads.length === 0) {
+  if (!rawLeads || rawLeads.length === 0) {
     console.log('   No leads found from scraper. Pipeline complete (empty batch).\n');
     return {
       batch,
@@ -79,43 +229,51 @@ export async function discoverLeads(config) {
   // Apply limit
   if (limit && rawLeads.length > limit) {
     rawLeads = rawLeads.slice(0, limit);
-    console.log(`   Applied limit: ${limit} leads\n`);
   }
-
+  _discoveryState.scrapedCount = rawLeads.length;
   console.log(`   Found ${rawLeads.length} raw leads\n`);
 
-  // Step 3: Enrich leads (website crawling)
+  // Step 3: Enrich leads (website crawling, Cloudflare decode, schema, and DNS MX checks)
   let enrichmentResults = new Map();
   if (!skipEnrichment) {
-    console.log('🌐 Step 3/5: Enriching leads (crawling websites)...');
+    console.log('🌐 Step 3/5: Enriching leads (crawling websites & finding emails)...');
+    _discoveryState.step = 'enriching';
+    _discoveryState.progress = 50;
+
     enrichmentResults = await enrichLeadsBatch(rawLeads, {
       concurrency: 3,
       onProgress: (current, total) => {
-        // Progress is logged inside enrichLeadsBatch
+        _discoveryState.progress = 50 + Math.floor((current / total) * 20);
       },
     });
 
     // Merge enrichment data back into leads
+    let totalEmailsFound = 0;
     for (const [idx, enrichment] of enrichmentResults) {
       const lead = rawLeads[idx];
-      if (enrichment.emails.length > 0 && !lead.email) {
-        lead.email = enrichment.emails[0];
+      if (enrichment.emails && enrichment.emails.length > 0) {
+        if (!lead.email) lead.email = enrichment.emails[0];
         lead._extra_emails = [...(lead._extra_emails || []), ...enrichment.emails.slice(1)];
+        totalEmailsFound += enrichment.emails.length;
       }
       if (enrichment.facebook_url && !lead.facebook_url) {
         lead.facebook_url = enrichment.facebook_url;
       }
     }
+    _discoveryState.emailsFoundCount = totalEmailsFound;
 
     const enrichedCount = [...enrichmentResults.values()].filter(r => r.emails.length > 0 || r.facebook_url).length;
-    console.log(`   Enriched: ${enrichedCount} leads got new data\n`);
+    console.log(`   Enriched: ${enrichedCount} leads got email / social data\n`);
   } else {
     console.log('⏭️  Step 3/5: Skipping enrichment (--skip-enrichment flag)\n');
   }
 
   // Step 4: Deduplicate
   console.log('🔄 Step 4/5: Deduplicating leads...');
+  _discoveryState.step = 'deduping';
+  _discoveryState.progress = 75;
   const { unique, duplicates, stats: dedupStats } = deduplicateLeads(rawLeads);
+  _discoveryState.duplicatesCount = dedupStats.duplicates;
   console.log(`   Total: ${dedupStats.total}, Unique: ${dedupStats.unique}, Duplicates: ${dedupStats.duplicates}`);
   if (dedupStats.within_batch > 0) console.log(`   Within-batch dups: ${dedupStats.within_batch}`);
   if (dedupStats.existing_db > 0) console.log(`   Already in DB: ${dedupStats.existing_db}`);
@@ -123,15 +281,19 @@ export async function discoverLeads(config) {
 
   // Step 5: Insert into database
   console.log('💾 Step 5/5: Inserting leads into database...');
+  _discoveryState.step = 'inserting';
+  _discoveryState.progress = 85;
   let insertedCount = 0;
 
   if (!dryRun) {
     insertedCount = insertLeads(unique, batch.id);
     updateBatchLeadCount(batch.id);
+    _discoveryState.insertedCount = insertedCount;
     console.log(`   Inserted ${insertedCount} leads into batch #${batch.id}\n`);
   } else {
     console.log(`   [DRY RUN] Would insert ${unique.length} leads\n`);
     insertedCount = unique.length;
+    _discoveryState.insertedCount = insertedCount;
   }
 
   // Summary
@@ -278,11 +440,13 @@ function insertLeads(leads, batchId) {
       batch_id, business_name, category, address, city, state, country,
       phone, website_url, facebook_url, email, source, rating, reviews,
       latitude, longitude, place_id, normalized_domain, normalized_phone,
+      booking_url, photo_url, price_level, hours_status, instagram_url, linkedin_url, twitter_url,
       status, discovered_at, updated_at
     ) VALUES (
       ?, ?, ?, ?, ?, ?, ?,
       ?, ?, ?, ?, ?, ?, ?,
       ?, ?, ?, ?, ?,
+      ?, ?, ?, ?, ?, ?, ?,
       'discovered', datetime('now'), datetime('now')
     )
   `);
@@ -321,6 +485,13 @@ function insertLeads(leads, batchId) {
         lead.place_id || null,
         lead.normalized_domain || normalizeDomain(lead.website_url),
         lead.normalized_phone || normalizePhone(lead.phone),
+        lead.booking_url || null,
+        lead.photo_url || null,
+        lead.price_level || null,
+        lead.hours_status || null,
+        lead.instagram_url || null,
+        lead.linkedin_url || null,
+        lead.twitter_url || null,
       );
 
       const leadId = result.lastInsertRowid;

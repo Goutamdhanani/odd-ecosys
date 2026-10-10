@@ -22,7 +22,7 @@ const { checkDomainDns } = await import('../pipeline/sending-engine.js');
 const { editPersonalization, approvePersonalization } = await import('../pipeline/personalizer.js');
 const { syncLeadToCRM } = await import('../pipeline/crm-sync.js');
 
-after(() => { closeDb(); rmSync(directory, { recursive: true, force: true }); });
+after(() => { closeDb(); delete process.env.ODD_DB_PATH; rmSync(directory, { recursive: true, force: true }); });
 
 // ── DNS layer test double: controlled resolver responses ──────
 const realResolveTxt = dns.promises.resolveTxt.bind(dns.promises);

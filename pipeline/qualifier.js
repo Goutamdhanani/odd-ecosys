@@ -10,6 +10,11 @@
 //  confidence scoring, SSRF-safe fetches
 // ============================================================
 
+import dns from 'dns';
+try {
+  dns.setDefaultResultOrder('ipv4first');
+} catch {}
+
 let cheerioModule = null;
 async function ensureCheerio() {
   if (!cheerioModule) cheerioModule = await import('cheerio');
@@ -787,35 +792,59 @@ export function getSpotCheckLeads(batchId, limit = 20) {
 // ══════════════════════════════════════════════════════════════
 
 /**
- * Check if a Facebook URL is still accessible.
+ * Check if a Facebook business page is still active and accessible.
+ * Returns 1 for active/accessible, 0 for 404/removed, or null if network error.
  */
-async function checkFacebookLiveness(facebookUrl) {
-  if (!facebookUrl) return null;
+export async function checkFacebookLiveness(facebookUrl) {
+  if (!facebookUrl || typeof facebookUrl !== 'string') return null;
 
   let url = facebookUrl.trim();
+  if (url.startsWith('//')) url = `https:${url}`;
   if (!url.startsWith('http')) {
     if (url.startsWith('fb.com/')) url = `https://www.facebook.com/${url.slice(7)}`;
     else url = `https://${url}`;
   }
 
+  // Basic format sanity check
+  try {
+    const parsed = new URL(url);
+    if (!parsed.hostname.includes('facebook.com') && !parsed.hostname.includes('fb.me')) {
+      return null;
+    }
+  } catch {
+    return null;
+  }
+
   try {
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 5000);
+    const timeout = setTimeout(() => controller.abort(), 2500); // 2.5s fast timeout
 
     const response = await fetch(url, {
-      method: 'HEAD',
-      headers: { 'User-Agent': USER_AGENT },
+      method: 'GET',
+      headers: {
+        'User-Agent': USER_AGENT,
+        'Accept': 'text/html,application/xhtml+xml',
+        'Accept-Language': 'en-US,en;q=0.9',
+        'Range': 'bytes=0-2048', // Lightweight range request
+      },
       signal: controller.signal,
       redirect: 'follow',
     });
 
     clearTimeout(timeout);
 
-    // Facebook returns 200 for existing pages, 404 for removed ones
-    // but redirects to login for private pages (still "active")
-    return response.ok || response.status === 302 ? 1 : 0;
+    // Facebook returns 200/206 for active public pages, 301/302 for redirects (still active)
+    if (response.ok || response.status === 206 || response.status === 301 || response.status === 302) {
+      return 1;
+    }
+
+    if (response.status === 404) {
+      return 0;
+    }
+
+    return 1; // Any reachable redirect or challenge page is an active entity
   } catch {
-    return null; // Couldn't determine — network error
+    return null; // Network error or timeout — leave unclassified rather than guessing
   }
 }
 

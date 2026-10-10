@@ -6,8 +6,19 @@
 import { URL } from 'url';
 import dns from 'dns';
 import { promisify } from 'util';
+const customResolver = new dns.promises.Resolver();
+try {
+  customResolver.setServers(['8.8.8.8', '1.1.1.1', '8.8.4.4']);
+} catch {}
 
-const dnsResolve = promisify(dns.resolve4);
+const defaultDnsResolve = promisify(dns.resolve4);
+async function dnsResolve(hostname) {
+  try {
+    return await customResolver.resolve4(hostname);
+  } catch {
+    return await defaultDnsResolve(hostname);
+  }
+}
 
 // Private/reserved IP ranges that should never be fetched
 const PRIVATE_RANGES = [

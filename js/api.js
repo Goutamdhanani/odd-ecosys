@@ -85,6 +85,13 @@ export const CRM = {
   blacklistDomain: (domain, reason) => api('/api/crm/blacklist-domain', { method: 'POST', body: JSON.stringify({ domain, reason }) }),
 };
 
+// ── Lead Scraper & Discovery (1-Click Pipeline) ─────────────
+export const Scraper = {
+  start:  (body) => api('/api/scrape/start', { method: 'POST', body: JSON.stringify(body) }),
+  status: () => api('/api/scrape/status'),
+  cancel: () => api('/api/scrape/cancel', { method: 'POST' }),
+};
+
 // ── Leads ────────────────────────────────────────────────────
 export const Leads = {
   list: (params = {}) => {

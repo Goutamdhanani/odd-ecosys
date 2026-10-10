@@ -13,7 +13,7 @@ const db = initDb();
 beforeEach(() => {
   db.exec('DELETE FROM events; DELETE FROM sends; DELETE FROM personalizations; DELETE FROM lead_emails; DELETE FROM leads; DELETE FROM mailboxes; DELETE FROM campaigns;');
 });
-after(() => { closeDb(); rmSync(directory, { recursive: true, force: true }); });
+after(() => { closeDb(); delete process.env.ODD_DB_PATH; rmSync(directory, { recursive: true, force: true }); });
 
 function fixture(smtp = {}) {
   db.prepare("INSERT INTO leads(id,business_name,email,status) VALUES (1,'Fixture','recipient@example.test','queued')").run();

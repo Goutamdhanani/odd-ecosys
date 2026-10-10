@@ -528,6 +528,40 @@ async function handleApiRequest(req, res, parsedUrl) {
   return errorResponse(res, `Unknown API route: ${method} ${pathname}`, 404);
 }
 
+// ── Lead Discovery & Scraping API Routes (1-Click Pipeline) ─
+async function handleScrapeApi(req, res, parsedUrl, pipeline) {
+  const { leadDiscovery } = pipeline;
+  const pathname = parsedUrl.pathname;
+  const method = req.method;
+
+  // POST /api/scrape/start — start 1-click lead scraping job
+  if (pathname === '/api/scrape/start' && method === 'POST') {
+    const body = await parseBody(req);
+    if (!body.niche || !body.geography) {
+      return errorResponse(res, 'Both niche and geography are required', 400);
+    }
+    try {
+      const result = await leadDiscovery.startDiscoveryJob(body);
+      return jsonResponse(res, result, 202);
+    } catch (err) {
+      return errorResponse(res, err.message, 409);
+    }
+  }
+
+  // GET /api/scrape/status — poll scraping & enrichment progress
+  if (pathname === '/api/scrape/status' && method === 'GET') {
+    return jsonResponse(res, leadDiscovery.getDiscoveryStatus());
+  }
+
+  // POST /api/scrape/cancel — cancel running scraping job
+  if (pathname === '/api/scrape/cancel' && method === 'POST') {
+    const cancelled = leadDiscovery.cancelDiscovery();
+    return jsonResponse(res, { cancelled });
+  }
+
+  return errorResponse(res, `Unknown scrape route: ${method} ${pathname}`, 404);
+}
+
 // ── Qualification API Routes ─────────────────────────────────
 async function handleQualifyApi(req, res, parsedUrl, pipeline) {
   const { qualifier, database } = pipeline;
@@ -980,6 +1014,18 @@ export const server = http.createServer(async (req, res) => {
   const reqPath = parsedUrl.pathname;
 
   // API routes
+  if (reqPath.startsWith('/api/scrape/')) {
+    try {
+      const pipeline = await getPipeline();
+      if (!pipeline) return errorResponse(res, 'Pipeline not initialized', 503);
+      await handleScrapeApi(req, res, parsedUrl, pipeline);
+    } catch (error) {
+      console.error('Scrape API Error:', error);
+      errorResponse(res, 'Internal server error', 500);
+    }
+    return;
+  }
+
   if (reqPath.startsWith('/api/qualify/') || reqPath === '/api/leads/site-status-distribution') {
     try {
       const pipeline = await getPipeline();

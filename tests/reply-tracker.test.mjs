@@ -34,6 +34,7 @@ beforeEach(() => {
 after(() => {
   globalThis.fetch = realFetch;
   closeDb();
+  delete process.env.ODD_DB_PATH;
   rmSync(directory, { recursive: true, force: true });
 });
 

@@ -13,25 +13,31 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Tests and development workers must select a separate database before import.
-const DB_PATH = process.env.ODD_DB_PATH
-  ? path.resolve(process.env.ODD_DB_PATH)
-  : path.join(__dirname, '..', 'data', 'pipeline.db');
+export function getDbPath() {
+  return process.env.ODD_DB_PATH
+    ? path.resolve(process.env.ODD_DB_PATH)
+    : path.join(__dirname, '..', 'data', 'pipeline.db');
+}
 
 let _db = null;
 
 /**
  * Get the singleton database instance.
- * Initializes on first call.
+ * Initializes on first call or reconnects if closed / target path changed.
  */
 export function getDb() {
-  if (!_db) {
+  const currentPath = getDbPath();
+  if (!_db || !_db.open || _db.name !== currentPath) {
+    if (_db && _db.open) {
+      try { _db.close(); } catch {}
+    }
     // Ensure data directory exists
-    const dataDir = path.dirname(DB_PATH);
+    const dataDir = path.dirname(currentPath);
     if (!fs.existsSync(dataDir)) {
       fs.mkdirSync(dataDir, { recursive: true });
     }
 
-    _db = new Database(DB_PATH);
+    _db = new Database(currentPath);
 
     // Performance & safety pragmas
     _db.pragma('journal_mode = WAL');
@@ -93,6 +99,13 @@ export function initDb() {
       site_checked_at TEXT,
       confidence INTEGER,
       site_reasons_json TEXT,
+      booking_url TEXT,
+      photo_url TEXT,
+      price_level TEXT,
+      hours_status TEXT,
+      instagram_url TEXT,
+      linkedin_url TEXT,
+      twitter_url TEXT,
       discovered_at TEXT DEFAULT (datetime('now')),
       updated_at TEXT DEFAULT (datetime('now'))
     );
@@ -107,6 +120,8 @@ export function initDb() {
       email TEXT NOT NULL,
       source TEXT,
       verification_status TEXT,
+      confidence_score INTEGER DEFAULT 0,
+      is_primary INTEGER DEFAULT 0,
       is_catch_all INTEGER DEFAULT 0,
       is_role_account INTEGER DEFAULT 0,
       verified_at TEXT
@@ -272,6 +287,8 @@ function runMigrations(db) {
     { column: 'smtp_response',    table: 'lead_emails', sql: 'ALTER TABLE lead_emails ADD COLUMN smtp_response TEXT' },
     { column: 'verification_json',table: 'lead_emails', sql: 'ALTER TABLE lead_emails ADD COLUMN verification_json TEXT' },
     { column: 'retry_count',      table: 'lead_emails', sql: 'ALTER TABLE lead_emails ADD COLUMN retry_count INTEGER DEFAULT 0' },
+    { column: 'confidence_score', table: 'lead_emails', sql: 'ALTER TABLE lead_emails ADD COLUMN confidence_score INTEGER DEFAULT 0' },
+    { column: 'is_primary',       table: 'lead_emails', sql: 'ALTER TABLE lead_emails ADD COLUMN is_primary INTEGER DEFAULT 0' },
     // Stage 6/7 — campaigns & sends enrichment
     { column: 'status',            table: 'campaigns',   sql: "ALTER TABLE campaigns ADD COLUMN status TEXT DEFAULT 'draft'" },
     { column: 'batch_ids_json',    table: 'campaigns',   sql: 'ALTER TABLE campaigns ADD COLUMN batch_ids_json TEXT' },
@@ -301,6 +318,14 @@ function runMigrations(db) {
     { column: 'crm_remote_id',     table: 'leads',       sql: 'ALTER TABLE leads ADD COLUMN crm_remote_id TEXT' },
     { column: 'crm_synced_at',     table: 'leads',       sql: 'ALTER TABLE leads ADD COLUMN crm_synced_at TEXT' },
     { column: 'crm_sync_status',   table: 'leads',       sql: "ALTER TABLE leads ADD COLUMN crm_sync_status TEXT DEFAULT 'not_synced'" },
+    // Enterprise Scraping & Rich Lead Metadata
+    { column: 'booking_url',       table: 'leads',       sql: 'ALTER TABLE leads ADD COLUMN booking_url TEXT' },
+    { column: 'photo_url',         table: 'leads',       sql: 'ALTER TABLE leads ADD COLUMN photo_url TEXT' },
+    { column: 'price_level',       table: 'leads',       sql: 'ALTER TABLE leads ADD COLUMN price_level TEXT' },
+    { column: 'hours_status',      table: 'leads',       sql: 'ALTER TABLE leads ADD COLUMN hours_status TEXT' },
+    { column: 'instagram_url',     table: 'leads',       sql: 'ALTER TABLE leads ADD COLUMN instagram_url TEXT' },
+    { column: 'linkedin_url',      table: 'leads',       sql: 'ALTER TABLE leads ADD COLUMN linkedin_url TEXT' },
+    { column: 'twitter_url',       table: 'leads',       sql: 'ALTER TABLE leads ADD COLUMN twitter_url TEXT' },
   ];
 
   for (const m of migrations) {

@@ -120,27 +120,86 @@ export function validateSyntax(email) {
 }
 
 // ══════════════════════════════════════════════════════════════
-//  2. AUTHORITATIVE DNS MX RESOLUTION
+//  2. AUTHORITATIVE DNS MX RESOLUTION (Cached & Resilient)
 // ══════════════════════════════════════════════════════════════
 
+const mxResolver = new dns.promises.Resolver();
+try {
+  mxResolver.setServers(['8.8.8.8', '1.1.1.1', '8.8.4.4', '9.9.9.9']);
+} catch {}
+
+const _mxCache = new Map();
+const KNOWN_MX_MAP = {
+  'google.com': 'smtp.google.com',
+  'gmail.com': 'gmail-smtp-in.l.google.com',
+  'googlemail.com': 'gmail-smtp-in.l.google.com',
+  'yahoo.com': 'mta5.am0.yahoodns.net',
+  'ymail.com': 'mta5.am0.yahoodns.net',
+  'outlook.com': 'outlook-com.olc.protection.outlook.com',
+  'hotmail.com': 'hotmail-com.olc.protection.outlook.com',
+  'live.com': 'live-com.olc.protection.outlook.com',
+  'icloud.com': 'mx1.mail.icloud.com',
+  'apple.com': 'mx1.mail.icloud.com',
+  'github.com': 'aspmx.l.google.com',
+  'microsoft.com': 'microsoft-com.mail.protection.outlook.com',
+};
+
 async function checkMxRecords(domain) {
+  const cleanDomain = (domain || '').toLowerCase().trim();
+  if (!cleanDomain) return { accepts_mail: false, records: [], primary: null };
+
+  if (_mxCache.has(cleanDomain)) {
+    return _mxCache.get(cleanDomain);
+  }
+
   try {
-    const records = await dns.promises.resolveMx(domain);
+    let records = null;
+    try {
+      records = await mxResolver.resolveMx(cleanDomain);
+    } catch {
+      try {
+        records = await dns.promises.resolveMx(cleanDomain);
+      } catch {
+        // Fallback to known MX if public provider lookup had transient network error
+        if (KNOWN_MX_MAP[cleanDomain]) {
+          records = [{ exchange: KNOWN_MX_MAP[cleanDomain], priority: 10 }];
+        }
+      }
+    }
+
     if (records && records.length > 0) {
       records.sort((a, b) => a.priority - b.priority);
-      return {
+      const res = {
         accepts_mail: true,
         records: records.map(r => r.exchange),
         primary: records[0].exchange,
       };
+      _mxCache.set(cleanDomain, res);
+      return res;
     }
   } catch {}
-  return { accepts_mail: false, records: [], primary: null };
+
+  // Last check for major provider known fallback
+  if (KNOWN_MX_MAP[cleanDomain]) {
+    const res = {
+      accepts_mail: true,
+      records: [KNOWN_MX_MAP[cleanDomain]],
+      primary: KNOWN_MX_MAP[cleanDomain],
+    };
+    _mxCache.set(cleanDomain, res);
+    return res;
+  }
+
+  const negativeRes = { accepts_mail: false, records: [], primary: null };
+  _mxCache.set(cleanDomain, negativeRes);
+  return negativeRes;
 }
 
 // ══════════════════════════════════════════════════════════════
 //  3. DISPOSABLE & DISIFY LIVE VERIFICATION
 // ══════════════════════════════════════════════════════════════
+
+const _disifyCache = new Map();
 
 async function checkDisifyAndDisposable(email, domain, rules) {
   const disposableDomains = new Set([
@@ -151,19 +210,41 @@ async function checkDisifyAndDisposable(email, domain, rules) {
     'mail2.mailinator.com', 'temp-mail.io', 'generator.email'
   ]);
 
-  let is_disposable = disposableDomains.has(domain);
-  let is_role_account = rules.role_account_prefixes.includes(email.split('@')[0]);
+  const cleanDomain = (domain || '').toLowerCase().trim();
+  const username = (email || '').split('@')[0].toLowerCase().trim();
+
+  let is_disposable = disposableDomains.has(cleanDomain);
+  let is_role_account = rules.role_account_prefixes.includes(username);
   let disifyData = null;
+
+  if (is_disposable) {
+    return { is_disposable: true, is_role_account, disifyData: { disposable: true } };
+  }
+
+  // Well-known provider domains do not need third-party disify API calls
+  if (KNOWN_MX_MAP[cleanDomain] || cleanDomain.endsWith('.edu') || cleanDomain.endsWith('.gov')) {
+    return { is_disposable: false, is_role_account, disifyData: null };
+  }
+
+  if (_disifyCache.has(cleanDomain)) {
+    const cached = _disifyCache.get(cleanDomain);
+    return {
+      is_disposable: cached.disposable ?? false,
+      is_role_account: is_role_account || (cached.role ?? false),
+      disifyData: cached,
+    };
+  }
 
   try {
     const res = await fetch(`https://disify.com/api/email/${encodeURIComponent(email)}`, {
       headers: { 'User-Agent': 'oddecosys-verifier/2.0' },
-      signal: AbortSignal.timeout(3000),
+      signal: AbortSignal.timeout(1200),
     });
     if (res.ok) {
       disifyData = await res.json();
       if (disifyData.disposable === true) is_disposable = true;
       if (disifyData.role === true) is_role_account = true;
+      _disifyCache.set(cleanDomain, disifyData);
     }
   } catch {}
 
@@ -171,13 +252,21 @@ async function checkDisifyAndDisposable(email, domain, rules) {
 }
 
 // ══════════════════════════════════════════════════════════════
-//  4. SMTP SOCKET PROBE (Port 25 Reachability)
+//  4. SMTP SOCKET PROBE (Port 25 Reachability & Non-Blocking Circuit Breaker)
 // ══════════════════════════════════════════════════════════════
 
-function probeSmtp(mxHost, toEmail, fromEmail = 'verify@outreach.local', timeoutMs = 3000) {
+let _port25Blocked = false;
+let _port25ConsecutiveTimeouts = 0;
+
+function probeSmtp(mxHost, toEmail, fromEmail = 'verify@outreach.local', timeoutMs = 2500) {
   return new Promise((resolve) => {
     if (!mxHost) {
       return resolve({ can_connect_smtp: false, is_deliverable: false, is_catch_all: false, reason: 'no_mx_host' });
+    }
+
+    const isLocalhost = mxHost === 'localhost' || mxHost === '127.0.0.1' || mxHost === '::1';
+    if (!isLocalhost && _port25Blocked) {
+      return resolve({ can_connect_smtp: false, is_deliverable: null, is_catch_all: false, reason: 'smtp_port25_timeout_blocked' });
     }
 
     const socket = net.createConnection(25, mxHost);
@@ -194,14 +283,26 @@ function probeSmtp(mxHost, toEmail, fromEmail = 'verify@outreach.local', timeout
     socket.setTimeout(timeoutMs);
 
     socket.on('timeout', () => {
+      if (!isLocalhost) {
+        _port25ConsecutiveTimeouts++;
+        if (_port25ConsecutiveTimeouts >= 1) _port25Blocked = true;
+      }
       finish({ can_connect_smtp: false, is_deliverable: null, is_catch_all: false, reason: 'smtp_port25_timeout_blocked' });
     });
 
     socket.on('error', (err) => {
+      if (!isLocalhost && (err.code === 'ECONNREFUSED' || err.code === 'ETIMEDOUT' || err.code === 'ENETUNREACH' || err.code === 'EHOSTUNREACH')) {
+        _port25ConsecutiveTimeouts++;
+        if (_port25ConsecutiveTimeouts >= 1) _port25Blocked = true;
+      }
       finish({ can_connect_smtp: false, is_deliverable: null, is_catch_all: false, reason: err.message });
     });
 
     socket.on('data', (data) => {
+      if (!isLocalhost) {
+        _port25Blocked = false;
+        _port25ConsecutiveTimeouts = 0;
+      }
       const msg = data.toString();
       const code = parseInt(msg.slice(0, 3));
 
@@ -219,7 +320,15 @@ function probeSmtp(mxHost, toEmail, fromEmail = 'verify@outreach.local', timeout
           socket.write(`QUIT\r\n`);
           finish({ can_connect_smtp: true, is_deliverable: true, is_catch_all: false, code });
         } else if (code >= 500 && code <= 559) {
-          finish({ can_connect_smtp: true, is_deliverable: false, is_catch_all: false, code, reason: `smtp_rejected:${code}` });
+          const lowerMsg = msg.toLowerCase();
+          const isPolicyBlock = lowerMsg.includes('5.7.1') || lowerMsg.includes('5.7.26') || lowerMsg.includes('spf') || lowerMsg.includes('spam') || lowerMsg.includes('client host') || lowerMsg.includes('blocked');
+          finish({
+            can_connect_smtp: true,
+            is_deliverable: isPolicyBlock ? null : false,
+            is_catch_all: false,
+            code,
+            reason: isPolicyBlock ? `smtp_policy_blocked:${code}` : `smtp_rejected:${code}`
+          });
         } else {
           finish({ can_connect_smtp: true, is_deliverable: null, is_catch_all: false, code, reason: `ambiguous_response:${code}` });
         }
@@ -676,14 +785,14 @@ export async function verifyEmail(email) {
 // ══════════════════════════════════════════════════════════════
 
 export async function verifyBatch(batchId, options = {}) {
-  const { dryRun = false } = options;
+  const { dryRun = false, onProgress, delayMs } = options;
   const rules = getRules();
   const db = getDb();
 
   const leads = db.prepare(`
     SELECT l.id, l.business_name, l.email, l.batch_id
     FROM leads l
-    WHERE l.batch_id = ? AND l.status IN ('site_checked', 'discovered')
+    WHERE l.batch_id = ? AND l.status IN ('site_checked', 'discovered', 'verifying')
     AND l.email IS NOT NULL AND l.email != ''
     ORDER BY l.id
   `).all(batchId);
@@ -692,7 +801,40 @@ export async function verifyBatch(batchId, options = {}) {
   _state.batchId = batchId;
   _state.total = leads.length;
   _state.processed = 0;
+  _state.deliverable = 0;
+  _state.risky = 0;
+  _state.undeliverable = 0;
   _state.startedAt = new Date().toISOString();
+
+  // Prepare SQL statements once for high performance and smooth execution
+  const findExistingStmt = db.prepare('SELECT id FROM lead_emails WHERE lead_id = ? AND LOWER(email) = LOWER(?)');
+  const updateLeadEmailStmt = db.prepare(`
+    UPDATE lead_emails SET
+      is_primary = ?,
+      verification_status = ?,
+      confidence_score = ?,
+      is_catch_all = ?,
+      is_role_account = ?,
+      is_free_provider = ?,
+      is_disposable = ?,
+      mx_host = ?,
+      verification_json = ?,
+      verified_at = datetime('now')
+    WHERE id = ?
+  `);
+  const insertLeadEmailStmt = db.prepare(`
+    INSERT INTO lead_emails (
+      lead_id, email, source, is_primary, verification_status, confidence_score,
+      is_catch_all, is_role_account, is_free_provider, is_disposable,
+      mx_host, verification_json, verified_at
+    ) VALUES (?, ?, 'verifier', ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'))
+  `);
+  const updateLeadStatusStmt = db.prepare(`
+    UPDATE leads SET status = ?, email = ?, updated_at = datetime('now') WHERE id = ?
+  `);
+  const getSecondaryEmailsStmt = db.prepare(`
+    SELECT id, email FROM lead_emails WHERE lead_id = ? AND email != ?
+  `);
 
   let deliverable = 0;
   let risky = 0;
@@ -702,41 +844,109 @@ export async function verifyBatch(batchId, options = {}) {
     if (_state.cancelling) break;
     _state.currentEmail = lead.email;
 
+    // 1. Verify primary email
     const res = await verifyEmail(lead.email);
+    let chosenEmail = lead.email;
+    let chosenStatus = res.verification_status;
 
     if (!dryRun) {
-      db.prepare(`
-        INSERT OR REPLACE INTO lead_emails (
-          lead_id, email, is_primary, verification_status, confidence_score,
-          is_catch_all, is_role_account, is_free_provider, is_disposable,
-          mx_host, verification_json, verified_at
-        ) VALUES (?, ?, 1, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'))
-      `).run(
-        lead.id,
-        lead.email,
-        res.verification_status,
-        res.valid ? 90 : 20,
-        res.is_catch_all ? 1 : 0,
-        res.is_role_account ? 1 : 0,
-        res.is_free_provider ? 1 : 0,
-        res.is_disposable ? 1 : 0,
-        res.mx_host,
-        JSON.stringify(res)
-      );
-
-      const nextStatus = res.verification_status === 'undeliverable'
-        ? 'disqualified'
-        : 'verifying';
-
-      db.prepare("UPDATE leads SET status = ?, updated_at = datetime('now') WHERE id = ?").run(nextStatus, lead.id);
+      const existing = findExistingStmt.get(lead.id, lead.email);
+      if (existing) {
+        updateLeadEmailStmt.run(
+          1,
+          res.verification_status,
+          res.score || (res.valid ? 90 : 20),
+          res.is_catch_all ? 1 : 0,
+          res.is_role_account ? 1 : 0,
+          res.is_free_provider ? 1 : 0,
+          res.is_disposable ? 1 : 0,
+          res.mx_host,
+          JSON.stringify(res),
+          existing.id
+        );
+      } else {
+        insertLeadEmailStmt.run(
+          lead.id,
+          lead.email,
+          1,
+          res.verification_status,
+          res.score || (res.valid ? 90 : 20),
+          res.is_catch_all ? 1 : 0,
+          res.is_role_account ? 1 : 0,
+          res.is_free_provider ? 1 : 0,
+          res.is_disposable ? 1 : 0,
+          res.mx_host,
+          JSON.stringify(res)
+        );
+      }
     }
 
     if (res.verification_status === 'deliverable') deliverable++;
     else if (res.verification_status === 'risky') risky++;
     else undeliverable++;
 
+    // 2. Also verify any secondary emails discovered for this lead in lead_emails
+    const secondaryRows = getSecondaryEmailsStmt.all(lead.id, lead.email);
+    for (const sec of secondaryRows) {
+      if (_state.cancelling) break;
+      const secRes = await verifyEmail(sec.email);
+      if (!dryRun) {
+        updateLeadEmailStmt.run(
+          0,
+          secRes.verification_status,
+          secRes.score || (secRes.valid ? 90 : 20),
+          secRes.is_catch_all ? 1 : 0,
+          secRes.is_role_account ? 1 : 0,
+          secRes.is_free_provider ? 1 : 0,
+          secRes.is_disposable ? 1 : 0,
+          secRes.mx_host,
+          JSON.stringify(secRes),
+          sec.id
+        );
+      }
+
+      if (secRes.verification_status === 'deliverable') deliverable++;
+      else if (secRes.verification_status === 'risky') risky++;
+      else undeliverable++;
+
+      // If primary was undeliverable but this secondary is deliverable or acceptable, promote it!
+      if (chosenStatus === 'undeliverable' && secRes.verification_status !== 'undeliverable') {
+        chosenEmail = sec.email;
+        chosenStatus = secRes.verification_status;
+        if (!dryRun) {
+          updateLeadEmailStmt.run(
+            1,
+            secRes.verification_status,
+            secRes.score || 90,
+            secRes.is_catch_all ? 1 : 0,
+            secRes.is_role_account ? 1 : 0,
+            secRes.is_free_provider ? 1 : 0,
+            secRes.is_disposable ? 1 : 0,
+            secRes.mx_host,
+            JSON.stringify(secRes),
+            sec.id
+          );
+        }
+      }
+    }
+
+    // 3. Update lead status in leads table
+    if (!dryRun) {
+      const nextStatus = chosenStatus === 'undeliverable' ? 'disqualified' : 'verified';
+      updateLeadStatusStmt.run(nextStatus, chosenEmail, lead.id);
+    }
+
     _state.processed++;
-    await sleep(rules.delay_between_emails_ms || 200);
+    _state.deliverable = deliverable;
+    _state.risky = risky;
+    _state.undeliverable = undeliverable;
+
+    if (onProgress) {
+      onProgress({ ..._state });
+    }
+
+    const stepDelay = delayMs !== undefined ? delayMs : (dryRun ? 0 : 50);
+    if (stepDelay > 0) await sleep(stepDelay);
   }
 
   _state.active = false;
@@ -805,7 +1015,7 @@ export async function reverifyEmailById(id) {
     WHERE id = ?
   `).run(
     res.verification_status,
-    res.valid ? 90 : 20,
+    res.score || (res.valid ? 90 : 20),
     res.is_catch_all ? 1 : 0,
     res.is_role_account ? 1 : 0,
     res.is_free_provider ? 1 : 0,
