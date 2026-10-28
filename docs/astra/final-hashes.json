@@ -1,0 +1,32 @@
+{
+  "sourceHead": "f30490bd892dd651fd2fb276b09b510379e27c0d",
+  "overlayManifestSha256": "a688a159676ddf3fbbce6ac8ac894d582f5644afbfee70b63416379f8f0474fd",
+  "sourceOriginalRecheckMismatches": [],
+  "implementationFiles": {
+    "pipeline/database.js": "816a52e9f56cbbf2f4d9571ea61a9e3d77cc1b6b3cc54c1f83c37e49f1c741cc",
+    "pipeline/offer-contracts.js": "4ce112efd096a2b2922cb989c0819dcf40acf7edd033d09c910b3b04ac12572b",
+    "pipeline/sending-engine.js": "5684a2906f022ba09d3f2a1c6ef89aeea8875ad67843f0cdcdb73a98ab087454",
+    "server.js": "925c1cffeb7137a4821999678ae3a87436f7c218f46e7464af1b4052789f112b",
+    "tests/offer-contracts.test.mjs": "feda78072339ff1547b8e28b62f90d89c9836811f79d2ba3e47d89238a25afaf",
+    "tests/offer-contracts-api.test.mjs": "f1a74098aa6207b2c574348c0e628dcd9f41c29fe73f900e5f357e5912a9354e",
+    "tests/campaign-launch-snapshot.test.mjs": "970a5a8fcc96b4b4257c9e432ee39d3aa3ae33b360b89aa8737d25651450660b",
+    "tests/campaign-lifecycle.test.mjs": "125f955abfd1c3341a54fbf786a07efd48b16bc473037796fbcf191c70e29349",
+    "docs/astra/base-capabilities.json": "432aedd3a3178afe4dd0dd092fd775ba9423d24eb87cf094f6dfadc65a8ee805",
+    "docs/astra/base-capability-map.md": "873a817883e166f503cc869a6fc061b5fe6aa50e1fce6b700f802ef37526e35b",
+    "docs/astra/baseline-validation.md": "a69dc5728b3ac5dae9a62c91dcf4bc8171d15e8d111ea7ae2c9f664a93702aee",
+    "docs/astra/combined-backlog.json": "dd488744f647baf03e6dac1fdcd1ed3ea095b65c78b72554f50019d736acc042",
+    "docs/astra/extension-capabilities.json": "1a51510726a5fae825cb9b2061830b00404e20730846d92921a4637b54a5eddb",
+    "docs/astra/extension-capability-map.md": "475132ffffff7a6dd1c39de8c95d82748f5f6e83851a9829bbe04013437f3d1c",
+    "docs/astra/foundation-assessment.md": "1d1148a04785bffe9a2894b6a3f3564501ea17bb41e5d5f9d32370e3483069c9",
+    "docs/astra/foundation-review.md": "06316a6754c3632e7050ddd195de88aad7c4bfb302e259ad90610eaba3be8ff4",
+    "docs/astra/IMPLEMENTATION_HANDOFF.md": "6e52409fd348b274179a129ed7500dc8687f7918836ecc7ed00ba1f10bfea29a",
+    "docs/astra/offer-foundation-report.md": "046ddb883b8f4531b344dd37fb049ab66250b5fd849e506630432da5186187fc",
+    "docs/astra/qa-s00-trace.md": "340ae59e5a5268ec9ed0e84c8341bed18cdefd31aa13a9d8bb53162e366602af",
+    "docs/astra/README.md": "793dd123bcf7174b8c295b81a0884a6f20c5aaf00ad21258aaecb1eb21541b2d",
+    "docs/astra/source-snapshot.json": "ed06ed60cc20714385528355c7ce16582bf21bb3d384328ac80fbb6bc848bdeb",
+    "docs/astra/ADRs/0001-tenant-migration.md": "e9e6e56d608498c56accfb0f3c4ec5190ff5033a7a2bdf7e9d6a847f3ae08b40",
+    "docs/astra/ADRs/0002-workflow-ownership.md": "f22765fff237b3aa52d00a16c44890efce2be8444cd934746cac801a233eecef",
+    "docs/astra/contracts/harness-task-v1.schema.json": "bf9144736b3b8f402073118be19063f48cb60b3119cee0f15ca26911ee475d14",
+    "docs/astra/contracts/README.md": "b0ec026eb7bae88a40d57841cae2b56a2b7007427d96bcc06e81c04570faff33"
+  }
+}

@@ -1,0 +1,70 @@
+.campaign-workspace { margin: 20px 0 28px; scroll-margin-top: 1rem; }
+.campaign-workspace[hidden], [data-campaign-overview][hidden] { display: none !important; }
+.campaign-workspace:empty { display: none; }
+.campaign-workspace-loading, .campaign-workspace-error { padding: 24px; border: 1px solid var(--border-subtle); border-radius: 18px; background: var(--bg-surface); }
+.campaign-workspace-loading { display: flex; align-items: center; gap: 12px; color: var(--text-muted); }
+.campaign-workspace-error h2 { margin: 8px 0; color: var(--text-primary); }
+.campaign-workspace-error p, .cw-help, .cw-warning { color: var(--text-muted); line-height: 1.65; }
+.cw-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; padding: 22px 24px; border: 1px solid var(--border-subtle); border-radius: 20px 20px 0 0; background: linear-gradient(140deg, rgba(99,102,241,.13), rgba(18,22,33,.82) 52%); }
+.cw-heading h1 { margin: 5px 0; font-size: clamp(1.35rem, 3vw, 1.9rem); }
+.cw-heading p { margin: 0; color: var(--text-muted); }
+.cw-progress { padding: 16px 20px; border-inline: 1px solid var(--border-subtle); background: var(--bg-elevated); }
+.cw-primary-action { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 16px; border: 1px solid rgba(99,102,241,.32); border-radius: 14px; background: rgba(99,102,241,.08); }
+.cw-primary-action > div { display: grid; gap: 4px; }
+.cw-primary-action strong { color: var(--text-primary); font-size: 1rem; }
+.cw-primary-action span:last-child { color: var(--text-muted); font-size: .82rem; }
+.cw-step-nav { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; margin-top: 14px; }
+.cw-step { display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 8px 10px; border: 1px solid var(--border-subtle); border-radius: 11px; background: transparent; color: var(--text-muted); text-align: left; cursor: pointer; }
+.cw-step > span { display: grid; place-items: center; width: 22px; height: 22px; flex: 0 0 22px; border-radius: 50%; background: rgba(148,163,184,.12); font-size: .72rem; }
+.cw-step strong { font-size: .76rem; font-weight: 600; }
+.cw-step.is-current { border-color: rgba(99,102,241,.65); color: var(--text-primary); background: rgba(99,102,241,.12); }
+.cw-step.is-done > span { background: rgba(16,185,129,.18); color: #6ee7b7; }
+.cw-content { padding: 20px 24px 24px; border: 1px solid var(--border-subtle); border-top: 0; border-radius: 0 0 20px 20px; background: var(--bg-surface); }
+.cw-content > h2 { margin: 0 0 8px; font-size: 1.2rem; }
+.cw-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin: 14px 0; }
+.cw-actions > span, .cw-copy-meta, .cw-verification { color: var(--text-muted); font-size: .8rem; }
+.cw-contact-list, .cw-review-list { display: grid; gap: 10px; margin-top: 14px; }
+.cw-contact-list article, .cw-review-card { border: 1px solid var(--border-subtle); border-radius: 14px; background: rgba(8,11,18,.36); }
+.cw-contact-list article { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 14px; }
+.cw-contact-list article > div, .cw-review-card header > div { display: grid; gap: 4px; min-width: 0; }
+.cw-contact-list article span:not(.campaign-eligibility), .cw-review-card header span { color: var(--text-muted); font-size: .8rem; overflow-wrap: anywhere; }
+.cw-review-card { padding: 16px; }
+.cw-review-card > header { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 14px; }
+.cw-review-card label { display: grid; gap: 6px; margin-top: 12px; color: var(--text-muted); font-size: .83rem; }
+.cw-review-card textarea { resize: vertical; min-height: 120px; }
+.cw-verification { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; padding: 10px; border-radius: 10px; background: rgba(148,163,184,.06); }
+.cw-verification strong { color: var(--text-primary); }
+.cw-copy-meta { display: flex; flex-wrap: wrap; gap: 8px 16px; margin: 12px 0; }
+.cw-guardrail-warning, .cw-warning { padding: 10px 12px; border-inline-start: 3px solid #f59e0b; border-radius: 8px; background: rgba(245,158,11,.08); }
+.cw-shared-schedule { display: grid; gap: 7px; padding: 16px; border: 1px solid var(--border-subtle); border-radius: 14px; background: rgba(148,163,184,.05); }
+.cw-shared-schedule p { margin: 0 0 5px; color: var(--text-muted); line-height: 1.6; }
+.cw-readiness-facts { display: flex; flex-wrap: wrap; gap: 10px; }
+.cw-readiness-facts span { padding: 9px 12px; border: 1px solid var(--border-subtle); border-radius: 10px; color: var(--text-muted); }
+.cw-empty, .cw-error { padding: 12px 0; color: var(--text-muted); }
+.cw-timeline { display: grid; gap: 0; padding: 0; list-style: none; }
+.cw-timeline li { display: flex; justify-content: space-between; gap: 12px; padding: 12px 4px; border-bottom: 1px solid var(--border-subtle); }
+.cw-timeline time { color: var(--text-muted); white-space: nowrap; }
+.campaign-card [data-campaign-workspace-open] { box-shadow: 0 0 0 1px rgba(99,102,241,.18) inset; }
+@media (max-width: 800px) {
+  .cw-step-nav { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 520px) {
+  .cw-heading { align-items: stretch; flex-direction: column; padding: 16px; }
+  .cw-heading > div { min-width: 0; }
+  .cw-heading > button { align-self: flex-start; flex: 0 0 auto; }
+  .cw-progress { padding: 12px; }
+  .cw-primary-action { align-items: flex-start; flex-direction: column; }
+  .cw-step-nav { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+  .cw-step { padding: 8px 6px; gap: 6px; }
+  .cw-step strong { font-size: .7rem; line-height: 1.2; }
+  .cw-content { padding: 16px 12px; }
+  .cw-review-card { padding: 12px; }
+  .cw-review-card > header { flex-direction: column; }
+  .cw-contact-list article { align-items: flex-start; flex-direction: column; }
+  .cw-verification { align-items: flex-start; flex-direction: column; }
+  .cw-timeline li { align-items: flex-start; flex-direction: column; }
+  .cw-actions > .btn { max-width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .campaign-workspace *, .campaign-workspace *::before, .campaign-workspace *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}

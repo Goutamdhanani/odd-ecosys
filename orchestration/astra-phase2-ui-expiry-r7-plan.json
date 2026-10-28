@@ -1,0 +1,20 @@
+{
+  "planId": "ASTRA-PHASE2-UI-PROOF-EXPIRY-R7",
+  "phase": "Phase 2 QA repair only",
+  "releaseReady": false,
+  "baseline": "astra-r7-runtime-519066086d825393",
+  "problem": "The real workbench proof form omits required expiresAt, so a valid synthetic file upload is rejected with HTTP 400.",
+  "ownership": [
+    { "ticket": "UI-PROOF-EXPIRY", "role": "fresh Luna implementer", "paths": ["astra.html", "js/astra-workbench.js", ".superpowers/phase2/fixes/ui-proof-expiry-r7/**"] },
+    { "ticket": "UI-JOURNEY", "role": "existing Luna test implementer", "paths": ["tests/astra-workbench-e2e.test.mjs", ".superpowers/phase2/astra-ui-r7/**"], "dependency": "Final journey waits for UI-PROOF-EXPIRY product freeze; diagnostic continuation may precede it." },
+    { "ticket": "FINAL-QA", "role": "independent Luna reviewer", "paths": [".superpowers/phase2/final-r7/**", ".superpowers/phase2/suite-r7/**"], "dependency": "Full-suite acceptance waits for product and test writers to finish and a new global source freeze." }
+  ],
+  "acceptance": [
+    "Required visible proof expiry field accepts a user-selected future local datetime and serializes an ISO expiry in the upload request.",
+    "Missing, invalid or past expiry remains rejected; backend expiry, tenant ownership and byte/hash validation are unchanged.",
+    "The final actual workbench journey uploads proof through its form with HTTP 201, without a fetch/API bypass for that step.",
+    "Fresh independent SPEC and QUALITY review plus complete frozen-candidate automated suite; retain failures as evidence."
+  ],
+  "constraints": ["Luna coding and reviewing agents only", "No live provider calls, outreach, production migration or deployment", "Synthetic disposable fixtures only", "No new feature wave", "Preserve protected redesign and inherited source", "Do not edit prior frozen manifests or evidence"],
+  "coordinatorScope": "Planning, dispatch, source freezing and orchestration helpers only"
+}

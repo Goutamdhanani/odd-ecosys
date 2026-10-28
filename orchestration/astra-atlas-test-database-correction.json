@@ -1,0 +1,14 @@
+{
+  "id": "ASTRA-ATLAS-VALID-DEDICATED-TEST-DATABASE",
+  "supersedesOnlyDatabaseSelection": "ASTRA-LIVE-ACTUAL-ATLAS-CASES and its preexecution ruling",
+  "previousDatabaseName": "astra_test_live_validation_20261026",
+  "approvedDatabaseName": "astra_test_validation_20261027",
+  "reason": "The existing reviewed persistence guard intentionally rejects astra_test_live_* names. The coordinator-selected prior test name conflicted with that guard. Choose a valid dedicated name instead of weakening the protection.",
+  "priorDatabaseActivity": "Authentication/ping and allowlisted collection metadata only; no collection writes or index changes completed. Both actual failed runner receipts remain preserved.",
+  "credentialChanges": false,
+  "customerDataMigrationOrDeletion": false,
+  "sourceGuardChanges": false,
+  "allowedTestDatabases": ["astra_test_validation_20261027"],
+  "operations": "Only the same six named prospecting collections, exact generated synthetic fixture records, index setup and bounded case operations already authorized",
+  "releaseReady": false
+}

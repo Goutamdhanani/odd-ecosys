@@ -1,0 +1,23 @@
+{
+  "checkpoint":"R18 integrated customer flow in development",
+  "workspace":"C:/Users/pooja/.codex/worktrees/astra-foundation/odd-ecosys",
+  "baseHead":"f30490bd892dd651fd2fb276b09b510379e27c0d",
+  "baseline":"orchestration/astra-phase2-source-r17.json",
+  "historicalRegression":{"checkpoint":"R17","pass":495,"fail":0,"currentR18FullRegression":false},
+  "currentEvidence":[
+    {"scope":"Released workspace + initial customer browser focused tests","pass":6,"fail":0,"skipped":0,"artifact":".superpowers/r18/integration-checkpoint/released-focused.result.json","notFinalCustomerAcceptance":true},
+    {"scope":"Changed API/store compatibility: recovery + outcome corrections using retained synthetic31 fixture","pass":2,"fail":0,"skipped":0,"artifact":".superpowers/r18/integration-checkpoint/legacy-api-regression.result.json"},
+    {"scope":"Initial X-Ray implementation","pass":3,"independentVerdict":"NEEDS_CHANGES","artifact":".superpowers/r18/review-research/REPORT.md"},
+    {"scope":"Collection policy implementation","nodeTests":1,"policyChecks":9,"pass":1,"fail":0,"artifact":".superpowers/r18/collection-policy/REPORT.md","independentAcceptance":false}
+  ],
+  "activeFixes":[
+    {"owner":"/root/r18_customer_ui_fixes","items":["real data envelopes","no rejected-target fallback","server approval lookup","explicit user rights expiry","tenant-pinned async writes"]},
+    {"owner":"/root/r18_research_fixes","items":["exact-URL watched recapture lineage","hidden markup filtering"]}
+  ],
+  "next":["Independent correction review and collection-policy review","R18 source-provenance/harness integration","Fresh synthetic32 migration and complete regression","Customer preview on preserved isolated data","Remaining backlog groups and acceptance"],
+  "releaseReady":false,
+  "formal52TaskAcceptance":false,
+  "genuineClosedLoopImprovement":"unproven",
+  "externalActions":"disabled",
+  "runtimePreview":"Existing 3211 retained on old process/schema; new R18 not yet restarted or accepted"
+}

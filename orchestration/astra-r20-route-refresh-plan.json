@@ -1,0 +1,8 @@
+{
+  "id":"ASTRA-R20-POST-OWNERSHIP-ROUTE-REFRESH",
+  "owner":"/root",
+  "ownedPaths":[".superpowers/r20/route-security-refresh/**",".superpowers/r20/integration-checkpoint/build-candidate.py",".superpowers/r20/integration-checkpoint/prepare-freezer.py",".superpowers/r20/integration-checkpoint/route-refresh-binding/**"],
+  "reason":"The accepted outcome ownership correction changes two captured sources; original172-route evidence must stay immutable and cannot validate new bytes",
+  "requirements":["Copy the reviewed route capture/snapshot/security helpers byte-for-byte into a fresh sibling folder at identical repository depth","Run only after accepted product correction; strict synthetic33 fixture and egress guard remain unchanged","Bind freezer and its deterministic recipe to fresh exact route evidence/helper paths, retaining all count/digest/hash/coverage/private-path protections","Preserve original reports/matrix/snapshots; independent helper review before freeze","Scope text must describe final UI/static-privacy/outcome deltas as well as rights/core integration"],
+  "releaseReady":false
+}

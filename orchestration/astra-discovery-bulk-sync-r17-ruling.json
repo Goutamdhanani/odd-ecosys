@@ -1,0 +1,27 @@
+{
+  "rulingId": "ASTRA-PHASE2-DISCOVERY-BULK-SYNC-R17",
+  "phase": "Phase 2 test request synchronization repair only",
+  "baselineManifest": "orchestration/astra-phase2-source-r16.json",
+  "baselineCandidate": "astra-r16-d0d162286d077ba5",
+  "runtimeManifest": "orchestration/astra-phase2-runtime-r15.json",
+  "owner": "/root/credential_finish_r14",
+  "agentReuseReason": "Fresh spawn and completed-writer follow-up both failed with agent thread limit reached. The existing known Luna/high audit agent receives this bounded test ticket while its final scan is waiting for run closure; independent source review remains with another Luna agent.",
+  "finding": "R16 full run: 495 tests, 494 passed, one EPCH bulk-selection UI test failed because websiteJobBodyReceived was null immediately after the click. Source-selection regression passed. The test currently asserts server-side capture without awaiting the exact async website-job POST.",
+  "ownedPaths": [
+    "tests/website-discovery-ui.test.mjs",
+    "tests/astra-source-fidelity.test.mjs",
+    "docs/astra/s00-source-delta.json",
+    ".superpowers/phase2/fixes/discovery-bulk-sync-r17/**"
+  ],
+  "requirements": [
+    "Reproduce request timing using a controlled synthetic request/response barrier, and distinguish request arrival from response completion. Show the click promise alone does not establish server receipt.",
+    "Await the exact modifying request and response for the EPCH selected-sites action before asserting its captured body and count. Preserve the exact batch/company payload, selected-site order, no scan before explicit click, exactly one job, selection across durable refresh, resulting email rows and no page errors.",
+    "Review this same file for the identical immediate server-side captured-body/count-after-click pattern and repair only those equivalent observations. Preserve all prior retry/no-auto-retry/cooldown/error/selection checks. No increased deadlines, skips, generic network-idle workaround or weaker expected payloads.",
+    "No product source, UI behavior, API ordering, extraction, backend, database, migration, credential or guard changes. If a product bug is established, report before expanding ownership.",
+    "Preserve the 228-file snapshot, all 30 delta paths and earlier authorizations; update only this website UI test's existing hash/byte count and append this additional authorization. Strict fidelity checks may add the corresponding explicit authorization assertion without relaxing old ones.",
+    "Run focused guarded Edge file checks and source-fidelity checks, retain exact R16 before copies and logs, then relinquish owned files for independent review, immutable global R17 freeze and a complete automated suite. Runtime R15 and its E2E binding remain unchanged.",
+    "Preserve R16 failure and the causal resolution of the earlier source-selection issue. No feature wave, external providers or outreach, real-data migrations or deployment."
+  ],
+  "independentAcceptance": false,
+  "releaseReady": false
+}

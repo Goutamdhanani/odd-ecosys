@@ -1,0 +1,105 @@
+{
+  "planId": "ASTRA-R18-CUSTOMER-FLOW",
+  "authority": "User pasted request in attachment ab031115-5f0e-4641-9b7c-9105becfbd01/Pasted text.txt explicitly resumes implementation from R17",
+  "baseline": "orchestration/astra-phase2-source-r17.json",
+  "baseHead": "f30490bd892dd651fd2fb276b09b510379e27c0d",
+  "workspace": "C:/Users/pooja/.codex/worktrees/astra-foundation/odd-ecosys",
+  "protectedWorkspace": "C:/Users/pooja/.codex/worktrees/a4a4/odd-ecosys",
+  "objective": "Connect a seven-section customer console to real tenant services and improve the dependency-ready Business X-Ray/Radar research path. Preserve operator capabilities and keep all external/live actions gated.",
+  "models": "Implementation and independent review agents: gpt-6-luna/high only, following user preference",
+  "tickets": [
+    {
+      "id": "R18-WORKSPACES",
+      "owner": "/root/r18_workspace_backend",
+      "ownedPaths": [
+        "pipeline/astra-api.js",
+        "pipeline/astra-tenant-store.js",
+        "pipeline/astra-tenant-context.js",
+        "server.js",
+        "tools/astra/local-preview.mjs",
+        "migrations/astra/032-workspace-discovery.up.sql",
+        "migrations/astra/032-workspace-discovery.down.sql",
+        "tests/astra-workspace-discovery.test.mjs",
+        ".superpowers/r18/workspaces/**"
+      ],
+      "deliverables": [
+        "Authenticated GET /api/astra/workspaces lists only the signed principal's current active memberships with tenant name/id/role",
+        "Signed nonce-bound security-definer discovery with app-role least privilege, no RLS bypass or owner login",
+        "Preserve tenant authorization and CSRF on existing endpoints",
+        "Serve the new customer page /growth.html and retain /astra.html as access-controlled advanced workspace",
+        "Preview supports the customer entry without exposing private tokens or changing saved data"
+      ],
+      "state": "IMPLEMENTED_FOCUSED_PASS_REVIEW_PENDING"
+    },
+    {
+      "id": "R18-CUSTOMER-UI",
+      "owner": "/root/r18_customer_ui",
+      "ownedPaths": [
+        "growth.html",
+        "css/astra-growth.css",
+        "js/astra-growth.js",
+        "tests/astra-growth-ui.test.mjs",
+        ".superpowers/r18/customer-ui/**"
+      ],
+      "deliverables": [
+        "Overview, Discover, Campaigns, Inbox, Customers/CRM, Analytics, Settings",
+        "Workspace IDs/evidence hashes/raw JSON stay internal during everyday flows",
+        "Real API calls and persisted outputs; no invented business inventory, messages or metrics",
+        "Business/service setup, discovery evidence and account audit, campaign selection/qualification/authorization, inbox/CRM/outcome views, analytics and meaningful blocked/error/recovery states",
+        "Advanced link shown only to authorized operators; no destructive or live action enabled"
+      ],
+      "state": "IMPLEMENTED_FOCUSED_PASS_REVIEW_PENDING"
+    },
+    {
+      "id": "R18-XRAY-RADAR",
+      "owner": "/root/r18_xray_research_v2",
+      "ownedPaths": [
+        "pipeline/astra-research.js",
+        "pipeline/astra-research-routes.js",
+        "pipeline/astra-evidence.js",
+        "pipeline/astra-radar.js",
+        "pipeline/astra-xray.js",
+        "tests/astra-xray.test.mjs",
+        ".superpowers/r18/research/**"
+      ],
+      "deliverables": [
+        "Evidence-bound account-level Business X-Ray across captured pages with useful measured findings and explicit unknowns",
+        "Existing POST /research/audits accepts exactly one of evidenceId or accountId; evidenceId behavior remains compatible",
+        "Persist the account audit using existing research_audits findings storage without destructive schema changes",
+        "Associate evidence/candidates with exact account/source, reject foreign/stale/revoked or ambiguous evidence",
+        "Connect compatible X-Ray signals to existing Radar behavior without a second scheduler",
+        "Exercise broken/missing/duplicate/injection/unknown cases with controlled fixtures and no network permission bypass"
+      ],
+      "state": "IMPLEMENTING"
+    }
+  ],
+  "interfaces": {
+    "workspaceDiscovery": "GET /api/astra/workspaces -> {workspaces:[{id,name,role,status}], capabilities:{customerConsole:true, operatorWorkspace:boolean}, releaseReady:false}; principal identity is server-authenticated, never supplied in query/body",
+    "accountAudit": "POST /api/astra/tenants/:tenantId/research/audits body {accountId} OR existing {evidenceId}; response {data:{id,auditVersion,coverageStatus,findings,...}} with normal 201/4xx behavior",
+    "customerPage": "/growth.html; static assets css/astra-growth.css and js/astra-growth.js; existing tenant endpoints remain the business operation authority",
+    "migrationReservation": "032 belongs only to workspace discovery. Research uses existing schema; any additional migration requires an explicit coordinator ownership change. Never modify applied UP001-031."
+  },
+  "acceptance": [
+    "Customer can choose an authorized named workspace and perform local supported operations without manually entering UUIDs, hashes or JSON",
+    "Application invokes actual services and persists or returns actual results; loading, empty, unavailable and policy-blocked states are truthful",
+    "Account X-Ray references exact captured evidence and never turns a missing observation into an asserted site-wide absence or estimated financial loss",
+    "New workspace discovery rejects forged principal, replay/expiry and foreign membership; app/worker roles retain least privilege",
+    "Focused tests during implementation; freeze source and run integration/regression at the completed group checkpoint",
+    "Independent Luna spec and quality acceptance required for this group's deltas; R17 historical evidence remains immutable"
+  ],
+  "restrictions": [
+    "No real customer data mutation",
+    "No live outreach, provider calls or production deployment",
+    "No destructive real-data migration",
+    "No global RLS or ownership weakening",
+    "No staging inherited changes or Git commit/push without user request",
+    "No model fallback beyond GLM-5.3 in product inference"
+  ],
+  "releaseReady": false,
+  "formal52TaskAcceptance": false,
+  "integrationNotes": [
+    "OWNERSHIP.md is in the immutable selected 228-file snapshot and now has an explicitly authorized R18 ownership amendment; append an R18 provenance delta instead of rewriting the baseline.",
+    "server.js already has an original explicit delta; append R18 authority and current hash only after source integration.",
+    "Old 31-migration fixtures and R17 manifests remain historical; new r18-foundation fixture has 32 migrations and realData=false."
+  ]
+}

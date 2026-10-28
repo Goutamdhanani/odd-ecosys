@@ -1,0 +1,19 @@
+{
+  "id":"ASTRA-R20-UI-REVIEW-FIX-1",
+  "owner":"/root/r20_ui_first",
+  "root":"C:/Users/pooja/.codex/worktrees/astra-foundation/odd-ecosys",
+  "ownedPaths":["js/astra-growth.js","tests/astra-growth-ui.test.mjs","tests/astra-growth-design.test.mjs","tests/astra-source-rights-ui.test.mjs",".superpowers/r20/ui-first/review-fix-1/**"],
+  "findings":[
+    "Actual-data owner screenshots show completed workspace still has Loading this workspace placeholders in idle task result boxes",
+    "Reproduced A-to-B Growth workspace switch opens Pro Advanced workspace in stale A because advanced localStorage selection is unsynchronized"
+  ],
+  "acceptance":[
+    "Idle task panels settle to accurate empty or unavailable states after initial current workspace load",
+    "Preserve completed results, active write status, current errors and stale response rejection during refresh and workspace switching",
+    "Advanced handoff preserves selected authorized current workspace across navigation and browser storage failure cannot silently open stale workspace",
+    "Retain all existing capabilities, role checks, tenant boundaries, CSRF, idempotency and all original behavior assertions",
+    "Focused actual browser regressions plus independent re-review of released bytes; original review failures preserved"
+  ],
+  "restrictions":["No backend/advanced-page product edits","No preview database writes or restart","No real providers/outreach","No metadata/freeze/global-suite until review release"],
+  "releaseReady":false
+}

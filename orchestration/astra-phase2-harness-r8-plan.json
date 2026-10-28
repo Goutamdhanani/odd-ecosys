@@ -1,0 +1,29 @@
+{
+  "planId": "ASTRA-PHASE2-FULLSUITE-HARNESS-R8",
+  "phase": "Phase 2 QA repairs only",
+  "baselineCandidate": "astra-r7-cb05b63778d3cb2e",
+  "productRuntime": "astra-r8-runtime-7762356187340fed",
+  "releaseReady": false,
+  "noNewFeatureWave": true,
+  "writeGate": "No frozen source/test/inventory edits until the R7 full suite has exited and its post-run integrity evidence is captured; coordinator must explicitly release writes.",
+  "implementer": "/root/fix_r7_qa_harness",
+  "ownedPaths": [
+    "tests/astra-lifecycle-cancel.test.mjs",
+    "docs/astra/s00-side-effect-inventory.json",
+    "tests/astra-workbench-e2e.test.mjs",
+    ".superpowers/phase2/fixes/fullsuite-harness-r8/**"
+  ],
+  "findings": [
+    { "test": "prepared lifecycle cancellation", "classification": "confirmed stale test guard hash", "repair": "Bind to the independently reviewed shipped guard; preserve all privacy and app-role checks." },
+    { "test": "S00-B02 side effect inventory", "classification": "confirmed stale workbench boundary hash after reviewed expiry repair", "repair": "Refresh only exact reviewed boundary metadata, preserving strict hash, mapping, authorization and negative checks." },
+    { "test": "Astra workbench journey", "classification": "research completion refresh assertion failed only in full run; cause must be established", "repair": "Diagnose actual request identity and response ordering; preserve task completion and rendered-state assertions. A real state regression requires product-defect escalation." },
+    { "test": "lead strategy UI connection feedback", "classification": "120 second timeout; missed transient busy state suspected, not yet proven", "repair": "Read-only diagnosis until separately owned with explicit source provenance; prefer deterministic fixture response control if confirmed." }
+  ],
+  "acceptance": [
+    "Record original full-run exact counts, failures and unchanged candidate hashes.",
+    "Focused actual behavior passes without weakening assertions, ownership checks or external-action policy.",
+    "All changed inherited source/test paths retain an explicit authorized provenance delta.",
+    "Fresh complete test-inclusive candidate and independent full-suite replay; retain all prior failures."
+  ],
+  "constraints": ["Luna agents only", "No production or customer data", "No providers, mail, deployment, destructive migrations or git history mutation", "Coordinator planning and orchestration only"]
+}

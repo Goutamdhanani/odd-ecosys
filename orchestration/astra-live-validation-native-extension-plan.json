@@ -1,0 +1,15 @@
+{
+  "id": "ASTRA-LIVE-VALIDATION-NATIVE-INTELLIGENCE-EXTENSION",
+  "owner": "/root/live_validation_extension",
+  "paths": ["artifacts/astra-live-validation/**", ".superpowers/astra-live/validation/native-extension/**"],
+  "requirements": [
+    "Prepare, but do not register, version3 typed contracts for the eight independently accepted original native cases and two accepted focused follow-up cases",
+    "Retain all twenty existing contract entries, current results, histories and archives unchanged while the20-case package review finishes",
+    "Original accepted IDs are QUAL03/04/05/09 and MEM01/02/07/10; focused accepted IDs QUAL01/MEM06 use their own separate actual execution receipt",
+    "Pin sanitized exact receipt copies and existing source hashes to each tested module or source-bound focused runner; distinguish two executions and their actual measured durations",
+    "Never carry original overbroad QUAL01/MEM06 labels as accepted; preserve the failed and false-assertion harness attempts with honest classification",
+    "Root must review actual summaries, assertions, source/evidence and independently accepted IDs before supplying a new signed coordinator binding and GO",
+    "No product, registrar, frozen matrix, private configuration or live-service edits or executions; no additional inference or mail requests"
+  ],
+  "releaseReady": false
+}

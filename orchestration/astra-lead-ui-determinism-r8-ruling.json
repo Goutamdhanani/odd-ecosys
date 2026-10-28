@@ -1,0 +1,22 @@
+{
+  "rulingId": "ASTRA-PHASE2-LEAD-UI-DETERMINISM-R8",
+  "authorizedBy": "Human Phase 2 QA and defect-repair request; coordinator bounded implementation ruling",
+  "baselineManifest": "orchestration/astra-phase2-source-r7.json",
+  "path": "tests/lead-strategy-ui.test.mjs",
+  "baselineSha256": "ff9d71eb19c24c38f2afd8a42dc1deea3e403c0eb0ea51fac8dc4db39bfeece0",
+  "authorizedPurpose": "Test-only deterministic observation of the existing provider-check pending state using a controlled synthetic fixture response, preserving busy, spinner, geometry, feedback and persistence assertions.",
+  "writeGate": "Only after R7 full-suite exit, post-run hashes, and coordinator explicit release.",
+  "owner": "/root/fix_r7_qa_harness",
+  "additionalOwnedPaths": ["tests/lead-strategy-ui.test.mjs", "tests/astra-source-fidelity.test.mjs", "docs/astra/s00-source-delta.json"],
+  "requirements": [
+    "Reproduce and document the missed transient-state failure or concrete synchronization flaw before editing.",
+    "Preserve all original behavioral assertions and negative coverage; do not skip the test or replace a missing UI state with a passing expectation.",
+    "Do not change product code, provider behavior, live actions, application timing, or weaken test deadlines.",
+    "Keep the immutable selected-source snapshot and every existing declared delta unchanged; append one explicit test-only delta with before/current hashes and this ruling reference.",
+    "Update only the strict source-fidelity test's authorized test-only path/provenance expectations so unrelated drift still fails.",
+    "Require focused actual Edge behavior, independent review and a new complete frozen-candidate run."
+  ],
+  "workerReport": ".superpowers/phase2/fixes/fullsuite-harness-r8/REPORT.md",
+  "independentAcceptance": false,
+  "releaseReady": false
+}

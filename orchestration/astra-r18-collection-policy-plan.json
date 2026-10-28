@@ -1,0 +1,17 @@
+{
+  "planId": "ASTRA-R18-COLLECTION-POLICY",
+  "parentPlan": "orchestration/astra-r18-customer-flow-plan.json",
+  "authority": "User requests continue R17 implementation and close real discovery gaps, preserving commercial and external-action gates",
+  "workspace": "C:/Users/pooja/.codex/worktrees/astra-foundation/odd-ecosys",
+  "owner": "/root/r18_collection_policy",
+  "ownedPaths": ["pipeline/astra-source-collection.js", "pipeline/astra-source-collection-routes.js", "tests/astra-source-collection-policy.test.mjs", ".superpowers/r18/collection-policy/**"],
+  "objectives": [
+    "Reproduce and fix fetch enqueue policy checks losing the normalized-domain request used by exact S01 scope matching",
+    "Allow an explicitly requested server approval mode for ordinary customer requests: resolve only unambiguous current approvals from the trusted server registry, preserve legacy explicit-reference behavior",
+    "Do not invent rights expiration, approvals, scope, evidence or permissions; retain every existing gate before DNS, fetch or worker scheduling",
+    "Prove persistence, domain/search scope binding, expired/missing/ambiguous approval rejection, worker unavailability and remote-disabled behavior on synthetic fixtures"
+  ],
+  "interface": "approvalMode:'server' is optional; existing requests with explicit approvalReferences retain their behavior. Server mode must not accept client-selected approval references simultaneously. Return useful blocked reasons without exposing private approval evidence. Source rights still need a user-supplied valid expiry; customer UI is owned separately.",
+  "constraints": ["Luna/high only, no helpers", "No other source paths", "No environment or provider flag enablement outside scoped sandbox tests", "No real network/provider/customer data", "No migration", "No commits/staging", "Independent review required"],
+  "releaseReady": false
+}

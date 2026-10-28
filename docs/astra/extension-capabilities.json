@@ -1,0 +1,375 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "checkout": "E:/odd-ecosys-build-worktree",
+    "head": "f30490bd892dd651fd2fb276b09b510379e27c0d",
+    "overlay": "uncommitted source inspection",
+    "sourceHashes": {
+      "pipeline/lead-discovery-jobs.js": "97ca24dc81b707fa5f3691a849e551ca89acefcb38ea189c4e20dba295602a7f",
+      "pipeline/website-discovery-jobs.js": "777451530375c85fe18641e1409304865bf8ade8da036bc8a76c69bf722ba410",
+      "pipeline/epch-directory-jobs.js": "fe28758f4b05853c9a090d17b24b748c22b087ac6dc9918765fbdd947124fc6b",
+      "pipeline/personalizer.js": "254971b176d4468139b8857eeee8850b850d7507a319ba5354e22d1dd81a6778",
+      "pipeline/qualification-scoring.js": "4199cc7ee3cbd0177c54b608a2304fe034fc15a636771e8ad5de71358c634669",
+      "pipeline/qualification-review.js": "3363bf40115cecc1c8a5d57a2e26a8cb4c8d3fae7930b26da7dd5474b27923aa",
+      "pipeline/ssrf-guard.js": "b49c24ddeb14f58025ea92810a9b234c245cd37fa89ffcf7a8b2ff151e00f03a",
+      "pipeline/contact-import-jobs.js": "e18efdf02c86c6bc3cbe0158dc321ec94d23c0249a9f86c954449bdaa3e44c5d",
+      "pipeline/campaign-sequence.js": "572c1a926b93ca0aa8a5974fae5547ee296860aaa276c25c2fb73cb57eab3c21",
+      "pipeline/ai-usage.js": "cbd47f289851f756cb1aaa7b97b26cab2170858de575cc6c831a1be827b23b3d",
+      "pipeline/click-tracking.js": "6c3c42f1b64b7c0d396597a9f00f48379b0c56ff9a6fbdfdc73b4dd39972b7d4",
+      "pipeline/auth-manager.js": "ae648deb73b2a8d0167d3daa4d1fbf5ce34271ed15d7d21f71d54e75378ef049",
+      "pipeline/campaign-audience.js": "dad1ce011bc52f84d82b046c1025d8c919952ff6a35ba238407262a9f18165f9",
+      "pipeline/sending-engine.js": "39d90158f453977721544bc08c6ad7917917a8851ed15b268a81349e960c1639",
+      "pipeline/database.js": "21c264b83995d7e12d8a8c87fd4f74d1d2fc12478b05a4758260f013bfdd4f5b",
+      "server.js": "8bbd27357bb94a0f7aa9b8913381aa513d69f48d10ec09dfb411cd3806c75613",
+      "tests/lead-discovery-jobs.test.mjs": "9620a3f9b0c8bbac74001ec9d7ad9abb809eaec04be328cca72d7ceed183882a",
+      "tests/ai-usage.test.mjs": "8cbef19af0eaa87b2f74f6886e4b39114e4eb480f44ac9cb49ba0f78d2e76dbb",
+      "tests/click-tracking.test.mjs": "8db27d216554c66afc4db12c39c90da7ceede38d144869a6a7467b34244542c5",
+      "tests/campaign-audience.test.mjs": "94cf76ef5b926fadeb630028ac80c5b7fed98e2a543f1213a37fe702904a3475",
+      "tests/sending.test.mjs": "4b37ec04054021b2ae2e1597654dfc168883591e838c7a206ea71cb91654f57c",
+      "tests/qualification-scoring.test.mjs": "43356f41dfb2d801a8d654f8bf4de49eab27e2c876de92bc1d2d3d9d04479022",
+      "tests/qualification-review.test.mjs": "2814e473791e3853fa41912107acf1464511822e973487f6e439a936e6336bc1",
+      "tests/ssrf-guard.test.mjs": "4224c87febf1ee81beeef723770ee2f0464d144a99c2aaf009947b096055c569",
+      "tests/website-discovery-verification.test.mjs": "6d95a05951a16ce52fab0ce269a151ec4ec9b3605a5bceca604a83fbac5210f6",
+      "tests/campaign-launch-snapshot.test.mjs": "902a88e9f04246f8f1cada073f50d81c17f6b88da65d1848a45fbbdba33d3de7"
+    },
+    "planningSourceHashes": {
+      "E:/ODDECOSYS_ASTRA_MASTER_BLUEPRINT.md": "de137030bf505a22b6dd14b128a541d1dd40560437e9da887b1c913406b924ed",
+      "E:/ODDECOSYS_ASTRA_EXTENDED_PLAN.md": "4edd719652d92b3e94f744830eecc1ae31527f2b1818a1bb1db4b656226b6ab1",
+      "E:/ODDECOSYS_SOL_ENGINEERING_BACKLOG.md": "9b70f6be52f8cebbfe3f09e9d71a098b7bceabb9de448d1b066e16119304ce79",
+      "E:/ODDECOSYS_SOL_EXTENDED_BACKLOG.md": "7e611e325b8b9d3048c8e0381036666b481c37c54b2189b5b5c72ededb48fb0f",
+      "E:/SOL_READ_THIS_EXTENSION_FIRST.md": "11d576e1403a111496060d3a86930da4c5b19f0891c30a8d71941309cc108cbd"
+    },
+    "comparisonCheckout": {
+      "path": "C:/Users/pooja/.codex/worktrees/a4a4/odd-ecosys",
+      "head": "a67413efb07cc462386249ded63fda829e269559",
+      "overlay": "console redesign; preserved, not used as newer-source evidence"
+    }
+  },
+  "tasks": [
+    {
+      "id": "X01",
+      "title": "Harness ownership and context contract",
+      "priority": "P0",
+      "dependencies": ["S00", "S05"],
+      "status": "needs_improvement",
+      "existingEvidence": [
+        {"path": "pipeline/lead-discovery-jobs.js", "lines": "113-119, 626-719", "observation": "A durable lead-discovery coordinator owns its own job schema, runtime and recovery; neighboring workflows have separate managers."},
+        {"path": "pipeline/website-discovery-jobs.js", "lines": "80-95, 802-847", "observation": "Website collection has a separate persisted job/task owner and recovery API."},
+        {"path": "server.js", "lines": "168-206", "observation": "Server initializes and recovers multiple vertical job managers independently."}
+      ],
+      "testEvidence": [
+        {"path": "tests/lead-discovery-jobs.test.mjs", "lines": "378-386", "observation": "Source contains pause/resume/cancel/restart recovery coverage; not run for this mapping."}
+      ],
+      "recommendation": "Extend the selected durable job owner through a narrow HarnessTask/Result adapter. Keep existing lead, campaign, contact and evidence IDs as domain references; do not create a parallel state machine. No common immutable context manifest or cross-workflow owner was found.",
+      "migration": "No harness tables exist to migrate. If a manifest is added, store versioned references to existing records and tenant/workspace identity; do not copy domain records into a new harness database.",
+      "nextAction": "After S00/S05 and baseline selection, choose one workflow as the adapter pilot and specify immutable input/output references plus a single authoritative state owner.",
+      "blockers": ["S00 and S05 acceptance are upstream prerequisites and must be separately confirmed.", "Cross-tenant identity binding for all candidate records is not demonstrated by these job modules."],
+      "olderCheckoutDifference": "The a67413e console checkout contains no lead-discovery, website-discovery job, or AI usage modules at these paths; it is a distinct older application snapshot plus console overlay. Do not transfer these findings to it."
+    },
+    {
+      "id": "X02",
+      "title": "Bounded execution and progress detection",
+      "priority": "P0",
+      "dependencies": ["X01", "S06", "S07"],
+      "status": "needs_improvement",
+      "existingEvidence": [
+        {"path": "pipeline/lead-discovery-jobs.js", "lines": "320-355", "observation": "Coordinator has runtime-budget termination and stops outstanding child work when the budget is reached."},
+        {"path": "pipeline/personalizer.js", "lines": "48-80, 261-291, 302-344", "observation": "Generation supports Ollama and optional Bedrock, including a Bedrock-to-Ollama fallback; this does not enforce the blueprint's GLM-5.3-only route."},
+        {"path": "pipeline/ai-usage.js", "lines": "50-57", "observation": "Usage recorder explicitly accepts Ollama and Bedrock provider IDs."}
+      ],
+      "testEvidence": [
+        {"path": "tests/lead-discovery-jobs.test.mjs", "lines": "510-556", "observation": "Source includes runtime-budget stop and child-cancel scenarios; not run for this mapping."},
+        {"path": "tests/ai-usage.test.mjs", "lines": "93-130", "observation": "Source exercises Ollama usage and a Bedrock fixture; not run for this mapping."}
+      ],
+      "recommendation": "Reuse vertical runtime limits as inputs to a selected harness wrapper, then add call/tool/cost/deadline accounting, allowed-tool schemas, no-progress detection and a single repair cap. Require an explicit GLM-5.3 adapter and remove/disable hidden provider fallback for harness work only after provider decisions are approved.",
+      "migration": "No cross-runtime budget reservation or task-level usage linkage was found. Add task IDs to existing usage events with nullable migration and preserve provider request records; do not rewrite historic cost rows.",
+      "nextAction": "Define the harness provider and tool allowlist after X01; instrument one pilot and prove that budget exhaustion blocks follow-on effects.",
+      "blockers": ["S06/S07 are prerequisites.", "The current personalizer/provider code contradicts a GLM-only runtime requirement and has no harness-level tool budget."],
+      "olderCheckoutDifference": "The older console checkout lacks pipeline/ai-usage.js and pipeline/personalizer.js at this version; its source cannot establish current provider compliance."
+    },
+    {
+      "id": "X03",
+      "title": "Recovery and completion evidence",
+      "priority": "P0",
+      "dependencies": ["X02", "S04", "S09"],
+      "status": "needs_improvement",
+      "existingEvidence": [
+        {"path": "pipeline/website-discovery-jobs.js", "lines": "575-602, 802-847", "observation": "Claimed tasks increment attempts; startup recovery reconciles running/queued states in durable SQLite rows."},
+        {"path": "pipeline/sending-engine.js", "lines": "1955-1976", "observation": "Interrupted sends are recovered to an uncertain state rather than automatically retried."},
+        {"path": "pipeline/database.js", "lines": "548-587, 1032-1102", "observation": "Discovery task and canonical send/event records are durable; no generic harness checkpoint schema appears in the inspected sections."}
+      ],
+      "testEvidence": [
+        {"path": "tests/website-discovery-verification.test.mjs", "lines": "165-179", "observation": "Source reopens the manager and checks a persisted completed verification attempt; not run for this mapping."}
+      ],
+      "recommendation": "Reuse per-workflow recovery and uncertain-side-effect handling. Add versioned harness checkpoints referencing evidence, usage and policy versions, plus a deterministic completion rubric before terminal state. Never equate a saved checkpoint with external effect acknowledgement.",
+      "migration": "No harness checkpoint rows exist. Add an independent nullable checkpoint table keyed to a selected owner/job; retain existing statuses and attempt history, and reconcile any legacy active jobs before rollout.",
+      "nextAction": "Once X02 is available, prototype checkpoint/reconcile behavior around one existing job manager and test process loss at each side-effect boundary using fake providers.",
+      "blockers": ["X02, S04 and S09 are prerequisites.", "Existing recovery differs by workflow and does not persist harness policy/version evidence or a common completion rubric."],
+      "olderCheckoutDifference": "The older checkout has the send engine but lacks the newer discovery job managers; only its own source can be used to plan a migration there."
+    },
+    {
+      "id": "X04",
+      "title": "Decision record and state migration",
+      "priority": "P0",
+      "dependencies": ["S13", "S14", "X01"],
+      "status": "needs_improvement",
+      "existingEvidence": [
+        {"path": "pipeline/qualification-scoring.js", "lines": "71-128, 204-232", "observation": "Scoring returns a weighted site score and penalty-derived confidence and can replay prior scoring versions; it does not establish the extension's separate event probability, utility, risk and reversibility record."},
+        {"path": "server.js", "lines": "1984-1988, 2013", "observation": "A scoring replay endpoint and auditable qualification review decision route exist."},
+        {"path": "tests/qualification-review.test.mjs", "lines": "222-228", "observation": "Source tests review decisions; not run for this mapping."}
+      ],
+      "testEvidence": [
+        {"path": "tests/qualification-scoring.test.mjs", "lines": "38-49", "observation": "Source checks deterministic versioned score and heuristic confidence penalties; not run for this mapping."}
+      ],
+      "recommendation": "Extend the existing qualification/review records with separately named nullable decision quantities, calibration target/action/horizon, evidence freshness and policy version. Keep abstention and denied policy explicit; never interpret model-reported confidence as probability.",
+      "migration": "Do not reinterpret legacy confidence_score or ACT/BLOCK fields. Preserve old rows and add explicit fields/versioned translation; leave probability values null unless backed by calibrated, matching evidence.",
+      "nextAction": "Inspect the full scoring and review schema after S13/S14 contracts are frozen; write a field-by-field legacy mapping before migration.",
+      "blockers": ["S13 and S14 semantics are prerequisites.", "Exact legacy field semantics need a source-level audit before assigning migration values."],
+      "olderCheckoutDifference": "Both checkouts have scoring/review concepts, but the newer source contains distinct dirty scoring-related changes; re-audit the older checkout independently before porting a schema."
+    },
+    {
+      "id": "X05",
+      "title": "Research allocation and expected utility",
+      "priority": "P1",
+      "dependencies": ["X04", "S27", "S24"],
+      "status": "new_development",
+      "existingEvidence": [
+        {"path": "pipeline/lead-discovery-jobs.js", "lines": "241-260", "observation": "Lead discovery tracks unique candidate counts as an operational stop target, not as calibrated response utility or inclusion probability."},
+        {"path": "pipeline/qualification-scoring.js", "lines": "71-128", "observation": "This scoring result is a deterministic site classification, with no expected-utility or value-of-information allocation fields."}
+      ],
+      "testEvidence": [
+        {"path": "tests/lead-discovery-jobs.test.mjs", "lines": "241-299", "observation": "Source checks unique candidate targeting; this is not an allocation experiment and was not run."}
+      ],
+      "recommendation": "Begin with deterministic priority and log exploration/inclusion probabilities; add calibrated ranking and value-of-information only after outcome labels and spend/source policy are available.",
+      "migration": "No allocation experiment or propensity history was found. New logs should be append-only and versioned; do not infer historical propensities from chosen records.",
+      "nextAction": "Wait for X04 plus S27/S24; define the action and outcome horizon, then add a synthetic evaluation record before customer-facing allocation.",
+      "blockers": ["X04, S27 and S24 are prerequisites.", "Mature outcome labels and calibrated estimates are not demonstrated."],
+      "olderCheckoutDifference": "No matching allocation contract was found in the older console checkout; its scoring paths are not proof for this newer source."
+    },
+    {
+      "id": "X06",
+      "title": "Inspect application adapter and evaluator governance",
+      "priority": "P0",
+      "dependencies": ["X02", "S26"],
+      "status": "new_development",
+      "existingEvidence": [
+        {"path": "package.json", "lines": "30-47", "observation": "The dependency list has no Inspect package; no Inspect application adapter or evaluator module was located in the source inventory."},
+        {"path": "pipeline/ai-usage.js", "lines": "50-57", "observation": "Operational generation accounting exists but does not provide separate dataset/scorer permissions or evaluator model governance."}
+      ],
+      "testEvidence": [],
+      "recommendation": "Add an Inspect adapter around the actual chosen harness endpoint. Freeze datasets, isolate scorer write permissions, enforce the GLM-5.3-only target/grader allowlist, and redact raw packets from ordinary logs.",
+      "migration": "No evaluation datasets, scorer registry or run records were found. Keep evaluation records separate from production customer records and prohibit writes to canonical labels from candidates.",
+      "nextAction": "After X02/S26, choose a fixture-only evaluation endpoint and add provider, grader, error-log and gold-label integrity checks.",
+      "blockers": ["X02 and S26 are prerequisites.", "GLM-only evaluator configuration and Inspect availability/licensing are not established."],
+      "olderCheckoutDifference": "The older console checkout has no located Inspect adapter/evaluator files either; this remains a new capability in both snapshots."
+    },
+    {
+      "id": "X07",
+      "title": "Matched-budget harness experiment",
+      "priority": "P0",
+      "dependencies": ["X03", "X04", "X06"],
+      "status": "new_development",
+      "existingEvidence": [
+        {"path": "package.json", "lines": "7-20", "observation": "The scripts expose the Node test suite and app/CLI commands; no matched-budget H0-H3 benchmark command is defined."},
+        {"path": "pipeline/ai-usage.js", "lines": "98-127", "observation": "Provider-level token and cost summaries exist as raw material, but not experiment-level budget equivalence or full risk/coverage/intervention metrics."}
+      ],
+      "testEvidence": [],
+      "recommendation": "Create a versioned benchmark harness after recovery, decision records and evaluator governance exist. Freeze sources and splits; compare H0-H3 on identical accounts and explicit ceilings; publish metric definitions with every run.",
+      "migration": "No benchmark history to migrate. New runs should reference immutable fixture/dataset and harness versions, and avoid copying private records into shared evaluation data.",
+      "nextAction": "After X03/X04/X06, design a synthetic smoke benchmark and obtain reviewed annotations before any production cohort evaluation.",
+      "blockers": ["X03, X04 and X06 are prerequisites.", "No frozen licensed corpus, account split or mature annotation set was located."],
+      "olderCheckoutDifference": "The older checkout's console QA artifacts are not evidence of H0-H3 harness evaluation."
+    },
+    {
+      "id": "X08",
+      "title": "Adversarial application conformance",
+      "priority": "P0",
+      "dependencies": ["X06", "S09", "S16", "S20"],
+      "status": "needs_improvement",
+      "existingEvidence": [
+        {"path": "pipeline/ssrf-guard.js", "lines": "60-78, 139-184, 273-341", "observation": "A dedicated SSRF guard validates public targets, applies redirects and request budgets; it does not prove the X08 end-to-end injection/exfiltration contract."},
+        {"path": "pipeline/campaign-audience.js", "lines": "66-69, 294-329", "observation": "Queue eligibility includes contact, campaign and approval policy checks."},
+        {"path": "tests/ssrf-guard.test.mjs", "lines": "28-118, 163-188", "observation": "Source tests isolated SSRF, redirect and request-budget controls; no integrated malicious-content suite was found and tests were not run for this map."}
+      ],
+      "testEvidence": [],
+      "recommendation": "Reuse SSRF, suppression, auth and campaign gate fixtures inside an end-to-end fake harness. Add malicious page, email, tool output, skill and fake approval inputs; assert that prohibited effects remain absent and report benign completion separately.",
+      "migration": "No adversarial run ledger found. Save fixture and policy versions, sanitized outcomes and incident category without secrets or raw customer payloads.",
+      "nextAction": "After X06 and S09/S16/S20, define end-to-end fixtures against a no-network/no-mail fake environment and include replayable evidence.",
+      "blockers": ["X06, S09, S16 and S20 are prerequisites.", "Existing control-specific tests do not establish adversarial system conformance."],
+      "olderCheckoutDifference": "The older redesign checkout has security and route evidence, but this map does not treat that QA as application-harness adversarial acceptance."
+    },
+    {
+      "id": "X09",
+      "title": "Validated procedural skill registry",
+      "priority": "P1",
+      "dependencies": ["S23", "S28", "S29", "X06"],
+      "status": "new_development",
+      "existingEvidence": [
+        {"path": "orchestration/OWNERSHIP.md", "lines": "1-20", "observation": "Repository ownership notes describe implementation ownership; they do not define runtime skill approval/version state."}
+      ],
+      "testEvidence": [],
+      "recommendation": "Build candidate/evaluating/approved/canary/active/revoked states with pinned versions, scope, provenance/license and test manifests. Only approved versions may enter tasks; correction/revocation must invalidate retrieval.",
+      "migration": "No skill rows found. Do not import personal agent instruction files as tenant skills; any future registry requires tenant ownership and deletion provenance.",
+      "nextAction": "After S23/S28/S29/X06, inventory any intended procedural artifacts and define tenant scope before implementing registry storage.",
+      "blockers": ["S23, S28, S29 and X06 are prerequisites.", "No application skill version or test manifest schema exists in the inspected source."],
+      "olderCheckoutDifference": "Neither checkout showed an app skill registry; local Codex skills remain outside the product runtime."
+    },
+    {
+      "id": "X10",
+      "title": "Campaign-scoped autonomy and execution tickets",
+      "priority": "P0",
+      "dependencies": ["S19", "S20", "S21", "X04"],
+      "status": "needs_improvement",
+      "existingEvidence": [
+        {"path": "pipeline/campaign-audience.js", "lines": "60-69, 294-329", "observation": "Audience eligibility is campaign-scoped but requires approved personalization copy for current sends."},
+        {"path": "pipeline/sending-engine.js", "lines": "1134-1168, 1628-1674", "observation": "Campaign launch snapshots are immutable and the send worker claims scheduled rows after campaign/snapshot gates."},
+        {"path": "pipeline/database.js", "lines": "922-937, 1032-1047", "observation": "Launch snapshots are immutable and sends bind to a launch snapshot; no action-ticket table or exact-intent ticket nonce was found."}
+      ],
+      "testEvidence": [
+        {"path": "tests/campaign-audience.test.mjs", "lines": "124-155", "observation": "Source verifies current approval/suppression checks before queue/send; not run for this mapping."},
+        {"path": "tests/campaign-launch-snapshot.test.mjs", "lines": "113-124", "observation": "Source tests immutable launch snapshots and configuration-drift blocking; envelope revocation, ticket replay and routine autosend acceptance was not found; not run for this map."}
+      ],
+      "recommendation": "Extend campaign launch policy into a scoped authorization envelope, with routine automatic sends for valid in-scope messages, optional draft/review mode, precise exception routing, and server-issued exact-intent action tickets. Keep hard rules rechecked in the dispatcher; reject replay and revoke eligibility on scope changes.",
+      "migration": "Preserve immutable launch snapshots and existing personalization approval history. Add versioned envelope/ticket references and nullable send bindings; do not reinterpret prior per-copy approvals as envelope consent.",
+      "nextAction": "After S19-S21/X04, define the envelope's recipient, sender, offer, copy, volume, time and exception scope; implement a replay-safe fake ticket gate before enabling any autonomous send mode.",
+      "blockers": ["S19, S20, S21 and X04 are prerequisites.", "Current approval-required eligibility does not satisfy routine campaign-scoped autonomy; no precise ticket replay defense is identified."],
+      "olderCheckoutDifference": "The older checkout has launch/sending code but no campaign audience/snapshot modules at this newer source revision; its console QA does not imply X10 acceptance."
+    },
+    {
+      "id": "X11",
+      "title": "Engagement events and metric definitions",
+      "priority": "P0",
+      "dependencies": ["S04", "S17", "S25"],
+      "status": "needs_improvement",
+      "existingEvidence": [
+        {"path": "pipeline/click-tracking.js", "lines": "35-106", "observation": "Optional click tracking uses opaque tokens and canonical send/event linkage; repeat requests are countable, so they are not unique human clicks."},
+        {"path": "pipeline/database.js", "lines": "1048-1055, 1102-1124", "observation": "Tracked link rows and canonical event rows exist; no open-pixel capability or explicit open/click denominator schema was identified."},
+        {"path": "server.js", "lines": "2454-2498", "observation": "Campaign delivery history reports send and tracked-link request information; the inspected projection does not establish full denominator/late-event semantics."}
+      ],
+      "testEvidence": [
+        {"path": "tests/click-tracking.test.mjs", "lines": "132-184", "observation": "Source covers opt-out default, opaque redirect persistence and repeated request accounting; not run for this mapping."}
+      ],
+      "recommendation": "Retain click tracking as optional, and define provider capability, raw versus filtered events, unique count rules, send denominator, late-event treatment and unknown delivery data. Add open tracking only after privacy/policy decisions and ensure scanner/proxy activity is not presented as a human engagement fact.",
+      "migration": "Keep historical events unchanged. Add versioned metric definitions and nullable classification metadata; do not backfill unknown or proxy-sensitive engagement into unique counts.",
+      "nextAction": "After S04/S17/S25, publish a metric dictionary against canonical events and add duplicate, scanner, proxy, timezone and late-event fixtures.",
+      "blockers": ["S04, S17 and S25 are prerequisites.", "Open tracking is not demonstrated; explicit denominators and filtered/unique event semantics are incomplete."],
+      "olderCheckoutDifference": "The older console checkout contains no pipeline/click-tracking.js in the mapped source tree; current click-tracking code belongs only to the newer checkout."
+    },
+    {
+      "id": "X12",
+      "title": "One telemetry route and privacy filters",
+      "priority": "P0",
+      "dependencies": ["S32", "X02", "X04"],
+      "status": "needs_improvement",
+      "existingEvidence": [
+        {"path": "pipeline/ai-usage.js", "lines": "50-96", "observation": "Durable sanitized provider request usage records track operation, model, tokens, outcome and request ID without storing prompt/response bodies in the usage table."},
+        {"path": "pipeline/database.js", "lines": "885-909", "observation": "AI usage events are a separate canonical usage table with provider and operation fields."},
+        {"path": "server.js", "lines": "1789-1793", "observation": "Dashboard usage analytics are assembled through the AI usage module; a general task/decision trace route was not found."}
+      ],
+      "testEvidence": [
+        {"path": "tests/ai-usage.test.mjs", "lines": "93-113", "observation": "Source checks durable usage attribution and absence of prompt/response/credential fields in that table; not run for this mapping."}
+      ],
+      "recommendation": "Extend existing sanitized usage records through one operational trace route with task/decision spans, sampling rules and redaction tests. Keep canonical cost/outcome events authoritative and make optional telemetry payload collection explicit.",
+      "migration": "No general trace store found. Add task and decision identifiers as nullable references to operational spans; retain current ai_usage_events as canonical usage and avoid duplicating raw provider payloads.",
+      "nextAction": "After S32/X02/X04, define one trace boundary and redaction schema; test ordinary logs, errors, provider IDs, tenant viewer access and sampling gaps.",
+      "blockers": ["S32, X02 and X04 are prerequisites.", "A one-route task/decision tracing contract and privacy filters are not demonstrated."],
+      "olderCheckoutDifference": "The older checkout does not contain pipeline/ai-usage.js at this revision, so its metrics cannot be assumed equivalent."
+    },
+    {
+      "id": "X13",
+      "title": "Incremental economics and autonomy dashboard",
+      "priority": "P1",
+      "dependencies": ["X07", "X11", "X12", "S07"],
+      "status": "needs_improvement",
+      "existingEvidence": [
+        {"path": "pipeline/ai-usage.js", "lines": "98-127, 146-211", "observation": "Provider/model request counts, token totals, known costs and partial/unknown usage states are summarized; there is no per-harness-task view."},
+        {"path": "server.js", "lines": "1789-1793", "observation": "Existing dashboard usage is provider-oriented rather than challenge fraction, trace bytes, reviewer minutes or cost per verified outcome."}
+      ],
+      "testEvidence": [
+        {"path": "tests/ai-usage.test.mjs", "lines": "123-133, 150-159", "observation": "Source checks provider calls, token totals and measured/unknown usage reporting; not run for this mapping."}
+      ],
+      "recommendation": "Extend provider usage as canonical per-request cost data and join it to task/evaluation/outcome records. Report p95 spend, challenge and exception categories, reviewer time and cost per verified outcome; avoid double-counting critic calls.",
+      "migration": "Keep old request events and rate cards; add nullable task/evaluation IDs and versioned metric formulas. Historical per-task economics remain unknown where linkage is absent.",
+      "nextAction": "After X07/X11/X12/S07, define outcome denominator and tier quotas; produce a synthetic dashboard report before exposing cost claims.",
+      "blockers": ["X07, X11, X12 and S07 are prerequisites.", "Task linkage, intervention minutes, p95 task costs and verified-outcome denominator are missing."],
+      "olderCheckoutDifference": "The older checkout has no AI usage module, so this newer provider-level cost evidence cannot be attributed to it."
+    },
+    {
+      "id": "X14",
+      "title": "Extension release gates and rollback",
+      "priority": "P0",
+      "dependencies": ["X07", "X08", "X10", "X11", "X12", "S29"],
+      "status": "needs_improvement",
+      "existingEvidence": [
+        {"path": "orchestration/OWNERSHIP.md", "lines": "1-16", "observation": "Ownership instructions explicitly keep releaseReady false and preserve existing phase gates."},
+        {"path": "pipeline/sending-engine.js", "lines": "1134-1168, 1955-1976", "observation": "Campaign launch configuration is immutable and interrupted sends are treated as uncertain; these are local safeguards, not a harness/decision/skill/metric release manifest."},
+        {"path": "pipeline/database.js", "lines": "922-937", "observation": "Campaign launch snapshots are append-only by triggers."}
+      ],
+      "testEvidence": [],
+      "recommendation": "Extend release manifests to harness, decision, skill and metric versions; require evaluated shadow/canary evidence and owner signoff, preserve backwards-compatible events, and roll back without changing send/suppression/outcome facts. Keep routine autonomy within its current envelope.",
+      "migration": "Preserve campaign launch snapshots and all canonical facts. Introduce an additive release-version manifest; never rewrite prior send or suppression outcomes during rollback.",
+      "nextAction": "After X07/X08/X10/X11/X12/S29, define release artifact/version bindings and exercise interrupted rollout, stale task, metric drift and emergency stop in fixtures.",
+      "blockers": ["X07, X08, X10, X11, X12 and S29 are prerequisites.", "Extension release manifest, shadow/canary controls and tested rollback are not present in the inspected source."],
+      "olderCheckoutDifference": "The older checkout's console route QA is not an extension release gate; no X14 manifest can be inferred from it."
+    },
+    {
+      "id": "X15",
+      "title": "Controlled learning validation",
+      "priority": "P1",
+      "dependencies": ["X05", "X09", "X13", "X14"],
+      "status": "new_development",
+      "existingEvidence": [
+        {"path": "pipeline/qualification-scoring.js", "lines": "204-232", "observation": "Deterministic scoring replay exists, but no frozen baseline/held-out candidate promotion pipeline with mature CRM outcomes was confirmed."},
+        {"path": "pipeline/qualification-scoring.js", "lines": "204-232", "observation": "Current replay recomputes a saved score by version; no app skill registry or controlled production learning release manager was located."}
+      ],
+      "testEvidence": [],
+      "recommendation": "Compare ranker, skill and prompt candidates only against frozen baselines with held-out companies/time and mature CRM outcomes. Keep promotion owner-controlled and prohibit private cross-tenant training or automatic production edits.",
+      "migration": "No candidate promotion or learning history exists to migrate. New records need dataset lineage, consent/scope, candidate hash, outcome maturity and rollback reference.",
+      "nextAction": "After X05/X09/X13/X14, define the smallest offline evaluation and wait for enough mature, authorized outcome labels.",
+      "blockers": ["X05, X09, X13 and X14 are prerequisites.", "No validated labels, skill lifecycle or extension release gate is available."],
+      "olderCheckoutDifference": "Older console validation does not establish learning outcomes or optimizer promotion; no equivalent controlled learning framework was located."
+    },
+    {
+      "id": "X16",
+      "title": "Domain-neutral interface review",
+      "priority": "P2",
+      "dependencies": ["X04", "X14"],
+      "status": "new_development",
+      "existingEvidence": [
+        {"path": "pipeline/qualification-scoring.js", "lines": "71-128", "observation": "The scoring contract is sales/site-classification-specific; no separated domain-neutral evidence/decision/evaluation interface was confirmed."},
+        {"path": "pipeline/sending-engine.js", "lines": "1988-1991", "observation": "The inspected execution path configures email/SMTP transports; no broker, order or market integration was found there."}
+      ],
+      "testEvidence": [],
+      "recommendation": "Keep this optional and after X04/X14. Extract only reusable evidence, decision and evaluation types; document sales-specific policy boundaries. Do not add financial execution, broker, order or market features to launch scope.",
+      "migration": "No cross-domain records exist to migrate. Keep all existing sales records tied to sales-specific policy versions.",
+      "nextAction": "After X04/X14, write a domain-boundary note and cross-domain rejection fixture; defer implementation if no supported second domain exists.",
+      "blockers": ["X04 and X14 are prerequisites.", "No second domain use case is authorized or evidenced; this is optional P2 work."],
+      "olderCheckoutDifference": "The older console checkout also has no cross-domain interface contract; the task remains optional in both source snapshots."
+    }
+  ],
+  "dependencyAmendments": {
+    "S05": ["X01 contract coverage: harness inputs/context and owner alignment"],
+    "S06": ["X02 call/tool/cost/deadline limits and provider/grader whitelist"],
+    "S07": ["X02 reservations and progress limits", "X13 task economics after prerequisites"],
+    "S13": ["X04 support/uncertainty/probability/utility/risk/reversibility separation"],
+    "S14": ["X04 explicit ACT/BLOCK state migration"],
+    "S19": ["X10 campaign authorization envelope"],
+    "S20": ["X10 routine autosend, optional draft mode, exception routing and replay-safe ticket"],
+    "S21": ["X10 envelope scope/revocation and dispatcher rechecks"],
+    "S23": ["X09 versioned skill lifecycle after prerequisites"],
+    "S28": ["X09 correction/revocation and tenant-scoped skill retrieval"],
+    "S29": ["X14 release gates; X09 skill test/version manifests"],
+    "S25": ["X11 engagement definitions and denominators"],
+    "S32": ["X12 one privacy-filtered operational telemetry route"],
+    "S33": ["X14 is a required dependency; sampling/review policy may be optional, and per-message review must not be a blanket permanent requirement"],
+    "S34": ["X13 measured marginal costs and economics"],
+    "S26": ["X06 Inspect adapter/governance and X07 H0-H3 benchmark"],
+    "optional_X16": ["X16 remains P2, dependent on X04 and X14, and outside initial launch"]
+  },
+  "inspectionLimitations": [
+    "No test commands were run. Test evidence identifies inspected test source only.",
+    "No backend writes, package installs, model/provider calls, live database access, credentials, commits, deploys or full-suite runs were performed.",
+    "Several candidate code files in E:/odd-ecosys-build-worktree are uncommitted. Findings apply to the recorded overlay hashes and may change with working-tree edits.",
+    "The a67413e older checkout was not used as evidence for the newer source. Its source hashes and capabilities require separate base-map treatment."
+  ]
+}

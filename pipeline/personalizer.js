@@ -14,17 +14,28 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { getDb } from './database.js';
+import { runAstraGlmPersonalizerPrompt } from './astra-glm-gateway.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const CONFIG_PATH = path.join(__dirname, '..', 'config', 'personalization.json');
 let _config = null;
+let _testConfig = null;
+let _testSdk = null;
+let _lastAdmission = null;
+export async function setPersonalizationTestAdapters({ sdk = null, config = null } = {}) {
+  if (process.env.NODE_ENV !== 'test') throw new Error('Personalization test injection is only available in test mode.');
+  if (sdk !== null && (typeof sdk.BedrockRuntimeClient !== 'function' || typeof sdk.InvokeModelCommand !== 'function')) throw new TypeError('Test SDK must expose official-shaped constructors.');
+  if (config !== null && (typeof config !== 'object' || Array.isArray(config))) throw new TypeError('Test configuration must be an object or null.');
+  _testConfig = config === null ? null : structuredClone(config);
+  _testSdk = sdk;
+}
 function getConfig() {
+  if (process.env.NODE_ENV === 'test' && _testConfig !== null) return _testConfig;
   if (!_config) _config = JSON.parse(fs.readFileSync(CONFIG_PATH, 'utf-8'));
   return _config;
 }
-
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 // ── Run state ────────────────────────────────────────────────
@@ -39,7 +50,19 @@ let _state = {
   stats: { drafted: 0, guardrail_failed: 0, polished: 0, factcheck_failed: 0, approved: 0 },
 };
 
-export function getPersonalizationStatus() { return { ..._state }; }
+export function getPersonalizationStatus() {
+  return { ..._state, providers: getPersonalizationProviderStatus() };
+}
+
+export function getPersonalizationProviderStatus(config = getConfig()) {
+  return {
+    provider: 'glm-5.3-api',
+    model: 'GLM-5.3',
+    status: 'tenant_gateway_required',
+    egressEnabled: false,
+    credentials: 'not_checked',
+  };
+}
 export function cancelPersonalization() {
   if (_state.active) { _state.cancelling = true; return true; }
   return false;
@@ -49,28 +72,11 @@ export function cancelPersonalization() {
 //  OLLAMA HELPER
 // ══════════════════════════════════════════════════════════════
 
-async function callOllama(prompt, model, config = getConfig()) {
-  const url = `${config.ollama.base_url}/api/generate`;
-
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), config.ollama.timeout_ms);
-
-  try {
-    const res = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ model: model || config.ollama.draft_model, prompt, stream: false }),
-      signal: controller.signal,
-    });
-    clearTimeout(timer);
-    if (!res.ok) throw new Error(`Ollama HTTP ${res.status}`);
-    const data = await res.json();
-    return data.response?.trim() || '';
-  } catch (err) {
-    clearTimeout(timer);
-    if (err.name === 'AbortError') throw new Error('Ollama timeout');
-    throw err;
-  }
+async function callOllama(prompt, model, config = getConfig(), operation = 'generation') {
+  const task = operation === 'subject_polish' ? 'subject_polish'
+    : operation === 'fact_check' ? 'fact_check' : 'personalization_draft';
+  const response = await runAstraGlmPersonalizerPrompt(prompt, task);
+  return response?.text || '';
 }
 
 // ══════════════════════════════════════════════════════════════
@@ -131,7 +137,7 @@ SUBJECT: [subject line]
 BODY:
 [email body — include {{business_name}} at least once, end with a soft call to action — one question or a 15-minute offer]`;
 
-  const response = await callOllama(prompt, config.ollama.draft_model);
+  const response = await callOllama(prompt, config.ollama.draft_model, config, 'personalization_draft');
   return parseOllamaDraft(response, variant);
 }
 
@@ -150,9 +156,8 @@ function parseOllamaDraft(text, variant) {
 //  STEP 2 — GUARDRAIL PASS (rule-based, no AI)
 // ══════════════════════════════════════════════════════════════
 
-export function runGuardrails(draft, factBundle) {
-  const config = getConfig();
-  const { guardrails } = config;
+export function runGuardrails(draft, factBundle, config = getConfig()) {
+  const guardrails = { ...getConfig().guardrails, ...config.guardrails };
   const failures = [];
 
   const bodyWords = draft.body_text.trim().split(/\s+/).length;
@@ -209,26 +214,19 @@ export function runGuardrails(draft, factBundle) {
   };
 }
 
+export function acceptPolishedDraft(originalDraft, polishedDraft, factBundle) {
+  if (!polishedDraft?.polished) return polishedDraft || originalDraft;
+  if (runGuardrails(polishedDraft, factBundle).passed) return polishedDraft;
+  return { ...originalDraft, polished: false, polished_by: 'rejected_guardrails' };
+}
+
 // ══════════════════════════════════════════════════════════════
-//  STEP 3 — POLISH PASS (Bedrock → Ollama fallback)
+//  STEP 3 — bounded GLM polish pass (requires tenant gateway job)
 // ══════════════════════════════════════════════════════════════
 
-async function polishSubjectLine(draft, factBundle, config = getConfig()) {
+async function polishSubjectLine(draft, factBundle, config = getConfig(), context = {}) {
   const factsStr = JSON.stringify(factBundle);
 
-  // Try Bedrock first if enabled
-  if (config.bedrock.enabled) {
-    try {
-      const polished = await callBedrock(draft, factBundle, config);
-      if (polished) return polished;
-    } catch (err) {
-      // Bedrock failure is recorded, then the configured Ollama fallback runs.
-      // Nothing is labeled as "Bedrock polished" unless the SDK call succeeded.
-      console.warn(`  Bedrock failed (${err.message}), falling back to Ollama`);
-    }
-  }
-
-  // Ollama polish fallback
   const prompt = `Given this cold email opener and body:
 Subject: "${draft.subject_line}"
 Body: "${draft.body_text}"
@@ -244,7 +242,7 @@ Rewrite ONLY the subject line to be:
 
 Output ONLY the new subject line, nothing else.`;
 
-  const response = await callOllama(prompt, config.ollama.draft_model, config);
+  const response = await callOllama(prompt, null, config, 'subject_polish');
   const newSubject = response.replace(/^["']|["']$/g, '').trim();
 
   if (newSubject && newSubject.length < 80) {
@@ -255,17 +253,10 @@ Output ONLY the new subject line, nothing else.`;
 
 export { polishSubjectLine };
 
-// Real AWS Bedrock adapter using the official @aws-sdk/client-bedrock-runtime.
-// Credentials come from the standard AWS SDK credential chain
-// (AWS_ACCESS_KEY_ID / AWS_SECRET_ACCESS_KEY / AWS_SESSION_TOKEN / AWS_REGION
-// or a configured profile). Without credentials the adapter fails truthfully;
-// it never returns a fabricated result.
-export async function callBedrock(draft, factBundle, config) {
-  const { BedrockRuntimeClient, InvokeModelCommand } = await import('@aws-sdk/client-bedrock-runtime');
-
-  const region = process.env.AWS_REGION || config.bedrock.region || 'us-east-1';
-  const modelId = config.bedrock.polish_model;
-
+// Compatibility adapter: prior Bedrock callers now fail closed through the
+// same GLM-only application gateway. The tenant workflow must create a durable
+// bounded request before any model can receive its context.
+export async function callBedrock(draft, factBundle, config = getConfig(), sdkOverride = null) {
   const prompt = `Rewrite ONLY the subject line of this cold email. Under 50 characters.
 Reference one specific business fact. No spam words, no exclamation marks.
 Output ONLY the new subject line.
@@ -274,33 +265,11 @@ Subject: "${draft.subject_line}"
 Body: "${draft.body_text}"
 Business facts: ${JSON.stringify(factBundle)}`;
 
-  const client = new BedrockRuntimeClient({ region });
-  const command = new InvokeModelCommand({
-    modelId,
-    contentType: 'application/json',
-    accept: 'application/json',
-    body: JSON.stringify({
-      anthropic_version: 'bedrock-2023-05-31',
-      max_tokens: 100,
-      messages: [{ role: 'user', content: prompt }],
-    }),
-  });
-
-  const response = await client.send(command);
-  const parsed = JSON.parse(new TextDecoder().decode(response.body));
-  const text = parsed.content?.[0]?.text?.replace(/^["']|["']$/g, '').trim() || '';
-
-  if (!text || text.length >= 80) {
-    throw new Error('Bedrock returned an unusable subject line');
-  }
-
-  return {
-    ...draft,
-    subject_line: text,
-    polished: true,
-    polished_by: `bedrock:${modelId}`,
-    model_used: `bedrock:${modelId}`,
-  };
+  const response = await runAstraGlmPersonalizerPrompt(prompt, 'subject_polish');
+  const text = String(response?.text || '').replace(/^\s*["']|["']\s*$/g, '').trim();
+  const maxSubjectChars = Number(config.guardrails?.max_subject_chars) || 60;
+  if (!text || text.length > maxSubjectChars || /[\r\n]/.test(text)) throw Object.assign(new Error('GLM returned an unusable subject line.'), { code: 'GLM_INVALID_SUBJECT' });
+  return { ...draft, subject_line: text, polished: true, polished_by: 'glm-5.3-api', model_used: 'GLM-5.3' };
 }
 
 // ══════════════════════════════════════════════════════════════
@@ -327,7 +296,7 @@ ${factsStr}
 Response (CLEAN or list of unsupported claims, one per line):`;
 
   try {
-    const response = await callOllama(prompt, config.ollama.factcheck_model);
+    const response = await callOllama(prompt, config.ollama.factcheck_model, config, 'fact_check');
     const clean = response.trim().toUpperCase() === 'CLEAN'
       || response.trim().toLowerCase().startsWith('clean');
 
@@ -415,6 +384,7 @@ export async function personalizeBatch(batchId, options = {}) {
 
     try {
       const factBundle = buildFactBundle(lead);
+      let factCheckUnavailableForLead = false;
       db.prepare("UPDATE leads SET status = 'personalizing', updated_at = datetime('now') WHERE id = ?").run(lead.id);
 
       // Personalize each variant
@@ -434,7 +404,7 @@ export async function personalizeBatch(batchId, options = {}) {
         }
 
         // STEP 2: Guardrails
-        const guardrailResult = runGuardrails(draft, factBundle);
+      const guardrailResult = runGuardrails(draft, factBundle);
         if (!guardrailResult.passed) {
           _state.stats.guardrail_failed++;
           console.log(`   ✗  [${variant}] Guardrail failed: ${guardrailResult.failures.join(', ')}`);
@@ -451,9 +421,19 @@ export async function personalizeBatch(batchId, options = {}) {
         // STEP 3: Polish subject line
         let polished = draft;
         try {
-          polished = await polishSubjectLine(draft, factBundle);
+          polished = await polishSubjectLine(draft, factBundle, config, { leadId: lead.id, variant });
           if (polished.polished) _state.stats.polished++;
         } catch { /* skip polish, use draft subject */ }
+
+        // Polish output is still untrusted generated copy. Do not preserve the
+        // pre-polish guardrail pass if the final subject fails existing rules.
+        const validatedPolish = acceptPolishedDraft(draft, polished, factBundle);
+        if (polished.polished && validatedPolish.polished !== true) {
+          polished = validatedPolish;
+          _state.stats.polished = Math.max(0, _state.stats.polished - 1);
+        } else {
+          polished = validatedPolish;
+        }
 
         // STEP 4: Fact-check
         const factCheck = await factCheckDraft(polished, factBundle);
@@ -461,6 +441,7 @@ export async function personalizeBatch(batchId, options = {}) {
           _state.stats.factcheck_failed++;
           console.log(`   ⚠  [${variant}] Fact-check issues: ${factCheck.issues.slice(0,2).join('; ')}`);
         } else if (factCheck.status === 'unavailable') {
+          factCheckUnavailableForLead = true;
           _state.stats.factcheck_unavailable = (_state.stats.factcheck_unavailable || 0) + 1;
           console.log(`   ⚠  [${variant}] Fact-check UNAVAILABLE (${factCheck.error}) — auto-approval blocked`);
         }
@@ -488,7 +469,11 @@ export async function personalizeBatch(batchId, options = {}) {
       }
 
       // Update lead status
-      const finalStatus = personalizingCount < config.approval.first_n_per_niche
+      // Keep failed AI checks in the review lifecycle as well as withholding
+      // approval on each personalization row. A queued lead is presented as
+      // send-ready in other parts of the application, so an unavailable
+      // fact-check must leave the lead in the explicit approval queue.
+      const finalStatus = personalizingCount < config.approval.first_n_per_niche || factCheckUnavailableForLead
         ? 'awaiting_approval' : 'queued';
       updateLeadStatus.run(finalStatus, lead.id);
       personalizingCount++;
@@ -616,6 +601,19 @@ export function rejectPersonalization(personalizationId, reason) {
 
 export function editPersonalization(personalizationId, updates) {
   const db = getDb();
+  if (!updates || typeof updates !== 'object' || Array.isArray(updates)) {
+    throw Object.assign(new TypeError('Personalization edits must be an object.'), { statusCode: 400 });
+  }
+
+  // Bound input before the guardrail checks do string scans and regex work.
+  // Partial updates keep the existing PATCH contract; unknown keys are ignored.
+  const textLimits = { subject_line: 998, body_text: 50000 };
+  for (const [field, maxLength] of Object.entries(textLimits)) {
+    if (updates[field] === undefined) continue;
+    if (typeof updates[field] !== 'string') throw Object.assign(new TypeError(`${field} must be text.`), { statusCode: 400 });
+    if (updates[field].length > maxLength) throw Object.assign(new RangeError(`${field} is too long.`), { statusCode: 400 });
+  }
+
   const fields = [];
   const values = [];
 
@@ -624,23 +622,49 @@ export function editPersonalization(personalizationId, updates) {
 
   if (fields.length === 0) return { id: personalizationId, updated: false };
 
-  const p = db.prepare('SELECT * FROM personalizations WHERE id = ?').get(personalizationId);
-  if (!p) throw new Error(`Personalization #${personalizationId} not found`);
+  const guardrailResult = db.transaction(() => {
+    // Read the current copy and saved lead while holding the write reservation,
+    // so the rule result is computed from exactly the row this edit replaces.
+    const p = db.prepare('SELECT * FROM personalizations WHERE id = ?').get(personalizationId);
+    if (!p) throw Object.assign(new Error(`Personalization #${personalizationId} not found`), { statusCode: 404 });
+    const lead = db.prepare('SELECT * FROM leads WHERE id = ?').get(p.lead_id);
+    if (!lead) throw Object.assign(new Error(`Lead #${p.lead_id} for personalization #${personalizationId} not found`), { statusCode: 404 });
 
-  // Editing invalidates the previous fact-check and any approval: the copy no
-  // longer matches what was checked/approved. It must be re-checked and
-  // re-approved by a human before it can be sent.
-  fields.push("fact_check_status = 'unavailable'");
-  fields.push('fact_check_passed = 0');
-  fields.push('approved = 0');
-  values.push(personalizationId);
+    const mergedDraft = {
+      subject_line: updates.subject_line === undefined ? p.subject_line : updates.subject_line,
+      body_text: updates.body_text === undefined ? p.body_text : updates.body_text,
+    };
+    if (typeof mergedDraft.subject_line !== 'string' || typeof mergedDraft.body_text !== 'string') {
+      throw Object.assign(new TypeError('Saved personalization copy must contain text fields.'), { statusCode: 400 });
+    }
+    const result = runGuardrails(mergedDraft, buildFactBundle(lead));
 
-  db.prepare(`UPDATE personalizations SET ${fields.join(', ')} WHERE id = ?`).run(...values);
+    // Editing invalidates the previous fact-check and any approval: the copy no
+    // longer matches what was checked/approved. It must be re-checked and
+    // re-approved by a human before it can be sent.
+    fields.push("fact_check_status = 'unavailable'");
+    fields.push('fact_check_passed = 0');
+    fields.push('approved = 0');
+    fields.push('guardrail_passed = ?');
+    values.push(result.passed ? 1 : 0);
+    values.push(personalizationId);
 
-  // Return lead to the approval queue
-  db.prepare("UPDATE leads SET status = 'awaiting_approval', updated_at = datetime('now') WHERE id = ?").run(p.lead_id);
+    // Persist the edited copy and its fresh deterministic result atomically.
+    db.prepare(`UPDATE personalizations SET ${fields.join(', ')} WHERE id = ?`).run(...values);
+    // Return lead to the approval queue
+    db.prepare("UPDATE leads SET status = 'awaiting_approval', updated_at = datetime('now') WHERE id = ?").run(p.lead_id);
+    return result;
+  }).immediate();
 
-  return { id: personalizationId, updated: true, approval_invalidated: true, fact_check_status: 'unavailable' };
+  return {
+    id: personalizationId,
+    updated: true,
+    approval_invalidated: true,
+    approved: false,
+    fact_check_status: 'unavailable',
+    guardrailPassed: guardrailResult.passed,
+    guardrailFailures: guardrailResult.failures,
+  };
 }
 
 // ══════════════════════════════════════════════════════════════
@@ -710,12 +734,5 @@ export function getPersonalizationList(batchId, options = {}) {
 }
 
 export function testOllamaConnection() {
-  const config = getConfig();
-  return fetch(`${config.ollama.base_url}/api/tags`, { method: 'GET' })
-    .then(r => r.json())
-    .then(data => ({
-      connected: true,
-      models: data.models?.map(m => m.name) || [],
-    }))
-    .catch(err => ({ connected: false, error: err.message }));
+  return Promise.resolve({ connected: false, provider: 'glm-5.3-api', model: 'GLM-5.3', error: 'tenant_gateway_required' });
 }

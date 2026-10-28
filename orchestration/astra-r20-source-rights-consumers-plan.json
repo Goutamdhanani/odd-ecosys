@@ -1,0 +1,17 @@
+{
+  "planId": "ASTRA-R20-SOURCE-RIGHTS-CONSUMPTION",
+  "writer": "/root/r20_source_rights_consumers",
+  "authority": "Current user continuation request and the durable source-rights revocation core contract",
+  "ownedPaths": ["pipeline/astra-current-claims.js", "pipeline/astra-claims.js", "pipeline/astra-evidence.js", "pipeline/astra-research.js", "pipeline/astra-xray.js", "pipeline/astra-radar.js", "pipeline/astra-campaign-audience.js", "pipeline/astra-campaigns.js", "pipeline/astra-memory.js", "pipeline/astra-benchmark.js", "tests/astra-source-rights-consumers.test.mjs", ".superpowers/r20/source-rights-consumers/**"],
+  "dependency": "Core writer releases readAstraSourceRights helper and migration033; root prepares new explicit synthetic33 fixture before actual application/database tests",
+  "requirements": [
+    "Use the core's persisted readAstraSourceRights(client,tenantId,sourceIds) Map; missing or unknown source rights fail closed. Never substitute caller attestation, silently permit a missing schema, mutate original grants or restore a revoked captured source",
+    "Wire revocation into effective original/corrected claim proof, claim creation/correction, exact contact candidate qualification and current audience validation, X-Ray/research current report generation, watched and recaptured Radar sources, evidence-backed memory insertion/retrieval and benchmark current eligibility",
+    "Inventory every direct source-rights reader in the owned paths as current consumption or historical observation. Preserve immutable captured evidence, past audits/events, delivered-recipient/outcome history and frozen benchmark observations. Historical read responses should label effective revoked rights without pretending the original grant or observed outcome changed",
+    "Keep the existing current-proof helper signature stable so execution-copy and geography validators inherit revocation. Generation and verification membership should inherit current-proof/current-audience checks; prove these dependencies behaviorally without a provider",
+    "Add guarded actual synthetic33 PostgreSQL tests for original and corrected claim sources, same-account contact sources, cross-tenant rights, append-only source bytes, cached/current audience and draft/approval/offline-plan rechecks, memory and Radar current-use denial, and benchmark current eligibility as applicable. Explicitly retain historical outputs while preventing new use",
+    "No new UI or route-helper edits; coordinate metadata annotation with core writer. Preserve before copies, raw failure/pass logs, commands, hashes and remaining unsupported paths. Release for independent review; no full suite during implementation"
+  ],
+  "constraints": ["Only explicit astra-foundation checkout", "Luna/high only", "No unowned edits", "No migration execution, provider/outreach, production data, preview restart, gate enablement or Git mutation", "All old R19 evidence immutable", "releaseReady=false"],
+  "releaseReady": false
+}

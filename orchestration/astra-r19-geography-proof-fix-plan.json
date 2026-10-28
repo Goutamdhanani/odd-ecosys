@@ -1,0 +1,14 @@
+{
+  "planId": "ASTRA-R19-GEOGRAPHY-CURRENT-PROOF-FIX",
+  "authority": "Correct the independent P1 in .superpowers/r19/review-proof-consumers/final-review.md under the user's current authorized implementation request",
+  "writer": "/root/r19_audience_consumers",
+  "ownedPaths": ["pipeline/astra-autonomy.js", "pipeline/astra-dispatcher.js", "tests/astra-qualification-lineage.test.mjs", "tests/astra-audience-consumers.test.mjs", ".superpowers/r19/audience-consumers/geography-proof-fix/**"],
+  "requirements": [
+    "Resolve the separate intent geography.country claim through the current effective-proof resolver in both autonomy issuance and dispatcher eligibility; preserve tenant, subject, predicate, geography, approval, suppression, budget and transport gates",
+    "Reject retracted, expired, incorrect domain/hash/excerpt/value/rights or ambiguous equal-newest corrections; never order ambiguous corrections by random UUID",
+    "Exercise the actual factored geography validator against synthetic PostgreSQL correction rows, including a valid replacement and each invalid replacement or ambiguity case; no need to activate live eligibility or transport",
+    "Preserve source before copies, all failed runs, exact commands/logs and hashes. Release all paths for independent re-review"
+  ],
+  "constraints": ["Only explicit astra-foundation checkout; no a4a4 edits", "Luna/high only", "No other source or test edits", "No migrations, providers, outreach, production data, preview restart, gate changes or Git mutations", "Original reports and frozen artifacts stay immutable"],
+  "releaseReady": false
+}

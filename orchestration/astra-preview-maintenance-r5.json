@@ -1,0 +1,10 @@
+{
+  "mode": "synthetic-preview-maintenance",
+  "pausedAt": "2026-10-25T09:52:48.2139508+05:30",
+  "pausedPid": 17680,
+  "reason": "Verify synthetic credential rotation and old credential rejection",
+  "productionAction": false,
+  "restoredAt": "2026-10-25T04:24:07.880Z",
+  "state": "RESTORED",
+  "currentAuthenticatedContextStatus": 200
+}

@@ -1,0 +1,1883 @@
+{
+  "candidateId": "astra-r2-7c748f115a9bd180",
+  "sourceSha256": "7c748f115a9bd180164890454fd517eb0c02131981814e8c0bdad23710dd3653",
+  "baseHead": "f30490bd892dd651fd2fb276b09b510379e27c0d",
+  "workspace": "C:\\Users\\pooja\\.codex\\worktrees\\astra-foundation\\odd-ecosys",
+  "files": [
+    {
+      "path": "astra.html",
+      "sha256": "5b6766c099d092f8096cb00579cbfd30af9cf2169e41dd929d6bcf5de3ddb926",
+      "bytes": 83545
+    },
+    {
+      "path": "css/astra-workbench.css",
+      "sha256": "0aa6aa105695d2c3d30f050cc7acccad0edbd9576dad2f531d28f4d0a6a65e25",
+      "bytes": 6565
+    },
+    {
+      "path": "css/auth.css",
+      "sha256": "202dfce23c683d24daaf84e5cd072f3e433fe1e45cae385476e8c37819a6f093",
+      "bytes": 7776
+    },
+    {
+      "path": "css/campaign-audience.css",
+      "sha256": "e4d15233bb6920ccb5eb15b5af47b14f1b3caadadd0cf0880055910d9cb8c9ff",
+      "bytes": 8082
+    },
+    {
+      "path": "css/campaign-sequence.css",
+      "sha256": "5892605fd445202b3140dff65856bfa0b35ab86d0d0cd26a13bbf8d714f011f4",
+      "bytes": 6128
+    },
+    {
+      "path": "css/contact-edit.css",
+      "sha256": "3204220fa024f338597fb05985d37596afd682f560cb03a11d9f3d678450c3f8",
+      "bytes": 12631
+    },
+    {
+      "path": "css/inbox.css",
+      "sha256": "370a9d843d5ac2414036d030394cd002724a9f59f6e9fa0d3b675dca65a54920",
+      "bytes": 8367
+    },
+    {
+      "path": "css/lead-strategy.css",
+      "sha256": "5bd577aba37b39464da12be0395d73bc0e5b0d43b79b7cac984501b63fddff24",
+      "bytes": 8552
+    },
+    {
+      "path": "css/lists.css",
+      "sha256": "8d29e4f88e4c6b1814ae42e0241dbbd48c94a14fdd0d0ab1dd68b007e9350a59",
+      "bytes": 5623
+    },
+    {
+      "path": "css/main.css",
+      "sha256": "3bc6d9934a54841c6836eba5af0a8dc45b06e04c967c13a981b2bfc3d3614e37",
+      "bytes": 72647
+    },
+    {
+      "path": "css/observatory.css",
+      "sha256": "d21601417558de16a5cce271afbe1fd80f82e2b8f674ecbfd59b013df2e7eee2",
+      "bytes": 46500
+    },
+    {
+      "path": "css/settings.css",
+      "sha256": "7bf730157fcfd54678368c554bc1940abbff6ec455d66644ef806b6d3e0c52ec",
+      "bytes": 10174
+    },
+    {
+      "path": "docs/astra/commercial-gates.json",
+      "sha256": "6ed3c9e51e3b4e02585a16c385610fe63b34998d7804cc1374725ee152e88c2c",
+      "bytes": 138657
+    },
+    {
+      "path": "index.html",
+      "sha256": "ad1d052784f7944c74b2f42b104f05f7c605420f752acced63c72b03b9d4250a",
+      "bytes": 3877
+    },
+    {
+      "path": "js/analytics.js",
+      "sha256": "e7d157536c2e1f992aec0b1d1985223e8ea929c1d9f8b7728be3439343cc9c19",
+      "bytes": 16264
+    },
+    {
+      "path": "js/api.js",
+      "sha256": "39de0ebdce9c26c7e98f0c9adfe8bb0a823aee15355dee067480fdf3198dc4c8",
+      "bytes": 34621
+    },
+    {
+      "path": "js/app.js",
+      "sha256": "b05f725537f97efd2d37d9aae83d9a973f4c31fec451c1f3ac278418c81c43bd",
+      "bytes": 40458
+    },
+    {
+      "path": "js/astra-workbench.js",
+      "sha256": "c09e02fe2befbfd206eb38ae4e52460e98c8b7c214d412574fd5cc0d6a9ff7ea",
+      "bytes": 149067
+    },
+    {
+      "path": "js/batches.js",
+      "sha256": "58f41d0fb8704823b469297a90f90aeedd37acf5890b4c58f9c4baa54a3d7e6b",
+      "bytes": 10180
+    },
+    {
+      "path": "js/campaigns.js",
+      "sha256": "677c0420c6acece2efd96cedab7e5ac8920a2f17b376ec94f5c4574d0ec0c14a",
+      "bytes": 74150
+    },
+    {
+      "path": "js/contact-import.js",
+      "sha256": "7466c40220dea241380aa010856fc24c4bb8b3f8df4759b9dc104b9d6085f08a",
+      "bytes": 2755
+    },
+    {
+      "path": "js/contact-selection.js",
+      "sha256": "333f364400df3628c3eb6b78e493db916cfadd0a0a8da25ff242047d33b77bb9",
+      "bytes": 1310
+    },
+    {
+      "path": "js/dashboard-metrics.js",
+      "sha256": "02cba6a264f029b870965036b07caeb7361499c4d0053f1eb74ef708135fd096",
+      "bytes": 371
+    },
+    {
+      "path": "js/dashboard.js",
+      "sha256": "a16da86fa696df539d3df6b7aec7af413f55194c6f8219d9150deb59fd2f251d",
+      "bytes": 11688
+    },
+    {
+      "path": "js/download.js",
+      "sha256": "4104ba3e5fb6c4d1685871e74446f87b4334e306452510cc9b822386d2123cf3",
+      "bytes": 886
+    },
+    {
+      "path": "js/inbox.js",
+      "sha256": "409f22d7a128cb8abc7da2cdaefde67a331a9583476992d647611c0a97549c0c",
+      "bytes": 16682
+    },
+    {
+      "path": "js/leads.js",
+      "sha256": "6fc49ed9d30c5c5a12546b42be5ead441b2cf583e91c841f85cb6db865473e3e",
+      "bytes": 273338
+    },
+    {
+      "path": "js/lists.js",
+      "sha256": "ec413d11a73139059aab08c5952462199f89cc2a4681b0c117f10e3e67f16ea3",
+      "bytes": 15170
+    },
+    {
+      "path": "js/mailboxes.js",
+      "sha256": "d91f65709a94a493717fec0a6a8c70b23cc9d5cae6c48a3f86edb4c6ffef123d",
+      "bytes": 47307
+    },
+    {
+      "path": "js/personalization.js",
+      "sha256": "c8741a1849ef3d68023be1ad533835323cf0173454e42af6cb63fdd2008778bb",
+      "bytes": 23546
+    },
+    {
+      "path": "js/qualification.js",
+      "sha256": "b080b79b93b549971c2dc15060c9ad59e6d3e14fbbcaacc8e01db78b11c7b240",
+      "bytes": 39081
+    },
+    {
+      "path": "js/settings.js",
+      "sha256": "8525d9c823cbc13230dbc760b0c642a52a0f8be698be17fc2071bad378b51d77",
+      "bytes": 26373
+    },
+    {
+      "path": "js/ui.js",
+      "sha256": "90786183eba21aade40753b5fa7bcff8b1f68ba789b5a2b8ab48040e4cf29b69",
+      "bytes": 15265
+    },
+    {
+      "path": "js/utils.js",
+      "sha256": "d7bd7b30f647c18c67223b7c44c2a41c3ffef3de8d0626776a32024dd583ea80",
+      "bytes": 2174
+    },
+    {
+      "path": "js/verification-result-view.js",
+      "sha256": "b9a5c8831e730caf308e4670c6a8d4a2e6941228b7fb6e333a7a3c5b71b743ac",
+      "bytes": 16449
+    },
+    {
+      "path": "js/verification.js",
+      "sha256": "f555709c794a23b360a56d9c254b86050cb40c1c11767f557bec3f72fe7184ed",
+      "bytes": 23810
+    },
+    {
+      "path": "migrations/astra/001-tenant-foundation.down.sql",
+      "sha256": "dcd8126d83e17fab55835368a44c0004b1f9c0f60230eb34a4bd0a4a6beb5df1",
+      "bytes": 1882
+    },
+    {
+      "path": "migrations/astra/001-tenant-foundation.up.sql",
+      "sha256": "327e3c8e5e0dbaf083461985c44b233fc994db5c51731878f7fe8493cc82e38b",
+      "bytes": 15955
+    },
+    {
+      "path": "migrations/astra/002-ledger.down.sql",
+      "sha256": "19d6046dfe667d0310b81cb0232ebe6ac057fb23ce42906ceea061bc0e8f1310",
+      "bytes": 444
+    },
+    {
+      "path": "migrations/astra/002-ledger.up.sql",
+      "sha256": "6c2c20f167070bd819740a74eeb1f12d12594e1179a368e2a88f5e62f9ff3575",
+      "bytes": 7333
+    },
+    {
+      "path": "migrations/astra/003-workflow.down.sql",
+      "sha256": "fc120ef1c8903c6fbf413527641324228a1be81889fd62ec759e219ab8af5756",
+      "bytes": 721
+    },
+    {
+      "path": "migrations/astra/003-workflow.up.sql",
+      "sha256": "bc17f70789c297c20130de9f5c5558221ed13f962d58bf2838ae62a49f4680c3",
+      "bytes": 3956
+    },
+    {
+      "path": "migrations/astra/004-gateway.down.sql",
+      "sha256": "561d66a506dbdd1e403135ee7970482a24d2bf57affa3826fe8cb3b9fb9df8ab",
+      "bytes": 812
+    },
+    {
+      "path": "migrations/astra/004-gateway.up.sql",
+      "sha256": "26003482360b07d3e568c3e89096cdf4e8e0f1591716953c6be3d587c7168c91",
+      "bytes": 6862
+    },
+    {
+      "path": "migrations/astra/005-research.down.sql",
+      "sha256": "5265aecfbe2899d6edf14ab590df97bc6e0389621a60ec17ab9803e48f880138",
+      "bytes": 534
+    },
+    {
+      "path": "migrations/astra/005-research.up.sql",
+      "sha256": "37a3e778a201140719e54253a65af9321ff2199ef7802085d62f67d6f954bb24",
+      "bytes": 10053
+    },
+    {
+      "path": "migrations/astra/006-inbox-permissions.down.sql",
+      "sha256": "8a5f94972fefba7290428376d07c6efdbd252acdbe139050e34c410271de1dae",
+      "bytes": 585
+    },
+    {
+      "path": "migrations/astra/006-inbox-permissions.up.sql",
+      "sha256": "8992d70731aced726405af3bbf14e39b1fba7a604b70d285b3b0c82e36bd73d4",
+      "bytes": 14004
+    },
+    {
+      "path": "migrations/astra/007-campaigns.down.sql",
+      "sha256": "b80dc5ab6810d26c013c9bffd1bc44e45b65e755cd8517f90a5cfb2bd26e89d9",
+      "bytes": 459
+    },
+    {
+      "path": "migrations/astra/007-campaigns.up.sql",
+      "sha256": "1fb9211bd8d5b81f4b20b4e2b09862fcc0c7b99164ab0ffedf3a87f84c1c59bf",
+      "bytes": 10733
+    },
+    {
+      "path": "migrations/astra/008-insights.down.sql",
+      "sha256": "3b2ebfbed2ca0a37d2c589996d17a0e20bdf5d7bb8da6c41c95244cd5f9ec388",
+      "bytes": 532
+    },
+    {
+      "path": "migrations/astra/008-insights.up.sql",
+      "sha256": "689a812409610822331ea21721b12e735b2c5ae9e1016f3dc1bbb9691e062815",
+      "bytes": 12837
+    },
+    {
+      "path": "migrations/astra/009-runtime.down.sql",
+      "sha256": "9ea1506011fccf9074f71c6fa4a9129c59cd029e22b872d4e4d184e2887687bc",
+      "bytes": 140
+    },
+    {
+      "path": "migrations/astra/009-runtime.up.sql",
+      "sha256": "aff468c35dd05484ee849e8aa881084ddb175b20f45902d8a2bbcc948653a958",
+      "bytes": 3486
+    },
+    {
+      "path": "migrations/astra/010-connectors.down.sql",
+      "sha256": "f708b5351ed1caf0345fd4713e5101fd901f8fa75868b4f1a21807f3d3383472",
+      "bytes": 1453
+    },
+    {
+      "path": "migrations/astra/010-connectors.up.sql",
+      "sha256": "2b218fcb2f834f7aa797b2a680268789412959dbf0cf274083543bc1e26e04c8",
+      "bytes": 13288
+    },
+    {
+      "path": "migrations/astra/011-generation.down.sql",
+      "sha256": "2ba01c99e8acd32ad74c803302dec39a9fc9645f0a0668cd7423d6385efc7ee0",
+      "bytes": 616
+    },
+    {
+      "path": "migrations/astra/011-generation.up.sql",
+      "sha256": "71bc191858ff99ef3a40d4c65fbc37239c6dfb54b2d0e70a088feb5346dfc53e",
+      "bytes": 8009
+    },
+    {
+      "path": "migrations/astra/012-autonomy.down.sql",
+      "sha256": "89b9ab6fed071bd75cccba6d0c7bd73dcf2727403015a204ad27f674f4d82d86",
+      "bytes": 575
+    },
+    {
+      "path": "migrations/astra/012-autonomy.up.sql",
+      "sha256": "f7cbe26de1e4811fb00ca19fd8bffe8f79edc19ffc224cb4c912355516d5503f",
+      "bytes": 12353
+    },
+    {
+      "path": "migrations/astra/013-evaluation.down.sql",
+      "sha256": "d10e547d80f0a417d80b917128dab76dad00ca52cf6049b07f0f880cb2ba414e",
+      "bytes": 1407
+    },
+    {
+      "path": "migrations/astra/013-evaluation.up.sql",
+      "sha256": "c43b3a94188cbd39e972434454303796057a1e0f18417eeef8117657b0b3d1e5",
+      "bytes": 16495
+    },
+    {
+      "path": "migrations/astra/014-lifecycle.down.sql",
+      "sha256": "7ff6942aa943675e17e60fc4901ab46106d9e57e8719e7804c6cabf3254b5fbf",
+      "bytes": 1215
+    },
+    {
+      "path": "migrations/astra/014-lifecycle.up.sql",
+      "sha256": "858ba8944ef6a64247858b33029c7f8ef9b11adbec82d26cd471ba1e5757b509",
+      "bytes": 8659
+    },
+    {
+      "path": "migrations/astra/015-operations.down.sql",
+      "sha256": "04d680b573aeea3d9a4d14fb5b5b78573e7af6dc49c3f1726652e91b1d39687e",
+      "bytes": 409
+    },
+    {
+      "path": "migrations/astra/015-operations.up.sql",
+      "sha256": "30dafb540b05ee76c1c48b967e67bfa6692b65ba7a66b04a232c1e9842fb268b",
+      "bytes": 8178
+    },
+    {
+      "path": "migrations/astra/016-radar.down.sql",
+      "sha256": "47d8cc1137c089a642402f9130b16c1a63031545ea2b27d2523519c532ff31e2",
+      "bytes": 326
+    },
+    {
+      "path": "migrations/astra/016-radar.up.sql",
+      "sha256": "466b31b11c8b8e0eab3c30c43443a26489eae460dccd4be4e27db969e09438a1",
+      "bytes": 8167
+    },
+    {
+      "path": "migrations/astra/017-learning.down.sql",
+      "sha256": "fcb08ab00e3346e5bac31a9c2bf5f4a2ed3fe8a02d51ef2318712daa53cf86a2",
+      "bytes": 432
+    },
+    {
+      "path": "migrations/astra/017-learning.up.sql",
+      "sha256": "4efb51a12b2a92cb375de90273f909f4a5e303e13a67806454056d5bbc297857",
+      "bytes": 8394
+    },
+    {
+      "path": "migrations/astra/018-economics-postsale.down.sql",
+      "sha256": "b0854337ee13a5e177c7b199475bc8e629a7918771ce9f386f26068ff9a72ddb",
+      "bytes": 1407
+    },
+    {
+      "path": "migrations/astra/018-economics-postsale.up.sql",
+      "sha256": "8f512e5b7820974fe183049b361bc594db01db96b17c6847a44e72d1a388f1b9",
+      "bytes": 17768
+    },
+    {
+      "path": "migrations/astra/019-launch-controls.down.sql",
+      "sha256": "3b87fac911f22f7cd07e7e15703538ca926454dbf4867eb64c2cc85e2d07c7a4",
+      "bytes": 469
+    },
+    {
+      "path": "migrations/astra/019-launch-controls.up.sql",
+      "sha256": "7d8cfc7a6e3fc7999b7de4abedb40e4c80785797729e49869a0c9fabfe62738a",
+      "bytes": 9451
+    },
+    {
+      "path": "migrations/astra/020-conformance.down.sql",
+      "sha256": "b6feb89cf171b01e7f47ce9146e3ec96811c5de9b0494c1fc255edac6412d8b8",
+      "bytes": 573
+    },
+    {
+      "path": "migrations/astra/020-conformance.up.sql",
+      "sha256": "0ac13d1977a943379969c1bc550526484593149e5439222dd4f8dc4430c5974f",
+      "bytes": 7839
+    },
+    {
+      "path": "migrations/astra/021-bandits.down.sql",
+      "sha256": "4ad2abdd8980e096e3453f13c4828517ebd80ec18b3b4a60a9df3fb6b13686a2",
+      "bytes": 397
+    },
+    {
+      "path": "migrations/astra/021-bandits.up.sql",
+      "sha256": "a2992ff62387fce066c77b00e2f60c852271e72c71bb7fc853d18974698ee8b3",
+      "bytes": 13064
+    },
+    {
+      "path": "migrations/astra/022-memberships.down.sql",
+      "sha256": "f66cb1065a73172810abf78ff35ce11da3cb2af5c046e8b5f32ebeb41edc6d02",
+      "bytes": 712
+    },
+    {
+      "path": "migrations/astra/022-memberships.up.sql",
+      "sha256": "8913c0c497e45ec75b8ab393e92947187308062bb52c436988d1235aa96e7faf",
+      "bytes": 17374
+    },
+    {
+      "path": "migrations/astra/023-customer-approvals.down.sql",
+      "sha256": "4e29881152c13732b2dde8cdf781cdd3a349c575b72f0a2e8767210e49687f3e",
+      "bytes": 1089
+    },
+    {
+      "path": "migrations/astra/023-customer-approvals.up.sql",
+      "sha256": "bad23d26f2082b947ef285924caa97996b23fd3ea60754b840a30d2ce93b00bd",
+      "bytes": 13798
+    },
+    {
+      "path": "migrations/astra/024-domain-harness.down.sql",
+      "sha256": "50ba656cde6314e109be793262f1a3c331aa0be469053e7d2c83588e8e88ac47",
+      "bytes": 353
+    },
+    {
+      "path": "migrations/astra/024-domain-harness.up.sql",
+      "sha256": "2694bd7dd63667f3ca3d360c1fedd223562ba2d379c0a6292ab208acfdff18fd",
+      "bytes": 4728
+    },
+    {
+      "path": "migrations/astra/025-source-collection.down.sql",
+      "sha256": "c9f90161550785cfdd48dccde689e6dc6e249324b3af164a8b5907447bec311c",
+      "bytes": 1209
+    },
+    {
+      "path": "migrations/astra/025-source-collection.up.sql",
+      "sha256": "1f9ea957db2faf1b65060b31b89af2aa49490aab8f9836b1c1c72c3ab838f076",
+      "bytes": 10634
+    },
+    {
+      "path": "migrations/astra/026-smtp-dispatch.down.sql",
+      "sha256": "d61e23275dd405154aaa41d57ee4eca1fae6e1cad2e81ace21e2a6af810a4e79",
+      "bytes": 540
+    },
+    {
+      "path": "migrations/astra/026-smtp-dispatch.up.sql",
+      "sha256": "dc84e1a720e213f1e37367298f58ae04682fefb9470d2839debbc4b37a1a3383",
+      "bytes": 2398
+    },
+    {
+      "path": "migrations/astra/027-release-evidence.down.sql",
+      "sha256": "56b02527c10c411bbded8f93f1f1aa761cb2c757e72451f7aecce7b546d56209",
+      "bytes": 431
+    },
+    {
+      "path": "migrations/astra/027-release-evidence.up.sql",
+      "sha256": "1ccd7dd355d86aa249182f01510eba07122f2838b05a5a273f4ec697e3a18ad1",
+      "bytes": 6370
+    },
+    {
+      "path": "migrations/astra/028-benchmark.down.sql",
+      "sha256": "ee7108876ada0124da4a20a6ebb5089990303e28d91e89853a1d4f52584a6114",
+      "bytes": 1547
+    },
+    {
+      "path": "migrations/astra/028-benchmark.up.sql",
+      "sha256": "7f7a383dac89e51eec75496107664eb49003e1f0089fca7377236f095539ec3a",
+      "bytes": 11425
+    },
+    {
+      "path": "migrations/astra/029-optimizer-execution.down.sql",
+      "sha256": "06a69db49e81e674c819a4430dec00824e3e1df2578f980d82a14d2434aa9559",
+      "bytes": 2662
+    },
+    {
+      "path": "migrations/astra/029-optimizer-execution.up.sql",
+      "sha256": "ac9078cf8691c0812eec1e73bc2ab654cab1ae9304dfae4e46a4bc0c7f55cb29",
+      "bytes": 7349
+    },
+    {
+      "path": "migrations/astra/030-membership-hardening.down.sql",
+      "sha256": "c9ae4bf7df4007484e34d4810c10a5a1b2965bbf6a5d676701988cd757f03af6",
+      "bytes": 6433
+    },
+    {
+      "path": "migrations/astra/030-membership-hardening.up.sql",
+      "sha256": "b6a5029c6c2cdd6c9b4c675553c6e8d8142d6d4ae3cac787db29c7b97eb43246",
+      "bytes": 6856
+    },
+    {
+      "path": "migrations/astra/031-research-idempotency.down.sql",
+      "sha256": "969b235815730829c9669cc0615bebb2e4ceef62a8d5dabfd39db88de9c11f32",
+      "bytes": 840
+    },
+    {
+      "path": "migrations/astra/031-research-idempotency.up.sql",
+      "sha256": "d6601d42cd01f2c7e2d690bc03b660cfab2f828ad5f8516d0eb17d781263d76c",
+      "bytes": 2016
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "8dbd87c0fc8e92ca65ed04ffac614b6c86aaa52364c766d1d3ca4d4cc9571738",
+      "bytes": 74535
+    },
+    {
+      "path": "package.json",
+      "sha256": "b6d862997c17dffeb396318bceb2d47b64fb26c816b4bf33f3f03a35acb2f6ce",
+      "bytes": 1558
+    },
+    {
+      "path": "pipeline/ab-testing.js",
+      "sha256": "27036d21f98a562f5d9791fce870c4e602640543913b36f90f53bb63c2906af3",
+      "bytes": 15279
+    },
+    {
+      "path": "pipeline/ai-usage.js",
+      "sha256": "cbd47f289851f756cb1aaa7b97b26cab2170858de575cc6c831a1be827b23b3d",
+      "bytes": 10676
+    },
+    {
+      "path": "pipeline/archiver.js",
+      "sha256": "aa5553a8987c3038e14f93e0572d2e0c8910c338cca251b67b0a2c9b5168e2a5",
+      "bytes": 9990
+    },
+    {
+      "path": "pipeline/astra-ai-routes.js",
+      "sha256": "d89359c350a6c0049ebd2642c90dfc18cdf40e7234824739020a9a52e0a50bb4",
+      "bytes": 7621
+    },
+    {
+      "path": "pipeline/astra-allocation.js",
+      "sha256": "be7d1a725c264967a77dd160b4d63f881286f948b3e5f2ee474e229d99f3f546",
+      "bytes": 622
+    },
+    {
+      "path": "pipeline/astra-analytics.js",
+      "sha256": "46a107f3796a96466adec96f399d0ca18b7f8bb086052e613f5eff24361d6b54",
+      "bytes": 12513
+    },
+    {
+      "path": "pipeline/astra-api.js",
+      "sha256": "e877c74febf7ec21ac775cc8ff8b181fdfb9595d1dd1946e9faf7ae353bdb72c",
+      "bytes": 12810
+    },
+    {
+      "path": "pipeline/astra-autonomy-routes.js",
+      "sha256": "b5cdaf4d98cf023648b02e72dc467bfa94c09cb1dfa3d2de9b90ea8c453dd5b4",
+      "bytes": 5175
+    },
+    {
+      "path": "pipeline/astra-autonomy.js",
+      "sha256": "1756839d49b7a500d15b168b3e2222d63bac7cbc3464d061c33d0947b6e97b3b",
+      "bytes": 35823
+    },
+    {
+      "path": "pipeline/astra-bandit-routes.js",
+      "sha256": "20169e3b1487c25e0548b41b1dff924c7f849ecd0bea7f34b68580a639d8f397",
+      "bytes": 4462
+    },
+    {
+      "path": "pipeline/astra-bandits.js",
+      "sha256": "023843368ddef0ed7438c1678789f6deb86d4baf86f56590bd4c5323898a754c",
+      "bytes": 35761
+    },
+    {
+      "path": "pipeline/astra-benchmark-routes.js",
+      "sha256": "211e986b413b5f5d019f08fad24b6aed91faf9cf8733a958e0b7f25ba6bb3ddd",
+      "bytes": 3415
+    },
+    {
+      "path": "pipeline/astra-benchmark.js",
+      "sha256": "384c1f1ac2c15c2fc0aae81a56fe6cca6ad006174e0928f5afd27098eafc2ab1",
+      "bytes": 32743
+    },
+    {
+      "path": "pipeline/astra-campaign-routes.js",
+      "sha256": "3da8f2ffa687598463c24be76df0c46b0d2964f6970f31cfa0544f4fab33dd86",
+      "bytes": 6345
+    },
+    {
+      "path": "pipeline/astra-campaigns.js",
+      "sha256": "965701e66ea72026b3c7ea959505e432faa05a9a9f3f1dd9ab0ab586f8fa641b",
+      "bytes": 38127
+    },
+    {
+      "path": "pipeline/astra-claims.js",
+      "sha256": "fb1ce572e6fe3d9cf4ce95b8593689ced20266a24e182d4250814e5bcb0f9795",
+      "bytes": 7183
+    },
+    {
+      "path": "pipeline/astra-conformance-routes.js",
+      "sha256": "22aab11dda9f2e34a3e36f866205b50ba37fc070966cf90399f4f0704a0f983d",
+      "bytes": 4350
+    },
+    {
+      "path": "pipeline/astra-conformance.js",
+      "sha256": "4a64117d79f6de279bc31d68edc52b20b77fdd7c99c5b4b8cdd04275199cbe7f",
+      "bytes": 28365
+    },
+    {
+      "path": "pipeline/astra-connector-routes.js",
+      "sha256": "5194ce832e9c69216c59320842e3c96e48291d28a52c9411e2db73c81c7047c0",
+      "bytes": 7778
+    },
+    {
+      "path": "pipeline/astra-connectors.js",
+      "sha256": "2de3d60e832e6cb59a3d9bf247f0cfa97d68ad8ff4c53f4ca3f6896323ebe599",
+      "bytes": 24368
+    },
+    {
+      "path": "pipeline/astra-crm-adapter.js",
+      "sha256": "13cb1220545c326f7992752e8393a2ed001d8b68199f9f2823cf711b3e562bb0",
+      "bytes": 12513
+    },
+    {
+      "path": "pipeline/astra-crm.js",
+      "sha256": "14f7bcaefee0dc7682d1f751e1ed5b5591e9f09b533cc57295af233752aa6d77",
+      "bytes": 11605
+    },
+    {
+      "path": "pipeline/astra-customer-approval-routes.js",
+      "sha256": "40771360eb6221d59ceccc8e551c6c4a35c2443ed26aef5d85a4652d953fd596",
+      "bytes": 4299
+    },
+    {
+      "path": "pipeline/astra-customer-approvals.js",
+      "sha256": "cdceb10e46432f6907bf5d2025f72e576deac7596a5c110e9207d452bdc0ebbb",
+      "bytes": 17176
+    },
+    {
+      "path": "pipeline/astra-decisions.js",
+      "sha256": "7ff0b448db1eea803d35ee7051689b0e59f250c080d3cb6ab90816ed1cce3934",
+      "bytes": 9205
+    },
+    {
+      "path": "pipeline/astra-dispatcher.js",
+      "sha256": "7cc711d0e0608cd54607eff55a4ce1d5a337d3a96c4d08ea2b9019832b845b95",
+      "bytes": 27931
+    },
+    {
+      "path": "pipeline/astra-domain-harness-routes.js",
+      "sha256": "0a665f66232688d62af2986ae396c46e4b859a08137a16a5a213cae986553426",
+      "bytes": 10653
+    },
+    {
+      "path": "pipeline/astra-domain-harness.js",
+      "sha256": "b1dacff2a2670f79ffff90c0471d7154bf26bc105871c7b697118b48626cf913",
+      "bytes": 14755
+    },
+    {
+      "path": "pipeline/astra-economics-routes.js",
+      "sha256": "1c82f413aeb33a77ef624262007e023080709806f4c358e0054dc03630da3703",
+      "bytes": 5222
+    },
+    {
+      "path": "pipeline/astra-economics.js",
+      "sha256": "c27f570c2836ff5e14832fcd0994ef24358bf7ad7033fa3fea0354134d72bba8",
+      "bytes": 17414
+    },
+    {
+      "path": "pipeline/astra-egress.js",
+      "sha256": "2a7980b400c6c90c3c774fc72c747d97e61cca4c795a8d5f8e0f51483e8ac393",
+      "bytes": 5351
+    },
+    {
+      "path": "pipeline/astra-engagement.js",
+      "sha256": "30049760ec7ce488b9081667419c1d08587dbbe4fef09c3db10f1c1a72d82332",
+      "bytes": 5871
+    },
+    {
+      "path": "pipeline/astra-eval-routes.js",
+      "sha256": "9c8c54a97a4ee1d078c8f6926543e3239073a91704baa348984decc967ee642a",
+      "bytes": 9359
+    },
+    {
+      "path": "pipeline/astra-evaluation.js",
+      "sha256": "d00da96fba1ccb3acc5b16de1622b88d21512a406e0c04f6fc52e2ec2cb66621",
+      "bytes": 39650
+    },
+    {
+      "path": "pipeline/astra-evidence.js",
+      "sha256": "0f63d78c81191cca91cefd6bd0c1edb8e0cc29942e8b529592f07ab177ad22af",
+      "bytes": 9997
+    },
+    {
+      "path": "pipeline/astra-experiments.js",
+      "sha256": "6fe072f4a078b53c5121ab8a69ee12f23b00bb6e80ba1a896ca38c04d5ffb691",
+      "bytes": 20655
+    },
+    {
+      "path": "pipeline/astra-feature-workers.js",
+      "sha256": "ff057ca81a13b091e7661a0705a005faa6df525b10ad30091443ffd17225d917",
+      "bytes": 8829
+    },
+    {
+      "path": "pipeline/astra-generation-routes.js",
+      "sha256": "0c4ff1682338f5039ed0fb17f26e7237db442adc91eaad25c6d5f59e351084ba",
+      "bytes": 8299
+    },
+    {
+      "path": "pipeline/astra-generation.js",
+      "sha256": "3abcfc63798986aa65ea5c6350851e19b34c81da7bc9e5f989b3f4dc7a7245b5",
+      "bytes": 28681
+    },
+    {
+      "path": "pipeline/astra-glm-gateway.js",
+      "sha256": "8cb025271179b700c2b06a9d89428511352704fc47a7216ce45709376e84e20b",
+      "bytes": 17280
+    },
+    {
+      "path": "pipeline/astra-harness.js",
+      "sha256": "814d52864039fd104f5d75b5766ebec4b10258517ef923c9fa4d5a550fb34b25",
+      "bytes": 9179
+    },
+    {
+      "path": "pipeline/astra-inbox-routes.js",
+      "sha256": "b271196f1d7d0aa0669625a02c310c51fc8f987c8550b4e4f59ea43eec294ae9",
+      "bytes": 6234
+    },
+    {
+      "path": "pipeline/astra-inbox.js",
+      "sha256": "08be9b14ed29b75c27e9cfe2003d416f20710442725ad488203911b93dd66212",
+      "bytes": 8593
+    },
+    {
+      "path": "pipeline/astra-insights-routes.js",
+      "sha256": "9fc98809f60b2c775947724260d8771072b14152e918dcd32a2acde897dc8dbb",
+      "bytes": 6944
+    },
+    {
+      "path": "pipeline/astra-invitation-context.js",
+      "sha256": "f92157bdbe91326ba50b400a7c7e12aa7bd9c069599f33fcd4448d1cb23adfea",
+      "bytes": 2714
+    },
+    {
+      "path": "pipeline/astra-launch-controls.js",
+      "sha256": "ad7e10dd07be3d3d65ff0102c0281157310d1f033d273779b48471a9bac0a8b3",
+      "bytes": 39846
+    },
+    {
+      "path": "pipeline/astra-launch-routes.js",
+      "sha256": "aeed1c1660fb636bd87b64a47a7146eb74606d1efe1fa1ed1beef0f7a0d10636",
+      "bytes": 73
+    },
+    {
+      "path": "pipeline/astra-learning-routes.js",
+      "sha256": "772726cce14d6867918d1b79390e03cb73fd0a2e213536f2cc4f7c6828f80c26",
+      "bytes": 9771
+    },
+    {
+      "path": "pipeline/astra-learning.js",
+      "sha256": "b8cf203d5d3f68d7e9898e45226b0a9112f12746421d6377ea0a7c928592f0d4",
+      "bytes": 16239
+    },
+    {
+      "path": "pipeline/astra-ledger-routes.js",
+      "sha256": "4ae25465410ebe4ccc0088930420fe1b9a928b150f2c0487d5a4c42a2de70509",
+      "bytes": 3047
+    },
+    {
+      "path": "pipeline/astra-ledger.js",
+      "sha256": "9ab97e80f9d77ee711a0b8d7003f2afa4c5c609c93eb01e1e807b75bd2a2ae16",
+      "bytes": 13463
+    },
+    {
+      "path": "pipeline/astra-lifecycle-routes.js",
+      "sha256": "10e134fdbee87610a466b7e9b954e5983be734bd5aedb5505a6e04854330cd70",
+      "bytes": 5288
+    },
+    {
+      "path": "pipeline/astra-lifecycle.js",
+      "sha256": "af15040a0a8d5a38dd0cd265c0ce67571504358d3ce9c4f81b02c1e8d24db95c",
+      "bytes": 20122
+    },
+    {
+      "path": "pipeline/astra-mailbox-provider.js",
+      "sha256": "082b173bc78e2cb8ea11f5fc6b36e2e6cf18d8a8efd7b7af3f3aabcf0551cfdc",
+      "bytes": 20270
+    },
+    {
+      "path": "pipeline/astra-memberships.js",
+      "sha256": "25fef8a7d434d5ac7c9e9c6052a4250e910a9e795f949c3683ca54e34e209a7f",
+      "bytes": 5324
+    },
+    {
+      "path": "pipeline/astra-memory.js",
+      "sha256": "8f3a8c7cdfa967d411f69452754e9ed694575682f7495ba5b9ca695b0d2a4873",
+      "bytes": 18188
+    },
+    {
+      "path": "pipeline/astra-operations-routes.js",
+      "sha256": "a3d5af7fc32c02de45423767c212f9cd613c0e0c43be9a561c14c35486ccd5fc",
+      "bytes": 3482
+    },
+    {
+      "path": "pipeline/astra-operations.js",
+      "sha256": "87cecf4d658f002db07771afa6be921c663c739a24ba7787dacc99c464ca19f1",
+      "bytes": 8132
+    },
+    {
+      "path": "pipeline/astra-optimizer.js",
+      "sha256": "8b9428a3f96be5815ef9d3677393eb7b7ecf1a604ea128d4642680f5b76c75c6",
+      "bytes": 24904
+    },
+    {
+      "path": "pipeline/astra-outcomes.js",
+      "sha256": "e39152ef91a09494639712ded448dd610f558175bd44877bf3e7e2fcb2304e28",
+      "bytes": 9027
+    },
+    {
+      "path": "pipeline/astra-permissions.js",
+      "sha256": "919f0618c2258740632dfc8ebda31f52bac024dde840ce66fded05373f7234c1",
+      "bytes": 7205
+    },
+    {
+      "path": "pipeline/astra-postsale.js",
+      "sha256": "f28a0e3294e0cefe73be1ceaabd0cea4d53d04ceac24fcc5b673fbc3285d7a1e",
+      "bytes": 11067
+    },
+    {
+      "path": "pipeline/astra-qualification.js",
+      "sha256": "403a37616049f9d0ce5fe6ea72f00264021b22763bda415252bef2d4bdc350a0",
+      "bytes": 61
+    },
+    {
+      "path": "pipeline/astra-radar-routes.js",
+      "sha256": "31cfe42eb85acb740339632490b47c40a094225c751e1ca326927c83b9d1f1cf",
+      "bytes": 5334
+    },
+    {
+      "path": "pipeline/astra-radar.js",
+      "sha256": "54d00e01811afdbfe1df5bd39092a08b8d190d7e9679e9fd1edd1e1557597ffe",
+      "bytes": 27405
+    },
+    {
+      "path": "pipeline/astra-release-evidence.js",
+      "sha256": "c247b295a2d153519a1437c733e08ca55747e2837882eb5ae4e5b60f0b66f7cf",
+      "bytes": 12713
+    },
+    {
+      "path": "pipeline/astra-release-registry.js",
+      "sha256": "c9470de43c42493b8d041b269055753407b8009ea13da4097f02dd87bda4ab18",
+      "bytes": 15097
+    },
+    {
+      "path": "pipeline/astra-reply-tasks.js",
+      "sha256": "ade39af30933261c80903a4e283f6d898db771818a56998a3c642f3704ac0359",
+      "bytes": 6019
+    },
+    {
+      "path": "pipeline/astra-research-routes.js",
+      "sha256": "ac56becf54ce6070e581bc526c71e06a909508afa0dfb8f32c7343647bd45ec9",
+      "bytes": 6399
+    },
+    {
+      "path": "pipeline/astra-research.js",
+      "sha256": "a34c7e8d44513229e12ae3a23d7d112e51a8e16a2ffe0353a6cf5aa94b3fe780",
+      "bytes": 8840
+    },
+    {
+      "path": "pipeline/astra-runtime-routes.js",
+      "sha256": "3d79c66ec22af40129775554f180bdb2bf07cc35de65d15e9957f85ccefe6d06",
+      "bytes": 11732
+    },
+    {
+      "path": "pipeline/astra-runtime.js",
+      "sha256": "11c801ce28f512cb17e6d7dfc5eb068118e1abe8b507f3c45837bbdf626d7230",
+      "bytes": 14689
+    },
+    {
+      "path": "pipeline/astra-skills.js",
+      "sha256": "44fa170f733309504c229d4f6461b1e874fee8300bd040c72054b8376305d7f7",
+      "bytes": 3714
+    },
+    {
+      "path": "pipeline/astra-smtp-dispatch.js",
+      "sha256": "6676f1d0b04417d035efab8c9ebe13f6153f5e44c7501f80c8fb8269739a3759",
+      "bytes": 12158
+    },
+    {
+      "path": "pipeline/astra-source-collection-routes.js",
+      "sha256": "38e3fa3d6c49627f75c944d14d7fd08009c070eb8797d96f1219472192070007",
+      "bytes": 5423
+    },
+    {
+      "path": "pipeline/astra-source-collection.js",
+      "sha256": "510d698a7ea43f340ab56e9b3da712bb2f379b70cb24e3fa934ac8d5afe09546",
+      "bytes": 30833
+    },
+    {
+      "path": "pipeline/astra-telemetry.js",
+      "sha256": "de36d46c0f08b6a314900be7fb78c6ca41d437843da42e4ba133745417dd6ee7",
+      "bytes": 5082
+    },
+    {
+      "path": "pipeline/astra-tenant-context.js",
+      "sha256": "009cca8650d313f0c8db2a56b80847a32ba27ebb85bad1d2b72aac63038cff70",
+      "bytes": 7224
+    },
+    {
+      "path": "pipeline/astra-tenant-store.js",
+      "sha256": "9de830c334e07b44f60d9ac56724d4a36254e4ea8d74792b6ee3f5b9eac21ad0",
+      "bytes": 14691
+    },
+    {
+      "path": "pipeline/astra-usage.js",
+      "sha256": "40166923b049737a57d21918a69efd501d0b9b33aa7ce093900a0a85c0718dd1",
+      "bytes": 21953
+    },
+    {
+      "path": "pipeline/astra-verification.js",
+      "sha256": "7cf5809b12f42680c20ac6fa082d15bb0cfd4f2c66dc72a6ff8d6286f52c4df0",
+      "bytes": 72
+    },
+    {
+      "path": "pipeline/astra-verifier-adapter.js",
+      "sha256": "ab24c5dfb803dff753c80c934b4d14437e2356f7ce8e5b03ac9bb139697a59bd",
+      "bytes": 13596
+    },
+    {
+      "path": "pipeline/astra-workflow-routes.js",
+      "sha256": "1d137a6fec2e78bf67ddfd9d388f74bcdec92e3100acd137311f828846b842f5",
+      "bytes": 2530
+    },
+    {
+      "path": "pipeline/astra-workflow.js",
+      "sha256": "1ce3373f88134a77eb31819fb3147fb853ef31ca2414fc1011043b40d2a30c46",
+      "bytes": 22496
+    },
+    {
+      "path": "pipeline/auth-manager.js",
+      "sha256": "955f5381d2f4707bacb41a9d82582c8bccb20a66a3cf7c07448bfa02f26f9504",
+      "bytes": 54746
+    },
+    {
+      "path": "pipeline/batch-manager.js",
+      "sha256": "55ee06cf4466297b7f774f5e75371e024f92469202859699c70bf975140d1c6e",
+      "bytes": 3914
+    },
+    {
+      "path": "pipeline/business-search-templates.js",
+      "sha256": "447e76f85b153bcbd7e7056feac91561d07f3cb0c97327e59d371cb953d13e3e",
+      "bytes": 5680
+    },
+    {
+      "path": "pipeline/campaign-audience.js",
+      "sha256": "dad1ce011bc52f84d82b046c1025d8c919952ff6a35ba238407262a9f18165f9",
+      "bytes": 20566
+    },
+    {
+      "path": "pipeline/campaign-sequence.js",
+      "sha256": "572c1a926b93ca0aa8a5974fae5547ee296860aaa276c25c2fb73cb57eab3c21",
+      "bytes": 17905
+    },
+    {
+      "path": "pipeline/campaign-templates.js",
+      "sha256": "dc332cf5da927b0b272401749cad835cb2a851288bfab3205b81e88e1fb5b903",
+      "bytes": 5336
+    },
+    {
+      "path": "pipeline/cli.js",
+      "sha256": "72ecbae3c641bf2cd66b69430921a97b302c1c1a044f276e8bbbf0c6377e78d6",
+      "bytes": 9165
+    },
+    {
+      "path": "pipeline/click-tracking.js",
+      "sha256": "6c3c42f1b64b7c0d396597a9f00f48379b0c56ff9a6fbdfdc73b4dd39972b7d4",
+      "bytes": 4897
+    },
+    {
+      "path": "pipeline/compliance.js",
+      "sha256": "93b7a05300f46a61fc8b351e6c6d0cf2a43f78dc9b212c0daaad7fa58b547c0d",
+      "bytes": 12265
+    },
+    {
+      "path": "pipeline/contact-fields.js",
+      "sha256": "7a647844ecf112297b54cb2cd0ee5db7b9af0f010474065090797806abd2435d",
+      "bytes": 12544
+    },
+    {
+      "path": "pipeline/contact-import-jobs.js",
+      "sha256": "e18efdf02c86c6bc3cbe0158dc321ec94d23c0249a9f86c954449bdaa3e44c5d",
+      "bytes": 29710
+    },
+    {
+      "path": "pipeline/contact-manager.js",
+      "sha256": "4f706be87dd21f1d1543e02c80679ab98a4c6903080ab8edd08a093564afc6c0",
+      "bytes": 35200
+    },
+    {
+      "path": "pipeline/contact-provenance.js",
+      "sha256": "8451be8e6729b5401ebd7ffe93bebf1fbf666f1ce2c1f15173cadd0f3368f8be",
+      "bytes": 3661
+    },
+    {
+      "path": "pipeline/credential-vault.js",
+      "sha256": "6cb65feef377056573b383c0609d2722caef9d56900b62950ce61afc1a9e063e",
+      "bytes": 6437
+    },
+    {
+      "path": "pipeline/crm-sync.js",
+      "sha256": "b803f5f6f00a828531017945015d251758871043cae4ae274b20d064a3926bbd",
+      "bytes": 7438
+    },
+    {
+      "path": "pipeline/csv-importer.js",
+      "sha256": "5375985ce5fe9bfc8911263442bfa211e7a1e20566e82dc7c0e992e071956f93",
+      "bytes": 11392
+    },
+    {
+      "path": "pipeline/database.js",
+      "sha256": "816a52e9f56cbbf2f4d9571ea61a9e3d77cc1b6b3cc54c1f83c37e49f1c741cc",
+      "bytes": 82532
+    },
+    {
+      "path": "pipeline/dedup.js",
+      "sha256": "6227811321eeed5546a867f5ebfcc6c4419d9d4e7551577488a68a306cbbee2d",
+      "bytes": 4575
+    },
+    {
+      "path": "pipeline/eepc-cbam-directory.js",
+      "sha256": "3050f6865770df964fe3789b7c3320c1c568e12d753b2e8199713bd12feed6c2",
+      "bytes": 12942
+    },
+    {
+      "path": "pipeline/email-verifier.js",
+      "sha256": "6be10b27bbdada95d13040a492984afc1a6d8beeb94bb1632dcb0c4ea12988ec",
+      "bytes": 93955
+    },
+    {
+      "path": "pipeline/enricher.js",
+      "sha256": "083d855b2eeeacaf6ef842b8ec8307589f599340d550c6297a553d632de985f8",
+      "bytes": 1102
+    },
+    {
+      "path": "pipeline/epch-directory-jobs.js",
+      "sha256": "fe28758f4b05853c9a090d17b24b748c22b087ac6dc9918765fbdd947124fc6b",
+      "bytes": 46200
+    },
+    {
+      "path": "pipeline/epch-member-directory.js",
+      "sha256": "4de31aa1cb807b5640fc9ee87ec3147c6bec729bbf9d7e6fcd4caf01a38f0cf6",
+      "bytes": 16305
+    },
+    {
+      "path": "pipeline/google-oauth.js",
+      "sha256": "42a23772b94bd3936a8d11c1dee1d48fa809003c34b2ed5c2d5e27305d856cd2",
+      "bytes": 5215
+    },
+    {
+      "path": "pipeline/imap-receiver.js",
+      "sha256": "fab1139b9f079d1179de6899161aa7da046c127e46213b8c5e4d48e017294947",
+      "bytes": 21850
+    },
+    {
+      "path": "pipeline/imap-sync-scheduler.js",
+      "sha256": "cb48bea420ba2104db3a903a2b95f74fd9e4060e5c4ad6330c24d7dbd3b484a9",
+      "bytes": 10254
+    },
+    {
+      "path": "pipeline/lead-discovery-jobs.js",
+      "sha256": "97ca24dc81b707fa5f3691a849e551ca89acefcb38ea189c4e20dba295602a7f",
+      "bytes": 45772
+    },
+    {
+      "path": "pipeline/lead-discovery.js",
+      "sha256": "f2ffa86db6d91801eee2f1288af89b12e85bc9d8a59f106bc81a852514d3745b",
+      "bytes": 6622
+    },
+    {
+      "path": "pipeline/lead-strategy.js",
+      "sha256": "fee4c804ff33c5daf113aade4f005d185c47d1c12e8860814040f44d46886dc8",
+      "bytes": 30691
+    },
+    {
+      "path": "pipeline/list-manager.js",
+      "sha256": "4b93aadd18a2df523c6678a4a70bdd7b2b6a8f41f1df5475f5075f59d1ac4523",
+      "bytes": 8438
+    },
+    {
+      "path": "pipeline/meta-lead-ads.js",
+      "sha256": "f330ebdaff39ad673c5a71df783449b38bb6ff4067cbcf65f3cd95fe739dc88a",
+      "bytes": 41652
+    },
+    {
+      "path": "pipeline/offer-contracts.js",
+      "sha256": "56937dda48d78e9014e9d0a173586e364e4d814fa7c24b75b9066ca2dc4bc52e",
+      "bytes": 19513
+    },
+    {
+      "path": "pipeline/offer-policy.js",
+      "sha256": "aab600cc9b748c2a5d72280aac7931f9906df8bcc03b72fba878fd3a2b51d4e5",
+      "bytes": 7062
+    },
+    {
+      "path": "pipeline/offer-proof-store.js",
+      "sha256": "b56e2a957304b43b9eb6db4e26974f01246514cfa27133a8503d25c8a3ca0514",
+      "bytes": 11904
+    },
+    {
+      "path": "pipeline/offer-routes.js",
+      "sha256": "b2eb8784f0090ef3695ceb65b4e482979df83855656773f4e119be5a287ad407",
+      "bytes": 6769
+    },
+    {
+      "path": "pipeline/osm-importer.js",
+      "sha256": "092e28c6c9b47ee05ca861685811dc0bdd3929d2d8e14bd8f671ba6245fda913",
+      "bytes": 7220
+    },
+    {
+      "path": "pipeline/pdf-text-worker.js",
+      "sha256": "c0e0e62fd3e9110bbf07591633114b94d1f6417660a06615b0416978bafd696a",
+      "bytes": 2441
+    },
+    {
+      "path": "pipeline/pdf-text.js",
+      "sha256": "6adef3760419fd9acd76ae153e723396a7ea7fb01b598c7351c430d4d2b1fa0c",
+      "bytes": 5428
+    },
+    {
+      "path": "pipeline/personalizer.js",
+      "sha256": "dba18599b2cae13206a2afac849f6172d2a94b8b88be055b220817ed67820dfa",
+      "bytes": 30996
+    },
+    {
+      "path": "pipeline/qualification-review.js",
+      "sha256": "3363bf40115cecc1c8a5d57a2e26a8cb4c8d3fae7930b26da7dd5474b27923aa",
+      "bytes": 8801
+    },
+    {
+      "path": "pipeline/qualification-scoring.js",
+      "sha256": "4199cc7ee3cbd0177c54b608a2304fe034fc15a636771e8ad5de71358c634669",
+      "bytes": 11419
+    },
+    {
+      "path": "pipeline/qualifier.js",
+      "sha256": "985edfd3549d5ce71b9a36e23b886c9f2498063c74d9973be9d6d4118258e367",
+      "bytes": 50611
+    },
+    {
+      "path": "pipeline/reply-tracker.js",
+      "sha256": "67f00a8716859f7ea71e4f24e5aada8b30d0d2e5f36d80238a0b4cc422262713",
+      "bytes": 31178
+    },
+    {
+      "path": "pipeline/scraper.js",
+      "sha256": "a90d18c4a2f52a8c05115e0eacf588da756aefe30917cf0397d60129571a60c9",
+      "bytes": 6325
+    },
+    {
+      "path": "pipeline/screenshot.js",
+      "sha256": "6da0646d034803bfc11eeedc159c539749d450415134994d088fb53aaddfdb2a",
+      "bytes": 12868
+    },
+    {
+      "path": "pipeline/searxng-search.js",
+      "sha256": "971547f5eaa0948f6786a5408fe5c0f0c7cd3eab1ebddb88a2ba6bb93fb03174",
+      "bytes": 29920
+    },
+    {
+      "path": "pipeline/seed.js",
+      "sha256": "737535526f310f88b72c0205086bf9a0cabc4efcf27307f7797225c68e5241d4",
+      "bytes": 12286
+    },
+    {
+      "path": "pipeline/segment-manager.js",
+      "sha256": "9290c7c227f41bc4e14083a4fa83896b8c4a70f0060737f18860228e810f8011",
+      "bytes": 7723
+    },
+    {
+      "path": "pipeline/sending-engine.js",
+      "sha256": "3f2b0ca9285780d4a5694d7a2ef5e341ca75fb8a9bba69caa3dce066dd8940fa",
+      "bytes": 144736
+    },
+    {
+      "path": "pipeline/sending-schedule.js",
+      "sha256": "b2787bbaa2854a51f13ba8023a6dab25c4bc60d057fe12ce8faeb8b0f4581fc3",
+      "bytes": 3527
+    },
+    {
+      "path": "pipeline/ssrf-guard.js",
+      "sha256": "b49c24ddeb14f58025ea92810a9b234c245cd37fa89ffcf7a8b2ff151e00f03a",
+      "bytes": 15726
+    },
+    {
+      "path": "pipeline/totp.js",
+      "sha256": "55defb51da16b5a6b3d47f59bd068190346efbed12a6122e9666a8ccb82f19a4",
+      "bytes": 3230
+    },
+    {
+      "path": "pipeline/website-discovery-jobs.js",
+      "sha256": "777451530375c85fe18641e1409304865bf8ade8da036bc8a76c69bf722ba410",
+      "bytes": 54753
+    },
+    {
+      "path": "pipeline/website-email-discovery.js",
+      "sha256": "72879dcabf6190b435f357e887c320f106ed2bb6dde6fbe50e6ad04da69936d3",
+      "bytes": 106012
+    }
+  ],
+  "testInputs": [
+    {
+      "path": "docs/astra/s00-side-effect-inventory.json",
+      "sha256": "def6a57abc83045477de98d867eea89cb5c9e35fa6f195644829c7b81427b74e",
+      "bytes": 21204
+    },
+    {
+      "path": "docs/astra/s00-source-delta.json",
+      "sha256": "9d99cc47b3eb17bb32ecd7cf4e5043ebdbcb20604fc687884a11cc6c637a5001",
+      "bytes": 11748
+    },
+    {
+      "path": "docs/astra/source-snapshot.json",
+      "sha256": "ed06ed60cc20714385528355c7ce16582bf21bb3d384328ac80fbb6bc848bdeb",
+      "bytes": 35775
+    },
+    {
+      "path": "orchestration/astra-source-scope-ruling.json",
+      "sha256": "350f3441a2d9820059641cc583ca344c28fc23ddf1c1a3d6ebb478d6035bb4a6",
+      "bytes": 3094
+    },
+    {
+      "path": "tests/acceptance-contract.test.mjs",
+      "sha256": "4363a9e1afd8ed942f47a7d50565b8e0db08beb093c13a5575c934999c9df9d5",
+      "bytes": 6767
+    },
+    {
+      "path": "tests/ai-usage.test.mjs",
+      "sha256": "10f983b3256a1552882b1822d86b07ce40fc019f2f47f6ccd416eb13f300bba7",
+      "bytes": 3769
+    },
+    {
+      "path": "tests/api-client-errors.test.mjs",
+      "sha256": "ef03bdc764ee1cd24bd10b6bd7a4444c6f7f64a5c63e3b6ac0cf396069a1787c",
+      "bytes": 7375
+    },
+    {
+      "path": "tests/astra-commercial-gates.test.mjs",
+      "sha256": "78e98521526f18f9c9e29af20704e165a3df733e664acab8f9a4572659e6a2bd",
+      "bytes": 6643
+    },
+    {
+      "path": "tests/astra-side-effect-inventory.test.mjs",
+      "sha256": "08633b75fe76160d5d80d3e6a42c96c3eef02ca144d0282e7343ef1f8dbe1636",
+      "bytes": 3282
+    },
+    {
+      "path": "tests/astra-source-fidelity.test.mjs",
+      "sha256": "0a7798fca79bc1e35f8c3d2119e52b396cd47f3ac76abd3614a17b9df0a6cf87",
+      "bytes": 2990
+    },
+    {
+      "path": "tests/astra-source-trace.test.mjs",
+      "sha256": "8f13767017d6d9ae048dcd79f105ea0de38510f97c39bb3dc4eda90b3024a589",
+      "bytes": 9108
+    },
+    {
+      "path": "tests/auth-client.test.mjs",
+      "sha256": "b1b65db9e9180ec2c5ef4a6c3d3abb28716e0f920318bf6ce8b1ecfcff212fae",
+      "bytes": 2294
+    },
+    {
+      "path": "tests/auth-mfa.test.mjs",
+      "sha256": "0c46b99060af3c0a2b7b67b279ff19f52d3f178afb165a86e9e5379687f5a112",
+      "bytes": 18991
+    },
+    {
+      "path": "tests/auth-session.test.mjs",
+      "sha256": "a05d484049bc40e6c3bdf3d7a1a66b2984c315258b56ba359246ba53e0bad0c3",
+      "bytes": 13334
+    },
+    {
+      "path": "tests/auth-workspace-migration.test.mjs",
+      "sha256": "d3dcfa3fa283cfc8f633dfdc32242578bf9ad8234eeeec3f57cd214ed230e679",
+      "bytes": 5535
+    },
+    {
+      "path": "tests/business-search-templates-api.test.mjs",
+      "sha256": "192096934e4807e3eb7f47b92d2eac463e89f239ddd586bbd1c367c0593d786c",
+      "bytes": 7237
+    },
+    {
+      "path": "tests/campaign-analytics.test.mjs",
+      "sha256": "0486ab8bab0e505496168e6c12ef385f563242cf6f2b8ffbcbca30f5b4a4716b",
+      "bytes": 7209
+    },
+    {
+      "path": "tests/campaign-audience-select.test.mjs",
+      "sha256": "8abb6d78ad7b1585609b2d2b620a4830cc326483350dfad14131acfed317f01b",
+      "bytes": 4775
+    },
+    {
+      "path": "tests/campaign-audience.test.mjs",
+      "sha256": "94cf76ef5b926fadeb630028ac80c5b7fed98e2a543f1213a37fe702904a3475",
+      "bytes": 13986
+    },
+    {
+      "path": "tests/campaign-clone.test.mjs",
+      "sha256": "6c3777b030d099493b56ecbc4d90187fe5d61272825232acea0263e6c24d5618",
+      "bytes": 6234
+    },
+    {
+      "path": "tests/campaign-created-at-migration.test.mjs",
+      "sha256": "aa0cbd7f910a79be7bbeec50a629452cfcd150c7234e5137358734bdfd8ba15c",
+      "bytes": 6903
+    },
+    {
+      "path": "tests/campaign-custom-fields-merge.test.mjs",
+      "sha256": "4d20b720e62f0bfce9c6923e411e3950d4042aacea47920b180392da27aae81a",
+      "bytes": 15669
+    },
+    {
+      "path": "tests/campaign-draft-management.test.mjs",
+      "sha256": "0a8f587027e5573b39219061d54275b45530612f9633b0c3c016d59951189f00",
+      "bytes": 4769
+    },
+    {
+      "path": "tests/campaign-launch-archive.test.mjs",
+      "sha256": "baf648a809b0dab30756626df254082fe016073ea71c8eb9094d6e384c251291",
+      "bytes": 12787
+    },
+    {
+      "path": "tests/campaign-launch-snapshot.test.mjs",
+      "sha256": "35b282bdea6ad004b4451fb9920a52c271311c581976b6839f5bd3928a91731e",
+      "bytes": 14831
+    },
+    {
+      "path": "tests/campaign-lifecycle.test.mjs",
+      "sha256": "125f955abfd1c3341a54fbf786a07efd48b16bc473037796fbcf191c70e29349",
+      "bytes": 7855
+    },
+    {
+      "path": "tests/campaign-ooo.test.mjs",
+      "sha256": "3415b28eafb65a3ee302b39c16cb60a378d2db8cfade1f73378133f81d6a5371",
+      "bytes": 15486
+    },
+    {
+      "path": "tests/campaign-preflight.test.mjs",
+      "sha256": "431db4ed026d4ee76004a0b8c15ab5465d40a1ef6e42e12ebdc6cea16c597f32",
+      "bytes": 15136
+    },
+    {
+      "path": "tests/campaign-recipient-removal.test.mjs",
+      "sha256": "241c737e9f40d15a6797f5bb42a41029e19372b0a602dabf551602ae66587496",
+      "bytes": 4495
+    },
+    {
+      "path": "tests/campaign-senders.test.mjs",
+      "sha256": "07a45e02fb33cf5770de94f19826da5e25a748b080c37c5add428f36713f622d",
+      "bytes": 7179
+    },
+    {
+      "path": "tests/campaign-sequence-execution.test.mjs",
+      "sha256": "958a312aaf5e1d710868adc2e38b07eff63d5969df073352c5766232bf6e287d",
+      "bytes": 21500
+    },
+    {
+      "path": "tests/campaign-sequence-migration.test.mjs",
+      "sha256": "0cff0754cd508d6293e69b0c9a04989d849c6889117a31d1837afab9b8d07c5f",
+      "bytes": 3922
+    },
+    {
+      "path": "tests/campaign-sequence.test.mjs",
+      "sha256": "7713e7c2ba6d2a000f0312f3ee80ac292e4fe4517471d4ecc0cb90d5fc2097a1",
+      "bytes": 7152
+    },
+    {
+      "path": "tests/campaign-stop.test.mjs",
+      "sha256": "673ce7cd306abc13dd4d86171fd2ab2220e108badcf64feced982dee9f1598f8",
+      "bytes": 7614
+    },
+    {
+      "path": "tests/campaign-templates.test.mjs",
+      "sha256": "c88969d885ecfb9a814d15465c8793300b55d5ccd69bcc91d1ec6659afd60abf",
+      "bytes": 3546
+    },
+    {
+      "path": "tests/cli.test.mjs",
+      "sha256": "398d118e2c4b9e4f55dd43bb486b50d269c0c05de44943fef6b0534c7a839e72",
+      "bytes": 4624
+    },
+    {
+      "path": "tests/click-tracking.test.mjs",
+      "sha256": "8db27d216554c66afc4db12c39c90da7ceede38d144869a6a7467b34244542c5",
+      "bytes": 13543
+    },
+    {
+      "path": "tests/compliance-readiness.test.mjs",
+      "sha256": "8c5e33dac6c3d9cd90d51e02f21c9952e4580f50f0ccba83b341d0dc157dfd09",
+      "bytes": 1964
+    },
+    {
+      "path": "tests/contact-bulk-tags.test.mjs",
+      "sha256": "88fd32ab4a7bc490d54d8be1ef466a0d9c4e4da2755e7ea22dec778195d51174",
+      "bytes": 7159
+    },
+    {
+      "path": "tests/contact-create.test.mjs",
+      "sha256": "4543760e2a3d39689f7ae77f7a29388c42d5ac52bb4b9c7d7fd9ceb919c05c91",
+      "bytes": 5974
+    },
+    {
+      "path": "tests/contact-custom-field-filter.test.mjs",
+      "sha256": "6cc7b0f5f1924dc55f4884a156c1bb15fc12a50bc41caf60f6f2a7902fa5da9f",
+      "bytes": 8264
+    },
+    {
+      "path": "tests/contact-delete.test.mjs",
+      "sha256": "45c24007ad52c914475e139e47633830424181eade8b59f2c78becdf5895d2d4",
+      "bytes": 5458
+    },
+    {
+      "path": "tests/contact-email-status-filter.test.mjs",
+      "sha256": "d5223c0aaa0180e1d78f2de9b7c5a020f06e731088a8914a36726a803103f2d4",
+      "bytes": 4252
+    },
+    {
+      "path": "tests/contact-fields.test.mjs",
+      "sha256": "78a1b8674d6a1e68b41c527e8a7c3c0ad98df916581aa5bf0e1a040518b08ad5",
+      "bytes": 10774
+    },
+    {
+      "path": "tests/contact-import-jobs.test.mjs",
+      "sha256": "e55f92ae84f76e4d22ea8be200cf381bb1706028822fe09b1d4d4bfad903d155",
+      "bytes": 11148
+    },
+    {
+      "path": "tests/contact-import.test.mjs",
+      "sha256": "ff5476bd700cd143b287166b05540a77214e3c000c364efb44d510c4e98ee4c9",
+      "bytes": 12803
+    },
+    {
+      "path": "tests/contact-pagination.test.mjs",
+      "sha256": "1aa23103c7b3468caa9999106e2e03e4a5bc8f974a091b3db9a288d159332dfe",
+      "bytes": 4636
+    },
+    {
+      "path": "tests/contact-provenance.test.mjs",
+      "sha256": "c3885ab48c4995b6b476d73e218478ee52bff1afc1f82d01c298dee157d99991",
+      "bytes": 12803
+    },
+    {
+      "path": "tests/contact-segments.test.mjs",
+      "sha256": "c28d2dd31e6aa838e99d8a5ee5a092abfa045bf118fc75024bed745a1b4ba571",
+      "bytes": 4618
+    },
+    {
+      "path": "tests/contact-selection.test.mjs",
+      "sha256": "0896f8b73dc196fe77bef6cebf06288a492c1a1cd37a091f9831414d1ec53ea7",
+      "bytes": 1847
+    },
+    {
+      "path": "tests/contact-sorting.test.mjs",
+      "sha256": "20adc4443106e4bc4b8ae24d802d3e442e0488c4d8cee18cf8f66673080f1707",
+      "bytes": 6218
+    },
+    {
+      "path": "tests/contact-suppression-filter.test.mjs",
+      "sha256": "7a17bfe10cf481699f70f4e29d780203a9cba9c37fa310ca04b6de01994c0810",
+      "bytes": 4782
+    },
+    {
+      "path": "tests/contact-suppression-visibility.test.mjs",
+      "sha256": "881423cdcbc09c4f130440862c8e531b5ca8057af79ecf6bdc993ef0a1ad6c0b",
+      "bytes": 3672
+    },
+    {
+      "path": "tests/contact-suppression.test.mjs",
+      "sha256": "18dd9ed04d295c80a65f3a8f805caa3156c70c7f871c477d4f316221a4d526df",
+      "bytes": 6572
+    },
+    {
+      "path": "tests/contact-tags.test.mjs",
+      "sha256": "4c55a6b3fcf6a72b5ca2cb44210418e4834f055de321564ce2538f6d1673233c",
+      "bytes": 5164
+    },
+    {
+      "path": "tests/contact-update.test.mjs",
+      "sha256": "b994ee67933062348f5f3dd122df049509b3112af26cdac6f400ea040cd30419",
+      "bytes": 6388
+    },
+    {
+      "path": "tests/contact-workspace-counts.test.mjs",
+      "sha256": "19fe567f60591b86e5dc174f1257c32d92e8eb99299ebf03776b96c41d7a4a68",
+      "bytes": 2925
+    },
+    {
+      "path": "tests/credential-vault.test.mjs",
+      "sha256": "1afad5493ed2757e7758078d45e2064f52584903c59ccec3ad0a3cc31583d516",
+      "bytes": 4543
+    },
+    {
+      "path": "tests/delivery-reports-ui.test.mjs",
+      "sha256": "9480efd2dfc4b8f76710422951e7f6c7b2d272cc1c1cc779ea9d0f9d79e29985",
+      "bytes": 4324
+    },
+    {
+      "path": "tests/disify-domain-check.test.mjs",
+      "sha256": "cd93edfa28e7cef6d6b99c07192c93691c2b67f0f591067504e58041307709f6",
+      "bytes": 8131
+    },
+    {
+      "path": "tests/download.test.mjs",
+      "sha256": "218feea5d5ee7d4ddc5626ed794ff70bab7a374ea5a349209cc12d754fd29e9c",
+      "bytes": 2286
+    },
+    {
+      "path": "tests/email-dns-evidence.test.mjs",
+      "sha256": "9e0aeb73e9e49f8c4789aff6d3e048a93d17e1a3d9f8fa80c04b6d319304defe",
+      "bytes": 5271
+    },
+    {
+      "path": "tests/email-idn-validation.test.mjs",
+      "sha256": "f0697ca3fdd240f7818976387096b8689398f8b71fc168a11cf4e9a90bf9a08b",
+      "bytes": 4137
+    },
+    {
+      "path": "tests/email-verifier-pipeline-acceptance.test.mjs",
+      "sha256": "0c82e3cc3c42d6ed7748874d20ff2fe3734c3596d1c2aace1f4f9aa1bd89fcc6",
+      "bytes": 6386
+    },
+    {
+      "path": "tests/email-verifier-reliability.test.mjs",
+      "sha256": "6795ceb992090476ce83bee70a6babd1ad78fc0a001e028c09f7dede97820ca0",
+      "bytes": 22117
+    },
+    {
+      "path": "tests/email-verifier-storage.test.mjs",
+      "sha256": "9bc6ed46a46f477a2c7f48272d882e3002334ed21e582a07eed62d05306b055d",
+      "bytes": 19418
+    },
+    {
+      "path": "tests/email-verifier.test.mjs",
+      "sha256": "a85c5186adf313ed9595fcdf981428ec160e8652580766e2a9dad5c04d39a900",
+      "bytes": 8036
+    },
+    {
+      "path": "tests/epch-directory-jobs.test.mjs",
+      "sha256": "4134c978f873dff26389ebd8b6949f2052be72eab4560678665516b349335c7d",
+      "bytes": 61928
+    },
+    {
+      "path": "tests/gateway.test.mjs",
+      "sha256": "44920c8cf25a5cca605fc53da90fba90c8bf58f6eaa8566cb5d7d5be0b4e41cf",
+      "bytes": 5506
+    },
+    {
+      "path": "tests/google-auth.test.mjs",
+      "sha256": "f427b9ab6a9f65f3822fae34d4833a974644d900aa53d7897a413518bea34966",
+      "bytes": 11624
+    },
+    {
+      "path": "tests/google-existing-owner.test.mjs",
+      "sha256": "0721ca997be75b31bb13ec93e3d0da339082c33987631ec38f0bec55c72f79eb",
+      "bytes": 5446
+    },
+    {
+      "path": "tests/google-login-ui.test.mjs",
+      "sha256": "49b650d73630d6a352d613e3ccb0307af869e09fa40beed0f951b15986489934",
+      "bytes": 9605
+    },
+    {
+      "path": "tests/imap-receiver.test.mjs",
+      "sha256": "ba8f2526d8d5064e344ae6981ec1961f22e94d24214803c28ac9998a348b4e2f",
+      "bytes": 30947
+    },
+    {
+      "path": "tests/imap-sync-scheduler.test.mjs",
+      "sha256": "9b86e8ac3ec7c08ad51a7bd02509e6644e84f77d1982db0906c4551aa66c6977",
+      "bytes": 7688
+    },
+    {
+      "path": "tests/inbox-replies.test.mjs",
+      "sha256": "912ffec71b5584cd97f79c49b42f16111c823ed8391436fa1eb918518533fcf3",
+      "bytes": 7556
+    },
+    {
+      "path": "tests/lead-discovery-jobs.test.mjs",
+      "sha256": "9620a3f9b0c8bbac74001ec9d7ad9abb809eaec04be328cca72d7ceed183882a",
+      "bytes": 45255
+    },
+    {
+      "path": "tests/lead-discovery-saved-search-api.test.mjs",
+      "sha256": "666cffe0a1da5e4c30f366c593a65f8f1e369b68e04efe4c33163f8d99ae7ada",
+      "bytes": 5310
+    },
+    {
+      "path": "tests/lead-discovery-saved-search.test.mjs",
+      "sha256": "5f5e9bdb3a7c20ec3eb5c22de24da256c991de0bfcdf003081a3da8feb9e7306",
+      "bytes": 4365
+    },
+    {
+      "path": "tests/lead-discovery-ui.test.mjs",
+      "sha256": "4005cc75870367a6028ee346f0891d5787df5f007d4139a86135737775143c71",
+      "bytes": 17557
+    },
+    {
+      "path": "tests/lead-search.test.mjs",
+      "sha256": "67bb6b4d518b010c303afeadbde8d452bfec6e4da410f37dfe9ce103f0b825d3",
+      "bytes": 9501
+    },
+    {
+      "path": "tests/lead-strategy-personal-api.test.mjs",
+      "sha256": "6200000d4499204a8fc2daf818845639ddc2091288745308d54370d07da74f44",
+      "bytes": 16083
+    },
+    {
+      "path": "tests/lead-strategy-personal-settings.test.mjs",
+      "sha256": "20699caaa7feadaef7e6ecaaa42a2333de84cbdda8e37cf7604cc6bf6ac1bb7e",
+      "bytes": 5590
+    },
+    {
+      "path": "tests/lead-strategy-settings.test.mjs",
+      "sha256": "6f42256e0f91e3afe60b35fda6308731b1cc1a2fce4bc8fcaa6f51f8d0b03299",
+      "bytes": 7622
+    },
+    {
+      "path": "tests/lead-strategy-ui.test.mjs",
+      "sha256": "ff9d71eb19c24c38f2afd8a42dc1deea3e403c0eb0ea51fac8dc4db39bfeece0",
+      "bytes": 23890
+    },
+    {
+      "path": "tests/lead-strategy.test.mjs",
+      "sha256": "8e2bdcd05605da5bc393e2b46169749b2d47c861d028c9087ddc9b45852e5d2f",
+      "bytes": 13740
+    },
+    {
+      "path": "tests/lead-website-email-discovery.test.mjs",
+      "sha256": "b9957e28754dd9e5c78f869a15b5086739f6373ec3ff63aac30436b820ff299d",
+      "bytes": 78281
+    },
+    {
+      "path": "tests/legacy-email-tracking-disabled.test.mjs",
+      "sha256": "30c5f74995128c879bfab8e7a08d2c0d7e1705d7e81618812ce699fcdd16c1de",
+      "bytes": 2434
+    },
+    {
+      "path": "tests/lists-api.test.mjs",
+      "sha256": "6f5250580d1f841071b20664c02b8ea623de8212636c77a60db28811b7b7de6d",
+      "bytes": 7330
+    },
+    {
+      "path": "tests/mailbox-inbox-view.test.mjs",
+      "sha256": "98b382e8293ab8a04496e4a7595b5dcb1d2ad488c6f24400ead66c1fa2367af4",
+      "bytes": 1705
+    },
+    {
+      "path": "tests/mailbox-warmup-review.test.mjs",
+      "sha256": "ef56e027fde9c853ac0a98f10bc1b86f2e16790a87a39aadee35379d183c0da1",
+      "bytes": 7794
+    },
+    {
+      "path": "tests/meta-lead-ads.test.mjs",
+      "sha256": "030c2dec629b8d31af7cf8176044bee19e04bf4c77099c067fbd35b77d1a8f16",
+      "bytes": 59555
+    },
+    {
+      "path": "tests/offer-contracts-api.test.mjs",
+      "sha256": "b56b2c6e1c4fe961aad35f9df83c3d9d2c32b6624f5fceacc7af93830b614770",
+      "bytes": 7269
+    },
+    {
+      "path": "tests/offer-contracts.test.mjs",
+      "sha256": "da7c204ce5222276e67e605a995c6ccc959b33f5af45184cd5602f69b341318a",
+      "bytes": 9994
+    },
+    {
+      "path": "tests/osm-lead-import.test.mjs",
+      "sha256": "cd7142b8f0ba2e785197088ccea61cd7d23d90c6d08528ccbfc1a5c41c7a9f26",
+      "bytes": 9216
+    },
+    {
+      "path": "tests/personalization-bedrock.test.mjs",
+      "sha256": "d194da8657da2efb0eb60b90a34ed338e53987f1458e99cad8e810457cb43c82",
+      "bytes": 5947
+    },
+    {
+      "path": "tests/personalization-provider-ui.test.mjs",
+      "sha256": "bc07959c1c0c3ea4da596aa1d0e65cafa1ea50c50345e6804466171fcd66b51e",
+      "bytes": 3235
+    },
+    {
+      "path": "tests/personalizer-factcheck.test.mjs",
+      "sha256": "45cd2fd4cfd9624a848d0873bc7405ece3ede6734495bcf4a5e18af2ed793b97",
+      "bytes": 4688
+    },
+    {
+      "path": "tests/qualification-jobs.test.mjs",
+      "sha256": "f6f34dbfe62dd392c49e865c8e4ce1e41e067801aa66eb37ff24e308fc6d29b4",
+      "bytes": 12715
+    },
+    {
+      "path": "tests/qualification-review.test.mjs",
+      "sha256": "2814e473791e3853fa41912107acf1464511822e973487f6e439a936e6336bc1",
+      "bytes": 15279
+    },
+    {
+      "path": "tests/qualification-scoring-api.test.mjs",
+      "sha256": "595bc95180c17c18f421fab8d410a70569ee27d7bfa037653198b264aae6aa43",
+      "bytes": 13416
+    },
+    {
+      "path": "tests/qualification-scoring.test.mjs",
+      "sha256": "43356f41dfb2d801a8d654f8bf4de49eab27e2c876de92bc1d2d3d9d04479022",
+      "bytes": 3530
+    },
+    {
+      "path": "tests/qualification-source-access.test.mjs",
+      "sha256": "bc3850019f49a9403688e705151dbb51ca5a7bb8c4df45b83cc99f6385ffdaea",
+      "bytes": 10083
+    },
+    {
+      "path": "tests/qualifier-scoring-integration.test.mjs",
+      "sha256": "08293ca300dc7568e6f1edc9931da2fd388c46c7faec1b0f47a2311d147b7bd0",
+      "bytes": 5252
+    },
+    {
+      "path": "tests/reply-tracker.test.mjs",
+      "sha256": "24fcb25482d8fbf4999699665cdc6492e1c8587550282ecf428065a6f181fc19",
+      "bytes": 9107
+    },
+    {
+      "path": "tests/searxng-search-migration.test.mjs",
+      "sha256": "5ad7ae8f24c7e09fd991bc01cb39daf891136c1de2e677014629301033c0267f",
+      "bytes": 1701
+    },
+    {
+      "path": "tests/searxng-search-ui.test.mjs",
+      "sha256": "0dd782adcd1bf5fb01ac5e1798c014e28e8a1d897c13ccdfb6c851dc868b1c5f",
+      "bytes": 40881
+    },
+    {
+      "path": "tests/searxng-search.test.mjs",
+      "sha256": "903571ce88b79cce3aab6a6e94ac1d309b0fb0b55c3809b2c4d1f9264fa3d5fc",
+      "bytes": 41052
+    },
+    {
+      "path": "tests/send-claims.test.mjs",
+      "sha256": "0ac317a6fe9a0b7c23bc97b67ecef2a5f2f5645d14a7aca871924d55533b571a",
+      "bytes": 7339
+    },
+    {
+      "path": "tests/sender-rotation.test.mjs",
+      "sha256": "89beb8a9c03a5953021bd4513c513b2f2b1b2c52cd24f03006144e55f3815c51",
+      "bytes": 2110
+    },
+    {
+      "path": "tests/sending-api.test.mjs",
+      "sha256": "ec82ac92bfaed8acc99a3941da792e7c3075d045307332f10f0ee1d7cf83d405",
+      "bytes": 11052
+    },
+    {
+      "path": "tests/sending-capacity.test.mjs",
+      "sha256": "0a5c1ea3094d4f442b9a0af030938017758e2d6e939b7cde02a6555273da64d9",
+      "bytes": 5221
+    },
+    {
+      "path": "tests/sending-control.test.mjs",
+      "sha256": "a780112167defb2f48cd42312a3bd3a7a34457b0d11ff1ce05614aaab92527c7",
+      "bytes": 13369
+    },
+    {
+      "path": "tests/sending-pacing.test.mjs",
+      "sha256": "6d745d992f72f288e028e81729c6ae2cea2837fef4e84e80233763f9d974433f",
+      "bytes": 4714
+    },
+    {
+      "path": "tests/sending-schedule.test.mjs",
+      "sha256": "96538df5ca498318ed14532d6bbc556938c167deb94bc4aabcd2e2f4777f1268",
+      "bytes": 5442
+    },
+    {
+      "path": "tests/sending.test.mjs",
+      "sha256": "4b37ec04054021b2ae2e1597654dfc168883591e838c7a206ea71cb91654f57c",
+      "bytes": 14597
+    },
+    {
+      "path": "tests/smtp-probe.test.mjs",
+      "sha256": "50011155010d21e0490db47799c41b1ea8f81b517653c1aae576302aebcc7536",
+      "bytes": 8244
+    },
+    {
+      "path": "tests/spa-renderer.test.mjs",
+      "sha256": "3f2b351a2a7e5f86740c8542432d7b9f79cbbb7d6e6a3a8a59f244d38492cf93",
+      "bytes": 11308
+    },
+    {
+      "path": "tests/ssrf-guard.test.mjs",
+      "sha256": "4224c87febf1ee81beeef723770ee2f0464d144a99c2aaf009947b096055c569",
+      "bytes": 10180
+    },
+    {
+      "path": "tests/support/minimal-pdf.mjs",
+      "sha256": "92be4861ebed1a3f4d9dd93414d73710ec1fcde9edf8548218ce44164ec3baa0",
+      "bytes": 1347
+    },
+    {
+      "path": "tests/support/send-worker.mjs",
+      "sha256": "296c84c9caf57a2e57bda91682b4c86c424d7f25fd4b7c0f8a1aab999f48a19e",
+      "bytes": 734
+    },
+    {
+      "path": "tests/totp.test.mjs",
+      "sha256": "0df47e7b678f85982059982aaf176094a4b057d3b66f4e56d098b1149e7cd2d6",
+      "bytes": 1373
+    },
+    {
+      "path": "tests/truthfulness.test.mjs",
+      "sha256": "7639cfaabd3a0cb8ad4b92d1d4a63d14240bb1dd441c253007f8897b82396093",
+      "bytes": 21634
+    },
+    {
+      "path": "tests/ui-action-auth.test.mjs",
+      "sha256": "f21a3e228a25c095dca22bd9ca40ca58180fd25caad71b6470efde34949b8814",
+      "bytes": 3348
+    },
+    {
+      "path": "tests/ui-feedback.test.mjs",
+      "sha256": "4243bf9f72afff0210ae120de60f3c65c008f48e55c066c644f006c0275278d4",
+      "bytes": 20864
+    },
+    {
+      "path": "tests/ui-route-audit.test.mjs",
+      "sha256": "a25e1b751d5168da988edafad9fa0112ca0d6750cbe2be2ac51f3a1a967b5e9b",
+      "bytes": 71309
+    },
+    {
+      "path": "tests/unsubscribe-api.test.mjs",
+      "sha256": "0912a9f7994c9fa488d14d9c85b4b54eb4ffcd942642a989d9055cb48a79fdbf",
+      "bytes": 8965
+    },
+    {
+      "path": "tests/verification-export.test.mjs",
+      "sha256": "6fa4d9642661943dfc396c377a3999d14702521ddbbc2734e12a448ab8fc65a0",
+      "bytes": 5818
+    },
+    {
+      "path": "tests/verification-jobs.test.mjs",
+      "sha256": "62196db003085af898c339a985f990cf87834a714a33e8bc038fcab0cd392cd6",
+      "bytes": 14409
+    },
+    {
+      "path": "tests/verification-result-view.test.mjs",
+      "sha256": "60ba2d7b9ef8d2ad3bc2265623df6743371624104e95e286e25e13c33b780f9c",
+      "bytes": 11430
+    },
+    {
+      "path": "tests/website-discovery-jobs.test.mjs",
+      "sha256": "b8f4bdac2cab8ec2254c41b0901824630b0008b02971fc6c734e0a156e378b1f",
+      "bytes": 65215
+    },
+    {
+      "path": "tests/website-discovery-ui.test.mjs",
+      "sha256": "ef0d3f64945f1ccf97df4f4259219e6aa2df9d22de1f0b57df9168e7421ccb8a",
+      "bytes": 55150
+    },
+    {
+      "path": "tests/website-discovery-verification.test.mjs",
+      "sha256": "6d95a05951a16ce52fab0ce269a151ec4ec9b3605a5bceca604a83fbac5210f6",
+      "bytes": 13931
+    },
+    {
+      "path": "tests/website-pdf-extraction.test.mjs",
+      "sha256": "19201aee645f27c3e5bf7e28595f87eb9093090b681aa4cc2cd61176b517e72d",
+      "bytes": 1821
+    },
+    {
+      "path": "tests/website-rendered-fallback.test.mjs",
+      "sha256": "da03ef6ce2af64159924b78120cba3a3c19c1cfdc89ad4a50f6262491278ae17",
+      "bytes": 10259
+    },
+    {
+      "path": "tests/workspace-membership.test.mjs",
+      "sha256": "c44b47ea9817702eea17a4abc28a2dc11b319e5e638ff8bf51600c017686237d",
+      "bytes": 13625
+    }
+  ],
+  "scope": "Frozen repaired local source and regression inputs; source overlay/inherited code included, no acceptance implied",
+  "routeRegistrations": 170,
+  "supersedesForRetest": "astra-local-7796cea6ce46c531",
+  "releaseReady": false,
+  "missingCanonicalAcceptanceInputs": [
+    "E:/ACCEPTANCE_MATRIX.json",
+    "E:/validate_acceptance.py"
+  ]
+}

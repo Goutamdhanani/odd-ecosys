@@ -1,0 +1,16 @@
+{
+  "scope": "Test-only same-email replacement eligibility fixture correction",
+  "writer": "/root/r20_fixture_integration",
+  "ownedPaths": ["tests/astra-qualification-lineage.test.mjs", ".superpowers/r20/fixture-integration/replacement-eligibility-fix/**"],
+  "trigger": "Independent current-byte ten-test run failed the distinct replacement candidate assertion; isolated and repeated runs passed. A green repeat does not close the unexplained selection sensitivity",
+  "reason": "The fixture leaves two same-email candidates eligible and assumes the later API capture will always be selected by PostgreSQL created_at ordering. The intended membership/history test needs an unambiguous replacement-current-candidate precondition",
+  "requirements": [
+    "Preserve every candidate identity, verification membership, unchanged replay, incremental audience, current-proof, expiry, retraction and historical same-account attribution assertion",
+    "After recording the original historical token, create the separate same-email contact capture and explicitly revoke only the old contact source through the authorized source-rights API. Keep independent industry/country proof permitted. Assert the old source is unusable and new capture source is usable before requalification",
+    "Keep the original distinct-candidate assertion; do not select an arbitrary returned row, relax equality, add sleeps, mutate source timestamps, bypass RLS or clock controls, or treat a green rerun as a causal explanation",
+    "Capture actual before copies, raw failed/successful runs, commands/exits/hashes and accurate diagnosis limits. Run focused qualification plus relevant audience/copy/core regressions; independent reviewer must recheck before quality acceptance"
+  ],
+  "productionChangeAuthorized": false,
+  "rootCauseClockShiftProven": false,
+  "releaseReady": false
+}

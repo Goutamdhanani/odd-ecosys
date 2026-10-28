@@ -1,0 +1,34 @@
+{
+  "observedAtUtc": "2026-10-28T12:29:49.707965+00:00",
+  "url": "http://localhost:3213/growth.html#discover",
+  "sourceCheckout": "C:/Users/pooja/.codex/worktrees/astra-combined-main-20261028/odd-ecosys",
+  "sourceAggregateSha256": "2e275edbb9b5f77f7635a87633f19ddb896395cdb56351502d2a62975b07700a",
+  "status": {
+    "mode": "synthetic-local-preview",
+    "externalActions": "disabled",
+    "outreach": "disabled",
+    "tenantDatabase": "disposable_fixture",
+    "realData": false
+  },
+  "browser": {
+    "navigationAreas": [
+      "Overview",
+      "Discover",
+      "Campaigns",
+      "Inbox",
+      "Customers",
+      "Analytics",
+      "Settings"
+    ],
+    "workspace": "Local preview workspace",
+    "goalFormPresent": true,
+    "goalCreatePersisted": true,
+    "readbackHttpStatus": 200,
+    "goalStatus": "blocked",
+    "stateRevision": 2,
+    "blockedCode": "goal_planner_authority_disabled"
+  },
+  "interpretation": "Actual customer UI saved a synthetic brief through real handlers/PG, attempted initial planning and reread the explicit persisted block. No real inference or prospect research was claimed.",
+  "providerCalls": 0,
+  "releaseReady": false
+}

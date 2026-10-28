@@ -35,7 +35,14 @@
     "csv-parse": "^7.0.2",
     "csv-stringify": "^6.8.3",
     "deep-email-validator": "^0.1.27",
-    "nodemailer": "10.0.15"
+    "imapflow": "2.3.0",
+    "jose": "^6.2.10",
+    "mongodb": "7.7.0",
+    "nodemailer": "10.0.15",
+    "pdfjs-dist": "6.4.299",
+    "pg": "^8.23.1",
+    "playwright": "^1.62.1",
+    "postal-mime": "4.0.5"
   },
   "devDependencies": {
     "smtp-server": "3.19.17"

@@ -1,0 +1,21 @@
+{
+  "id": "ASTRA-LIVE-PROSPECTING-REVIEW-ROUND5",
+  "owner": "/root/live_prospecting_fix5",
+  "transfersReleasedAssignment": "/root/live_prospecting_fix4",
+  "reviewBaseline": ".superpowers/astra-live/review-prospecting/fix-round4/review.md",
+  "paths": ["pipeline/astra-prospecting.js", "pipeline/astra-source-collection.js", "tests/astra-prospecting.test.mjs", "tests/astra-prospecting-source-gate.test.mjs", "tests/astra-prospecting-recovery.test.mjs", ".superpowers/astra-live/prospecting/fix-round5/**"],
+  "requirements": [
+    "Fresh Luna worker under the user's explicit model restriction; final repair round under the skill's five-round cap",
+    "Capture exact before copies and reproduce the confirmed in-flight parent lease-handover counterexample",
+    "A source job still running is pending: never convert it to a failed search, irreversible candidate quarantine, or completed logical parent merely because another source worker owns the attempt",
+    "Retain source/candidate pointers and counters while outstanding attempt settles; current parent lease/fence must remain authoritative",
+    "Provide a bounded durable waiting/recovery path that the worker/customer controls can continue after the original source job resolves; do not spin, duplicate requests or leave an invisible orphaned logical job",
+    "Proven safe terminal predecessor may use the accepted deterministic successor; completed source may be consumed once; ambiguous reservation/transport remains held without replay",
+    "Cover both search and fetch handovers, pause/cancel during waiting, stale parent versions, source completion and safe terminal deferral with native strict33 SQL state plus clearly labeled in-memory Mongo behavior",
+    "Preserve existing SQL invariants, tenant ownership, all rights/SSRF/robots/pacing/budget gates and the one-successor cap; no migration or trigger edits",
+    "Run focused affected checks and produce exact source hashes, source-state assertions, limits and stopped-writer release for independent SPEC and QUALITY review"
+  ],
+  "noLiveServices": true,
+  "unresolvedAfterThisRound": "Record as unaccepted and keep capability disabled; do not waive a correctness gate or claim production readiness.",
+  "releaseReady": false
+}

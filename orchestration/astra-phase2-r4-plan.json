@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "phase": "PHASE_2_HARNESS_AND_CUSTOMER_PROOF_REPAIR",
+  "baselineManifest": "orchestration/astra-phase2-source-r3.json",
+  "baselineCandidate": "astra-r3-557cfa3b17869946",
+  "releaseReady": false,
+  "acceptanceGranted": false,
+  "sourceWrites": [
+    {
+      "owner": "/root/portable_qa_harness",
+      "paths": [
+        "tests/support/astra-qa-egress-guard.mjs",
+        "tests/astra-qa-egress-guard.test.mjs",
+        "tests/astra-workflow-recovery.test.mjs",
+        "tests/astra-outcomes-corrections.test.mjs"
+      ],
+      "purpose": "Ship portable fail-closed QA harness preserving callback result shapes and loopback-only resolver pinning; no source behavior assertion weakening."
+    },
+    {
+      "owner": "/root/fix_customer_proofs",
+      "paths": [
+        "pipeline/astra-customer-approvals.js",
+        "tests/astra-customer-approvals.test.mjs"
+      ],
+      "purpose": "Restore valid cryptographic customer proof verification and accurate revocation enforcement/status.",
+      "writeDependency": "TRUST_BASELINE_DONE required before edits."
+    }
+  ],
+  "independentEvidence": [
+    ".superpowers/phase2/suite-r3/luna-independent-review.md",
+    ".superpowers/phase2/trust-r3/"
+  ],
+  "restrictions": [
+    "No live outreach or providers",
+    "No production deploy or real-data migration",
+    "No edits to applied SQL001-031",
+    "No inherited index staging/commits",
+    "No customer data or real secrets copied"
+  ]
+}

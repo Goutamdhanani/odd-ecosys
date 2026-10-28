@@ -1,0 +1,16 @@
+{
+  "dataset": "disposable-domains.txt",
+  "source_url": "https://github.com/disposable/disposable-email-domains/tree/3ebb7fef055e3757dfc9bb46b1297ee2b0d11fe7",
+  "source_commit": "3ebb7fef055e3757dfc9bb46b1297ee2b0d11fe7",
+  "source_commit_timestamp": "2026-10-22T10:52:51Z",
+  "snapshot_acquired_date": "2026-10-22",
+  "license": "MIT",
+  "license_file": "LICENSE",
+  "license_sha256": "1e63718e48c04e3788330b7bc6ab0d0a22985522ebe9201636deb26c3a07ab68",
+  "license_bytes": 1124,
+  "dataset_sha256": "ba19d6735fc2224db58d3eaa9bb294de43437a488133c4271fb07d0ad4436fc7",
+  "dataset_bytes": 1521263,
+  "nonempty_unique_domain_count": 98465,
+  "normalization": "Original source bytes retained; entries are validated without rewriting.",
+  "refresh_policy": "Bundled immutable snapshot; no runtime fetch or automatic update."
+}

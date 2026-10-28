@@ -1,0 +1,41 @@
+{
+  "phase": "PHASE_1_IMPLEMENTATION",
+  "releaseReady": false,
+  "externalActions": "disabled",
+  "baseline": ".superpowers/sdd/fa3710986978fc58/feature-wave4-before.json",
+  "tickets": [
+    {
+      "id": "radar",
+      "tasks": [
+        "S12"
+      ],
+      "state": "READY_TO_DISPATCH",
+      "owned": [
+        "pipeline/astra-radar.js",
+        "pipeline/astra-radar-routes.js",
+        "migrations/astra/016-radar.up.sql",
+        "migrations/astra/016-radar.down.sql"
+      ]
+    },
+    {
+      "id": "learning",
+      "tasks": [
+        "S27",
+        "S28",
+        "X05",
+        "X09"
+      ],
+      "owner": "/root/implement_learning",
+      "state": "IN_PROGRESS",
+      "owned": [
+        "pipeline/astra-learning.js",
+        "pipeline/astra-learning-routes.js",
+        "pipeline/astra-allocation.js",
+        "pipeline/astra-skills.js",
+        "pipeline/astra-decisions.js",
+        "migrations/astra/017-learning.up.sql",
+        "migrations/astra/017-learning.down.sql"
+      ]
+    }
+  ]
+}

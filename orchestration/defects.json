@@ -53,41 +53,106 @@
     "id": "B04",
     "description": "`checkDomainDns()`: `dkim_ok` inferred from SPF + DMARC presence.",
     "acceptance": "Discover/configure actual selector, check key and captured message signature/alignment; missing selector is unknown. SPF/DMARC presence is not authentication success.",
-    "status": "pending",
-    "tests": [],
-    "evidence": []
+    "status": "implemented_unverified",
+    "tests": [
+      "tests/truthfulness.test.mjs",
+      "tests/sending.test.mjs",
+      "tests/sending-api.test.mjs"
+    ],
+    "evidence": [
+      {
+        "command": "node --test --test-reporter=spec tests/truthfulness.test.mjs tests/sending.test.mjs tests/sending-api.test.mjs",
+        "result": "34/34 pass, exit 0",
+        "recordedAt": "2026-10-09T15:28:59Z",
+        "note": "Synthetic DNS and a generated RSA public key verify selector/key parsing, unknown authentication state, durable persistence, legacy pass masking, and Mailbox Fleet rendering. Provider-signed message capture/signature/alignment verification is not implemented or live-validated."
+      }
+    ]
   },
   {
     "id": "B05",
     "description": "Same DNS logic looks up a website/domain A record and treats every successful DNSBL response as a listing; errors imply not listed.",
     "acceptance": "Distinguish sender IP/domain lists, query permissions, error codes, unavailable checks and actual evidence. Do not call this mailbox blacklist proof.",
-    "status": "pending",
-    "tests": [],
-    "evidence": []
+    "status": "implemented_unverified",
+    "tests": [
+      "tests/truthfulness.test.mjs",
+      "tests/sending-api.test.mjs",
+      "tests/sending.test.mjs",
+      "tests/campaign-preflight.test.mjs"
+    ],
+    "evidence": [
+      {
+        "command": "node --test --test-concurrency=1 --test-reporter=spec tests/truthfulness.test.mjs tests/sending-api.test.mjs tests/sending.test.mjs tests/campaign-preflight.test.mjs",
+        "result": "43/43 pass, exit 0; JavaScript syntax checks and git diff --check passed",
+        "recordedAt": "2026-10-09T15:37:09Z",
+        "note": "Injected DNS fixtures covered every observed domain A address (bounded at eight), exact queried-IP/list attribution, documented Spamhaus listing, not-listed and special query-error codes, resolver failures, no A record, incomplete coverage, SQLite persistence, the HTTP DNS-verification and fleet APIs, and rendered Mailbox Fleet/details. The ambiguous mailbox-level blacklist field is no longer used for domain evidence or exposed by the fleet API; SMTP sender-IP reputation remains unknown. Existing sending and campaign-preflight regressions also passed. No public DNSBL, external SMTP service, live mailbox, recipient, credential or database was contacted. Source revision 099b4c4f71fe858a3e8e6d07d6888d87e1416f9e; work remains uncommitted and release review is pending."
+      }
+    ]
   },
   {
     "id": "B06",
     "description": "`pipeline/personalizer.js`, `callBedrock()` simply returns null.",
     "acceptance": "Implement official provider SDK adapter or mark disabled; no claim that cloud polishing ran. Live test with configured credentials before declaring enabled support.",
-    "status": "pending",
-    "tests": [],
-    "evidence": []
+    "status": "implemented_unverified",
+    "tests": [
+      "tests/personalization-bedrock.test.mjs",
+      "tests/personalization-provider-ui.test.mjs",
+      "tests/sending-api.test.mjs"
+    ],
+    "evidence": [
+      {
+        "command": "node --test --test-concurrency=1 --test-reporter=spec tests/personalization-bedrock.test.mjs tests/personalization-provider-ui.test.mjs tests/truthfulness.test.mjs tests/sending-api.test.mjs tests/sending.test.mjs tests/campaign-preflight.test.mjs",
+        "result": "50/50 pass, exit 0; JavaScript syntax checks and git diff --check passed",
+        "recordedAt": "2026-10-09T15:42:41Z",
+        "note": "The Bedrock API/UI report disabled by default and enabled configuration as credentials-unverified. Deterministic SDK-boundary tests verify one-attempt InvokeModel request construction, response parsing, timeout wiring, subject length/guardrail rejection, and disabled-mode no-call behavior. Existing AWS default model had passed its listed EOL; configuration now uses the documented Sonnet 5 US inference profile, which supports bedrock-runtime Invoke. The provider remains disabled. No AWS credentials were checked, no Bedrock request was made, and no live provider result is claimed. Edge browser test, disposable API/test environment, and loopback sending/campaign regressions passed. Source revision 099b4c4f71fe858a3e8e6d07d6888d87e1416f9e; work remains uncommitted and release review is pending."
+      }
+    ]
   },
   {
     "id": "B07",
     "description": "`factCheckDraft()` returns `passed:true` on Ollama failure.",
     "acceptance": "Store `unavailable` and block automatic approval/send; human review cannot falsely turn a missing check into AI-verified evidence.",
-    "status": "pending",
-    "tests": [],
-    "evidence": []
+    "status": "implemented_unverified",
+    "tests": [
+      "tests/personalizer-factcheck.test.mjs",
+      "tests/truthfulness.test.mjs",
+      "tests/campaign-audience.test.mjs",
+      "tests/campaign-preflight.test.mjs",
+      "tests/sending.test.mjs",
+      "tests/sending-api.test.mjs"
+    ],
+    "evidence": [
+      {
+        "command": "node --check pipeline/personalizer.js; node --check tests/personalizer-factcheck.test.mjs; node --test --test-concurrency=1 --test-reporter=spec tests/personalizer-factcheck.test.mjs tests/truthfulness.test.mjs tests/campaign-audience.test.mjs tests/campaign-preflight.test.mjs tests/sending.test.mjs tests/sending-api.test.mjs; git diff --check",
+        "result": "48/48 tests passed, exit 0; syntax checks and git diff --check passed",
+        "recordedAt": "2026-10-09T15:48:38Z",
+        "note": "A local HTTP failure sink returned 503 for the two synthetic contact's Ollama draft, polish and fact-check requests; no remote provider was contacted. With 20 prior copy rows so automatic approval would otherwise be enabled, both new copies persisted fact_check_status=unavailable, fact_check_passed=0 and approved=0; the lead remained awaiting_approval, campaign policy returned approval_required, eligible-recipient selection was empty, and no send rows were created. Existing approval tests confirm a human approval does not rewrite unavailable evidence. SMTP and campaign preflight loopback regressions passed. No live database, mailbox, credential, provider or recipient was used. Base revision 099b4c4f71fe858a3e8e6d07d6888d87e1416f9e; changes remain uncommitted and pending review."
+      }
+    ]
   },
   {
     "id": "B08",
     "description": "`server.js` analytics estimates tokens/cost from copy counts (`*380`, `*0.003`) and a constant cost-per-reply numerator.",
     "acceptance": "Store actual request usage and dated rate-card provenance. Label unavoidable estimates; unknown usage remains null. No fabricated calls/tokens/spend.",
-    "status": "pending",
-    "tests": [],
-    "evidence": []
+    "status": "implemented_unverified",
+    "tests": [
+      "tests/ai-usage.test.mjs",
+      "tests/personalization-bedrock.test.mjs",
+      "tests/personalization-provider-ui.test.mjs",
+      "tests/personalizer-factcheck.test.mjs",
+      "tests/truthfulness.test.mjs",
+      "tests/campaign-audience.test.mjs",
+      "tests/campaign-preflight.test.mjs",
+      "tests/sending.test.mjs",
+      "tests/sending-api.test.mjs"
+    ],
+    "evidence": [
+      {
+        "command": "node --check pipeline/ai-usage.js pipeline/personalizer.js pipeline/database.js server.js js/analytics.js tests/ai-usage.test.mjs tests/personalization-bedrock.test.mjs tests/personalizer-factcheck.test.mjs; node --test --test-concurrency=1 --test-reporter=spec tests/ai-usage.test.mjs tests/personalization-bedrock.test.mjs tests/personalization-provider-ui.test.mjs tests/personalizer-factcheck.test.mjs tests/truthfulness.test.mjs tests/campaign-audience.test.mjs tests/campaign-preflight.test.mjs tests/sending.test.mjs tests/sending-api.test.mjs; git diff --check",
+        "result": "Syntax checks passed; 55/55 focused tests passed, exit 0; git diff --check passed",
+        "recordedAt": "2026-10-09T16:01:47Z",
+        "note": "A loopback Ollama sink generated six actual provider responses for synthetic contacts. Durable analytics captured returned token counts and exact operation/provider attribution. A dated synthetic Bedrock rate card was snapshotted and its calculation verified; unpriced Ollama kept aggregate cost unknown. The disposable HTTP analytics server returned persisted events and the UI rendered request/token/pricing caveats. Adjacent failure, campaign, suppression and SMTP safety tests passed. No live provider, credential, mailbox, database or recipient was used. Base revision 099b4c4f71fe858a3e8e6d07d6888d87e1416f9e; review pending."
+      }
+    ]
   },
   {
     "id": "B09",
@@ -99,83 +164,180 @@
   },
   {
     "id": "B10",
-    "description": "CLI imports `runPersonalizationBatch`, but module exports `personalizeBatch`.",
-    "acceptance": "Fix import/call; prove the ESM CLI starts for every command. This static import can break the entire CLI before its switch executes.",
-    "status": "pending",
-    "tests": [],
-    "evidence": []
+    "description": "The CLI startup import defect is already fixed, but legacy scraper exports still permit unofficial Google Maps, Facebook, and search-engine requests that bypass the disabled discovery orchestrator.",
+    "acceptance": "Keep CLI startup working and make every legacy third-party scraping entry point fail before network, Docker, or file side effects; cover with deterministic tests.",
+    "status": "verified_local",
+    "tests": [
+      "tests/cli.test.mjs",
+      "tests/maps-facebook-focus.test.mjs",
+      "tests/scraper-endpoint.test.mjs"
+    ],
+    "evidence": [
+      "The CLI ESM imports were already corrected in this checkout. Legacy Maps, Facebook, search-engine, combined-scraper, and Docker-image entry points now reject before issuing requests or writing query/result files; Docker availability remains false. Importing the scraper no longer creates its data directories.",
+      "node --test --test-concurrency=1 --test-reporter=spec tests/cli.test.mjs tests/maps-facebook-focus.test.mjs tests/scraper-endpoint.test.mjs passed 21/21, exit 0. The HTTP fetch stub observed zero calls. JavaScript syntax checks and git diff --check passed. No live source, Docker daemon, mailbox, or database was used."
+    ]
   },
   {
     "id": "B11",
-    "description": "CLI/package script mismatch: `import`, `seed`, `batch-status`, `template` are advertised without switch cases.",
-    "acceptance": "Implement truthful supported commands; validation and nonzero exit codes; production seed prohibited. Test every package script.",
-    "status": "pending",
-    "tests": [],
-    "evidence": []
+    "description": "CLI commands are implemented and package scripts map correctly, but several missing-argument errors initialize SQLite before returning failure.",
+    "acceptance": "Keep package CLI scripts mapped to supported commands; reject malformed required arguments with nonzero status before creating an unnecessary database; keep fixture seed prohibited outside explicit test DBs.",
+    "status": "verified_local",
+    "tests": [
+      "tests/cli.test.mjs"
+    ],
+    "evidence": [
+      "The import, seed, batch-status, template, stats, help, and discovery CLI cases were already implemented. Required-argument validation for import, discovery, reply, suppression, and archive now runs before initDb(); valid-but-disabled discovery also returns before database creation, and production seed remains guarded.",
+      "node --test --test-concurrency=1 --test-reporter=spec tests/cli.test.mjs tests/maps-facebook-focus.test.mjs tests/scraper-endpoint.test.mjs passed 23/23, exit 0. The package pipeline:* script map was checked against supported commands; disposable SQLite verifies CSV import, seed, batch list/status, and stats behavior. Syntax and git diff --check passed. No default DB or external source was used."
+    ]
   },
   {
     "id": "B12",
-    "description": "UI qualification/verification cancel wrappers call non-batch `/cancel`; server only handles batch-scoped cancel. Batch-close wrapper also lacks a matching handler in the inspected server.",
-    "acceptance": "Canonical API contracts and actual lifecycle endpoints; contract tests exercise UI calls against running handlers.",
-    "status": "pending",
-    "tests": [],
-    "evidence": []
+    "description": "The historical report claimed lifecycle UI routes were mismatched; current wrappers and server handlers appear repaired and need contract verification.",
+    "acceptance": "Confirm UI wrappers use canonical batch-scoped cancel and batch-close paths, and exercise cancellation/close against actual handlers with durable lifecycle behavior.",
+    "status": "verified_local",
+    "tests": [
+      "tests/qualification-jobs.test.mjs",
+      "tests/verification-jobs.test.mjs",
+      "tests/truthfulness.test.mjs",
+      "tests/ui-action-auth.test.mjs"
+    ],
+    "evidence": [
+      "The current Qualify.cancel(batchId), Verify.cancelBatch(id), and Batches.close(id) wrappers use the canonical routes. Disposable HTTP tests exercised persistent qualification/verification cancellation and restart recovery, plus batch close success, missing-batch 404, and repeated-close 409. UI client assertions bind the three wrapper URLs to the local handlers and verify CSRF headers.",
+      "node --test --test-concurrency=1 --test-reporter=spec tests/qualification-jobs.test.mjs tests/verification-jobs.test.mjs tests/truthfulness.test.mjs tests/ui-action-auth.test.mjs passed 21/21, exit 0. JavaScript syntax checks and git diff --check passed. Synthetic workers and disposable SQLite only; no live verification or sending occurred."
+    ]
   },
   {
     "id": "B13",
-    "description": "`js/api.js` replaces network/HTTP failure with empty/default success-shaped values.",
-    "acceptance": "Explicit discriminated errors; UI distinguishes empty data, offline, unauthorized, partial, timeout, and successful zero counts.",
-    "status": "pending",
-    "tests": [],
-    "evidence": []
+    "description": "The shared API client already returns typed HTTP/network errors and preserves payloads, but it has no bounded timeout and the global view error state labels timeouts as offline.",
+    "acceptance": "Apply a bounded timeout through response-body consumption; distinguish timeout, cancellation, network, HTTP, authorization and invalid-response errors; pass successful empty/zero/explicit-partial payloads through unchanged.",
+    "status": "verified_local",
+    "tests": [
+      "tests/api-client.test.mjs",
+      "tests/ui-action-auth.test.mjs",
+      "tests/ui-feedback.test.mjs"
+    ],
+    "evidence": [
+      "The shared API client now aborts a request after 15 seconds through response parsing, emits typed TIMEOUT/REQUEST_ABORTED/NETWORK_ERROR and HTTP errors, and dispatches api:error. The global page reports timeout separately from an unreachable server; user-facing copy keeps authorization errors distinct. Successful empty arrays, zero counts, and explicit partial markers are returned exactly as received.",
+      "node --test --test-concurrency=1 --test-reporter=spec tests/api-client.test.mjs tests/ui-action-auth.test.mjs tests/ui-feedback.test.mjs passed 6/6, exit 0. Tests stub fetch, assert timeout abort and error codes, preserve success payloads, verify route CSRF behavior, and render feedback in Edge. Changed JS syntax checks passed; no live API was called."
+    ]
   },
   {
     "id": "B14",
-    "description": "`queueSends()` joins multiple personalizations and chooses their existing variant; it does not visibly consume `assignVariant()` or enforce campaign batch enrollment.",
-    "acceptance": "Durable unique enrollment/step/variant assignment and campaign membership; one logical send per eligible enrollment/step.",
-    "status": "pending",
-    "tests": [],
-    "evidence": []
+    "description": "Historical report claimed queueing lacked durable campaign membership and deterministic sequence variant assignment; current implementation needs verification.",
+    "acceptance": "Confirm durable unique enrollment, deterministic campaign/contact/step variant selection, and one logical send per eligible enrollment/step using actual queue and worker code.",
+    "status": "verified_local",
+    "tests": [
+      "tests/campaign-analytics.test.mjs",
+      "tests/campaign-sequence.test.mjs",
+      "tests/campaign-sequence-execution.test.mjs",
+      "tests/campaign-audience-select.test.mjs",
+      "tests/campaign-preflight.test.mjs",
+      "tests/campaign-launch-snapshot.test.mjs"
+    ],
+    "evidence": [
+      "The existing queue path requires durable unique campaign_enrollments, calls selectCampaignStepVariant using campaign/step/contact identity, and persists a send row bound to the launch snapshot. Follow-ups use deterministic per-step assignment; recipient and variant changes are blocked or invalidate preflight.",
+      "node --test --test-concurrency=1 --test-reporter=spec tests/campaign-analytics.test.mjs tests/campaign-sequence.test.mjs tests/campaign-sequence-execution.test.mjs tests/campaign-audience-select.test.mjs tests/campaign-preflight.test.mjs tests/campaign-launch-snapshot.test.mjs passed 16/16, exit 0. Tests cover stable assignment, duplicate queue protection, restart/reply stop behavior, launch binding, and loopback SMTP acceptance/quarantine. Only disposable SQLite and synthetic recipients were used."
+    ]
   },
   {
     "id": "B15",
-    "description": "Queue limits use already-sent counts, not atomic reservations; processor has no durable claim/recheck of pause, suppression, approval, or capacity at transmission.",
-    "acceptance": "Atomic reservations/claims and a final serialized policy gate shared with stop/unsubscribe controls; concurrency/crash/race tests.",
-    "status": "pending",
-    "tests": [],
-    "evidence": []
+    "description": "Historical report claimed send submission lacked atomic reservations/claims and serialized policy gates; current worker needs verification.",
+    "acceptance": "Verify atomic capacity reservations and send claims, final suppression/approval/pause checks, crash recovery quarantine, and stop/unsubscribe behavior under concurrency.",
+    "status": "verified_local",
+    "tests": [
+      "tests/send-claims.test.mjs",
+      "tests/sending-capacity.test.mjs",
+      "tests/sending-control.test.mjs",
+      "tests/campaign-stop.test.mjs",
+      "tests/unsubscribe-api.test.mjs"
+    ],
+    "evidence": [
+      "The current worker atomically claims rows and reserves mailbox/domain capacity before SMTP, rechecks pause and recipient/copy policy at submission, quarantines incomplete or ambiguous SMTP transactions, and uses existing stop/unsubscribe controls to prevent future work. The capacity test now compares persisted UTC capacity_day to its exact next-day due timestamp instead of relying on a time-of-day-dependent 12-hour threshold.",
+      "node --test --test-concurrency=1 --test-reporter=spec tests/send-claims.test.mjs tests/sending-capacity.test.mjs tests/sending-control.test.mjs tests/campaign-stop.test.mjs tests/unsubscribe-api.test.mjs passed 9/9, exit 0. Loopback SMTP captured accepted submissions and ambiguous submissions; independent worker threads verified exactly one send under concurrent claim and a durable next-day defer. No real recipient was contacted."
+    ]
   },
   {
     "id": "B16",
-    "description": "Queue writes ISO timestamps but compares with SQLite `datetime('now')`; pacing is reduced to a max 1.5-second sleep while config says 30–120 seconds; window settings are not enforced in that path.",
-    "acceptance": "Canonical time types, timezone/DST-aware durable scheduler, real pacing/caps; tests for same-day due times and restarts.",
-    "status": "pending",
-    "tests": [],
-    "evidence": []
+    "description": "Durable send-window, pacing, capacity and sender-rotation implementation is recorded in the ownership ledger; defect status was not advanced.",
+    "acceptance": "Verify timezone/DST-aware persisted send windows, pacing, capacity reservations, and sender rotation through focused tests and restart behavior.",
+    "status": "verified_local",
+    "tests": [
+      "tests/sending-schedule.test.mjs",
+      "tests/sending-pacing.test.mjs",
+      "tests/sending-capacity.test.mjs",
+      "tests/sender-rotation.test.mjs",
+      "tests/sending-control.test.mjs"
+    ],
+    "evidence": [
+      "Prior checkpoint evidence records send-window checks at preflight, queue and worker; persisted per-mailbox pacing; transactional mailbox/domain daily capacity; and persisted health-weighted sender rotation. Owner/admin setting changes invalidate stale review and are audited.",
+      "The saved focused run `node --test tests/sending-schedule.test.mjs tests/sending-pacing.test.mjs tests/sending-capacity.test.mjs tests/sender-rotation.test.mjs tests/sending-control.test.mjs` passed 7/7 with loopback SMTP, restart/DST and pause behavior; the contemporaneous full suite passed 143/143. B15 reran the focused capacity and control tests successfully. No live mail was sent."
+    ]
   },
   {
     "id": "B17",
     "description": "`updateSend` writes `sent_at` for failed sends; runtime throws become `soft_bounce` regardless of cause.",
-    "acceptance": "Separate attempted/accepted/sent/delivered/failed timestamps, auth/network/provider/DSN error taxonomy.",
-    "status": "pending",
-    "tests": [],
-    "evidence": []
+    "acceptance": "Persist a distinct SMTP-attempt event before transport, record SMTP acceptance only after an acceptance response, keep delivery unconfirmed without delivery evidence, keep failed timestamps separate, and classify authentication/network/provider enhanced-status errors without weakening uncertain-submission quarantine.",
+    "status": "verified_local",
+    "tests": [
+      "tests/send-outcome-classification.test.mjs",
+      "tests/sending.test.mjs",
+      "tests/send-claims.test.mjs",
+      "tests/sending-control.test.mjs",
+      "tests/sending-capacity.test.mjs",
+      "tests/campaign-stop.test.mjs",
+      "tests/campaign-sequence-execution.test.mjs",
+      "tests/sending-api.test.mjs"
+    ],
+    "evidence": [
+      "The reported failed sent_at/soft_bounce behavior was not present in the current checkout: sent_at is assigned only when SMTP acceptance is recorded, failures retain a null sent_at, and runtime failures never create bounce/delivery events. The send path now persists send_attempt_started immediately before SMTP submission and records explicit authentication, configuration, network, temporary-provider-rejection, permanent-provider-rejection, envelope, or unknown classification with any parsed enhanced SMTP status code. Accepted submissions retain sent_at and a sent event with smtp_acceptance=confirmed; delivery remains unknown and no delivered event is synthesized.",
+      "node --test --test-concurrency=1 --test-reporter=spec tests/send-outcome-classification.test.mjs tests/sending.test.mjs tests/send-claims.test.mjs tests/sending-control.test.mjs tests/sending-capacity.test.mjs tests/campaign-stop.test.mjs tests/campaign-sequence-execution.test.mjs tests/sending-api.test.mjs passed 41/41, exit 0. Tests used temporary SQLite and loopback SMTP for success, authentication failure, recipient refusal, temporary/permanent DATA rejection, worker restart, ambiguous post-DATA disconnect, pause/stop races, and API protections. Uncertain network outcomes remain quarantined; no real recipient or mailbox was contacted. Delivery receipt/DSN ingestion remains separate work; releaseReady=false."
+    ]
   },
   {
     "id": "B18",
     "description": "Compliance helper functions exist but the real send path sends a mailto unsubscribe header rather than using the HTTPS token/footer helpers.",
-    "acceptance": "Apply verified current sender policy; tested MIME with real business identity/address and HTTPS one-click semantics.",
-    "status": "pending",
-    "tests": [],
-    "evidence": []
+    "acceptance": "Use the configured mailbox identity and business address; capture actual queued MIME proving an HTTPS token in List-Unsubscribe and the body, RFC 8058 one-click POST semantics, and safe GET confirmation.",
+    "status": "verified_local",
+    "tests": [
+      "tests/unsubscribe-api.test.mjs",
+      "tests/compliance-readiness.test.mjs",
+      "tests/sending.test.mjs",
+      "tests/campaign-preflight.test.mjs"
+    ],
+    "evidence": [
+      "The reported mailto-only send-path defect was already fixed in the current checkout: the actual queue worker uses buildComplianceEnvelope, sends the selected mailbox from_name and address, places a stored random HTTPS token in both the RFC 8058 List-Unsubscribe header and body footer, and leaves GET as a non-mutating confirmation. A local MIME assertion now verifies the configured sender identity is preserved. Production sending still blocks without a valid public HTTPS origin and non-placeholder physical address.",
+      "node --test --test-concurrency=1 --test-reporter=spec tests/unsubscribe-api.test.mjs tests/compliance-readiness.test.mjs tests/sending.test.mjs tests/campaign-preflight.test.mjs passed 28/28, exit 0. A disposable database and loopback SMTP sink captured the message; the local endpoint verified the token, GET caused no suppression, valid one-click POST suppressed exactly once and cancelled queued follow-ups. Tests used a synthetic business identity/address and never contacted a real recipient or public endpoint. `releaseReady=false`."
+    ]
   },
   {
     "id": "B19",
     "description": "Warm-up eligibility is inferred from elapsed days; calendar ramp is not evidence of actual warm-up activity or inbox placement.",
     "acceptance": "Separate scheduled volume ramp from measured warm-up/placement results. Require explicit policy and evidence; never synthesize received/opened/replied events.",
-    "status": "pending",
-    "tests": [],
-    "evidence": []
+    "status": "implemented_unverified",
+    "tests": [
+      "tests/warmup-evidence.test.mjs",
+      "tests/mailboxes-warmup-ui.test.mjs",
+      "tests/sending.test.mjs",
+      "tests/sending-api.test.mjs",
+      "tests/campaign-senders.test.mjs",
+      "tests/campaign-preflight.test.mjs",
+      "tests/campaign-sequence-execution.test.mjs",
+      "tests/send-claims.test.mjs"
+    ],
+    "evidence": [
+      {
+        "command": "node --test --test-concurrency=1 --test-reporter=spec tests/warmup-evidence.test.mjs tests/mailboxes-warmup-ui.test.mjs tests/sending.test.mjs tests/sending-api.test.mjs tests/campaign-senders.test.mjs tests/campaign-preflight.test.mjs tests/campaign-sequence-execution.test.mjs tests/send-claims.test.mjs",
+        "result": "43/43 pass, exit 0",
+        "recordedAt": "2026-10-14T11:09:05Z",
+        "note": "Disposable SQLite and browser fixtures verified age-only eligibility removal, direct status-write rejection, explicit owner/admin review, SMTP-accepted and inbound IMAP evidence provenance, review history and migration preservation. Existing campaign/send regressions exercised actual loopback SMTP acceptance, reply stop, and uncertain-submit quarantine. No live mailbox/database or external recipient was used."
+      },
+      {
+        "command": "node --test --test-concurrency=1 --test-reporter=spec tests/campaign-*.test.mjs tests/warmup-evidence.test.mjs tests/mailboxes-warmup-ui.test.mjs",
+        "result": "41/41 pass, exit 0",
+        "recordedAt": "2026-10-14T11:09:05Z",
+        "note": "Full campaign test set passes with explicit synthetic current-policy review rows in fixtures that assume a pre-reviewed sender. SMTP behaviors remain loopback-only. Local implementation is not yet independently reviewed or validated against live mailbox data."
+      }
+    ]
   },
   {
     "id": "B20",
@@ -199,25 +361,95 @@
     "id": "B21",
     "description": "`archiver.js` declares terminal states but archives all batch leads; deletes related rows without full relationship/schema preservation.",
     "acceptance": "Eligible lifecycle guards, transactional complete preservation, restore/reconciliation and FK tests. Never archive active sequence recipients.",
-    "status": "pending",
-    "tests": [],
-    "evidence": []
+    "status": "verified_local",
+    "tests": [
+      "tests/archiver-lifecycle.test.mjs",
+      "tests/campaign-launch-archive.test.mjs",
+      "tests/contact-provenance.test.mjs",
+      "tests/database-migrations.test.mjs"
+    ],
+    "evidence": [
+      "Archive now rejects non-terminal contacts, active campaign enrollments, and scheduled/processing/uncertain sends before mutation. Eligible terminal batches are snapshotted transactionally with relational descendants (including legacy lead_id/send_id history), deleted child-first, and closed; restore re-inserts parents first, restores original batch state, marks the snapshot restored, and rejects duplicate restores. Cross-batch references and relationship cycles fail closed. The HTTP API returns actionable 409 conflicts, archive stats expose restorable batch IDs, and the Batches screen offers restore only for a saved restorable snapshot.",
+      "node --test --test-concurrency=1 --test-reporter=spec tests/archiver-lifecycle.test.mjs tests/campaign-launch-archive.test.mjs tests/contact-provenance.test.mjs tests/database-migrations.test.mjs passed 13/13, exit 0. Tests used a temporary SQLite database and local HTTP only; they covered guards, restart persistence, verification/source/contact evidence, personalization, sends, events, campaign enrollment, foreign-key integrity, API restore/listing, 409 preservation, and injected transactional rollback. No live database, mailbox, credential, or real recipient was used.",
+      "node --check passed for pipeline/archiver.js, pipeline/database.js, server.js, js/api.js, js/batches.js, tests/archiver-lifecycle.test.mjs, and tests/database-migrations.test.mjs. Targeted git diff --check exited 0 (Git emitted only an LF/CRLF conversion warning for pipeline/archiver.js). releaseReady=false."
+    ]
   },
   {
     "id": "B22",
     "description": "`database.js` catches migration errors silently; archive fields diverge; failed migration can leave partial schema.",
     "acceptance": "Versioned transactional migrations with explicit failure and rollback; test old snapshots and all columns/relationships.",
-    "status": "pending",
-    "tests": [],
-    "evidence": []
+    "status": "verified_local",
+    "tests": [
+      "tests/database-migrations.test.mjs",
+      "tests/campaign-senders.test.mjs",
+      "tests/contact-provenance.test.mjs",
+      "tests/email-verifier-storage.test.mjs",
+      "tests/imap-sync-scheduler.test.mjs",
+      "tests/warmup-evidence.test.mjs"
+    ],
+    "evidence": [
+      {
+        "command": "node --test --test-concurrency=1 --test-reporter=spec tests/database-migrations.test.mjs tests/contact-provenance.test.mjs tests/email-verifier-storage.test.mjs tests/imap-sync-scheduler.test.mjs tests/warmup-evidence.test.mjs",
+        "result": "10/10 pass, exit 0",
+        "recordedAt": "2026-10-14T11:47:20Z",
+        "note": "Disposable SQLite fixtures cover transactional base-schema rollback, injected migration rollback after ALTER TABLE, retry, explicit applied-version history, unknown/newer/mismatched versions, restart idempotence, legacy column upgrades, warm-up evidence migration, source metadata, verification records, IMAP sync state, campaign send/enrollment/sender relationships, and preservation of existing rows. No live database was opened or modified."
+      },
+      {
+        "command": "node --test --test-concurrency=1 --test-reporter=spec tests/campaign-*.test.mjs tests/mailboxes-warmup-ui.test.mjs",
+        "result": "38/38 pass, exit 0",
+        "recordedAt": "2026-10-14T11:47:20Z",
+        "note": "Campaign, warm-up UI, sender selection, preflight, sequence, SMTP-sink, and legacy sender-backfill regressions pass with versioned schema startup."
+      },
+      {
+        "command": "node --test --test-concurrency=1 --test-reporter=dot tests/*.test.mjs",
+        "result": "Full suite exits 1; six unrelated test failures remain",
+        "recordedAt": "2026-10-14T11:47:20Z",
+        "note": "No database migration or campaign/warm-up tests failed. Remaining failures are the legacy CLI rejection assertion, contact-tags test, legacy verifier progress callback test, IMAP receiver test (missing tests/support/imap-test-cert.pem), maps-facebook-focus test file, and scraper-endpoint test file. These remain open and no release-ready claim is made."
+      },
+      {
+        "command": "node --test --test-concurrency=1 --test-reporter=spec tests/database-migrations.test.mjs tests/contact-provenance.test.mjs tests/email-verifier-storage.test.mjs tests/imap-sync-scheduler.test.mjs tests/warmup-evidence.test.mjs tests/archiver-lifecycle.test.mjs",
+        "result": "18/18 pass, exit 0",
+        "recordedAt": "2026-10-14T13:10:04Z",
+        "note": "Revalidated ordered transactional migrations with the archive snapshot schema added as version 4. Legacy contact/source data, sends/events, verification, IMAP and warm-up review history persisted; startup remained idempotent; injected migration failure rolled back and was retryable. Archive/restart/restore and foreign-key checks passed. Disposable databases only; independent review remains pending and releaseReady=false."
+      }
+    ]
   },
   {
     "id": "B23",
     "description": "Server has no visible authentication/tenant boundary; wildcard CORS; raw project directory static serving; no body-size cap.",
     "acceptance": "Auth/RBAC/tenant isolation, static asset allowlist, strict input limits and secure transport. DB/config/source/secret downloads must be denied.",
-    "status": "pending",
-    "tests": [],
-    "evidence": []
+    "status": "implemented_unverified",
+    "tests": [
+      "tests/request-body-limits.test.mjs",
+      "tests/cors-policy.test.mjs",
+      "tests/static-file-allowlist.test.mjs"
+    ],
+    "evidence": [
+      {
+        "command": "node --test --test-concurrency=1 --test-reporter=spec tests/request-body-limits.test.mjs tests/contact-import.test.mjs tests/contact-import-jobs.test.mjs tests/auth-session.test.mjs",
+        "result": "14/14 pass, exit 0",
+        "recordedAt": "2026-10-14T13:18:50Z",
+        "note": "parseBody now defaults to a 1 MiB cap; default JSON routes returned HTTP 413 before mutation for oversized input, while the explicitly larger CSV preview continued to accept a 1.1 MiB request. Existing bulk/streamed CSV, authentication/CSRF, and contact-import tests passed. Disposable SQLite and local HTTP only. This covers the B23 request-size slice; CORS policy, tenant isolation, static-file boundary, deployment TLS/proxy configuration, and independent review remain open; releaseReady=false."
+      },
+      {
+        "command": "node --test --test-concurrency=1 --test-reporter=spec tests/cors-policy.test.mjs tests/request-body-limits.test.mjs tests/auth-session.test.mjs tests/verification-export.test.mjs tests/unsubscribe-api.test.mjs tests/meta-lead-ads.test.mjs",
+        "result": "16/16 pass, exit 0",
+        "recordedAt": "2026-10-14T13:22:25Z",
+        "note": "Removed wildcard CORS access from generic API OPTIONS and verification CSV export. A normally bootstrapped owner used same-origin API/export successfully; the responses contain no Access-Control-Allow-Origin grant, anonymous cross-origin reads remain 401, and cross-origin preflight receives no grant. Existing unsubscribe and Meta webhook tests passed unchanged. All data was disposable and provider calls were stubbed. Tenant isolation, static-file allowlisting, and production TLS/proxy remain open; releaseReady=false."
+      },
+      {
+        "command": "node --test --test-concurrency=1 --test-reporter=spec tests/static-file-allowlist.test.mjs tests/cors-policy.test.mjs tests/request-body-limits.test.mjs tests/auth-session.test.mjs tests/verification-export.test.mjs tests/unsubscribe-api.test.mjs",
+        "result": "8/8 pass, exit 0",
+        "recordedAt": "2026-10-14T13:26:44Z",
+        "note": "Static serving now admits only the SPA root/login documents and approved /css, /js, /assets, and favicon paths; arbitrary authenticated paths under the project root return 404. A bootstrapped owner could load the app and assets but not server.js, pipeline/database.js, config, orchestration, package.json, or .env paths; anonymous source access also returned 404. Same-origin CORS, auth, body limits, CSV export, and unsubscribe regressions passed. Disposable SQLite/local HTTP only. Multi-workspace tenant isolation, production TLS/proxy, and independent review remain open; releaseReady=false."
+      },
+      {
+        "command": "node --test --test-concurrency=1 --test-reporter=spec tests/archiver-lifecycle.test.mjs tests/campaign-launch-archive.test.mjs tests/contact-provenance.test.mjs tests/database-migrations.test.mjs tests/email-verifier-storage.test.mjs tests/imap-sync-scheduler.test.mjs tests/warmup-evidence.test.mjs tests/static-file-allowlist.test.mjs tests/cors-policy.test.mjs tests/request-body-limits.test.mjs tests/auth-session.test.mjs tests/verification-export.test.mjs tests/unsubscribe-api.test.mjs tests/meta-lead-ads.test.mjs",
+        "result": "36/36 pass, exit 0",
+        "recordedAt": "2026-10-14T13:26:44Z",
+        "note": "Final combined archive, migration, request-size, CORS, static-file, owner bootstrap/session, verification-export, unsubscribe, Meta webhook/import, and warm-up evidence regression run passed. All mutable data was in disposable SQLite; Meta provider operations used test stubs; no live database, mailbox, credential, or recipient was used. This does not establish cross-workspace isolation or production TLS/reverse-proxy behavior; independent review remains pending and releaseReady=false."
+      }
+    ]
   },
   {
     "id": "B24",

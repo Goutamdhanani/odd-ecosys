@@ -1,0 +1,16 @@
+{
+  "planId": "ASTRA-R20-EXPLICIT-SCHEMA33-QA-AND-PREVIEW-INTEGRATION",
+  "writer": "/root/r20_fixture_integration",
+  "authority": "Integrate the authorized R20 revocation dependency without weakening historical fixture validation or changing existing databases",
+  "ownedPaths": ["tests/support/astra-platform-fixture.mjs", "tests/astra-customer-records.test.mjs", "tests/astra-qualification-lineage.test.mjs", "tests/astra-source-collection-policy.test.mjs", "tests/astra-workbench-e2e.test.mjs", "tests/astra-customer-approvals.test.mjs", "tests/astra-benchmark-report.test.mjs", "tests/astra-bandit-registry-read.test.mjs", "tests/astra-lifecycle-cancel.test.mjs", "tests/astra-outcomes-corrections.test.mjs", "tests/astra-workflow-recovery.test.mjs", "tools/astra/local-preview.mjs", ".superpowers/r20/fixture-integration/**"],
+  "requirements": [
+    "Add an explicit fixture bridge that delegates unchanged historical labels/options to the original strict31/32 validator and validates only the canonical named R20 source-rights33 fixture through the released strict R20 validator when the caller explicitly opts in. Never relax either validator, trust an environment connection string, or catch validation errors to permit a fallback",
+    "Update only fixture selection/validation and truthful fixture metadata diagnostics in the ten owned existing integration tests, retaining every behavioral/tenant/ownership/proof/idempotency assertion. Use explicit named33 selection for current schema-dependent checks; do not keep running source-rights readers on old32 or migrate old test fixtures",
+    "For owned actual API tests, keep fresh isolated SQLite authentication and seed a random high auth-user sequence before bootstrap, as the accepted R19 customer and R20 core tests do. This prevents a new auth ID1 from inheriting retained PostgreSQL memberships. Preserve all assertions and do not delete fixture rows or bypass ownership",
+    "Prepare the existing local preview helper to accept the same dedicated preview fixture at original32 or explicitly validated33, checking every canonical filename and immutable UP hash including033. Preserve its role/host/port/database, synthetic mode, data/private state/session/key, egress, path, CSRF and nonce-CSP safeguards. No automatic migrations, data copy, new fake seed or process restart",
+    "Use scratch-only fixture negatives and focused relevant tests after backend consumer release. Existing strict31/32 tests and migration files remain unchanged. Preserve all failures, before copies, commands/logs/exits and exact hashes",
+    "No full suite, runtime update or actual old-preview migration in this ticket. Root will separately review and perform any authorized additive033 application only on the proven disposable local preview after feature QA, retaining source/customer history"
+  ],
+  "constraints": ["Only explicit astra-foundation checkout", "Luna/high only", "No unowned source/test/helper edits", "No providers/outreach/production data/migration execution/preview restart/Git mutations", "Historical R19 artifacts immutable", "releaseReady=false"],
+  "releaseReady": false
+}

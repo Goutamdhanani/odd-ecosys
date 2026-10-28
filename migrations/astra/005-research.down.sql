@@ -1,0 +1,14 @@
+BEGIN;
+SET ROLE astra_owner;
+DROP TABLE IF EXISTS astra.research_reports;
+DROP TABLE IF EXISTS astra.research_claim_corrections;
+DROP TABLE IF EXISTS astra.research_claims;
+DROP TABLE IF EXISTS astra.research_audits;
+DROP TABLE IF EXISTS astra.research_identity_candidates;
+DROP TABLE IF EXISTS astra.research_accounts;
+DROP TABLE IF EXISTS astra.research_evidence;
+DROP TABLE IF EXISTS astra.research_blobs;
+DROP TABLE IF EXISTS astra.research_sources;
+DROP FUNCTION IF EXISTS astra.research_append_only_guard();
+RESET ROLE;
+COMMIT;

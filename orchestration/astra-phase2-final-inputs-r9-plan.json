@@ -1,0 +1,23 @@
+{
+  "planId": "ASTRA-PHASE2-FINAL-INPUTS-R9",
+  "phase": "Phase 2 QA repair and source provenance only",
+  "baseline": "astra-r8-a59aaa03eee87706",
+  "releaseReady": false,
+  "noNewFeatureWave": true,
+  "metadataRepair": {
+    "owner": "/root/fix_r7_qa_harness",
+    "path": "docs/astra/commercial-gates.json",
+    "allowedChange": "One provenance.sourceEvidenceSha256 inventory fingerprint after the reviewed workbench expiry repair.",
+    "preserve": "All approval, license, status, enabled, runtime and customer evidence values; all external decisions remain blocked/unknown."
+  },
+  "sourceFreezeCorrection": {
+    "coordinatorScope": "Orchestration only; no application source edits.",
+    "previousExplicitProductFiles": 238,
+    "additionalExistingFiles": ["server.js", "config/ai-rate-cards.json", "config/parking-signatures.json", "config/personalization.json", "config/qualification-scoring.json", "config/sending-engine.json", "config/verification-rules.json", "shared/verification-classification.js", "pipeline/astra-inspect-adapter.py", "assets/odd-ecosys-emblem.png"],
+    "additionalTestInputs": ["tools/astra/derive-acceptance.mjs", "tools/astra/commercial-gates.mjs", "tools/freeinference/gateway.mjs", "docs/astra/combined-backlog.json", "docs/astra/base-capability-map.md", "docs/astra/acceptance-contract/requirements-map.json"],
+    "licenseEvidence": "Include the installed package metadata and selected public license texts explicitly referenced by the existing strict commercial-gates test.",
+    "historicalLimit": "Earlier 238-file manifests omitted these explicit inputs. Selected-source fidelity tests indirectly bound some omitted application files; earlier counts are retained as scoped evidence rather than retroactively relabeled."
+  },
+  "acceptance": ["Exact one-key metadata diff and protected status values unchanged", "Focused commercial gates and source fidelity checks pass", "Independent review of expanded explicit inputs and immutable source provenance", "Complete uninterrupted automated suite on the new frozen candidate with pre/post hash checks", "Final credential evidence scan, current gap qualification and independent evidence-backed score"],
+  "constraints": ["No providers or live outreach", "No production/customer data migrations", "No deployment", "No git history mutation", "Luna code/review agents only"]
+}

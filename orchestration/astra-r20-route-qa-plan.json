@@ -1,0 +1,10 @@
+{
+  "id":"ASTRA-R20-CURRENT-ROUTE-QA",
+  "owner":"/root/r20_route_security_qa",
+  "root":"C:/Users/pooja/.codex/worktrees/astra-foundation/odd-ecosys",
+  "ownedPaths":[".superpowers/r20/route-security/**"],
+  "predecessorEvidence":".superpowers/r19/route-security/ (read-only historical reference)",
+  "acceptance":["Invoke current route modules in exact server registration order; capture actual current count rather than assume170","Use only strict canonical synthetic33 fixture and native egress guard, ephemeral auth and unique IDs","Current anonymous/foreign membership/CSRF/role matrix plus special workspace/page boundaries","Positive current read/revoke rights route probes with actual synthetic source and cross-tenant negatives","Per-route evidence clearly distinguishes gate success from positive functional success, policy blocking and unproven validation","Source hash before/after stable; report actual counts and regex branch limits","Invalidate temporary auth and remove only self-created scratch auth evidence; no private values retained"],
+  "restrictions":["No product/test/helper edits outside own report folder","No historical report writes","No preview/production data or runtime actions","No live external calls or migrations","Keep all commercial gates unchanged and releaseReady=false"],
+  "releaseReady":false
+}

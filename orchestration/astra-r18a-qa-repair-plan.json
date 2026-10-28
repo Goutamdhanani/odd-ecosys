@@ -1,0 +1,28 @@
+{
+  "planId": "ASTRA-R18A-BOUNDED-QA-REPAIR",
+  "authority": "Current human continuation request; R18 suite and independent integration review identified concrete integration failures. Prior R18 writers have released their paths.",
+  "predecessor": "astra-r18-42646b8a168d0cea",
+  "predecessorResult": {"tests": 508, "pass": 506, "fail": 2, "skipped": 0, "sourceMismatchCount": 0},
+  "writer": "/root/r18a_qa_repairs",
+  "ownedPaths": [
+    "tests/support/astra-r18-fixture.mjs",
+    "tests/astra-source-fidelity.test.mjs",
+    "tests/astra-source-collection-policy.test.mjs",
+    "docs/astra/s00-side-effect-inventory.json",
+    "docs/astra/commercial-gates.json",
+    ".superpowers/r18a/qa-repairs/**"
+  ],
+  "transfers": [
+    {"from": "/root/r18_integration", "state": "completed_and_released", "paths": ["tests/support/astra-r18-fixture.mjs", "tests/astra-source-fidelity.test.mjs", "docs/astra/s00-side-effect-inventory.json", "docs/astra/commercial-gates.json"]},
+    {"from": "/root/r18_collection_policy", "state": "completed_and_released", "paths": ["tests/astra-source-collection-policy.test.mjs"]}
+  ],
+  "requirements": [
+    "Normalize bracketed IPv6 loopback hostname in the strict synthetic fixture validator and prove valid loopback plus remote rejection without a database connection.",
+    "Use shared full fixture validation in the collection policy test with explicit R18 synthetic32 labels, preserving all ten behavioral check groups and all policy gates.",
+    "Add the statically detected X-Ray boundary to the inventory with an accurate effect/guard/destination/authorization description and exact source hash and behavior tests. Preserve static detection and negative assertions.",
+    "Refresh only the inventory provenance fingerprint in commercial-gates; do not alter any approval decision.",
+    "Preserve before copies and exact hashes; run guarded focused checks using the approved r18-suite disposable fixture and release all paths for a fresh candidate. Never overwrite the frozen R18 evidence."
+  ],
+  "constraints": ["Luna/high only", "No product behavior changes", "No gate or test weakening", "No real data or external calls", "No git mutations", "Do not edit OWNERSHIP.md or any frozen R18 helper/manifest/report"],
+  "releaseReady": false
+}

@@ -1,0 +1,757 @@
+{
+  "schemaVersion": 1,
+  "generatedFrom": "S00-B02 current static detector inventory: original 48 boundary paths and negative probe are preserved; two actual detector matches (FreeInference client and prospecting orchestration) bring the current set to 50. Original boundary fingerprints are refreshed with previousSha256 retained where bytes changed. MongoDB repository and PostgreSQL source-collection reads/writes are separately inventoried below; counts do not hide indirect database effects or imply external approval.",
+  "scanPattern": "pipeline/**/*.js containing fetch, SMTP, IMAP, DNS, socket, filesystem-write, process-spawn, or direct node:http request terms; js/**/*.js containing fetch/XMLHttpRequest/WebSocket; server.js API boundary. Mongo/SQL accesses not matched by this static detector are listed in supplemental database read/write entries.",
+  "sourceFiles": 51,
+  "boundaries": [
+    {
+      "path": "js/api.js",
+      "sha256": "39de0ebdce9c26c7e98f0c9adfe8bb0a823aee15355dee067480fdf3198dc4c8",
+      "effect": "browser-to-server API transport and request/auth/CSRF handling",
+      "testFiles": [
+        "tests/api-client-errors.test.mjs",
+        "tests/ui-action-auth.test.mjs"
+      ]
+    },
+    {
+      "path": "js/astra-growth.js",
+      "sha256": "05e5698209b1900db7e7d109ff60b6354ac276c3f922ea1fe6f7e21549832df7",
+      "effect": "Guided/Pro customer growth workspace browser API requests, source-rights review and revocation workflows, and explicit tenant-scoped customer mutations.",
+      "testFiles": [
+        "tests/astra-growth-ui.test.mjs",
+        "tests/astra-workbench-e2e.test.mjs"
+      ],
+      "guardAndDestination": {
+        "guard": "Same-origin API only; requires authenticated session and CSRF for writes, selects active tenant context, binds asynchronous writes to the current tenant and epoch, and leaves source rights, membership roles, approval, dispatch, and server-side policy checks authoritative.",
+        "destination": "Same-origin /api/astra/workspaces, /api/astra/tenants, and /api/astra/tenants/{tenantId}/... endpoints; no provider URL is called directly by the browser.",
+        "authorization": "Customer-entered browser actions do not approve source reuse, provider egress, collection, or external dispatch."
+      },
+      "previousSha256": "6ee6a6304e9e9e58dfa46693b4cf2fc25f038295b246ca98d17cf1d3340f150c"
+    },
+    {
+      "path": "js/astra-workbench.js",
+      "sha256": "73d57fe44b4f098f07e8ad46989ed140703ffd9588daf1f3876eda49fd07d74f",
+      "effect": "Browser Astra workbench API requests and user-triggered workflows",
+      "testFiles": [
+        "tests/astra-source-trace.test.mjs"
+      ],
+      "guardAndDestination": {
+        "guard": "Uses tenant-scoped API paths and requires the user to select/create tenant context before data operations; browser session/CSRF checks remain server-owned.",
+        "destination": "Same-origin /api/astra/tenants/{tenantId} endpoints; no provider URL is called directly.",
+        "authorization": "A tenant UI boundary, not external-action approval."
+      }
+    },
+    {
+      "path": "js/leads.js",
+      "sha256": "6fc49ed9d30c5c5a12546b42be5ead441b2cf583e91c841f85cb6db865473e3e",
+      "effect": "browser lead/discovery UI API requests and user-triggered backend work",
+      "testFiles": [
+        "tests/lead-discovery-ui.test.mjs",
+        "tests/lead-search.test.mjs"
+      ]
+    },
+    {
+      "path": "pipeline/astra-autonomy.js",
+      "sha256": "2d2c74de6cf0d1ec5b54e4c5b1c638f6c7b7b8e3ef5b670b22b29340b915e731",
+      "effect": "Astra autonomy policy and delegated job orchestration with durable state changes",
+      "testFiles": [
+        "tests/astra-source-trace.test.mjs"
+      ],
+      "guardAndDestination": {
+        "guard": "Requires current tenant-scoped campaign, qualification, permission/suppression, approved offer, provider-observed verification and SMTP capability evidence, plus signed short-lived execution tickets and dispatch switches.",
+        "destination": "Persists tenant-scoped execution tickets/attempts; transport is delegated to the gated dispatcher.",
+        "authorization": "Ticket issuance does not establish commercial approval or enable transport."
+      }
+    },
+    {
+      "path": "pipeline/astra-connectors.js",
+      "sha256": "2de3d60e832e6cb59a3d9bf247f0cfa97d68ad8ff4c53f4ca3f6896323ebe599",
+      "effect": "Connector adapter lifecycle, configuration and external provider dispatch boundaries",
+      "testFiles": [
+        "tests/astra-source-trace.test.mjs"
+      ],
+      "guardAndDestination": {
+        "guard": "Provider allowlist is reacher/smtp_imap/twenty; endpoint schemas validate HTTPS URLs or hostname/port fields. Transport requires provider-observed environment, external-action flags, approvals for commercial use/source rights/privacy, and non-preview/non-test mode.",
+        "destination": "Tenant-configured Reacher HTTPS, Twenty HTTPS, SMTP and IMAP hosts; configuration alone does not enable calls.",
+        "authorization": "Commercial registry currently blocks these transports."
+      }
+    },
+    {
+      "path": "pipeline/astra-crm.js",
+      "sha256": "6df80d2672a16ee222a9dc7c51963dcd9e5fb54c74c7115ff63775d4ffd596c8",
+      "effect": "CRM connector calls and tenant-scoped outcome synchronization",
+      "testFiles": [
+        "tests/astra-source-trace.test.mjs"
+      ],
+      "guardAndDestination": {
+        "guard": "Creates durable outbound proposal records; SQL settings default commercial_approved, explicit_opt_in and transport_enabled to false.",
+        "destination": "A configured CRM destination is described by the proposal, but no transport is enabled here.",
+        "authorization": "No CRM delivery/approval is inferred."
+      }
+    },
+    {
+      "path": "pipeline/astra-dispatcher.js",
+      "sha256": "e077686765c99fdd8de39475e8e19e80765d7a71d94653ac106cc0b5e1f02977",
+      "effect": "Dispatch coordination across approved outbound adapters and durable delivery events",
+      "testFiles": [
+        "tests/astra-source-trace.test.mjs"
+      ],
+      "guardAndDestination": {
+        "guard": "Checks tenant ticket authority, global/feature dispatch switches and local-preview denial before delegating to the SMTP adapter.",
+        "destination": "Delegates to the exact configured SMTP connector; SMTP adapter pins a validated public address.",
+        "authorization": "External actions remain disabled unless every explicit runtime and commercial gate passes."
+      }
+    },
+    {
+      "path": "pipeline/astra-evidence.js",
+      "sha256": "a20db4e468783cd1d18f058ecc0be2109585242cd8aab7b5f142b238629d64b6",
+      "effect": "Evidence metadata and artifact persistence/read boundaries",
+      "testFiles": [
+        "tests/astra-source-trace.test.mjs"
+      ],
+      "guardAndDestination": {
+        "guard": "Rejects local/private hostnames, IP-literal sources and invalid source URL forms before evidence registration.",
+        "destination": "Records a normalized public-host source reference; fetch is handled by the source/research workers.",
+        "authorization": "URL shape checks are not source-rights approval."
+      }
+    },
+    {
+      "path": "pipeline/astra-glm-gateway.js",
+      "sha256": "8cb025271179b700c2b06a9d89428511352704fc47a7216ce45709376e84e20b",
+      "effect": "GLM gateway request boundary with policy and egress controls",
+      "testFiles": [
+        "tests/astra-commercial-gates.test.mjs"
+      ],
+      "guardAndDestination": {
+        "guard": "Restricts task names and structured output schemas, minimizes input, checks commercial egress, usage budget, and offer-model-egress policy before fetch.",
+        "destination": "Exact GLM endpoint/model defined in astra-egress.js; no fallback provider.",
+        "authorization": "S01 approvals remain absent, so live provider inference remains blocked."
+      }
+    },
+    {
+      "path": "pipeline/astra-mailbox-provider.js",
+      "sha256": "082b173bc78e2cb8ea11f5fc6b36e2e6cf18d8a8efd7b7af3f3aabcf0551cfdc",
+      "effect": "Mailbox provider network access and mailbox job execution",
+      "testFiles": [
+        "tests/astra-source-trace.test.mjs"
+      ],
+      "guardAndDestination": {
+        "guard": "Preview and provider-action switches, connector approvals, mailbox link, current capability evidence, explicit SMTP/IMAP enablement, public-address DNS validation/pinning, TLS verification and tenant scope are checked before network use.",
+        "destination": "Only configured SMTP/IMAP hosts for a tenant mailbox.",
+        "authorization": "Current commercial decisions disable provider-observed transport."
+      }
+    },
+    {
+      "path": "pipeline/astra-radar-routes.js",
+      "sha256": "31cfe42eb85acb740339632490b47c40a094225c751e1ca326927c83b9d1f1cf",
+      "effect": "Astra radar API route boundary for source and discovery workflows",
+      "testFiles": [
+        "tests/astra-source-trace.test.mjs"
+      ],
+      "guardAndDestination": {
+        "guard": "Requires verified tenant identity matching route tenant; role-scoped routes; refresh is explicit and worker work is scheduled after commit.",
+        "destination": "Routes enqueue tenant-scoped radar work; source transport is in the radar worker.",
+        "authorization": "Manual route invocation is not approval for external collection."
+      }
+    },
+    {
+      "path": "pipeline/astra-radar.js",
+      "sha256": "3914c6b74d6223d85190df5e82de008f09400225f6c9c07dcacdaad8d28b9586",
+      "effect": "Radar source discovery, external lookups and durable research evidence",
+      "testFiles": [
+        "tests/astra-source-trace.test.mjs"
+      ],
+      "guardAndDestination": {
+        "guard": "Tenant-scoped watch state, pause/resume and source policy/rights/expiry checks; background refresh only follows explicit route action.",
+        "destination": "Configured source adapters, where enabled; no default source list inferred here.",
+        "authorization": "Source collection rights remain external unknown."
+      }
+    },
+    {
+      "path": "pipeline/astra-research.js",
+      "sha256": "d483f7a1b2185805bdf5a1d6a601b6908d1f3af948bed31169439c028f3c80f7",
+      "effect": "Research source access, provider requests and persisted research jobs",
+      "testFiles": [
+        "tests/astra-source-trace.test.mjs"
+      ],
+      "guardAndDestination": {
+        "guard": "Tenant-scoped jobs/evidence, immutable content hashes, resolved evidence references and review-required outcomes.",
+        "destination": "Durable Astra research/evidence store; acquisition transport is delegated to approved source workers.",
+        "authorization": "Evidence persistence does not approve source reuse or model egress."
+      }
+    },
+    {
+      "path": "pipeline/astra-smtp-dispatch.js",
+      "sha256": "6676f1d0b04417d035efab8c9ebe13f6153f5e44c7501f80c8fb8269739a3759",
+      "effect": "SMTP dispatch adapter and durable transport result boundary",
+      "testFiles": [
+        "tests/astra-source-trace.test.mjs"
+      ],
+      "guardAndDestination": {
+        "guard": "Requires exact signed ticket and current capability/configuration evidence, explicit SMTP enablement, live-action flags, non-preview mode, immutable recipient/copy binding and DNS validation with a pinned public address before TLS SMTP.",
+        "destination": "Only the configured tenant SMTP hostname/port.",
+        "authorization": "SMTP stays disabled in local preview and unless commercial/dispatch approvals are active."
+      }
+    },
+    {
+      "path": "pipeline/astra-source-collection-routes.js",
+      "sha256": "38e3fa3d6c49627f75c944d14d7fd08009c070eb8797d96f1219472192070007",
+      "effect": "Source collection API routes and delegated collection job requests",
+      "testFiles": [
+        "tests/astra-source-trace.test.mjs"
+      ],
+      "guardAndDestination": {
+        "guard": "Requires verified tenant context and role checks; user must explicitly invoke the collection workflow.",
+        "destination": "Tenant-scoped source collection jobs; worker owns outbound fetch.",
+        "authorization": "A route invocation does not attest source rights."
+      }
+    },
+    {
+      "path": "pipeline/astra-source-collection.js",
+      "sha256": "b62a7636b5c0fb539b6a3e555afd1aa83d80a55fddc82270d640c1635942bdc5",
+      "effect": "Source collection workers, external fetches and source evidence writes",
+      "testFiles": [
+        "tests/astra-source-trace.test.mjs",
+        "tests/astra-source-collection-policy.test.mjs",
+        "tests/astra-local-search-transport.test.mjs"
+      ],
+      "guardAndDestination": {
+        "guard": "Remote transport requires ASTRA_SOURCE_COLLECTION_REMOTE_ENABLED=true; HTTPS-only normalized public host, no credentials/query/fragment/nonstandard port, source-rights/robots attestations and approval references; uses shared safe fetcher.",
+        "destination": "Explicit HTTPS source URLs; no arbitrary provider/model endpoint.",
+        "authorization": "Rights evidence must be valid and current; unknown approvals remain blocked."
+      },
+      "previousSha256": "8f84f3bca4ec119796f3e445fd0428370a3984f11b75449936398edbefac1e59"
+    },
+    {
+      "path": "pipeline/astra-xray.js",
+      "sha256": "cef2b708648de8a591780007b662aef6c6a09bb333d1ede85cfd7aeea168df51",
+      "effect": "Deterministic analysis of supplied captured HTML and evidence-linked account summaries; this module does not fetch pages, access a database, execute page scripts, or contact providers.",
+      "testFiles": [
+        "tests/astra-xray.test.mjs"
+      ],
+      "guardAndDestination": {
+        "guard": "The research service supplies tenant-scoped captures only after source, rights, hash, freshness, and current-evidence checks. The parser removes executable and explicitly hidden content and never evaluates captured scripts.",
+        "destination": "Returns a bounded report from the supplied snapshots to the research service, which persists it as an audit for the tenant account.",
+        "authorization": "Analysis of a permitted prior capture does not authorize fetching or crawling sources, commercial reuse, model egress, or contacting extracted email addresses."
+      }
+    },
+    {
+      "path": "pipeline/auth-manager.js",
+      "sha256": "955f5381d2f4707bacb41a9d82582c8bccb20a66a3cf7c07448bfa02f26f9504",
+      "testFiles": [
+        "tests/auth-session.test.mjs",
+        "tests/workspace-membership.test.mjs"
+      ],
+      "effect": "authentication/session and membership state persisted by API calls"
+    },
+    {
+      "path": "pipeline/campaign-audience.js",
+      "sha256": "dad1ce011bc52f84d82b046c1025d8c919952ff6a35ba238407262a9f18165f9",
+      "effect": "SQLite campaign enrollment and recipient eligibility state",
+      "testFiles": [
+        "tests/campaign-audience.test.mjs",
+        "tests/campaign-preflight.test.mjs"
+      ]
+    },
+    {
+      "path": "pipeline/campaign-sequence.js",
+      "sha256": "572c1a926b93ca0aa8a5974fae5547ee296860aaa276c25c2fb73cb57eab3c21",
+      "effect": "SQLite campaign steps, variants, and sequence events",
+      "testFiles": [
+        "tests/campaign-sequence.test.mjs",
+        "tests/campaign-sequence-execution.test.mjs"
+      ]
+    },
+    {
+      "path": "pipeline/click-tracking.js",
+      "sha256": "6c3c42f1b64b7c0d396597a9f00f48379b0c56ff9a6fbdfdc73b4dd39972b7d4",
+      "testFiles": [
+        "tests/click-tracking.test.mjs"
+      ],
+      "effect": "SQLite tracking-token creation, redirect resolution, and click-event writes"
+    },
+    {
+      "path": "pipeline/contact-manager.js",
+      "sha256": "4f706be87dd21f1d1543e02c80679ab98a4c6903080ab8edd08a093564afc6c0",
+      "effect": "SQLite contact, provenance, suppression-aware, and event mutations",
+      "testFiles": [
+        "tests/contact-create.test.mjs",
+        "tests/contact-provenance.test.mjs"
+      ]
+    },
+    {
+      "path": "pipeline/credential-vault.js",
+      "sha256": "6cb65feef377056573b383c0609d2722caef9d56900b62950ce61afc1a9e063e",
+      "testFiles": [
+        "tests/credential-vault.test.mjs"
+      ],
+      "effect": "encrypted mailbox/provider credential reads and updates in SQLite"
+    },
+    {
+      "path": "pipeline/crm-sync.js",
+      "sha256": "b803f5f6f00a828531017945015d251758871043cae4ae274b20d064a3926bbd",
+      "effect": "outbound CRM HTTP mutation and local sync status",
+      "testFiles": [
+        "tests/qualification-jobs.test.mjs"
+      ]
+    },
+    {
+      "path": "pipeline/csv-importer.js",
+      "sha256": "5375985ce5fe9bfc8911263442bfa211e7a1e20566e82dc7c0e992e071956f93",
+      "effect": "CSV parsing; caller persists imported contacts in SQLite",
+      "testFiles": [
+        "tests/contact-import.test.mjs"
+      ]
+    },
+    {
+      "path": "pipeline/database.js",
+      "sha256": "816a52e9f56cbbf2f4d9571ea61a9e3d77cc1b6b3cc54c1f83c37e49f1c741cc",
+      "effect": "SQLite schema, migrations, and application state writes",
+      "testFiles": [
+        "tests/auth-workspace-migration.test.mjs",
+        "tests/campaign-created-at-migration.test.mjs"
+      ]
+    },
+    {
+      "path": "pipeline/eepc-cbam-directory.js",
+      "sha256": "3050f6865770df964fe3789b7c3320c1c568e12d753b2e8199713bd12feed6c2",
+      "effect": "directory source fetching and parsing",
+      "testFiles": [
+        "tests/epch-directory-jobs.test.mjs"
+      ]
+    },
+    {
+      "path": "pipeline/email-verifier.js",
+      "sha256": "6be10b27bbdada95d13040a492984afc1a6d8beeb94bb1632dcb0c4ea12988ec",
+      "effect": "DNS, optional verification-provider HTTP, gated SMTP probe, SQLite evidence writes",
+      "testFiles": [
+        "tests/email-verifier.test.mjs",
+        "tests/email-verifier-reliability.test.mjs"
+      ]
+    },
+    {
+      "path": "pipeline/enricher.js",
+      "sha256": "083d855b2eeeacaf6ef842b8ec8307589f599340d550c6297a553d632de985f8",
+      "effect": "external enrichment/search HTTP and local evidence persistence",
+      "testFiles": [
+        "tests/lead-search.test.mjs"
+      ]
+    },
+    {
+      "path": "pipeline/epch-directory-jobs.js",
+      "sha256": "fe28758f4b05853c9a090d17b24b748c22b087ac6dc9918765fbdd947124fc6b",
+      "effect": "directory HTTP fetches and durable job/contact/evidence writes",
+      "testFiles": [
+        "tests/epch-directory-jobs.test.mjs"
+      ]
+    },
+    {
+      "path": "pipeline/epch-member-directory.js",
+      "sha256": "4de31aa1cb807b5640fc9ee87ec3147c6bec729bbf9d7e6fcd4caf01a38f0cf6",
+      "effect": "directory page HTTP fetch",
+      "testFiles": [
+        "tests/epch-directory-jobs.test.mjs"
+      ]
+    },
+    {
+      "path": "pipeline/google-oauth.js",
+      "sha256": "42a23772b94bd3936a8d11c1dee1d48fa809003c34b2ed5c2d5e27305d856cd2",
+      "effect": "OAuth provider HTTP/token exchange",
+      "testFiles": [
+        "tests/google-auth.test.mjs"
+      ]
+    },
+    {
+      "path": "pipeline/imap-receiver.js",
+      "sha256": "fab1139b9f079d1179de6899161aa7da046c127e46213b8c5e4d48e017294947",
+      "effect": "inbound IMAP network access and reply persistence",
+      "testFiles": [
+        "tests/imap-receiver.test.mjs",
+        "tests/inbox-replies.test.mjs"
+      ]
+    },
+    {
+      "path": "pipeline/imap-sync-scheduler.js",
+      "sha256": "cb48bea420ba2104db3a903a2b95f74fd9e4060e5c4ad6330c24d7dbd3b484a9",
+      "effect": "schedules inbox work; delegates to IMAP receiver",
+      "testFiles": [
+        "tests/imap-sync-scheduler.test.mjs"
+      ]
+    },
+    {
+      "path": "pipeline/lead-strategy.js",
+      "sha256": "fee4c804ff33c5daf113aade4f005d185c47d1c12e8860814040f44d46886dc8",
+      "effect": "provider/search HTTP and persistent lead-strategy state",
+      "testFiles": [
+        "tests/lead-strategy.test.mjs"
+      ]
+    },
+    {
+      "path": "pipeline/meta-lead-ads.js",
+      "sha256": "f330ebdaff39ad673c5a71df783449b38bb6ff4067cbcf65f3cd95fe739dc88a",
+      "effect": "Meta Graph API HTTP requests",
+      "testFiles": [
+        "tests/meta-lead-ads.test.mjs"
+      ]
+    },
+    {
+      "path": "pipeline/pdf-text.js",
+      "sha256": "6adef3760419fd9acd76ae153e723396a7ea7fb01b598c7351c430d4d2b1fa0c",
+      "effect": "local PDF worker/process and file extraction",
+      "testFiles": [
+        "tests/website-pdf-extraction.test.mjs"
+      ]
+    },
+    {
+      "path": "pipeline/qualifier.js",
+      "sha256": "985edfd3549d5ce71b9a36e23b886c9f2498063c74d9973be9d6d4118258e367",
+      "effect": "website HTTP/browser qualification and lead status writes",
+      "testFiles": [
+        "tests/qualification-jobs.test.mjs",
+        "tests/qualification-scoring.test.mjs"
+      ]
+    },
+    {
+      "path": "pipeline/reply-tracker.js",
+      "sha256": "67f00a8716859f7ea71e4f24e5aada8b30d0d2e5f36d80238a0b4cc422262713",
+      "effect": "reply classification provider call and inbox/suppression/event writes",
+      "testFiles": [
+        "tests/reply-tracker.test.mjs",
+        "tests/campaign-sequence-execution.test.mjs"
+      ]
+    },
+    {
+      "path": "pipeline/scraper.js",
+      "sha256": "a90d18c4a2f52a8c05115e0eacf588da756aefe30917cf0397d60129571a60c9",
+      "effect": "website/search HTTP and extraction",
+      "testFiles": [
+        "tests/lead-search.test.mjs"
+      ]
+    },
+    {
+      "path": "pipeline/screenshot.js",
+      "sha256": "6da0646d034803bfc11eeedc159c539749d450415134994d088fb53aaddfdb2a",
+      "effect": "browser navigation and screenshot file output",
+      "testFiles": [
+        "tests/website-rendered-fallback.test.mjs"
+      ]
+    },
+    {
+      "path": "pipeline/searxng-search.js",
+      "sha256": "971547f5eaa0948f6786a5408fe5c0f0c7cd3eab1ebddb88a2ba6bb93fb03174",
+      "effect": "external search HTTP and result persistence",
+      "testFiles": [
+        "tests/searxng-search.test.mjs",
+        "tests/lead-discovery-jobs.test.mjs"
+      ]
+    },
+    {
+      "path": "pipeline/sending-engine.js",
+      "sha256": "3f2b0ca9285780d4a5694d7a2ef5e341ca75fb8a9bba69caa3dce066dd8940fa",
+      "effect": "SMTP send/test transport and durable send/campaign state",
+      "testFiles": [
+        "tests/sending.test.mjs",
+        "tests/campaign-sequence-execution.test.mjs"
+      ]
+    },
+    {
+      "path": "pipeline/ssrf-guard.js",
+      "sha256": "b49c24ddeb14f58025ea92810a9b234c245cd37fa89ffcf7a8b2ff151e00f03a",
+      "effect": "egress target validation used before network calls",
+      "testFiles": [
+        "tests/ssrf-guard.test.mjs"
+      ]
+    },
+    {
+      "path": "pipeline/website-discovery-jobs.js",
+      "sha256": "777451530375c85fe18641e1409304865bf8ade8da036bc8a76c69bf722ba410",
+      "effect": "durable work queue and email-verification handoff",
+      "testFiles": [
+        "tests/website-discovery-jobs.test.mjs"
+      ]
+    },
+    {
+      "path": "pipeline/website-email-discovery.js",
+      "sha256": "72879dcabf6190b435f357e887c320f106ed2bb6dde6fbe50e6ad04da69936d3",
+      "effect": "website HTTP/browser fetch, extraction, evidence and contact writes",
+      "testFiles": [
+        "tests/lead-website-email-discovery.test.mjs",
+        "tests/website-discovery-verification.test.mjs"
+      ]
+    },
+    {
+      "path": "server.js",
+      "sha256": "116e95153f5a25dc576845b079359fd09b866718d32bbbf899574144f7b2453f",
+      "effect": "Allow-listed public static reads, authenticated HTTP API routes, auth/CSRF enforcement, SQLite mutations and orchestration of external boundaries.",
+      "testFiles": [
+        "tests/ui-route-audit.test.mjs",
+        "tests/campaign-sequence-execution.test.mjs",
+        "tests/workspace-membership.test.mjs",
+        "tests/astra-static-privacy.test.mjs",
+        "tests/astra-source-rights-ui.test.mjs"
+      ],
+      "previousSha256": "ebc5c02845a707e03cae854e2708fd6c429c2cce1a98ef71b4f1047f2974fba6"
+    },
+    {
+      "path": "pipeline/astra-freeinference-client.js",
+      "sha256": "7c3ce0c4bf437c31d638c39ef07cbb8306a2993511410701971a40a7f0a0fd11",
+      "effect": "Fixed-origin FreeInference model catalog and chat-completions HTTP egress with bounded request/response handling and provider usage telemetry.",
+      "testFiles": [
+        "tests/astra-freeinference-client.test.mjs"
+      ],
+      "guardAndDestination": {
+        "guard": "Reads FREEINFERENCE_API_KEY only from the process environment; fixed HTTPS endpoints, redirect:error, authenticated model catalog GET before any inference POST, immutable selected model, bounded timeout/retries/request and response sizes, and sanitized provider errors.",
+        "destination": "https://freeinference.org/v1/models and https://freeinference.org/v1/chat/completions only.",
+        "authorization": "Transport implementation and the capped synthetic probe have bounded independent review; transport code alone does not approve commercial use, sensitive-data submission, or production inference."
+      }
+    },
+    {
+      "path": "pipeline/astra-prospecting.js",
+      "sha256": "f498faa652900c128a47afc3927314c69989c1691954536af4db6b519d861a7c",
+      "effect": "Tenant-scoped prospecting orchestration over durable Mongo jobs and the PostgreSQL source-collection worker; requests source search/fetch through injected workflows and never performs direct HTTP itself.",
+      "testFiles": [
+        "tests/astra-prospecting.test.mjs",
+        "tests/astra-prospecting-source-gate.test.mjs",
+        "tests/astra-prospecting-recovery.test.mjs"
+      ],
+      "guardAndDestination": {
+        "guard": "Requires ASTRA_LIVE_PROSPECTING_GO=true, coordinator GO approval, Mongo prospecting-test mode, a separate allowlisted astra_test_* database, a dedicated source-worker database URL, and the existing source-worker checks. Readiness accepts either the explicit local-search opt-in with the existing origin exactly http://127.0.0.1:8081 or the existing explicit remote-source flag and configured origin; route supplies verified tenant membership and owner-only start. Source worker enforces its own S01 approvals, URL/SSRF, rights, robots, request budget and pacing checks.",
+        "destination": "Configured Mongo test database for durable tenant jobs/evidence/outcomes/contacts; configured PostgreSQL source-worker database; source-worker search uses only the explicit exact loopback capability or separately configured approved public HTTPS endpoints. The local-search capability does not enable public website fetching.",
+        "authorization": "Bounded round-five lease-handover repair passed independent review. This does not activate prospecting, approve source rights, infer Atlas/provider success, or authorize any send."
+      }
+    },
+    {
+      "path": "pipeline/astra-local-search-transport.js",
+      "sha256": "0b185b0caf20dc575bc9901d0d03e697c9fb609cf18e6f1194c5a0c3810b0b2e",
+      "effect": "Direct bounded loopback HTTP transport for the server-owned local search capability; it does not fetch result websites or use the public HTTPS transport.",
+      "testFiles": [
+        "tests/astra-local-search-transport.test.mjs",
+        "tests/astra-source-collection-policy.test.mjs"
+      ],
+      "guardAndDestination": {
+        "guard": "Requires ASTRA_SOURCE_COLLECTION_LOCAL_SEARCH_ENABLED=true and the existing origin exactly http://127.0.0.1:8081; the source actor request-admission wraps the actual dispatch through the mandatory withRequestAdmission wrapper, and current S01/source-rights checks remain mandatory. The transport fails closed on invalid request shape, redirects, non-JSON or non-identity encoding, unsuccessful status, oversized response, timeout, or malformed results.",
+        "destination": "One GET to http://127.0.0.1:8081/search with the pinned google cse engine and JSON format; no caller-selected host, engine, proxy, redirect, retry, or public website destination. Constructor-only fixtures may use an explicit 127.0.0.1 HTTP port.",
+        "authorization": "The reviewed synthetic loopback fixture acceptance did not contact the local service. Separately, a bounded one-query product-transport probe is documented at .superpowers/astra-local-search-live-check/actual-product-transport-probe.json and independently validated in .superpowers/astra-local-search-review/actual-service-evidence/REPORT.md (one actual query, HTTP 200, 20 results, 1,394 ms); that is component-query evidence only. It does not establish S01/source-policy execution, source rights or terms, provider identity, engine-internal fan-out, permission to retain or reuse results, full application discovery, or release approval."
+      }
+    }
+  ],
+  "retiredBoundaries": [
+    {
+      "path": "pipeline/personalizer.js",
+      "sha256": "254971b176d4468139b8857eeee8850b850d7507a319ba5354e22d1dd81a6778",
+      "effect": "configured model-provider HTTP/SDK calls and personalization persistence",
+      "testFiles": [
+        "tests/personalization-bedrock.test.mjs",
+        "tests/personalizer-factcheck.test.mjs"
+      ],
+      "status": "retired_from_static_marker_scan",
+      "note": "Current source no longer matches the inventory scan markers; retain as historical provider-call boundary for continued manual review."
+    }
+  ],
+  "reviewedOn": "2026-10-26",
+  "supplementalDatabaseReads": [
+    {
+      "path": "pipeline/astra-current-claims.js",
+      "sha256": "44fc76557bbabc4bbc013e8b8f36f0a7aae8dcdd172b97dcb263b364222bade0",
+      "reads": [
+        "astra.research_claims",
+        "astra.research_claim_corrections",
+        "astra.research_evidence",
+        "astra.research_sources"
+      ],
+      "effect": "Tenant-scoped read of current research claims, latest corrections, effective evidence and current persisted source rights; retracted, expired, ambiguous, proof-mismatched, revoked, stale-rights, non-literal, and excerpt-mismatched claims are blocked.",
+      "testFiles": [
+        "tests/astra-qualification-lineage.test.mjs",
+        "tests/astra-audience-consumers.test.mjs",
+        "tests/astra-source-rights-consumers.test.mjs"
+      ],
+      "guardAndDestination": {
+        "guard": "Requires tenantId; filters claims and corrections by tenant; effective proof and source joins use tenant plus id; persisted source rights are resolved through the tenant-scoped helper. Corrections with duplicate latest timestamps are ambiguous and fail closed.",
+        "destination": "Read-only PostgreSQL queries through the injected client; no network/provider destination.",
+        "authorization": "Read-only current-proof resolution; source rights and proof validity are checked before a claim can support current eligibility."
+      }
+    },
+    {
+      "path": "pipeline/astra-campaign-audience.js",
+      "sha256": "2b50836c962996ab79cab5274e6cabc1889794bf47c6a1fc939352b23c1e18f6",
+      "reads": [
+        "astra.campaigns",
+        "astra.research_identity_candidates",
+        "astra.research_evidence",
+        "astra.research_sources",
+        "astra.research_claims",
+        "astra.research_claim_corrections"
+      ],
+      "effect": "Reads a tenant campaign approval-bound audience snapshot and validates each saved fit against exact account, candidate, email evidence, current claim proofs, and persisted source rights; revoked or stale fits become blocked while qualification history remains immutable.",
+      "testFiles": [
+        "tests/astra-qualification-lineage.test.mjs",
+        "tests/astra-audience-consumers.test.mjs",
+        "tests/astra-source-rights-consumers.test.mjs"
+      ],
+      "guardAndDestination": {
+        "guard": "Requires tenantId and campaignId; campaign, candidate, evidence, source, claim and rights reads are tenant-scoped; account/candidate/email/proof identities are compared exactly, and rights revocation/expiry/retraction are revalidated.",
+        "destination": "Read-only PostgreSQL queries through the injected client; no network/provider destination.",
+        "authorization": "Current audience membership is read-only and does not create approval, authorize source reuse or enable provider/dispatch actions."
+      }
+    },
+    {
+      "path": "pipeline/astra-mongo-store.js",
+      "sha256": "bed484893d6a5ad5c7ad01ac073d4c1c731f0c0494a2b5987fa7c831f5dbde8e",
+      "reads": [
+        "prospecting_jobs",
+        "prospecting_events",
+        "prospecting_outcomes",
+        "prospecting_source_evidence",
+        "prospecting_qualified_contacts",
+        "prospecting_idempotency_receipts"
+      ],
+      "effect": "Tenant-scoped reads for prospecting jobs, append-only events, outcomes, saved source evidence, positively qualified contacts, and idempotency receipts.",
+      "testFiles": [
+        "tests/astra-mongo-store.test.mjs",
+        "tests/astra-prospecting.test.mjs",
+        "tests/astra-prospecting-recovery.test.mjs"
+      ],
+      "guardAndDestination": {
+        "guard": "Every repository operation captures and validates tenantId once and includes it in document filters; unique indexes are tenant-prefixed, mutating multi-document flows use serial session transactions, and untrusted Mongo operators/dotted keys are rejected.",
+        "destination": "Only the separately named and allowlisted MongoDB prospecting-test database; collection filters include tenantId.",
+        "authorization": "Dedicated integration only: ASTRA_INTEGRATION_MODE=prospecting-test, separate explicitly named and allowlisted astra_test_* database, verified TLS and transaction capability; PostgreSQL remains the default. No Atlas access or production/customer data permission is inferred."
+      }
+    },
+    {
+      "path": "pipeline/astra-source-collection.js",
+      "sha256": "b62a7636b5c0fb539b6a3e555afd1aa83d80a55fddc82270d640c1635942bdc5",
+      "reads": [
+        "astra.source_collection_jobs",
+        "astra.source_collection_runs",
+        "astra.source_collection_candidates",
+        "astra.source_collection_observations",
+        "astra.research_evidence",
+        "astra.research_sources",
+        "astra.research_blobs",
+        "astra.research_accounts",
+        "astra.research_identity_candidates"
+      ],
+      "effect": "Reads tenant-scoped source jobs/runs/candidates, the last domain observation, and joined research/source/content/account/identity evidence for recovery and readback.",
+      "testFiles": [
+        "tests/astra-prospecting.test.mjs",
+        "tests/astra-prospecting-source-gate.test.mjs",
+        "tests/astra-prospecting-recovery.test.mjs"
+      ],
+      "guardAndDestination": {
+        "guard": "Tenant UUID is validated at manager boundaries; every SQL SELECT binds tenant_id=$1, record joins bind tenant_id with IDs, and source-job claims use tenant-scoped row locks. External reads remain behind configured search/source, S01 approval, source rights, robots, SSRF, budget and pacing gates.",
+        "destination": "Configured PostgreSQL source-worker database; only Astra source collection and research tables.",
+        "authorization": "A database read is not approval for source reuse or external collection; current native independent repeat was blocked by local fixture ECONNREFUSED."
+      }
+    }
+  ],
+  "supplementalDatabaseWrites": [
+    {
+      "path": "pipeline/astra-mongo-store.js",
+      "sha256": "bed484893d6a5ad5c7ad01ac073d4c1c731f0c0494a2b5987fa7c831f5dbde8e",
+      "writes": [
+        "prospecting_jobs",
+        "prospecting_events",
+        "prospecting_outcomes",
+        "prospecting_source_evidence",
+        "prospecting_qualified_contacts",
+        "prospecting_idempotency_receipts"
+      ],
+      "effect": "Transactional, idempotent tenant-scoped writes for prospecting job/event/outcome state, evidence, qualified contacts and idempotency receipts; also creates tenant-prefixed unique indexes during explicit connection setup.",
+      "testFiles": [
+        "tests/astra-mongo-store.test.mjs",
+        "tests/astra-prospecting.test.mjs",
+        "tests/astra-prospecting-recovery.test.mjs"
+      ],
+      "guardAndDestination": {
+        "guard": "Every repository operation captures and validates tenantId once and includes it in document filters; unique indexes are tenant-prefixed, mutating multi-document flows use serial session transactions, and untrusted Mongo operators/dotted keys are rejected. Qualified contact writes require positive qualification and source evidence belonging to the same tenant/job; worker updates require current lease/fence/version.",
+        "destination": "Only the separately named and allowlisted MongoDB prospecting-test database; collection writes use transaction sessions and tenant-prefixed unique indexes.",
+        "authorization": "Dedicated integration only: ASTRA_INTEGRATION_MODE=prospecting-test, separate explicitly named and allowlisted astra_test_* database, verified TLS and transaction capability; PostgreSQL remains the default. No Atlas access or production/customer data permission is inferred."
+      }
+    },
+    {
+      "path": "pipeline/astra-source-collection.js",
+      "sha256": "b62a7636b5c0fb539b6a3e555afd1aa83d80a55fddc82270d640c1635942bdc5",
+      "writes": [
+        "astra.source_collection_jobs",
+        "astra.source_collection_runs",
+        "astra.source_collection_candidates",
+        "astra.source_collection_observations",
+        "astra.research_sources",
+        "astra.research_blobs",
+        "astra.research_evidence",
+        "astra.research_accounts",
+        "astra.research_identity_candidates"
+      ],
+      "effect": "Tenant-scoped durable source job/run lifecycle, untrusted search candidates, fetched source snapshot/evidence/content and derived account/identity candidates; writes terminal run/job results and retry-safe predecessor state.",
+      "testFiles": [
+        "tests/astra-prospecting.test.mjs",
+        "tests/astra-prospecting-source-gate.test.mjs",
+        "tests/astra-prospecting-recovery.test.mjs"
+      ],
+      "guardAndDestination": {
+        "guard": "Every SQL write binds tenant_id; claims use FOR UPDATE SKIP LOCKED and status/latest-run predicates; fetch transport requires explicit remote enablement, approved public HTTPS origin, source-rights and robots attestations, SSRF-safe resolving, shared durable per-request reservation and one-second minimum spacing.",
+        "destination": "Configured PostgreSQL source-worker database and Astra source/research tables; no direct writes to Mongo collections.",
+        "authorization": "Source persistence does not confer rights, commercial reuse, provider inference, or send approval. Round-five native repeat could not connect to the existing synthetic PostgreSQL fixture."
+      }
+    },
+    {
+      "path": "pipeline/astra-source-rights.js",
+      "sha256": "ba42cf67ec21aa08341305a53b7af7570ab3f48541afcfa689dec828d4e39de7",
+      "writes": [
+        "astra.research_source_rights_revocations"
+      ],
+      "effect": "Appends tenant-scoped, idempotent source-rights revocation events to an append-only table; existing events remain immutable and current readers fail closed after revocation. Current rights readers evaluate expiry at the later of the database statement time and supplied audit time; a backdated audit cannot revive rights already expired according to the database clock.",
+      "testFiles": [
+        "tests/astra-source-rights.test.mjs",
+        "tests/astra-source-rights-consumers.test.mjs",
+        "tests/astra-source-rights-ui.test.mjs"
+      ],
+      "guardAndDestination": {
+        "guard": "Mutation requires a verified tenant owner/admin actor; tenant/source identity is derived from the verified session, spoofed identity fields and unknown inputs are rejected, the source must belong to that tenant, and retries are idempotent. Database tenant RLS is retained.",
+        "destination": "PostgreSQL astra.research_source_rights_revocations. The table has ENABLE ROW LEVEL SECURITY and FORCE ROW LEVEL SECURITY; the app role has tenant-RLS-scoped SELECT and INSERT, and the worker role has tenant-RLS-scoped SELECT. Events are append-only.",
+        "authorization": "Recording or reading source-rights state does not authorize provider inference, source collection/reuse, dispatch, or release approval."
+      },
+      "tableAccess": {
+        "app": [
+          "SELECT",
+          "INSERT"
+        ],
+        "worker": [
+          "SELECT"
+        ],
+        "tenantRls": true,
+        "forcedRls": true,
+        "appendOnly": true
+      }
+    }
+  ],
+  "supplementalOutcomeOwnershipGuards": [
+    {
+      "path": "pipeline/astra-outcomes.js",
+      "sha256": "f56ee094dd96e0688184a9cbd75a8fdc9446e13f975a9da10ab4005bc5a1d20c",
+      "guard": "Recognized account UUID references are normalized and resolved under the actor tenant before recording outcomes or correction replacements; missing and foreign account references receive the same safe 404. Reversals remain tenant-scoped to historical event IDs and do not re-resolve or rewrite the historical entity.",
+      "destination": "Tenant-scoped account lookup through the injected database client precedes append-only outcome ledger writes; no provider destination.",
+      "authorization": "Ownership validation permits only an owned account reference for an outcome write; opaque legacy references keep their existing behavior and no provider or release approval is inferred.",
+      "testFiles": [
+        "tests/astra-outcome-ownership.test.mjs",
+        "tests/astra-outcomes-corrections.test.mjs"
+      ]
+    },
+    {
+      "path": "pipeline/astra-ledger-routes.js",
+      "sha256": "e952710c56f91c04b9c879bc870862353bb09eb46f126b4ef137f74f90876ed5",
+      "guard": "Generic tenant event route validates recognized account UUID references against the actor tenant before appendEvent, outbox insertion, or projection rebuild; foreign and missing references fail closed.",
+      "destination": "Tenant-scoped outcome ledger and outbox/projection write paths.",
+      "authorization": "Generic event writes enforce account ownership; this does not grant provider or release authority.",
+      "testFiles": [
+        "tests/astra-outcome-ownership.test.mjs"
+      ]
+    }
+  ],
+  "historicalStaticDetectorBaseline": {
+    "sourceFiles": 48,
+    "inventorySha256": "292607594e9b3382f754aa66c73d5ef98e4789de0862233ddbee8db6ebc2c873",
+    "evidence": ".superpowers/astra-live/metadata/before/s00-side-effect-inventory.json",
+    "preservedPathCount": 48
+  }
+}

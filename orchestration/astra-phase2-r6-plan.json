@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "phase": "PHASE_2_QA_ONLY",
+  "createdAt": "2026-10-25T04:53:20.600Z",
+  "noNewFeatureWave": true,
+  "baselineCandidate": "astra-r5-7474ca99053ab119",
+  "sourceChanges": [
+    {
+      "owner": "/root/fix_benchmark_report_r6",
+      "paths": [
+        "pipeline/astra-benchmark.js",
+        "tests/astra-benchmark-report.test.mjs"
+      ],
+      "reason": "R141 normal tenant request failed because dependent member data was used before initialization; preserve honest insufficient_data for 0/500."
+    }
+  ],
+  "qaEvidence": [
+    ".superpowers/phase2/suite-r5/",
+    ".superpowers/phase2/migrations-r5/final-cycle-results.json",
+    ".superpowers/phase2/credential-audit-r5/",
+    ".superpowers/phase2/routes-r5/provenance-binding-r5.json",
+    ".superpowers/phase2/coverage-r6/"
+  ],
+  "readinessRubric": "orchestration/astra-phase2-readiness-rubric.json",
+  "releaseReady": false,
+  "roadmapCompletionClaimed": false
+}

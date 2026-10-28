@@ -1,0 +1,60 @@
+{
+  "phase": "PHASE_1_IMPLEMENTATION",
+  "model": "gpt-6-luna",
+  "reasoning": "high",
+  "releaseReady": false,
+  "externalActions": "disabled",
+  "tickets": [
+    {
+      "owner": "/root/launch_controls",
+      "tasks": [
+        "X14",
+        "S33",
+        "X15"
+      ],
+      "files": [
+        "pipeline/astra-launch-controls.js",
+        "pipeline/astra-launch-routes.js",
+        "pipeline/astra-harness.js",
+        "pipeline/astra-dispatcher.js",
+        "migrations/astra/019-launch-controls.up.sql",
+        "migrations/astra/019-launch-controls.down.sql"
+      ]
+    },
+    {
+      "owner": "/root/economics_postsale",
+      "tasks": [
+        "X13",
+        "S34",
+        "S35"
+      ],
+      "files": [
+        "pipeline/astra-economics.js",
+        "pipeline/astra-economics-routes.js",
+        "pipeline/astra-postsale.js",
+        "migrations/astra/018-economics-postsale.up.sql",
+        "migrations/astra/018-economics-postsale.down.sql"
+      ]
+    },
+    {
+      "owner": "/root/integrate_remaining_features",
+      "files": [
+        "server.js",
+        "pipeline/astra-api.js",
+        "pipeline/astra-feature-workers.js",
+        "astra.html",
+        "js/astra-workbench.js",
+        "css/astra-workbench.css",
+        "pipeline/astra-connectors.js"
+      ],
+      "tasks": [
+        "INTEGRATION"
+      ]
+    }
+  ],
+  "remainingPreparedFeatureGap": [
+    "S30 offline bandit management",
+    "X08 executable adversarial application cases (not Phase2 execution)"
+  ],
+  "realPilotAndDeployment": "forbidden"
+}

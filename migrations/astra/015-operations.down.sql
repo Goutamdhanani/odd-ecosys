@@ -1,0 +1,11 @@
+BEGIN;
+SET ROLE astra_owner;
+DROP TABLE IF EXISTS astra.engagement_events;
+DROP TABLE IF EXISTS astra.engagement_tracking_tokens;
+DROP TABLE IF EXISTS astra.engagement_privacy_permissions;
+DROP TABLE IF EXISTS astra.recovery_requests;
+DROP TABLE IF EXISTS astra.operational_incidents;
+DROP TABLE IF EXISTS astra.operational_kill_switches;
+DROP TABLE IF EXISTS astra.operational_telemetry;
+RESET ROLE;
+COMMIT;

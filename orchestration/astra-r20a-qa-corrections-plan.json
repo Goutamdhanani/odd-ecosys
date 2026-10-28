@@ -1,0 +1,13 @@
+{
+  "id": "ASTRA-R20A-REPRODUCED-QA-CORRECTIONS",
+  "baseCandidate": "astra-r20-6df3c0f1f6eb8a3a",
+  "baseAggregate": "6df3c0f1f6eb8a3a9fa7f14b272db4519a216b6b336dc1c71ce4dde46e58fb40",
+  "baseSuite": {"tests":539,"passed":536,"failed":3,"skipped":0,"exitCode":1,"sourceMismatchCount":0},
+  "tasks": [
+    {"id":"expiry","owner":"/root/r20a_expiry_fix1","paths":["pipeline/astra-research.js","pipeline/astra-source-rights.js","tests/astra-xray.test.mjs","tests/astra-source-rights.test.mjs",".superpowers/r20a/expiry-fix/**"],"requirement":"Reproduce future-as-of and real expiry failures; enforce persisted revocation/expiry and future audit time consistently, never revive database-expired rights with a backdated clock. Preserve tenant and append-only boundaries. Focused synthetic33 proof and independent review."},
+    {"id":"workspace-transition","owner":"/root/r20a_workspace_fix1","paths":["js/astra-growth.js","tests/astra-growth-ui.test.mjs","tests/astra-growth-journey.test.mjs",".superpowers/r20a/workspace-fix/**"],"requirement":"Reproduce or deterministically cover POST-to-context-to-readback transition delay. Show verified workspace promptly while retaining loading/error states, epoch/role/CSRF/data isolation and all existing journey assertions. Preserve failed evidence; no blanket timeout increase or assertion removal."},
+    {"id":"integration","owner":"/root","paths":[".superpowers/r20a/integration-checkpoint/**",".superpowers/r20a/suite/**","orchestration/astra-r20a-qa-ownership.md","orchestration/astra-r20a-freeze-authorization.json","orchestration/astra-phase2-source-r20a.json"],"requirement":"After independent fixes, refresh exact metadata and route binding, freeze a successor without overwriting R20, run complete guarded suite and obtain final independent review."}
+  ],
+  "constraints":["Luna-only implementation and reviews; root orchestration/helpers only","True before copies and one writer per path","No live provider/outreach/deployment or real-data migration","No Git stage/commit/push, protected worktree changes, private external env access or fabricated canonical acceptance","Do not mutate frozen R20 reports, manifest, archive or authorization"],
+  "releaseReady":false
+}

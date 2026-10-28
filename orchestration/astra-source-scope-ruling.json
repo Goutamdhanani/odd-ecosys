@@ -1,0 +1,64 @@
+{
+  "recordedDate": "2026-10-25",
+  "kind": "coordinator_scope_authorization",
+  "authority": "The user authorized complete isolated frontend/backend implementation and necessary test changes, later explicitly choosing feature-first development with Luna agents.",
+  "meaning": "Authorized implementation deltas only. NOT historical approval, independent acceptance, legal/provider approval, or a test waiver. Captured before and current after hashes remain auditable.",
+  "immutableSourceSnapshotPreserved": true,
+  "productAcceptance": "NOT_ACCEPTED",
+  "releaseReady": false,
+  "paths": [
+    {
+      "path": "package.json",
+      "authorizedPurpose": "S03 PostgreSQL dependency/runtime integration",
+      "currentSha256": "b6d862997c17dffeb396318bceb2d47b64fb26c816b4bf33f3f03a35acb2f6ce"
+    },
+    {
+      "path": "package-lock.json",
+      "authorizedPurpose": "S03 exact PostgreSQL dependency chain",
+      "currentSha256": "8dbd87c0fc8e92ca65ed04ffac614b6c86aaa52364c766d1d3ca4d4cc9571738"
+    },
+    {
+      "path": "pipeline/auth-manager.js",
+      "authorizedPurpose": "S03 auth/session and trusted principal integration",
+      "currentSha256": "955f5381d2f4707bacb41a9d82582c8bccb20a66a3cf7c07448bfa02f26f9504"
+    },
+    {
+      "path": "pipeline/lead-strategy.js",
+      "authorizedPurpose": "S06 sole GLM gateway/egress integration",
+      "currentSha256": "fee4c804ff33c5daf113aade4f005d185c47d1c12e8860814040f44d46886dc8"
+    },
+    {
+      "path": "pipeline/personalizer.js",
+      "authorizedPurpose": "S06 sole GLM gateway/egress integration",
+      "currentSha256": "dba18599b2cae13206a2afac849f6172d2a94b8b88be055b220817ed67820dfa"
+    },
+    {
+      "path": "pipeline/reply-tracker.js",
+      "authorizedPurpose": "S06/S21 reply and sole gateway integration",
+      "currentSha256": "67f00a8716859f7ea71e4f24e5aada8b30d0d2e5f36d80238a0b4cc422262713"
+    },
+    {
+      "path": "pipeline/sending-engine.js",
+      "authorizedPurpose": "S02 offer proof/capacity enforcement preserving legacy null-offer snapshots",
+      "currentSha256": "3f2b0ca9285780d4a5694d7a2ef5e341ca75fb8a9bba69caa3dce066dd8940fa"
+    },
+    {
+      "path": "server.js",
+      "authorizedPurpose": "S03 and subsequent authenticated native route assembly",
+      "currentSha256": "0a11ceccd682673b757697458db5fbe0608f796f954cb9670a226ed8d8e722fd"
+    },
+    {
+      "path": "tests/unsubscribe-api.test.mjs",
+      "authorizedPurpose": "Synthetic loopback fixture adds explicit legacy mailbox warmup review row; coordinator reviewed actual two-line diff",
+      "currentSha256": "0912a9f7994c9fa488d14d9c85b4b54eb4ffcd942642a989d9055cb48a79fdbf"
+    }
+  ],
+  "references": [
+    "docs/astra/CONTINUOUS_EXECUTION_PLAN.md",
+    "orchestration/astra-feature-wave-2.json",
+    ".superpowers/sdd/fa3710986978fc58/feature-first-before.json",
+    ".superpowers/sdd/fa3710986978fc58/gateway-before.json",
+    ".superpowers/sdd/fa3710986978fc58/gateway-extra-before.json",
+    ".superpowers/sdd/fa3710986978fc58/unsubscribe-before.json"
+  ]
+}

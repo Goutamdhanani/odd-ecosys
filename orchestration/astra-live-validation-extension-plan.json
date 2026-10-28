@@ -1,0 +1,18 @@
+{
+  "id": "ASTRA-LIVE-VALIDATION-ACTUAL-APPLICATION-EXTENSION",
+  "owner": "/root/live_validation_extension",
+  "paths": ["artifacts/astra-live-validation/**", ".superpowers/astra-live/validation/application-extension/**"],
+  "requirements": [
+    "Preserve the frozen exactly100 matrix, all original attempts, assertion-contract archives, coordinator-review archives and independent review evidence",
+    "Capture true before copies of every changed existing file; do not edit the evidence registrar or relax its predicates",
+    "Prepare a version2 assertion contract and unsigned coordinator binding proposal for the independently reviewed actual application receipt and the separate actual encrypted-provider persistence receipt",
+    "Pin immutable sanitized copies of actual receipts in the existing approved public evidence root; never copy private configuration, fixture fingerprints or ciphertext",
+    "Use exact scenario purpose, measured duration, tested source bytes and per-case assertions; native PostgreSQL and SQLite may not count as Atlas tests",
+    "Do not replace stronger existing ENC01 and ENC05 actual evidence merely to increase registration counts",
+    "Do not register PASS or claim coordinator approval until root supplies the signed review binding after reading the proposed actual text and source/evidence",
+    "Register only justified new evidence after GO; remaining cases stay truthfully blocked or not run; update all required human and machine reports consistently",
+    "No new runtime, provider, Atlas, source or mail execution; this assignment records already executed evidence only"
+  ],
+  "releaseReady": false,
+  "roadmap52Accepted": false
+}

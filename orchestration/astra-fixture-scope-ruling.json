@@ -1,0 +1,122 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-24T22:41:18.443Z",
+  "kind": "coordinator_scope_authorization",
+  "authority": "User authorized full isolated implementation and Phase2 complete testing with Luna-only agents; necessary test fixture repairs are within that scope.",
+  "meaning": "Prospective authorization of bounded fixture changes only; not historical approval, test waiver, independent acceptance, legal or provider approval.",
+  "immutableSourceSnapshotPreserved": true,
+  "releaseReady": false,
+  "baselineCandidate": "orchestration/astra-phase2-source-r2.json",
+  "evidence": [
+    ".superpowers/phase2/suite-r2/failures.json",
+    "orchestration/astra-phase2-r3-plan.json",
+    ".superpowers/phase2/fixes/mail-fixtures/report.md"
+  ],
+  "paths": [
+    {
+      "path": "tests/lead-strategy-personal-api.test.mjs",
+      "agent": "/root/repair_legacy_gateway_tests",
+      "authorizedPurpose": "Replace stale legacy direct-provider tests with current tenant GLM authorization, no-egress/no-persistence, schema and sequence-stop guarantees.",
+      "baselineSha256": "6200000d4499204a8fc2daf818845639ddc2091288745308d54370d07da74f44",
+      "afterHash": "Capture only after named writer finishes; verify against worker report before freezing."
+    },
+    {
+      "path": "tests/lead-strategy-personal-settings.test.mjs",
+      "agent": "/root/repair_legacy_gateway_tests",
+      "authorizedPurpose": "Replace stale legacy direct-provider tests with current tenant GLM authorization, no-egress/no-persistence, schema and sequence-stop guarantees.",
+      "baselineSha256": "20699caaa7feadaef7e6ecaaa42a2333de84cbdda8e37cf7604cc6bf6ac1bb7e",
+      "afterHash": "Capture only after named writer finishes; verify against worker report before freezing."
+    },
+    {
+      "path": "tests/lead-strategy-settings.test.mjs",
+      "agent": "/root/repair_legacy_gateway_tests",
+      "authorizedPurpose": "Replace stale legacy direct-provider tests with current tenant GLM authorization, no-egress/no-persistence, schema and sequence-stop guarantees.",
+      "baselineSha256": "6f42256e0f91e3afe60b35fda6308731b1cc1a2fce4bc8fcaa6f51f8d0b03299",
+      "afterHash": "Capture only after named writer finishes; verify against worker report before freezing."
+    },
+    {
+      "path": "tests/lead-strategy.test.mjs",
+      "agent": "/root/repair_legacy_gateway_tests",
+      "authorizedPurpose": "Replace stale legacy direct-provider tests with current tenant GLM authorization, no-egress/no-persistence, schema and sequence-stop guarantees.",
+      "baselineSha256": "8e2bdcd05605da5bc393e2b46169749b2d47c861d028c9087ddc9b45852e5d2f",
+      "afterHash": "Capture only after named writer finishes; verify against worker report before freezing."
+    },
+    {
+      "path": "tests/personalization-bedrock.test.mjs",
+      "agent": "/root/repair_legacy_gateway_tests",
+      "authorizedPurpose": "Replace stale legacy direct-provider tests with current tenant GLM authorization, no-egress/no-persistence, schema and sequence-stop guarantees.",
+      "baselineSha256": "d194da8657da2efb0eb60b90a34ed338e53987f1458e99cad8e810457cb43c82",
+      "afterHash": "Capture only after named writer finishes; verify against worker report before freezing."
+    },
+    {
+      "path": "tests/personalizer-factcheck.test.mjs",
+      "agent": "/root/repair_legacy_gateway_tests",
+      "authorizedPurpose": "Replace stale legacy direct-provider tests with current tenant GLM authorization, no-egress/no-persistence, schema and sequence-stop guarantees.",
+      "baselineSha256": "45cd2fd4cfd9624a848d0873bc7405ece3ede6734495bcf4a5e18af2ed793b97",
+      "afterHash": "Capture only after named writer finishes; verify against worker report before freezing."
+    },
+    {
+      "path": "tests/sending-api.test.mjs",
+      "agent": "/root/repair_legacy_gateway_tests",
+      "authorizedPurpose": "Replace stale legacy direct-provider tests with current tenant GLM authorization, no-egress/no-persistence, schema and sequence-stop guarantees.",
+      "baselineSha256": "ec82ac92bfaed8acc99a3941da792e7c3075d045307332f10f0ee1d7cf83d405",
+      "afterHash": "Capture only after named writer finishes; verify against worker report before freezing."
+    },
+    {
+      "path": "tests/campaign-sequence-execution.test.mjs",
+      "agent": "/root/repair_legacy_gateway_tests",
+      "authorizedPurpose": "Replace stale legacy direct-provider tests with current tenant GLM authorization, no-egress/no-persistence, schema and sequence-stop guarantees.",
+      "baselineSha256": "958a312aaf5e1d710868adc2e38b07eff63d5969df073352c5766232bf6e287d",
+      "afterHash": "Capture only after named writer finishes; verify against worker report before freezing."
+    },
+    {
+      "path": "tests/campaign-audience.test.mjs",
+      "agent": "/root/repair_mail_fixtures",
+      "authorizedPurpose": "Restore safe synthetic reviewed mailbox fixtures and loopback IMAP TLS trust coverage, preserving deny cases and sender/recipient/suppression/stop behavior.",
+      "baselineSha256": "94cf76ef5b926fadeb630028ac80c5b7fed98e2a543f1213a37fe702904a3475",
+      "afterHash": "Capture only after named writer finishes; verify against worker report before freezing."
+    },
+    {
+      "path": "tests/campaign-senders.test.mjs",
+      "agent": "/root/repair_mail_fixtures",
+      "authorizedPurpose": "Restore safe synthetic reviewed mailbox fixtures and loopback IMAP TLS trust coverage, preserving deny cases and sender/recipient/suppression/stop behavior.",
+      "baselineSha256": "07a45e02fb33cf5770de94f19826da5e25a748b080c37c5add428f36713f622d",
+      "afterHash": "Capture only after named writer finishes; verify against worker report before freezing."
+    },
+    {
+      "path": "tests/campaign-stop.test.mjs",
+      "agent": "/root/repair_mail_fixtures",
+      "authorizedPurpose": "Restore safe synthetic reviewed mailbox fixtures and loopback IMAP TLS trust coverage, preserving deny cases and sender/recipient/suppression/stop behavior.",
+      "baselineSha256": "673ce7cd306abc13dd4d86171fd2ab2220e108badcf64feced982dee9f1598f8",
+      "afterHash": "Capture only after named writer finishes; verify against worker report before freezing."
+    },
+    {
+      "path": "tests/sender-rotation.test.mjs",
+      "agent": "/root/repair_mail_fixtures",
+      "authorizedPurpose": "Restore safe synthetic reviewed mailbox fixtures and loopback IMAP TLS trust coverage, preserving deny cases and sender/recipient/suppression/stop behavior.",
+      "baselineSha256": "89beb8a9c03a5953021bd4513c513b2f2b1b2c52cd24f03006144e55f3815c51",
+      "afterHash": "Capture only after named writer finishes; verify against worker report before freezing."
+    },
+    {
+      "path": ".gitignore",
+      "agent": "/root/repair_mail_fixtures",
+      "authorizedPurpose": "Restore safe synthetic reviewed mailbox fixtures and loopback IMAP TLS trust coverage, preserving deny cases and sender/recipient/suppression/stop behavior.",
+      "baselineSha256": null,
+      "afterHash": "Capture only after named writer finishes; verify against worker report before freezing."
+    },
+    {
+      "path": "tests/support/imap-test-cert.pem",
+      "agent": "/root/repair_mail_fixtures",
+      "authorizedPurpose": "Restore safe synthetic reviewed mailbox fixtures and loopback IMAP TLS trust coverage, preserving deny cases and sender/recipient/suppression/stop behavior.",
+      "baselineSha256": null,
+      "afterHash": "Capture only after named writer finishes; verify against worker report before freezing."
+    },
+    {
+      "path": "tests/support/imap-test-key.pem",
+      "agent": "/root/repair_mail_fixtures",
+      "authorizedPurpose": "Restore safe synthetic reviewed mailbox fixtures and loopback IMAP TLS trust coverage, preserving deny cases and sender/recipient/suppression/stop behavior.",
+      "baselineSha256": null,
+      "afterHash": "Capture only after named writer finishes; verify against worker report before freezing."
+    }
+  ]
+}

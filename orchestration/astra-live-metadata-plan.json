@@ -1,0 +1,8 @@
+{
+  "id":"ASTRA-LIVE-SOURCE-INTEGRATION",
+  "owner":"/root/live_metadata1",
+  "paths":["docs/astra/s00-source-delta.json","docs/astra/s00-side-effect-inventory.json","docs/astra/commercial-gates.json","tests/astra-source-fidelity.test.mjs","tests/astra-side-effect-inventory.test.mjs",".superpowers/astra-live/metadata/**"],
+  "dependencies":["Released and independently accepted provider transport, Mongo repository, prospecting callers/UI, and 100-case registrar fixes"],
+  "requirements":["Capture true before files before edits; preserve every original selected source and prior authorization/history hash","Enumerate latest owner-authorized package/server/growth/provider/Mongo/prospecting deltas rather than hiding divergence; preserve original baseline counts/history and add separately classified current fingerprints","Preserve original static detector and negative probe; add actual new database/egress boundaries and their tenant/approval/transaction/secret guards, without fake marker comments or detector exemptions","Commercial registry may change only inventory source provenance hash; parsed equality of all decisions and unrelated fields against accepted R20a and original preR20 registry","Do not approve live/legal/provider gates, infer real-service passes, overwrite R20a or change product/helpers/fixtures","Guarded focused metadata tests with actual exits/counts, then independent review before a new frozen full-suite candidate"],
+  "releaseReady":false
+}

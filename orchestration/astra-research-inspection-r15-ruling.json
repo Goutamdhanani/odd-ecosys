@@ -1,0 +1,32 @@
+{
+  "rulingId": "ASTRA-PHASE2-RESEARCH-INSPECTION-R15",
+  "parentPlan": "orchestration/astra-research-inspection-r13-plan.json",
+  "previousRuling": "orchestration/astra-research-inspection-r14-ruling.json",
+  "reviewRound": 3,
+  "finding": "Corrected independent DOM-observer probe confirmed a P3 stale error notice: B-click, B-request-start, then A's identity-failure notice, then B success. No stale evidence/forms/candidates commit was observed. The earlier window.setNotice instrumentation was invalid and is not negative assurance.",
+  "evidence": ".superpowers/phase2/final-r14/R14-STALE-ERROR-REVIEW.md",
+  "rejectedRuntime": "orchestration/astra-phase2-runtime-r14.json",
+  "rejectedRuntimePreserved": true,
+  "globalR14Executed": false,
+  "owner": "/root/research_notice_r15",
+  "ownershipTransfer": "Prior writer relinquished all files at its FINAL; previous agent is no longer active. This ticket transfers the same bounded paths to a fresh Luna writer.",
+  "ownedPaths": [
+    "js/astra-workbench.js",
+    "tests/astra-research-inspection-ui.test.mjs",
+    "tests/astra-workbench-e2e.test.mjs",
+    "docs/astra/s00-side-effect-inventory.json",
+    "docs/astra/commercial-gates.json",
+    ".superpowers/phase2/fixes/research-notice-r15/**"
+  ],
+  "requirements": [
+    "Handle an inspection error notice only while its captured request ID and tenant remain current, with no asynchronous gap between that check and notice mutation. Apply to both explicit inspection and automatic snapshot inspection callers.",
+    "Current inspection failures must still show a useful error; stale failures must not overwrite newer notices. Preserve latest-request/current-tenant evidence/forms/actions/candidates commits and no-account clearing.",
+    "Reproduce the concrete R14 trace using actual app-rendered controls and DOM observation. Keep a deterministic regression for stale failure and current failure, preserving every existing overlap, out-of-order, tenant-switch and no-account assertion.",
+    "Retain all rejected runtime and prior focused/review logs. Do not overwrite any source manifest or claim a full R14 regression was executed.",
+    "Refresh only the JS fingerprint and resulting inventory provenance fingerprint. Preserve all commercial decisions and the immutable selected-source snapshot/deltas.",
+    "Writer completes product/test/metadata and relinquishes product files, root freezes runtime R15, then writer binds existing strict E2E checks to that exact runtime and runs the real guarded synthetic journey.",
+    "Require independent re-review, new immutable global candidate, full automated suite, final credential audit and evidence-based readiness report. No feature wave or external actions."
+  ],
+  "independentAcceptance": false,
+  "releaseReady": false
+}

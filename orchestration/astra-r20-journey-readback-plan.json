@@ -1,0 +1,8 @@
+{
+  "id":"ASTRA-R20-JOURNEY-PERSISTED-READBACK",
+  "owner":"/root/r20_journey_readback1",
+  "ownedPaths":["tests/astra-growth-journey.test.mjs",".superpowers/r20/guided-journey/readback-extension/**"],
+  "reason":"Independent journey review accepted bounded scope but documented missing explicit GET readback of imported inbox message and held CRM proposal",
+  "requirements":["Keep all current positive/negative/source-lineage assertions unchanged","Add actual persisted readback assertions for exact imported message/thread and mapped/held CRM proposal including same tenant/account identity","Do not enable provider actions, replace receipts with mocks or weaken any policy assertion","Use strict canonical synthetic33 fixture, enforced auth and egress guard; capture before/after test hashes and exact focused exit","Independent narrow review before final test fingerprint and freeze"],
+  "releaseReady":false
+}

@@ -1,0 +1,10 @@
+{
+  "id":"ASTRA-R20-GUIDED-JOURNEY-QA",
+  "owner":"/root/r20_guided_journey_qa",
+  "root":"C:/Users/pooja/.codex/worktrees/astra-foundation/odd-ecosys",
+  "ownedPaths":["tests/astra-growth-journey.test.mjs",".superpowers/r20/guided-journey/**"],
+  "purpose":"A positive joined synthetic customer journey through actual guided UI and persisted APIs, supplementing the existing advanced workbench test whose qualification assertion checks only result count",
+  "acceptance":["Real enforced authentication, strict canonical synthetic33 fixture, unique auth IDs and workspaces","Actual guided controls preserve current account/evidence/source linkage through research and supported facts","Approved offer/manual mailbox/campaign creation, explicit fit qualification, supported draft, exact-version approval and persisted offline dispatch plan","Same synthetic account continues through inbox import, local CRM mapping/held proposal, observed outcomes and analytics readback","Idempotent retry/conflict and cross-tenant negative controls at material transitions","No fake verification, invented causal attribution, bypassed proofs or flags enabling live actions","Fresh per-run temporary screenshots and secret-safe command/log/exit evidence","Existing tests/assertions remain unchanged; product defects must be reported and separately assigned"],
+  "restrictions":["Luna/high only","No product/helper edits","No live preview writes, real customer data or provider calls","No production migrations, runtime restarts or Git mutations","Do not activate real sending, collection, GLM or CRM integrations","Full suite waits for released test and independent review"],
+  "releaseReady":false
+}

@@ -1,0 +1,23 @@
+{
+  "workspace": "C:/Users/pooja/.codex/worktrees/astra-foundation/odd-ecosys",
+  "baseHead": "f30490bd892dd651fd2fb276b09b510379e27c0d",
+  "currentProductSourceFrozen": false,
+  "historicalAcceptedCandidate": "astra-r20a-6440a954f59ed529",
+  "historicalSuite": {"pass": 540, "fail": 0, "appliesToCurrentOverlay": false},
+  "registered100Scenarios": {"PASS": 20, "FAIL": 0, "BLOCKED": 14, "NOT_RUN": 66},
+  "registrationBindings": {"retainedVersion1": 8, "newVersion2": 12},
+  "providerUse": {"modelCatalogRequests": 2, "catalogAllowanceExhausted": true, "inferenceRequests": 3, "inferenceRequestLimit": 10, "actualModel": "glm-5.3-flash", "inputTokens": 280, "completionTokens": 27, "reportedTotalTokens": 307, "costAndReasoningTokens": "unreported", "canonicalSpecialistGatewayIntegrationProven": false},
+  "externalInputs": {"atlasUriPresentAtLastCheck": false, "atlasTestDatabaseNameConfigured": true, "searchEndpointPresentAtLastCheck": false, "approvedPublicPageLimit": 10, "minimumRequestSpacingSeconds": 1, "actualPublicSourceRequests": 0},
+  "mail": {"etherealSmtpAuthenticated": true, "etherealImapAuthenticated": true, "messagesSubmitted": 0, "internetDeliveryVerified": false, "applicationCampaignInboxIntegrationProven": false},
+  "pending": [
+    "Final prospecting repair/review round5: outstanding SQL source job must remain pending during parent-lease handover rather than quarantine or complete parent",
+    "Independent registry/report extension review for exactly20 currently registered passes",
+    "Independent focused QUAL01/MEM06 evidence re-review; prior native review accepted8 other cases, no native intelligence cases registered yet",
+    "Released and accepted final product sources before source metadata writer GO",
+    "Current route capture/security run, source freeze, guarded full suite and independent checkpoint acceptance",
+    "Safe preview restart with current accepted backend while preserving private state"
+  ],
+  "externalOperationsDisabledByDefault": true,
+  "releaseReady": false,
+  "roadmap52Accepted": false
+}

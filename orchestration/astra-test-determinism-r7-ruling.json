@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-25T05:21:46.817Z",
+  "kind": "coordinator_scope_authorization",
+  "authority": "User explicitly requested Phase2 complete safe QA; root authorized a fresh Luna task to fix test determinism and isolate project-test browser traffic while preserving all application behavior.",
+  "baselineManifest": "orchestration/astra-phase2-source-r6.json",
+  "scope": "TEST_HARNESS_ONLY_NOT_A_NEW_FEATURE_WAVE",
+  "meaning": "Records authorized scope, not prior acceptance or production/provider approval.",
+  "immutableOriginal228SnapshotPreserved": true,
+  "releaseReady": false,
+  "existingPaths": [
+    {
+      "path": "tests/website-discovery-jobs.test.mjs",
+      "baselineSha256": "b8f4bdac2cab8ec2254c41b0901824630b0008b02971fc6c734e0a156e378b1f",
+      "baselineBytes": 65215
+    },
+    {
+      "path": "tests/support/astra-qa-egress-guard.mjs",
+      "baselineSha256": "d63f1868bcd1722dd8a21512b3d6da4897cfa19dd93768bb01dff130669775a4",
+      "baselineBytes": 10890
+    },
+    {
+      "path": "tests/astra-qa-egress-guard.test.mjs",
+      "baselineSha256": "525d40ce75f7ccea39ad4bf0a5aec3b34bde22dfd4ca18b851a7d49389b0e38a",
+      "baselineBytes": 7684
+    },
+    {
+      "path": "docs/astra/s00-source-delta.json",
+      "baselineSha256": "819123a3ce962132a660bf8725c1192df0af2f7ed820855373182a2ee9f5bd2a",
+      "baselineBytes": 28827
+    },
+    {
+      "path": "tests/astra-source-fidelity.test.mjs",
+      "baselineSha256": "892956b07f80162bddc5afe11415060cff90c5f6a8262c29dce9df325600683d",
+      "baselineBytes": 5033
+    }
+  ],
+  "newOptionalPaths": [
+    "tests/support/loopback-browser-guard.mjs",
+    "tests/astra-qa-browser-guard.test.mjs"
+  ],
+  "conditions": [
+    "No application UI/fonts/API or migration changes.",
+    "Preserve all native Node network deny guards and callback result shapes.",
+    "Only existing normal project browser tests and fresh test profiles; no real-user browser automation.",
+    "Original evidence records must be proven preserved by stable identity; if they were actually overwritten, report a product defect rather than relaxing assertions.",
+    "The evidence test must assert all original rows/hash/excerpts remain intact while allowing additional distinct-page evidence.",
+    "Update source-delta only for actually changed files in original 228 snapshot, preserving every prior row and original before hashes."
+  ],
+  "evidence": [
+    ".superpowers/phase2/suite-r6/first-run/",
+    ".superpowers/phase2/suite-r6/",
+    ".superpowers/phase2/fixes/test-determinism-r7/"
+  ]
+}

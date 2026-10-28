@@ -1,0 +1,72 @@
+{
+  "finding": "R2-F1",
+  "severity": "P2",
+  "scope": "Captured JSON lead/send reference arrays must contain only valid IDs wholly owned by the restorable snapshot.",
+  "releaseReady": false,
+  "frozenAt": "2026-10-28T12:17:34.355Z",
+  "runBoundary": "Separate follow-up after the coordinator started full R2; no assertion that full R2 covered this final archive hash.",
+  "files": [
+    {
+      "path": "pipeline/archiver.js",
+      "sha256": "b157b9b40ed0de5aecb968a746c4b061929603ad03ea068e5ee9b37532e9e35a",
+      "beforeSha256": "bf762e639577a560106db39f7666b9e905c6082db80561164e343fd60e6cd253"
+    },
+    {
+      "path": "tests/archive-json-references.test.mjs",
+      "sha256": "1c7e79f8dfcaa289d1019949b84df7ca6f4790665defcc309cd9afa558e5e1d0",
+      "beforeSha256": null
+    },
+    {
+      "path": "docs/product/astra-combined-main-20261028/integration/REPORT.md",
+      "sha256": "936bc4846dddb46f43c9b4e1039757cd46f4cbff1f57008d6851d4a4c8685c14",
+      "beforeSha256": "2087dc55d091dbc27b1519fdc9f1c8259de8d24a73455d9d2e9e2c8ee3b2410e"
+    }
+  ],
+  "unchangedRegressionTests": [
+    {
+      "path": "tests/campaign-launch-archive.test.mjs",
+      "sha256": "41a9cf96ace8b40bd01dec5bf3f46891a1ae68ea3234193b7d274b4fb27c3aa9"
+    },
+    {
+      "path": "tests/archiver-lifecycle.test.mjs",
+      "sha256": "fef3fb6e1746388d38579f5a6ce5876d1346b3c9b76d3824842f4a00b87c6588"
+    }
+  ],
+  "checks": [
+    {
+      "command": "node --test --test-concurrency=1 --test-reporter=tap tests/archive-json-references.test.mjs",
+      "exitCode": 1,
+      "tests": 5,
+      "passed": 1,
+      "failed": 4,
+      "log": ".runner/archive-json-r2-f1/before-test.tap",
+      "logSha256": "6946df1814eaa9bc53dcc00dc8b5abff280788fa0af733321eed991b06191186",
+      "note": "Reproduction before source fix; the final dedicated file subsequently added the empty send-set variation to the outside-only scenario."
+    },
+    {
+      "command": "node --test --test-concurrency=1 --test-reporter=tap tests/archive-json-references.test.mjs tests/campaign-launch-archive.test.mjs tests/archiver-lifecycle.test.mjs",
+      "exitCode": 0,
+      "tests": 18,
+      "passed": 18,
+      "failed": 0,
+      "durationMs": 7367.7302,
+      "log": ".runner/archive-json-r2-f1/after-test.tap",
+      "logSha256": "6f1b3f7f96fe64d1aef26c054463ba41f6e2ae7042c539ec11ae7c348aecb5bd"
+    },
+    {
+      "command": "node --check pipeline/archiver.js",
+      "exitCode": 0
+    },
+    {
+      "command": "node --check tests/archive-json-references.test.mjs",
+      "exitCode": 0
+    },
+    {
+      "command": "git -c core.whitespace=cr-at-eol diff --check -- pipeline/archiver.js tests/archive-json-references.test.mjs",
+      "exitCode": 0
+    }
+  ],
+  "patch": ".runner/archive-json-r2-f1/followup.patch",
+  "patchSha256": "8b21372e39a80bf7476551f7e1b13a3f88eee3440e1d1afca89f56f4553d7aef",
+  "independentReview": "Requested; implementer does not approve its own correction."
+}

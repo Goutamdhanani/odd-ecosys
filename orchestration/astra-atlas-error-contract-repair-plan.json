@@ -1,0 +1,18 @@
+{
+  "id": "ASTRA-ATLAS-ERROR-CONTRACT-REPAIR",
+  "owner": "/root/live_mongo_error_fix",
+  "paths": ["pipeline/astra-mongo-store.js", "tests/astra-mongo-store.test.mjs", ".superpowers/astra-live/mongodb/error-contract-fix/**"],
+  "sourcePredecessor": "astra-live-r1-5dfb5bacbd63fc78",
+  "requirements": [
+    "Preserve the immutable R1 manifest, archive, reviews and594-test suite; capture true before copies before a new source revision",
+    "Investigate the actual Atlas rollback-case assertion failure without accessing credentials; its sanitized receipt is b91cfd7a-1e8d-474e-b36d-bf2bb3e19907",
+    "Check the suspected double normalization of duplicate-key errors: inner publicError maps11000 to unique_conflict, outer publicError must preserve that application's typed error rather than turn it into mongodb_operation_failed",
+    "Reproduce with the installed native API contract or a clearly labeled deterministic driver double; confirm transaction abort/no partial write and error identity before a minimal fix",
+    "Preserve TLS, tenant filters, transactions, idempotency and secret-safe public messages; do not expose raw driver errors or weaken the rollback assertion",
+    "Fix only a confirmed product defect and add focused regressions for create and other affected transactional write paths; no feature wave, migration or real-data changes",
+    "No protected configuration or key reads, Atlas/model/source/mail calls, package/dependency edits or Git mutations by the worker",
+    "Root performs the bounded real Atlas retest after independent source review; metadata and any new frozen suite follow separately",
+    "Release exact hashes, test counts and limitations for independent SPEC and QUALITY review"
+  ],
+  "releaseReady": false
+}

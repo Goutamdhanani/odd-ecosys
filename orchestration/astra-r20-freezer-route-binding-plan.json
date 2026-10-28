@@ -1,0 +1,9 @@
+{
+  "id":"ASTRA-R20-FREEZER-CURRENT-REGISTRY-BINDING",
+  "owner":"/root",
+  "ownedPaths":[".superpowers/r20/integration-checkpoint/build-candidate.py",".superpowers/r20/integration-checkpoint/prepare-freezer.py",".superpowers/r20/integration-checkpoint/route-binding-fix/**"],
+  "trigger":"Fresh R20 registry capture has172 method/pattern pairs; prepared freezer incorrectly inherits R19's170 count",
+  "acceptance":["Preserve pinned R19 predecessor, exact product deltas, private path exclusions and full test coverage guards","Bind current route matrix and route source snapshot by explicit authorization hashes","Recompute registry digest and unique method/pattern count; require current R20 label and matching source hashes","Include registry evidence in source archive, derive manifest count from bound current capture","Preparation recipe reproduces exact new freezer bytes; independent harness re-review before any freeze"],
+  "restrictions":["No product changes or actual freeze before independent acceptance","No route evidence tampering","No historical helper/report modifications","No release/provider/Git authority"],
+  "releaseReady":false
+}

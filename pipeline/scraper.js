@@ -22,9 +22,12 @@ const __dirname = path.dirname(__filename);
 const QUERIES_DIR = path.join(__dirname, 'queries');
 const DATA_DIR = path.join(__dirname, '..', 'data');
 
-// Ensure directories exist
-if (!fs.existsSync(QUERIES_DIR)) fs.mkdirSync(QUERIES_DIR, { recursive: true });
-if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
+export const GOOGLE_MAPS_SCRAPER_DISABLED =
+  'Automated Google Maps scraping is disabled. Configure an authorized source connector instead.';
+const SEARCH_SCRAPING_DISABLED =
+  'Search-engine result scraping is disabled. Configure an authorized source connector instead.';
+const FACEBOOK_SCRAPING_DISABLED =
+  'Automated Facebook scraping is disabled. Use an authorized Meta integration instead.';
 
 /**
  * Generate search queries from niche + geography.
@@ -75,6 +78,7 @@ export function generateQueryFile(niche, geography, options = {}) {
 
   const filename = `${niche.toLowerCase().replace(/\s+/g, '-')}_${geography.toLowerCase().replace(/\s+/g, '-')}_${Date.now()}.txt`;
   const filepath = path.join(QUERIES_DIR, filename);
+  fs.mkdirSync(QUERIES_DIR, { recursive: true });
   fs.writeFileSync(filepath, queries.join('\n'), 'utf-8');
 
   return filepath;
@@ -497,6 +501,9 @@ export function extractHoursStatus(d) {
  * @returns {Promise<object[]>} Array of raw lead objects
  */
 export async function scrapeGoogleMapsNative(query, options = {}) {
+  throw new Error(GOOGLE_MAPS_SCRAPER_DISABLED);
+
+  // Retained below as historical parsing/reference code; network collection is disabled.
   const limit = options.limit || 25;
   const filterClosed = options.filterClosed !== false;
   const isDeep = options.deepScan === true || limit > 20;
@@ -762,6 +769,9 @@ export async function scrapeGoogleMapsNative(query, options = {}) {
  * @returns {Promise<object[]>} Array of raw lead objects
  */
 export async function runScraper(queryFilePath, options = {}) {
+  throw new Error(GOOGLE_MAPS_SCRAPER_DISABLED);
+
+  // Legacy Docker/native runner retained for reference; never execute it implicitly.
   const {
     depth = 1,
     concurrency = 2,
@@ -996,6 +1006,9 @@ export function parseAddress(address) {
  * Pull the Docker image if not already present.
  */
 export async function ensureDockerImage() {
+  throw new Error(GOOGLE_MAPS_SCRAPER_DISABLED);
+
+  // Docker image management is intentionally not an implicit discovery side effect.
   try {
     console.log('📦 Checking for Google Maps scraper Docker image...');
     await execAsync('docker image inspect gosom/google-maps-scraper', { timeout: 15000 });
@@ -1018,12 +1031,7 @@ export async function ensureDockerImage() {
  * Check if Docker is available and running.
  */
 export async function isDockerAvailable() {
-  try {
-    await execAsync('docker info', { timeout: 10000 });
-    return true;
-  } catch {
-    return false;
-  }
+  return false;
 }
 
 /**
@@ -1037,6 +1045,9 @@ export async function isDockerAvailable() {
  * @returns {Promise<object[]>}
  */
 export async function scrapeWebQueryLeads(niche, geography, options = {}) {
+  throw new Error(SEARCH_SCRAPING_DISABLED);
+
+  // Unofficial SERP scraping is disabled; retain parser logic for an authorized adapter.
   const limit = options.limit || 25;
   console.log(`\n🔍 Running Web Search Query Scraper for: "${niche}" in "${geography}"...`);
 
@@ -1163,6 +1174,9 @@ export async function scrapeWebQueryLeads(niche, geography, options = {}) {
  * @returns {Promise<object[]>}
  */
 export async function scrapeFacebookLeads(niche, geography, options = {}) {
+  throw new Error(FACEBOOK_SCRAPING_DISABLED);
+
+  // Use the official Meta connector instead of browser/search-engine scraping.
   const limit = options.limit || 25;
   console.log(`\nⓕ Running Facebook Business Scraper for: "${niche}" in "${geography}"...`);
   const leads = [];
@@ -1416,7 +1430,13 @@ export function getLeadMatchKeys(lead) {
  * @returns {Promise<object[]>} Deduplicated and fused array of lead objects
  */
 export async function scrapeLeadsMultiMethod(config) {
-  const { niche, geography, method = 'combined', limit = 25, options = {} } = config;
+  const method = config?.method || 'combined';
+  if (method === 'facebook') throw new Error(FACEBOOK_SCRAPING_DISABLED);
+  if (method === 'web_search') throw new Error(SEARCH_SCRAPING_DISABLED);
+  throw new Error(GOOGLE_MAPS_SCRAPER_DISABLED);
+
+  // The legacy aggregator has no authorized provider adapter.
+  const { niche, geography, limit = 25, options = {} } = config;
   const targetLimit = limit || 25;
   const aggregated = [];
   const leadRegistry = new Map();

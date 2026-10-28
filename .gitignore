@@ -5,9 +5,17 @@ data/
 !.env.example
 *.key
 *.pem
+!tests/support/imap-test-cert.pem
+!tests/support/imap-test-key.pem
 *.db
 *.db-wal
 *.db-shm
 orchestration/evidence/
 orchestration/backups/
 .runner/
+.superpowers/
+.codex/
+.kimi-inputs/
+
+!tests/support/imap-test-cert.pem
+!tests/support/imap-test-key.pem

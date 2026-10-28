@@ -1,0 +1,15 @@
+{
+  "planId": "ASTRA-R20-CUSTOMER-SOURCE-RIGHTS",
+  "writer": "/root/r20_source_rights_ui",
+  "authority": "Continue the authorized customer product; wire durable source rights into the seven-section experience after the backend contract release",
+  "ownedPaths": ["growth.html", "css/astra-growth.css", "js/astra-growth.js", "tests/astra-growth-ui.test.mjs", "tests/astra-source-rights-ui.test.mjs", ".superpowers/r20/source-rights-ui/**"],
+  "requirements": [
+    "Let tenant owners/admins select a captured source by readable business/URL/date, inspect persisted effective rights and record a reason to stop future use through the released source-rights API. Do not require UUIDs, hashes or JSON entry",
+    "Display actual pending/success/revoked/error states and explain that prior capture/history is retained and future use is blocked. Do not claim a legal grant or re-enable a revoked capture",
+    "Preserve seven sections, existing forms, role/CSRF/tenant binding, text-only untrusted content and workspace epoch guards. Hide revocation writes from operators/reviewers; clear tenant form drafts synchronously on switch and prevent stale responses/follow-up requests",
+    "Use the released core CONTRACT.md. Add meaningful guarded UI and actual synthetic33 API/browser integration for persisted readback, actor denial, retry/conflict and workspace switches. Do not submit writes to the running R19 preview",
+    "Preserve before copies, failures, raw logs and exact hashes; no console redesign or metadata/helper edits. Release for independent review before any runtime update"
+  ],
+  "constraints": ["Only explicit astra-foundation checkout", "Luna/high only", "No backend/schema/fixture/helper changes", "No production data, providers, outreach, gate changes, preview restart or Git mutations", "Historical R19 evidence remains immutable", "releaseReady=false"],
+  "releaseReady": false
+}

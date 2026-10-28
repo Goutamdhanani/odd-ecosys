@@ -1,0 +1,255 @@
+{
+  "schemaVersion": 1,
+  "definedAt": "2026-10-25T04:23:47.479Z",
+  "phase": "PHASE_2_QA_AND_REPAIRS_ONLY",
+  "noNewFeatureWave": true,
+  "baselineCandidate": "astra-r4-9052cfd8aaf3c114",
+  "releaseReady": false,
+  "roadmapCompletionClaimed": false,
+  "userPriorities": [
+    "Invitation expiry and historical offer tests without weaker tenant ownership",
+    "Complete suite and cross-tenant security",
+    "Nine-stage actual synthetic offline API workflow",
+    "Credential rotation/invalidation and retained evidence sanitation",
+    "170 routes: actual wiring, protection and functional category",
+    "Migration up, rollback/reapply and transaction atomicity",
+    "Remaining features and external dependencies",
+    "Exact QA results and evidence-backed production-readiness score"
+  ],
+  "lanes": [
+    {
+      "agent": "/root/fix_ui_feedback_r5",
+      "state": "IMPLEMENTED_FOCUSED_PASS",
+      "owned": [
+        "tests/ui-feedback.test.mjs",
+        "docs/astra/s00-source-delta.json",
+        "tests/astra-source-fidelity.test.mjs"
+      ]
+    },
+    {
+      "agent": "/root/routes_and_chain_r5",
+      "owned": [
+        ".superpowers/phase2/routes-r5/**"
+      ]
+    },
+    {
+      "agent": "/root/migrations_and_credentials_r5",
+      "owned": [
+        ".superpowers/phase2/migrations-r5/**",
+        ".superpowers/phase2/credential-audit-r5/**"
+      ],
+      "independentSourceEdits": false
+    },
+    {
+      "agent": "/root/fix_rollback_023_r5",
+      "owned": [
+        "migrations/astra/001-tenant-foundation.down.sql",
+        "migrations/astra/002-ledger.down.sql",
+        "migrations/astra/003-workflow.down.sql",
+        "migrations/astra/004-gateway.down.sql",
+        "migrations/astra/005-research.down.sql",
+        "migrations/astra/006-inbox-permissions.down.sql",
+        "migrations/astra/007-campaigns.down.sql",
+        "migrations/astra/008-insights.down.sql",
+        "migrations/astra/009-runtime.down.sql",
+        "migrations/astra/010-connectors.down.sql",
+        "migrations/astra/011-generation.down.sql",
+        "migrations/astra/012-autonomy.down.sql",
+        "migrations/astra/013-evaluation.down.sql",
+        "migrations/astra/014-lifecycle.down.sql",
+        "migrations/astra/015-operations.down.sql",
+        "migrations/astra/016-radar.down.sql",
+        "migrations/astra/017-learning.down.sql",
+        "migrations/astra/018-economics-postsale.down.sql",
+        "migrations/astra/019-launch-controls.down.sql",
+        "migrations/astra/020-conformance.down.sql",
+        "migrations/astra/021-bandits.down.sql",
+        "migrations/astra/022-memberships.down.sql",
+        "migrations/astra/023-customer-approvals.down.sql",
+        "migrations/astra/024-domain-harness.down.sql",
+        "migrations/astra/025-source-collection.down.sql",
+        "migrations/astra/026-smtp-dispatch.down.sql",
+        "migrations/astra/027-release-evidence.down.sql",
+        "migrations/astra/028-benchmark.down.sql",
+        "migrations/astra/029-optimizer-execution.down.sql",
+        "migrations/astra/030-membership-hardening.down.sql",
+        "migrations/astra/031-research-idempotency.down.sql"
+      ],
+      "allowedChanges": "Only actual reproduced dependency ordering or orphan-function cleanup defects in unapplied DOWN scripts; preserve all data refusals and RESTRICT behavior. No CASCADE or UP edits.",
+      "beforeEvidence": "orchestration/astra-phase2-source-r4.json"
+    },
+    {
+      "agent": "/root/final_qa_r5",
+      "owned": [
+        ".superpowers/phase2/suite-r5/**",
+        ".superpowers/phase2/final-r5/**"
+      ],
+      "state": "PREPARED_WAITING_FREEZE"
+    }
+  ],
+  "immutableAppliedUpMigrations": [
+    {
+      "path": "migrations/astra/001-tenant-foundation.up.sql",
+      "sha256": "327e3c8e5e0dbaf083461985c44b233fc994db5c51731878f7fe8493cc82e38b",
+      "bytes": 15955
+    },
+    {
+      "path": "migrations/astra/002-ledger.up.sql",
+      "sha256": "6c2c20f167070bd819740a74eeb1f12d12594e1179a368e2a88f5e62f9ff3575",
+      "bytes": 7333
+    },
+    {
+      "path": "migrations/astra/003-workflow.up.sql",
+      "sha256": "bc17f70789c297c20130de9f5c5558221ed13f962d58bf2838ae62a49f4680c3",
+      "bytes": 3956
+    },
+    {
+      "path": "migrations/astra/004-gateway.up.sql",
+      "sha256": "26003482360b07d3e568c3e89096cdf4e8e0f1591716953c6be3d587c7168c91",
+      "bytes": 6862
+    },
+    {
+      "path": "migrations/astra/005-research.up.sql",
+      "sha256": "37a3e778a201140719e54253a65af9321ff2199ef7802085d62f67d6f954bb24",
+      "bytes": 10053
+    },
+    {
+      "path": "migrations/astra/006-inbox-permissions.up.sql",
+      "sha256": "8992d70731aced726405af3bbf14e39b1fba7a604b70d285b3b0c82e36bd73d4",
+      "bytes": 14004
+    },
+    {
+      "path": "migrations/astra/007-campaigns.up.sql",
+      "sha256": "1fb9211bd8d5b81f4b20b4e2b09862fcc0c7b99164ab0ffedf3a87f84c1c59bf",
+      "bytes": 10733
+    },
+    {
+      "path": "migrations/astra/008-insights.up.sql",
+      "sha256": "689a812409610822331ea21721b12e735b2c5ae9e1016f3dc1bbb9691e062815",
+      "bytes": 12837
+    },
+    {
+      "path": "migrations/astra/009-runtime.up.sql",
+      "sha256": "aff468c35dd05484ee849e8aa881084ddb175b20f45902d8a2bbcc948653a958",
+      "bytes": 3486
+    },
+    {
+      "path": "migrations/astra/010-connectors.up.sql",
+      "sha256": "2b218fcb2f834f7aa797b2a680268789412959dbf0cf274083543bc1e26e04c8",
+      "bytes": 13288
+    },
+    {
+      "path": "migrations/astra/011-generation.up.sql",
+      "sha256": "71bc191858ff99ef3a40d4c65fbc37239c6dfb54b2d0e70a088feb5346dfc53e",
+      "bytes": 8009
+    },
+    {
+      "path": "migrations/astra/012-autonomy.up.sql",
+      "sha256": "f7cbe26de1e4811fb00ca19fd8bffe8f79edc19ffc224cb4c912355516d5503f",
+      "bytes": 12353
+    },
+    {
+      "path": "migrations/astra/013-evaluation.up.sql",
+      "sha256": "c43b3a94188cbd39e972434454303796057a1e0f18417eeef8117657b0b3d1e5",
+      "bytes": 16495
+    },
+    {
+      "path": "migrations/astra/014-lifecycle.up.sql",
+      "sha256": "858ba8944ef6a64247858b33029c7f8ef9b11adbec82d26cd471ba1e5757b509",
+      "bytes": 8659
+    },
+    {
+      "path": "migrations/astra/015-operations.up.sql",
+      "sha256": "30dafb540b05ee76c1c48b967e67bfa6692b65ba7a66b04a232c1e9842fb268b",
+      "bytes": 8178
+    },
+    {
+      "path": "migrations/astra/016-radar.up.sql",
+      "sha256": "466b31b11c8b8e0eab3c30c43443a26489eae460dccd4be4e27db969e09438a1",
+      "bytes": 8167
+    },
+    {
+      "path": "migrations/astra/017-learning.up.sql",
+      "sha256": "4efb51a12b2a92cb375de90273f909f4a5e303e13a67806454056d5bbc297857",
+      "bytes": 8394
+    },
+    {
+      "path": "migrations/astra/018-economics-postsale.up.sql",
+      "sha256": "8f512e5b7820974fe183049b361bc594db01db96b17c6847a44e72d1a388f1b9",
+      "bytes": 17768
+    },
+    {
+      "path": "migrations/astra/019-launch-controls.up.sql",
+      "sha256": "7d8cfc7a6e3fc7999b7de4abedb40e4c80785797729e49869a0c9fabfe62738a",
+      "bytes": 9451
+    },
+    {
+      "path": "migrations/astra/020-conformance.up.sql",
+      "sha256": "0ac13d1977a943379969c1bc550526484593149e5439222dd4f8dc4430c5974f",
+      "bytes": 7839
+    },
+    {
+      "path": "migrations/astra/021-bandits.up.sql",
+      "sha256": "a2992ff62387fce066c77b00e2f60c852271e72c71bb7fc853d18974698ee8b3",
+      "bytes": 13064
+    },
+    {
+      "path": "migrations/astra/022-memberships.up.sql",
+      "sha256": "8913c0c497e45ec75b8ab393e92947187308062bb52c436988d1235aa96e7faf",
+      "bytes": 17374
+    },
+    {
+      "path": "migrations/astra/023-customer-approvals.up.sql",
+      "sha256": "bad23d26f2082b947ef285924caa97996b23fd3ea60754b840a30d2ce93b00bd",
+      "bytes": 13798
+    },
+    {
+      "path": "migrations/astra/024-domain-harness.up.sql",
+      "sha256": "2694bd7dd63667f3ca3d360c1fedd223562ba2d379c0a6292ab208acfdff18fd",
+      "bytes": 4728
+    },
+    {
+      "path": "migrations/astra/025-source-collection.up.sql",
+      "sha256": "1f9ea957db2faf1b65060b31b89af2aa49490aab8f9836b1c1c72c3ab838f076",
+      "bytes": 10634
+    },
+    {
+      "path": "migrations/astra/026-smtp-dispatch.up.sql",
+      "sha256": "dc84e1a720e213f1e37367298f58ae04682fefb9470d2839debbc4b37a1a3383",
+      "bytes": 2398
+    },
+    {
+      "path": "migrations/astra/027-release-evidence.up.sql",
+      "sha256": "1ccd7dd355d86aa249182f01510eba07122f2838b05a5a273f4ec697e3a18ad1",
+      "bytes": 6370
+    },
+    {
+      "path": "migrations/astra/028-benchmark.up.sql",
+      "sha256": "7f7a383dac89e51eec75496107664eb49003e1f0089fca7377236f095539ec3a",
+      "bytes": 11425
+    },
+    {
+      "path": "migrations/astra/029-optimizer-execution.up.sql",
+      "sha256": "ac9078cf8691c0812eec1e73bc2ab654cab1ae9304dfae4e46a4bc0c7f55cb29",
+      "bytes": 7349
+    },
+    {
+      "path": "migrations/astra/030-membership-hardening.up.sql",
+      "sha256": "b6a5029c6c2cdd6c9b4c675553c6e8d8142d6d4ae3cac787db29c7b97eb43246",
+      "bytes": 6856
+    },
+    {
+      "path": "migrations/astra/031-research-idempotency.up.sql",
+      "sha256": "d6601d42cd01f2c7e2d690bc03b660cfab2f828ad5f8516d0eb17d781263d76c",
+      "bytes": 2016
+    }
+  ],
+  "readinessRubric": "orchestration/astra-phase2-readiness-rubric.json",
+  "restrictions": [
+    "No live outreach or provider/model calls",
+    "No production deployment or real-data migrations",
+    "Preserve source, tenant ownership and customer data",
+    "All coders/reviewers gpt-6-luna/high; root orchestrates only",
+    "No commits/staging/reset/push of inherited dirty overlay"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "id": "ASTRA-ATLAS-PREEXECUTION-HARNESS-REVIEW",
+  "scope": "Atlas case runner only; no frozen product, test, metadata or earlier authorization changes",
+  "correctionsRequiredBeforeExecution": [
+    "Use exact collection-name tracking keys; the initial prepared runner used undefined jobs/events shorthand after writes",
+    "Track unique synthetic IDs before mutations so uncertain acknowledgements remain cleanup-scoped",
+    "Execute cleanup once and verify it; cleanup failure changes the run status and exit code",
+    "Correct the prepared guide's literal variable placeholders and escaped control characters"
+  ],
+  "operationBudget": {"maximumObservedDriverCommands": 250, "stopAdmittingScenariosAt": 200, "cleanupReserve": 50, "maximumDurationMs": 90000},
+  "reasonForBudgetAdjustment": "Initial150-command estimate omitted repeated index setup, reconnect and final cleanup verification. The new bound accounts for these actual driver operations without enabling broad load tests.",
+  "executionState": "WAIT_FOR_ROOT_REVIEW_AND_SCOPED_LAUNCH",
+  "noProductOrFrozenInputMutation": true,
+  "releaseReady": false
+}

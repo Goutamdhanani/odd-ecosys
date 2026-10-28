@@ -1,0 +1,16 @@
+{
+  "planId":"ASTRA-R18-INTEGRATION-CHECKPOINT",
+  "state":"WAITING_FOR_R18_PRODUCT_FIX_RELEASE",
+  "authority":"User-directed complete useful feature groups then integration/regression; preserve all R17 evidence and source",
+  "ownedPaths":["docs/astra/s00-source-delta.json","docs/astra/s00-side-effect-inventory.json","docs/astra/commercial-gates.json","tests/astra-source-fidelity.test.mjs","tests/astra-workbench-e2e.test.mjs","tests/astra-workflow-recovery.test.mjs","tests/astra-outcomes-corrections.test.mjs","tests/astra-benchmark-report.test.mjs","tests/astra-customer-approvals.test.mjs","tests/astra-lifecycle-cancel.test.mjs","tests/astra-bandit-registry-read.test.mjs","tests/support/astra-r18-fixture.mjs",".superpowers/r18/integration/**"],
+  "requirements":[
+    "Append exact R18 source authorization for OWNERSHIP.md and server.js; preserve immutable selected snapshot and historical deltas",
+    "Refresh boundary hashes only after product writers release; record new growth browser boundary and guards/tests; never change commercial approval decisions",
+    "Keep legacy 31-migration fixture support and add only explicit R18 synthetic32 fixture labels with immutable UP file hash verification, loopback role checks and no secret output",
+    "Adapt operator workbench onboarding test to the intentional membership page gate by proving 403 before membership, creating named workspace through authorized customer onboarding, then opening operator page and running the existing complete journey; never loosen gate or skip checks",
+    "Prove migration032 DOWN/UP and failure atomicity on a new dedicated empty synthetic fixture; never touch old31 fixtures or preview schema",
+    "Preserve failed runs; run appropriate focused checks and release paths before root freezes a new source candidate and full-suite run"
+  ],
+  "constraints":["Luna/high only","One writer per file","No source snapshot/history rewrite","No test or policy weakening","No live calls or production data","No git operations beyond read-only"],
+  "releaseReady":false
+}

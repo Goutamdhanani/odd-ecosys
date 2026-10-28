@@ -1,0 +1,12 @@
+{
+  "id":"ASTRA-R20-OUTCOME-OWNERSHIP-FIX",
+  "owner":"/root/r20_outcome_resume1",
+  "resumeNote":"No implementer is currently live. Preserve interrupted before copies and partial fix; the fresh Luna resumes with new task-entry before copies under resume-1.",
+  "root":"C:/Users/pooja/.codex/worktrees/astra-foundation/odd-ecosys",
+  "ownedPaths":["pipeline/astra-outcomes.js","pipeline/astra-ledger-routes.js","tests/astra-outcome-ownership.test.mjs","tests/astra-outcomes-corrections.test.mjs",".superpowers/r20/outcome-ownership-fix/**"],
+  "genericWriteSurface":"POST /events also calls appendEvent then rebuilds outcome projection; reproduce and cover this route so it cannot bypass the account ownership check",
+  "reproduction":"New guided journey passes through analytics but workspaceB POST/outcomes accepts workspaceA research account UUID withHTTP201, even though accounts must be scoped to their workspace",
+  "acceptance":["Validate recognized platform account references within actor tenant before any event or projection write; missing and foreign identifiers have the same safe rejection","Apply ownership checks consistently to new/corrected account outcomes without bypassing ledger idempotency/provenance","Preserve explicit legacy opaque references and existing historical events; do not rewrite/delete customer history","Allow safe tenant-owned reversal/remediation of historical malformed links while rejecting new foreign links","Positive own-account meeting/revenue/refund/correction/replay works; foreign/missing/case/alternate UUID representations cannot bypass the boundary","Denied requests leave events, projections and analytics unchanged; same owner membership in both tenants is not authority to cross-link data","Original journey negative assertion stays unchanged; independent Luna review and final full-suite proof required"],
+  "restrictions":["No test assertion weakening or fake owned records","No schema or real-data migration/cleanup","No UI/route/metadata edits by this writer","No provider/preview/runtime/Git actions","Report entity-model ambiguity rather than guess ownership for unrelated types"],
+  "releaseReady":false
+}

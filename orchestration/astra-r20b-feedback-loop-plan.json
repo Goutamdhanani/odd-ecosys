@@ -1,0 +1,16 @@
+{
+  "id":"ASTRA-R20B-BOUNDED-QA-FEEDBACK-LOOP",
+  "baseCandidate":"astra-r20a-6440a954f59ed529",
+  "baseAggregate":"6440a954f59ed52973e58d8ee18e4ed26dd06e277644736d87bc3d6acd0ca87b",
+  "baselineSuite":{"passed":540,"failed":0,"skipped":0},
+  "method":"Expand missing behavioral evidence, reproduce actual failures, assign bounded fixes only when necessary, independently review exact results, preserve every prior candidate and failure.",
+  "tasks":[
+    {"id":"core-route-behavior","owner":"/root/r20b_core_routes1","paths":[".superpowers/r20b/route-functional/core/**"],"requirement":"Exercise real loopback HTTP business behavior on synthetic tenant/account/research/claims/campaign/inbox/CRM/outcome/analytics routes. Record exact method/path/status and state assertions against current registry, not empty-array or role-gate-only success. Preserve partial and policy-blocked cases."},
+    {"id":"system-route-behavior","owner":"/root/r20b_system_routes1","paths":[".superpowers/r20b/route-functional/system/**"],"requirement":"Exercise real loopback HTTP behavior for existing workflow, agent/AI policy, memory, operations and automation modules where synthetic setup is available. No live inference or delivery, no fabricated approval or passing fake provider. Map observed branches and authorization negatives to exact registrations."},
+    {"id":"restore-drill-preparation","owner":"/root/r20b_restore_drill1","paths":[".superpowers/r20b/recovery/**"],"requirement":"Prepare an independently reviewable backup/restore and populated migration033 failure drill on entirely new explicitly named synthetic source/restore databases. No execution until helper review and coordinator provisioning. Keep dumps/configs/private context secrets under private .runner paths, never retained public diagnostics."},
+    {"id":"integration","owner":"/root","paths":[".superpowers/r20b/orchestration/**","orchestration/astra-r20b-feedback-loop-plan.json","orchestration/astra-r20b-feedback-ownership.md",".superpowers/r20b/final-report/**"],"requirement":"Validate baseline hashes, coordinate local fixtures and independent reviews; do not edit product source. Updated coverage cannot imply whole-roadmap or release acceptance."}
+  ],
+  "constraints":["Luna-only coding and independent review, high reasoning; one writer per scope","No product/test/harness edits without a separately recorded reproduced defect and ownership transfer","Existing R20/R20a source and reports immutable; no Git stage/commit/push or protected a4a4 writes","Canonical33 fixture only via strict validator for API tests; unique synthetic principals and complete auth teardown","No live outreach/provider requests, deployment, real-data migration, external env access or gate approval","Measure only observed facts; unknown branches remain incomplete, policy denials remain blocked positive behavior","No endless background automation; next bounded loop follows accepted findings"],
+  "releaseReady":false,
+  "roadmap52Accepted":false
+}

@@ -1,0 +1,17 @@
+{
+  "planId":"ASTRA-R18-CUSTOMER-FIXES",
+  "parentPlan":"orchestration/astra-r18-customer-flow-plan.json",
+  "authority":"Correct independent review findings and integrate the authorized customer collection mode without weakening backend checks",
+  "state":"READY_FOR_LUNA_IMPLEMENTER",
+  "ownedPaths":["growth.html","css/astra-growth.css","js/astra-growth.js","tests/astra-growth-ui.test.mjs",".superpowers/r18/customer-ui/**"],
+  "requirements":[
+    "Fix snapshot and audit data-envelope consumers, and correct API fixtures to the actual documented envelopes",
+    "Use accountId auditing on the current server; never mask foreign-account or policy errors by silently switching targets on arbitrary 400/404",
+    "Use collection approvalMode server without client approvalReferences; add a required user-selected future source-rights expiry and send rightsExpiresAt. Do not invent approval dates or permissions",
+    "Pin tenant and epoch for entire write operations before reading files, hashing, awaiting details, or beginning multi-step calls. A workspace switch must prevent later subrequests from targeting a new workspace or stale writes from changing its UI",
+    "Exercise real-shaped successful capture/audit rendering, policy errors, malformed envelopes, asynchronous file/hash workspace changes, and delayed success/error isolation with meaningful browser assertions"
+  ],
+  "fixture":"Fresh r18-customer-qa is disposable synthetic through migration032; independent actual-app validation must avoid reused auth identities and stale evidence selection",
+  "constraints":["No other source paths","Luna/high only","No helpers/live calls/migration/real data/git changes","Independent re-review required"],
+  "releaseReady":false
+}

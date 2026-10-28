@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "phase": "PHASE_2_PRODUCT_REPAIR_AND_RETEST",
+  "sourceCandidate": "astra-r2-7c748f115a9bd180",
+  "productSourceSha256": "7c748f115a9bd180164890454fd517eb0c02131981814e8c0bdad23710dd3653",
+  "createdAt": "2026-10-24T22:38:16.647Z",
+  "repository": "C:\\Users\\pooja\\.codex\\worktrees\\astra-foundation\\odd-ecosys",
+  "baseHead": "f30490bd892dd651fd2fb276b09b510379e27c0d",
+  "productChangesAuthorized": [
+    "pipeline/astra-outcomes.js",
+    "pipeline/astra-workflow.js"
+  ],
+  "releaseReady": false,
+  "tasks": [
+    {
+      "agent": "/root/repair_legacy_gateway_tests",
+      "ownership": [
+        "tests/lead-strategy-personal-api.test.mjs",
+        "tests/lead-strategy-personal-settings.test.mjs",
+        "tests/lead-strategy-settings.test.mjs",
+        "tests/lead-strategy.test.mjs",
+        "tests/personalization-bedrock.test.mjs",
+        "tests/personalizer-factcheck.test.mjs",
+        "tests/sending-api.test.mjs",
+        "tests/campaign-sequence-execution.test.mjs"
+      ],
+      "acceptance": "Current tenant GLM authorization is covered without weakening schema, access, no-egress or immediate reply-stop guarantees; focused tests pass with guards."
+    },
+    {
+      "agent": "/root/repair_mail_fixtures",
+      "ownership": [
+        "tests/campaign-audience.test.mjs",
+        "tests/campaign-senders.test.mjs",
+        "tests/campaign-stop.test.mjs",
+        "tests/sender-rotation.test.mjs",
+        "tests/imap-receiver.test.mjs",
+        "tests/support/imap-test-cert.pem",
+        "tests/support/imap-test-key.pem",
+        ".gitignore"
+      ],
+      "acceptance": "Positive reviewed synthetic sender fixtures; missing review denial; TLS trust positive and negative; recipient, suppression, stop and capacity behavior remain covered."
+    },
+    {
+      "agent": "/root/review_platform_r2",
+      "ownership": [
+        ".superpowers/phase2/flows-r2/**"
+      ],
+      "acceptance": "Independent actual authenticated app-role API flow and critical repair retest; product integrity unchanged; precise open gaps."
+    }
+  ],
+  "next": "Freeze new test inputs and independently rerun suite plus review test repairs; no source promotion, stage, commit or deployment.",
+  "findings": [
+    {
+      "source": ".superpowers/phase2/flows-r2/INDEPENDENT-REVIEW.md",
+      "behavior": "Correction/reversal API lacks required ledger correction target",
+      "owner": "/root/fix_outcome_corrections",
+      "regression": "tests/astra-outcomes-corrections.test.mjs"
+    },
+    {
+      "source": ".superpowers/phase2/runtime-r2/workflow-recovery-probe.mjs",
+      "behavior": "Duplicate cancellation and committed checkpoint retry conflict; preserve worker fencing while making exact durable replay safe",
+      "owner": "Fresh Luna dispatch pending",
+      "regression": "tests/astra-workflow-recovery.test.mjs"
+    }
+  ],
+  "updatedAt": "2026-10-24T22:47:53.418Z"
+}

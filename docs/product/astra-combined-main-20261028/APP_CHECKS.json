@@ -1,0 +1,29 @@
+{
+  "observations": [
+    {
+      "id": "initial_planning_and_readback",
+      "status": "PASS",
+      "actual": {
+        "status": "blocked",
+        "stateRevision": 2,
+        "reasonCodes": [
+          "goal_planner_authority_disabled"
+        ]
+      }
+    },
+    {
+      "id": "idempotency_version_and_tenant_guards",
+      "status": "PASS"
+    },
+    {
+      "id": "real_browser_create_block_and_reload",
+      "status": "PASS",
+      "routeMocks": false,
+      "providerCalls": 0
+    }
+  ],
+  "environment": "disposable synthetic PostgreSQL + temporary SQLite + actual app + headless Edge",
+  "liveProviderCalls": 0,
+  "outreach": "disabled",
+  "releaseReady": false
+}

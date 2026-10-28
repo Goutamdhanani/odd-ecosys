@@ -1,0 +1,8 @@
+{
+  "id":"ASTRA-R20-FINAL-METADATA-REFRESH",
+  "owner":"/root/r20_metadata_refresh1",
+  "ownedPaths":["docs/astra/s00-source-delta.json","docs/astra/s00-side-effect-inventory.json","docs/astra/commercial-gates.json","tests/astra-source-fidelity.test.mjs","tests/astra-side-effect-inventory.test.mjs",".superpowers/r20/metadata-integration/post-outcome-refresh/**"],
+  "dependencies":["Independent acceptance of released outcome ownership correction","Unchanged guided journey rerun and its exact test fingerprint"],
+  "requirements":["Preserve the228 selected source rows,31 original deltas,197 unchanged rows,immutable hashes and all existing R18/R19/R20 authorizations","Refresh actual ownership fingerprint, preserve all42 existing supplemental fingerprints and add final outcomes/routes/ownership-test/journey-test entries","Refresh only changed existing inventory fingerprints/effects for new account-reference ownership guard; keep48 static boundaries, original negative detector, supplemental reads and append-only forced-RLS write assertion","Commercial registry may change only the inventory provenance fingerprint; prove parsed equality of every other field against both latest accepted and original pre-R20 registry","No product/helper/fixture/private environment file edits, gate approvals or readiness claims","Guarded focused fidelity/inventory/commercial tests and independent metadata review before freeze"],
+  "releaseReady":false
+}

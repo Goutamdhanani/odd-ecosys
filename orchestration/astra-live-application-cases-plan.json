@@ -1,0 +1,7 @@
+{
+  "id":"ASTRA-LIVE-APPLICATION-CASES",
+  "owner":"/root/live_application_cases1",
+  "paths":[".superpowers/astra-live/application-cases/**"],
+  "requirements":["Prepare and execute relevant exact 100-matrix scenarios against actual running application components, not mocks; identify native PostgreSQL/SQLite synthetic test storage explicitly and never call it Atlas","Prioritize AUTH-01 through AUTH-10 and genuinely executable encryption/security component scenarios","Source code, existing tests, validation artifacts/registrar/contracts and private env files are read-only","Use only canonical strict33 fixture through existing validator and an isolated loopback server with enforced auth/CSRF; no provider/search/mail requests","Generate temporary unique principals and complete logout/stale-session proof/close/exact-owned-scratch cleanup","Record each scenario's typed observed assertions, actual path/status, duration, source/evidence hashes, limitations and blocked/not-run reasons; do not automatically append to the main matrix","Do not count existing mock compatibility checks as new real-service passes or force unrelated cases to match"],
+  "releaseReady":false
+}

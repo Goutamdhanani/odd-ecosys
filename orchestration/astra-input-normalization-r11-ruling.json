@@ -1,0 +1,9 @@
+{
+  "rulingId": "ASTRA-PHASE2-INPUT-NORMALIZATION-R11",
+  "scope": "Coordinator source-packaging correction only; no application or test edits",
+  "releaseReady": false,
+  "preservedCandidate": "astra-r10-58a1f725dd628c5b",
+  "finding": "The unexecuted R10 manifest contains 548 test-input entries for 429 unique paths. Re-adding Windows license paths after previously normalizing them created 119 equivalent aliases; every duplicate has identical bytes/hash. The archive contains each unique file once.",
+  "action": "Preserve the R10 manifest/archive as an unexecuted packaging record. Normalize slashes before deduplicating all R11 input names and reject duplicate canonical paths before freezing the next candidate.",
+  "acceptance": ["Exactly one entry per contained canonical path", "Every distinct R10 input remains included with the same bytes/hash", "No product or test semantic changes", "Independent manifest review and full suite use the corrected R11 candidate"]
+}

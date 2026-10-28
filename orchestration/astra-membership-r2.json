@@ -1,0 +1,40 @@
+{
+  "patchId": "membership-r2-d96308453f01b5b8",
+  "sha256": "d96308453f01b5b8455dc7c50fa7623de94453acad4028dcb15bbc072d342b8b",
+  "originalCandidate": "astra-local-7796cea6ce46c531",
+  "scope": "Independent focused membership hardening retest; not full platform acceptance",
+  "files": [
+    {
+      "path": "pipeline/astra-tenant-store.js",
+      "beforeSha256": "0f772cc05ba3dccda804c24ca3c7518a080dd69ff30c116aa4130666bce147d6",
+      "sha256": "9de830c334e07b44f60d9ac56724d4a36254e4ea8d74792b6ee3f5b9eac21ad0"
+    },
+    {
+      "path": "pipeline/astra-memberships.js",
+      "beforeSha256": "373878468eddf66722023d57889166c2bd952d823c24014653e7923e72cc407b",
+      "sha256": "25fef8a7d434d5ac7c9e9c6052a4250e910a9e795f949c3683ca54e34e209a7f"
+    },
+    {
+      "path": "pipeline/astra-invitation-context.js",
+      "beforeSha256": "f92157bdbe91326ba50b400a7c7e12aa7bd9c069599f33fcd4448d1cb23adfea",
+      "sha256": "f92157bdbe91326ba50b400a7c7e12aa7bd9c069599f33fcd4448d1cb23adfea"
+    },
+    {
+      "path": "pipeline/astra-api.js",
+      "beforeSha256": "e877c74febf7ec21ac775cc8ff8b181fdfb9595d1dd1946e9faf7ae353bdb72c",
+      "sha256": "e877c74febf7ec21ac775cc8ff8b181fdfb9595d1dd1946e9faf7ae353bdb72c"
+    },
+    {
+      "path": "migrations/astra/030-membership-hardening.up.sql",
+      "beforeSha256": null,
+      "sha256": "b6a5029c6c2cdd6c9b4c675553c6e8d8142d6d4ae3cac787db29c7b97eb43246"
+    },
+    {
+      "path": "migrations/astra/030-membership-hardening.down.sql",
+      "beforeSha256": null,
+      "sha256": "c9ae4bf7df4007484e34d4810c10a5a1b2965bbf6a5d676701988cd757f03af6"
+    }
+  ],
+  "fixture": ".runner/astra-qa/p2-tenant-r2/pg.json",
+  "releaseReady": false
+}

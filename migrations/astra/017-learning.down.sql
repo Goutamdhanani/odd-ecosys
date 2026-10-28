@@ -1,0 +1,11 @@
+BEGIN;
+SET ROLE astra_owner;
+DROP TABLE IF EXISTS astra.skills;
+DROP TABLE IF EXISTS astra.learning_optimizer_jobs;
+DROP TABLE IF EXISTS astra.allocation_plans;
+DROP TABLE IF EXISTS astra.learning_reviews;
+DROP TABLE IF EXISTS astra.learning_artifacts;
+DROP FUNCTION IF EXISTS astra.guard_learning_append_only();
+DROP FUNCTION IF EXISTS astra.guard_learning_skill();
+DROP FUNCTION IF EXISTS astra.guard_learning_artifact();
+COMMIT;

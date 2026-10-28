@@ -1,0 +1,509 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Astra tenant workspace for outcomes, offers, workflows, and AI policy.">
+  <title>Astra workbench — Odd Ecosys</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/astra-workbench.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to workbench</a>
+  <div class="ambient-mesh" aria-hidden="true"><div class="ambient-orb orb-1"></div><div class="ambient-orb orb-2"></div></div>
+  <main id="main" class="astra-shell">
+    <header class="astra-topbar">
+      <a class="back-link" href="/" aria-label="Return to Odd Ecosys console">← Console</a>
+      <span class="eyebrow">ODD ECOSYS / ASTRA</span>
+      <span class="session-state" id="session-state">Checking sign-in…</span>
+    </header>
+    <section class="hero">
+      <div><p class="eyebrow">TENANT OPERATIONS</p><h1>Astra workbench</h1><p class="lede">A focused workspace for source-traced outcomes, approved offers, and queued work.</p><p class="quiet">Synthetic local preview · enter only synthetic or explicitly authorized fixture data.</p></div>
+      <div class="tenant-panel glass-card">
+        <label for="tenant-id">Active tenant ID</label>
+        <div class="tenant-row"><input id="tenant-id" autocomplete="off" spellcheck="false" placeholder="Create a workspace or paste a tenant UUID"><button id="load-tenant" class="button secondary" type="button">Load</button></div>
+        <form id="create-tenant" class="tenant-row"><label class="sr-only" for="tenant-name">New workspace name</label><input id="tenant-name" maxlength="160" required placeholder="New workspace name"><button class="button primary" type="submit">Create workspace</button></form>
+        <p id="tenant-context" class="quiet" aria-live="polite">No tenant selected. Your last selected tenant is saved in this browser.</p>
+        <form id="accept-invitation-form" class="tenant-row compact-form">
+          <label class="sr-only" for="invitation-token">Invitation link token</label><input id="invitation-token" name="token" maxlength="43" autocomplete="off" spellcheck="false" required placeholder="Paste a tenant invitation link token">
+          <button class="button secondary" type="submit">Accept invitation</button>
+        </form>
+      </div>
+    </section>
+    <div id="notice" class="notice" role="status" aria-live="polite"></div>
+    <nav class="workbench-nav" aria-label="Workbench sections">
+      <a href="#memberships">Memberships</a><a href="#offline-checks">Offline checks</a><a href="#outcomes">Outcomes</a><a href="#offers">Offers</a><a href="#campaigns">Campaigns</a><a href="#connectors">Connectors &amp; generation</a><a href="#operations">Operations</a><a href="#evaluation">Evaluation</a><a href="#decisions">Decisions &amp; autonomy</a><a href="#workflows">Workflows</a><a href="#research">Research</a><a href="#permissions">Permissions</a><a href="#inbox-crm">Inbox &amp; CRM</a><a href="#memory">Memory &amp; experiments</a><a href="#lifecycle">Lifecycle</a><a href="#radar">Radar</a><a href="#learning">Learning</a><a href="#economics">Economics</a><a href="#launch-controls">Launch</a><a href="#ai-policy">AI policy</a>
+    </nav>
+    <section class="workbench-grid">
+      <article class="work-card glass-card" id="memberships">
+        <div class="card-heading"><div><p class="eyebrow">TENANT ACCESS</p><h2>Members &amp; invitations</h2></div><button class="button secondary refresh" data-refresh="memberships" type="button">Refresh</button></div>
+        <p class="quiet">Manage tenant roles and revoke access. Invitation links are one-time, expire within seven days, and are shown only in the creation response. Copy the local link manually; no email is sent.</p>
+        <form id="membership-invite-form" class="form-grid compact-form">
+          <label>Invite email<input name="email" type="email" maxlength="320" autocomplete="off" required></label>
+          <label>Tenant role<select name="role"><option value="reviewer">Reviewer</option><option value="operator">Operator</option><option value="admin">Admin</option><option value="owner">Owner</option></select></label>
+          <label>Expires in days<input name="expiresInDays" type="number" min="1" max="7" value="7" required></label>
+          <button class="button secondary wide" type="submit">Create invitation link</button>
+        </form>
+        <div id="invitation-link-result" class="status-box" hidden>
+          <strong>Copy this link now. It is shown once and is not saved.</strong>
+          <label class="wide">One-time tenant invitation link<input id="invitation-link" readonly autocomplete="off" spellcheck="false"></label>
+        </div>
+        <div class="list-head"><h3>Tenant members</h3><span id="membership-count" class="quiet">—</span></div>
+        <div id="members-list" class="data-list empty">Select a tenant to load members.</div>
+        <div class="list-head"><h3>Invitations</h3><span id="invitation-count" class="quiet">—</span></div>
+        <div id="invitations-list" class="data-list empty">Select an owner/admin tenant to load invitations.</div>
+      </article>
+      <article class="work-card glass-card" id="offline-checks">
+        <div class="card-heading"><div><p class="eyebrow">SYNTHETIC / OFFLINE</p><h2>Conformance &amp; bandit diagnostics</h2></div></div>
+        <p class="quiet">These controls require an explicit tenant action. Conformance is available only in local preview with synthetic-fixture consent. Bandit evaluation is descriptive and never allocates campaign traffic or sends.</p>
+        <div class="list-head"><h3>Conformance manifest</h3><button id="conformance-manifest-load" class="button secondary" type="button">Load manifest</button></div>
+        <div id="conformance-manifest" class="status-box empty">Manifest is not loaded.</div>
+        <form id="conformance-run-form" class="form-grid compact-form">
+          <label class="wide">Idempotency key<input name="idempotencyKey" minlength="8" maxlength="160" required placeholder="Use a fresh opaque key"></label>
+          <label class="check-label wide"><input name="syntheticDatasetConsent" type="checkbox" required> This run will use only synthetic fixture data, and I attest tenant synthetic-fixture rights.</label>
+          <button class="button secondary wide" type="submit">Queue explicit conformance run</button>
+        </form>
+        <div id="conformance-run-status" class="status-box empty">No conformance run selected.</div>
+        <div class="list-head"><h3>Offline bandit lanes</h3><button id="bandit-lanes-load" class="button secondary" type="button">Refresh lanes</button></div>
+        <div id="bandit-lanes" class="data-list empty">Lanes are not loaded.</div>
+        <form id="bandit-lane-form" class="form-grid compact-form">
+          <label>Experiment ID<input name="experimentId" required></label><label>Seed<input name="seed" maxlength="120" required></label>
+          <label>Maximum exploration fraction<input name="maxExplorationFraction" type="number" min="0" max="0.2" step="0.001" value="0.1" required></label>
+          <button class="button secondary wide" type="submit">Prepare fixed offline lane</button>
+        </form>
+        <form id="bandit-evaluate-form" class="form-grid compact-form">
+          <label>Lane ID<input name="laneId" required></label><label>Maximum weight<input name="maxWeight" type="number" min="1" max="20" value="20" required></label>
+          <button class="button secondary wide" type="submit">Run offline diagnostic</button>
+        </form>
+        <div id="bandit-diagnostic" class="status-box empty">No offline diagnostic run.</div>
+        <div class="list-head"><h3>Queue an existing domain job</h3></div>
+        <p class="quiet">Link a queued canonical verification, drafting, or reply-classification job to the tenant workflow. This records a workflow only; it never starts automatically.</p>
+        <form id="domain-harness-form" class="form-grid compact-form">
+          <label>Job kind<select name="kind"><option value="verification">Verification</option><option value="drafting">Drafting</option><option value="reply_classification">Reply classification</option></select></label>
+          <label>Existing domain job ID<input name="jobId" required></label>
+          <button class="button secondary" type="submit">Queue workflow</button><button id="domain-harness-status" class="button secondary" type="button">Check binding</button>
+        </form>
+        <div id="domain-harness-result" class="status-box empty">No domain job binding loaded.</div>
+      </article>
+      <article class="work-card glass-card" id="outcomes">
+        <div class="card-heading"><div><p class="eyebrow">SOURCE TRACE</p><h2>Events &amp; outcomes</h2></div><button class="button secondary refresh" data-refresh="ledger" type="button">Refresh</button></div>
+        <p class="quiet">Record a milestone against a contact, account, opportunity, meeting, or invoice. Source and evidence stay attached to the event.</p>
+        <form id="outcome-form" class="form-grid">
+          <label>Stage<select name="stage" required><option value="meeting_booked">Meeting booked</option><option value="meeting_held">Meeting held</option><option value="meeting_cancelled">Meeting cancelled</option><option value="opportunity_created">Opportunity created</option><option value="opportunity_qualified">Opportunity qualified</option><option value="opportunity_won">Opportunity won</option><option value="opportunity_lost">Opportunity lost</option><option value="revenue_paid">Revenue paid</option><option value="revenue_refunded">Revenue refunded</option><option value="label">Custom label</option></select></label>
+          <label>Entity type<select name="entityType"><option>contact</option><option>account</option><option>opportunity</option><option>meeting</option><option>invoice</option></select></label>
+          <label class="wide">Entity ID<input name="entityId" required maxlength="500" placeholder="CRM record ID"></label>
+          <label>Occurred at<input name="occurredAt" type="datetime-local" required></label>
+          <label class="conditional" data-for="revenue_paid revenue_refunded">Amount (minor units)<input name="amountMinor" type="number" min="0" step="1"></label>
+          <label class="conditional" data-for="revenue_paid revenue_refunded">Currency<input name="currency" maxlength="3" value="USD" placeholder="USD"></label>
+          <label class="conditional wide" data-for="label">Label<input name="label" maxlength="200" placeholder="Outcome label"></label>
+          <label class="conditional" data-for="revenue_paid revenue_refunded">Invoice reference<input name="invoiceRef" maxlength="500"></label>
+          <label>Provenance source<input name="source" required maxlength="120" placeholder="e.g. crm_sync, salesforce"></label>
+          <label>Confidence<select name="confidence"><option value="unknown">Unknown</option><option value="high">High</option><option value="medium">Medium</option><option value="low">Low</option></select></label>
+          <label>Field authority<select name="fieldAuthority"><option value="source">Source</option><option value="crm">CRM</option><option value="human">Human</option><option value="system">System</option></select></label>
+          <label class="wide">Evidence reference (URL or record key)<input name="evidenceRef" maxlength="1000" placeholder="Evidence locator"></label>
+          <button class="button primary wide" type="submit">Record outcome</button>
+        </form>
+        <div class="list-head"><h3>Recent events</h3><span id="event-count" class="quiet">—</span></div><div id="events-list" class="data-list empty">Select a tenant to load events.</div>
+        <div class="list-head"><h3>Outcome projections</h3><span id="outcome-count" class="quiet">—</span></div><div id="outcomes-list" class="data-list empty">Projection data appears after recorded outcomes.</div>
+      </article>
+
+      <article class="work-card glass-card" id="offers">
+        <div class="card-heading"><div><p class="eyebrow">VERSIONED &amp; HASHED</p><h2>Offers</h2></div><button class="button secondary refresh" data-refresh="offers" type="button">Refresh</button></div>
+        <p class="quiet">Offer versions are immutable. Create and approve versions here; each version displays the server-computed SHA-256.</p>
+        <form id="offer-form" class="form-grid">
+          <label class="wide">Offer name<input name="name" required maxlength="160" placeholder="Offer name"></label>
+          <label class="wide">Offer content JSON<textarea name="content" rows="12" required spellcheck="false"></textarea></label>
+          <button class="button primary wide" type="submit">Create offer and version 1</button>
+        </form>
+        <form id="version-form" class="form-grid compact-form">
+          <label>Offer ID<input name="offerId" type="number" min="1" required></label>
+          <label class="wide">New version content JSON<textarea name="content" rows="8" required spellcheck="false"></textarea></label>
+          <button class="button secondary wide" type="submit">Create immutable version</button>
+        </form>
+        <form id="proof-form" class="form-grid compact-form">
+          <label>Offer ID<input name="offerId" type="number" min="1" required></label><label>Version ID<input name="versionId" type="number" min="1" required></label>
+          <label>Proof ID<input name="proofId" required maxlength="100" placeholder="Unique proof key"></label><label>Proof file<input name="proofFile" type="file" required></label>
+          <label class="wide">Proof expiry (required; choose a future date and time)<input name="expiresAt" type="datetime-local" required></label>
+          <button class="button secondary wide" type="submit">Upload and attach proof</button>
+        </form>
+        <div class="list-head"><h3>Tenant offers</h3><span id="offer-count" class="quiet">—</span></div><div id="offers-list" class="data-list empty">Select a tenant to load offers.</div>
+      </article>
+
+      <article class="work-card glass-card" id="workflows">
+        <div class="card-heading"><div><p class="eyebrow">DURABLE QUEUE</p><h2>Workflows</h2></div><button class="button secondary refresh" data-refresh="workflows" type="button">Refresh</button></div>
+        <p class="quiet">Schedule accepts a versioned HarnessTask contract. This queues work; it does not run a provider from this page.</p>
+        <form id="workflow-form" class="form-grid">
+          <label class="wide">HarnessTask JSON<textarea name="task" rows="12" required spellcheck="false" placeholder="Paste a tenant-scoped HarnessTask v1 contract"></textarea></label>
+          <label>Priority<input name="priority" type="number" min="0" max="100" value="50"></label>
+          <label>Queue class<select name="taskClass"><option>standard</option><option>interactive</option><option>suppression</option><option>bulk</option></select></label>
+          <label>Max attempts<input name="maxAttempts" type="number" min="1" max="10" value="3"></label>
+          <button class="button primary wide" type="submit">Schedule workflow</button>
+        </form>
+        <div class="list-head"><h3>Recent queue</h3><span id="workflow-count" class="quiet">—</span></div><div id="workflows-list" class="data-list empty">Select a tenant to load workflows.</div>
+      </article>
+
+      <article class="work-card glass-card" id="ai-policy">
+        <div class="card-heading"><div><p class="eyebrow">EGRESS GUARD</p><h2>AI gateway policy</h2></div><button class="button secondary refresh" data-refresh="ai" type="button">Refresh</button></div>
+        <p class="quiet">Status is read from the tenant gateway. A policy change controls eligibility only; provider dispatch remains unavailable here.</p>
+        <div id="ai-status" class="status-box empty">Select a tenant to load gateway status.</div>
+        <form id="ai-policy-form" class="form-grid compact-form">
+          <label class="check-label wide"><input name="enabled" type="checkbox"> Allow eligible synthetic requests</label>
+          <label class="wide">Allowed tasks<select name="allowedTasks" multiple size="3"><option value="personalization_draft">Personalization draft</option><option value="subject_polish">Subject polish</option><option value="fact_check">Fact check</option></select></label>
+          <label>Daily budget (micro-USD)<input name="dailyBudgetMicrousd" type="number" min="0" step="1" value="0"></label>
+          <label>Per-request reservation<input name="reservationMicrousd" type="number" min="0" step="1" value="0"></label>
+          <label>Max input tokens<input name="maxInputTokens" type="number" min="0" max="128000" value="0"></label>
+          <label>Max output tokens<input name="maxOutputTokens" type="number" min="0" max="16384" value="0"></label>
+          <button class="button secondary wide" type="submit">Save tenant policy</button>
+        </form>
+        <p class="blocked-note">Provider actions are not available in this workbench. The gateway reports when global or tenant policy blocks requests.</p>
+      </article>
+
+      <article class="work-card glass-card" id="research">
+        <div class="card-heading"><div><p class="eyebrow">IMMUTABLE SOURCE EVIDENCE</p><h2>Snapshot research</h2></div><button class="button secondary refresh" data-refresh="research" type="button">Refresh</button></div>
+        <p class="quiet">Supply HTML you are authorized to retain. Snapshot text is untrusted evidence; this form does not fetch the URL.</p>
+        <form id="snapshot-form" class="form-grid">
+          <label class="wide">Source URL<input name="sourceUrl" type="url" required maxlength="2048" placeholder="https://example.org/page"></label>
+          <label>Rights policy<select name="rightsPolicy"><option value="synthetic_fixture">Synthetic fixture</option><option value="user_provided">User provided</option><option value="licensed">Licensed</option><option value="public_terms_permitted">Public terms permitted</option></select></label>
+          <label>Rights expiry (optional)<input name="rightsExpiresAt" type="datetime-local"></label>
+          <label class="check-label"><input name="rightsAttested" type="checkbox" required> I attest the selected rights basis</label>
+          <label class="check-label"><input name="robotsAllowed" type="checkbox" required> I confirmed robots / access permission</label>
+          <label class="wide">Supplied HTML<textarea name="html" rows="8" required maxlength="1048576" spellcheck="false" placeholder="Paste permitted HTML snapshot (up to 1 MiB)"></textarea></label>
+          <button class="button primary wide" type="submit">Capture immutable snapshot</button>
+        </form>
+        <div id="research-selected" class="status-box empty">No evidence selected.</div>
+        <div class="list-head"><h3>Explicit source collection</h3><button id="source-collection-refresh" class="button secondary" type="button">Refresh jobs</button></div>
+        <p class="quiet">Jobs are tenant-scoped. Requests stay blocked unless current source-rights attestations and matching S01 approval references are present; server transport is disabled by default. No request is made until you submit a form.</p>
+        <form id="source-fetch-form" class="form-grid compact-form">
+          <label class="wide">HTTPS source page URL<input name="sourceUrl" type="url" maxlength="2048" required placeholder="https://example.org/page"></label>
+          <label>Rights policy<select name="rightsPolicy"><option value="licensed">Licensed</option><option value="public_terms_permitted">Public terms permitted</option></select></label>
+          <label>Rights expiry<input name="rightsExpiresAt" type="datetime-local" required></label>
+          <label class="check-label"><input name="rightsAttested" type="checkbox" required> Rights were reviewed and attested</label>
+          <label class="check-label"><input name="robotsAllowed" type="checkbox" required> Current robots/access policy permits this page</label>
+          <label>Rights evidence reference<input name="rightsEvidenceReference" maxlength="500" required></label>
+          <label>Robots evidence reference<input name="robotsEvidenceReference" maxlength="500" required></label>
+          <label>Rights reviewed at<input name="rightsReviewedAt" type="datetime-local" required></label>
+          <label class="wide">Matching S01 approval references JSON<textarea name="approvalReferences" rows="3" required spellcheck="false" placeholder='[{"decisionId":"source.public-websites","reference":"approval record","evidenceSha256":"64-character SHA-256"},{"decisionId":"glm.input-processing-and-data-protection","reference":"approval record","evidenceSha256":"64-character SHA-256"}]'></textarea></label>
+          <button class="button secondary wide" type="submit">Queue explicit source fetch</button>
+        </form>
+        <form id="source-search-form" class="form-grid compact-form">
+          <label>Public business category<input name="category" maxlength="80" required></label><label>Country<input name="country" maxlength="80" required></label>
+          <label>City (optional)<input name="city" maxlength="80"></label><label>Rights policy<select name="rightsPolicy"><option value="licensed">Licensed</option><option value="public_terms_permitted">Public terms permitted</option></select></label>
+          <label class="check-label"><input name="rightsAttested" type="checkbox" required> Search-rights basis reviewed and attested</label><label class="check-label"><input name="robotsAllowed" type="checkbox" required> Search service policy reviewed</label>
+          <label>Rights expiry<input name="rightsExpiresAt" type="datetime-local" required></label><label>Rights evidence reference<input name="rightsEvidenceReference" maxlength="500" required></label>
+          <label>Robots evidence reference<input name="robotsEvidenceReference" maxlength="500" required></label><label>Rights reviewed at<input name="rightsReviewedAt" type="datetime-local" required></label>
+          <label class="wide">Matching S01 approval references JSON<textarea name="approvalReferences" rows="3" required spellcheck="false" placeholder='[{"decisionId":"source.searxng-instance-and-engines","reference":"approval record","evidenceSha256":"64-character SHA-256"},{"decisionId":"glm.input-processing-and-data-protection","reference":"approval record","evidenceSha256":"64-character SHA-256"}]'></textarea></label>
+          <button class="button secondary wide" type="submit">Queue public-category search</button>
+        </form>
+        <div id="source-collection-status" class="status-box empty">No source collection jobs loaded.</div>
+        <div id="source-collection-jobs" class="data-list empty">Select a tenant to load source collection jobs.</div>
+        <div class="list-head"><h3>Evidence snapshots</h3><span id="evidence-count" class="quiet">—</span></div><div id="evidence-list" class="data-list empty">Select a tenant to load evidence.</div>
+        <form id="research-queue-form" class="form-grid compact-form"><p id="research-queue-status" class="quiet wide">Bounded research task queue unavailable until worker status confirms support.</p><button class="button secondary wide" type="submit" disabled>Queue selected evidence for research</button></form>
+        <div class="list-head"><h3>Identity candidates</h3><span id="candidate-count" class="quiet">—</span></div><div id="candidates-list" class="data-list empty">Inspect a snapshot to load account candidates.</div>
+        <form id="audit-form" class="form-grid compact-form"><label class="wide">Evidence ID<input name="evidenceId" required placeholder="Select an evidence row"></label><button class="button secondary wide" type="submit">Audit evidence</button></form>
+        <div id="audit-result" class="data-list empty">No audit result loaded.</div>
+        <form id="claim-form" class="form-grid compact-form">
+          <label>Subject key<input name="subjectKey" required maxlength="300" placeholder="account or entity key"></label><label>Predicate<input name="predicate" required maxlength="120" placeholder="e.g. headquarters_city"></label>
+          <label class="wide">Claim value<input name="value" required maxlength="2000"></label><label class="wide">Exact excerpt from selected evidence<textarea name="exactExcerpt" rows="3" required maxlength="1000"></textarea></label>
+          <input name="evidenceId" type="hidden"><input name="contentSha256" type="hidden"><label>Claim expires at<input name="expiresAt" type="datetime-local" required></label><button class="button primary" type="submit">Submit evidenced claim</button>
+        </form>
+        <div class="list-head"><h3>Claims</h3><span id="claim-count" class="quiet">—</span></div><div id="claims-list" class="data-list empty">Select a tenant to load claims.</div>
+      </article>
+
+      <article class="work-card glass-card" id="permissions">
+        <div class="card-heading"><div><p class="eyebrow">CONSENT &amp; SAFETY</p><h2>Permissions &amp; suppressions</h2></div><button class="button secondary refresh" data-refresh="permissions" type="button">Refresh</button></div>
+        <p class="quiet">Permission records require source proof. Suppressions have no removal action. Evaluate the current grant and suppression state before a task.</p>
+        <form id="permission-form" class="form-grid">
+          <label>Subject type<select name="subjectType"><option>recipient</option><option>domain</option><option>account</option><option>channel</option></select></label><label>Subject value<input name="subjectValue" required maxlength="320"></label>
+          <label>Purpose<input name="purpose" required maxlength="120"></label><label>Lawful basis<select name="lawfulBasis"><option>unknown</option><option>consent</option><option>contract</option><option>legal_obligation</option><option>vital_interests</option><option>public_task</option><option>legitimate_interests</option></select></label>
+          <label>Geography<input name="geography" required maxlength="80" placeholder="country or region"></label><label>Decision<select name="decision"><option>granted</option><option>denied</option><option>withdrawn</option><option>expired</option></select></label>
+          <label>Consent expiry (required for consent)<input name="consentExpiresAt" type="datetime-local"></label><label class="wide">Source proof JSON<textarea name="sourceProof" rows="3" required placeholder='{"reference":"record or evidence URI"}'></textarea></label>
+          <button class="button primary wide" type="submit">Record permission</button>
+        </form>
+        <form id="evaluate-form" class="form-grid compact-form">
+          <label>Recipient<input name="recipient" type="email"></label><label>Domain<input name="domain"></label><label>Account key<input name="account"></label><label>Channel<input name="channel"></label>
+          <label class="wide">Purpose<input name="purpose" required></label><button class="button secondary wide" type="submit">Evaluate permission gate</button>
+        </form><div id="permission-evaluation" class="status-box empty">No permission evaluation run.</div>
+        <form id="suppression-form" class="form-grid compact-form">
+          <label>Scope<select name="scope"><option>recipient</option><option>domain</option><option>account</option><option>channel</option><option>purpose</option></select></label><label>Value<input name="value" required></label>
+          <label class="wide">Reason<input name="reason" required maxlength="240"></label><label class="wide">Evidence JSON<textarea name="evidence" rows="3" required placeholder='{"source":"operator review"}'></textarea></label>
+          <button class="button secondary wide" type="submit">Record suppression</button>
+        </form>
+        <div class="list-head"><h3>Permission decisions</h3><span id="permission-count" class="quiet">—</span></div><div id="permissions-list" class="data-list empty">Select a tenant to load permissions.</div>
+        <div class="list-head"><h3>Suppression decisions</h3><span id="suppression-count" class="quiet">—</span></div><div id="suppressions-list" class="data-list empty">Select a tenant to load suppressions.</div>
+      </article>
+
+      <article class="work-card glass-card" id="inbox-crm">
+        <div class="card-heading"><div><p class="eyebrow">MANUAL INGEST / HELD CRM</p><h2>Inbox &amp; CRM</h2></div><button class="button secondary refresh" data-refresh="inbox" type="button">Refresh</button></div>
+        <p class="quiet">Mailbox receive is manual ingest only. Reply classification is deterministic. CRM proposals remain held/queued records; transport stays disabled.</p>
+        <form id="mailbox-form" class="form-grid"><label class="wide">Mailbox display name<input name="displayName" required maxlength="160"></label><label class="wide">External mailbox ID (optional)<input name="providerMailboxId" maxlength="500"></label><button class="button primary wide" type="submit">Create manual mailbox</button></form>
+        <div class="list-head"><h3>Mailboxes</h3><span id="mailbox-count" class="quiet">—</span></div><div id="mailboxes-list" class="data-list empty">Select a tenant to load mailboxes.</div>
+        <form id="message-form" class="form-grid compact-form">
+          <label class="wide">Mailbox ID<input name="mailboxId" required placeholder="Select a mailbox below"></label><label>External thread ID<input name="externalThreadId" required></label><label>External message ID<input name="externalMessageId" required></label>
+          <label>In-reply-to (optional)<input name="inReplyTo"></label><label>Sender<input name="sender" type="email"></label><label class="wide">Recipients (comma separated)<input name="recipients" placeholder="person@example.org"></label>
+          <label class="wide">Subject<input name="subject"></label><label class="wide">Message body<textarea name="bodyText" rows="5" required maxlength="100000"></textarea></label><button class="button primary wide" type="submit">Ingest supplied message</button>
+        </form>
+        <div class="list-head"><h3>Inbox messages</h3><span id="message-count" class="quiet">—</span></div><div id="messages-list" class="data-list empty">No messages loaded.</div>
+        <div class="list-head"><h3>Reply tasks</h3><span id="reply-count" class="quiet">—</span></div><div id="reply-tasks-list" class="data-list empty">No reply tasks loaded.</div>
+        <form id="mapping-form" class="form-grid compact-form">
+          <label>Entity type<select name="entityType"><option value="company">Company</option></select></label><label>Local entity ID<input name="entityId" required></label><label>External CRM ID<input name="externalId" required></label>
+          <label class="wide">Field authority JSON<textarea name="fieldAuthority" rows="2" placeholder='{"name":"crm"}'></textarea></label><label class="wide">Provenance JSON<textarea name="provenance" rows="2" placeholder='{"source":"operator_mapping"}'></textarea></label><button class="button secondary wide" type="submit">Add CRM mapping</button>
+        </form>
+        <form id="outbox-form" class="form-grid compact-form">
+          <label>Entity type<select name="entityType"><option value="company">Company</option></select></label><label>Local company ID<input name="entityId" required></label><label class="wide">Idempotency key<input name="idempotencyKey" required maxlength="250"></label>
+          <label class="wide">Company create payload JSON<textarea name="payload" rows="4" required placeholder='{"name":"Fixture company","domainName":"fixture.example"}'></textarea></label><label class="wide">Field authority JSON<textarea name="fieldAuthority" rows="3" required placeholder='{"name":"source","domainName":"source"}'></textarea></label><label class="wide">Provenance JSON<textarea name="provenance" rows="3" required placeholder='{"source":"operator_review"}'></textarea></label><button class="button secondary wide" type="submit">Queue company proposal</button>
+        </form>
+        <div class="list-head"><h3>CRM mappings</h3><span id="mapping-count" class="quiet">—</span></div><div id="mappings-list" class="data-list empty">No mappings loaded.</div>
+        <div class="list-head"><h3>CRM outbox</h3><span id="outbox-count" class="quiet">—</span></div><div id="outbox-list" class="data-list empty">No proposals loaded.</div>
+      </article>
+
+      <article class="work-card glass-card" id="campaigns">
+        <div class="card-heading"><div><p class="eyebrow">GATED CAMPAIGN RECORDS</p><h2>Campaigns</h2></div><button class="button secondary refresh" data-refresh="campaigns" type="button">Refresh</button></div>
+        <p class="quiet">Campaign records bind approved offer versions, research claims, permissions, and verification evidence. Dispatch stays disabled; a plan is offline only.</p>
+        <form id="campaign-form" class="form-grid">
+          <label class="wide">Campaign name<input name="name" required maxlength="160"></label><label>Approved offer version ID<input name="offerVersionId" type="number" min="1" required></label><label>Manual mailbox ID<input name="mailboxId" required placeholder="Select from mailbox list"></label>
+          <label>Purpose<input name="purpose" required maxlength="120"></label><label>Geography (ISO country codes)<input name="geography" required placeholder="US, CA"></label>
+          <label>Spend limit (minor units)<input name="spendLimitMinor" type="number" min="0" step="1" required></label><label>Currency<input name="currency" maxlength="3" required value="USD"></label><label class="wide">Schedule at (optional)<input name="scheduleAt" type="datetime-local"></label>
+          <button class="button primary wide" type="submit">Create gated campaign record</button>
+        </form>
+        <div class="list-head"><h3>Campaign records</h3><span id="campaign-count" class="quiet">—</span></div><div id="campaigns-list" class="data-list empty">Select a tenant to load campaign records.</div>
+        <div id="campaign-detail" class="status-box empty">Select a campaign for qualification, draft, approval, and offline planning.</div>
+        <form id="qualification-form" class="form-grid compact-form"><label class="wide">Research account IDs (comma separated)<input name="accountIds" required placeholder="Use account IDs returned with captured research"></label><button class="button secondary wide" type="submit">Qualify accounts against current evidence</button></form>
+        <div id="qualification-result" class="data-list empty">No qualification run.</div>
+        <p class="quiet">To record negative or unknown verification, copy the candidate and evidence IDs from the research identity-candidate list. The campaign audience must already include that candidate.</p>
+        <form id="verification-form" class="form-grid compact-form">
+          <label>Candidate ID<input name="candidateId" required></label><label>Source evidence ID<input name="evidenceId" required></label><label>Classification<select name="classification"><option>unknown</option><option>catch_all</option><option>stale</option><option>invalid</option><option>manual_review_pending</option></select></label><label>Expires at<input name="expiresAt" type="datetime-local" required></label>
+          <label>Source<input name="source" required value="manual_fixture_review"></label><label class="wide">Evidence note<input name="note" required maxlength="1000"></label><button class="button secondary wide" type="submit">Record negative or unknown verification evidence</button>
+        </form>
+        <form id="draft-form" class="form-grid compact-form">
+          <p class="quiet wide">Drafts use the current campaign version and exact copy templates backed by current source evidence. Unsupported edits remain unverified and cannot be saved or approved.</p>
+          <label class="wide">Subject<input name="subject" required maxlength="100" readonly></label>
+          <div class="wide"><p class="quiet">Current server-provided source templates</p><div id="draft-template-list" class="data-list empty">Select a campaign to load current copy templates.</div></div>
+          <label class="wide">Body<textarea name="body" rows="5" required maxlength="4000" aria-describedby="draft-validation"></textarea></label>
+          <p id="draft-validation" class="status-box empty wide" aria-live="polite">Select a campaign to load current copy validation.</p>
+          <button class="button secondary wide" type="submit" disabled>Validate and save versioned draft</button>
+        </form>
+        <form id="approval-form" class="form-grid compact-form"><label>Approval expires at<input name="expiresAt" type="datetime-local" required></label><button class="button secondary" type="submit" disabled>Approve immutable campaign version</button></form>
+        <form id="plan-form" class="form-grid compact-form"><label>Plan idempotency key<input name="idempotencyKey" required maxlength="200"></label><button class="button secondary" type="submit">Prepare offline-only plan</button></form>
+        <div class="list-head"><h3>Approvals &amp; offline plans</h3><span class="quiet">Transport disabled</span></div><div id="campaign-plans" class="data-list empty">Select a campaign to view approvals and plans.</div>
+        <form id="plan-claim-form" class="form-grid compact-form"><label>Plan ID<input name="planId" required placeholder="Select an offline plan below"></label><label>Claim idempotency key<input name="idempotencyKey" required maxlength="200"></label><button class="button secondary wide" type="submit">Claim &amp; quarantine plan</button></form>
+      </article>
+
+      <article class="work-card glass-card" id="connectors">
+        <div class="card-heading"><div><p class="eyebrow">TENANT-SCOPED PROVIDER CONNECTORS</p><h2>Connectors &amp; generation</h2></div><button class="button secondary refresh" data-refresh="connectors" type="button">Refresh</button></div>
+        <p class="quiet">Connector secrets are submitted only to the authenticated tenant API and never shown again. Provider work remains blocked by S01 and local preview; queued probes and syncs become durable blocked jobs.</p>
+        <form id="connector-form" class="form-grid">
+          <label>Provider<select name="provider"><option value="reacher">Reacher verification</option><option value="smtp_imap">SMTP / IMAP mailbox</option><option value="twenty">Twenty CRM</option></select></label><label>Connector key<input name="connectorKey" required maxlength="120"></label>
+          <label>Endpoint host (optional)<input name="endpointHost" maxlength="253"></label><label>Public config JSON<textarea name="publicConfig" rows="3" required spellcheck="false">{}</textarea></label>
+          <label class="wide">Credentials JSON (hidden input)<input name="credentials" type="password" autocomplete="new-password" required maxlength="12000" placeholder='{"apiSecret":"…"}'></label>
+          <label class="wide">Approval decision references JSON (optional for blocked draft)<textarea name="decisionReferences" rows="2" spellcheck="false" placeholder='[] — later, supply three approved references'></textarea></label>
+          <label class="wide">Approval documents JSON (optional for blocked draft)<textarea name="documents" rows="3" spellcheck="false" placeholder='[] — later, supply approval document hashes and expiry'></textarea></label>
+          <button class="button primary wide" type="submit">Save encrypted connector configuration</button>
+        </form>
+        <form id="connector-bind-form" class="form-grid compact-form"><label>Connector ID<input name="connectorId" required></label><label>Mailbox ID<input name="mailboxId" required></label><label class="wide">Provider mailbox ID<input name="providerMailboxId" required maxlength="500"></label><button class="button secondary wide" type="submit">Bind connector to mailbox</button></form>
+        <form id="connector-job-form" class="form-grid compact-form"><label>Connector ID<input name="connectorId" required></label><label>Mailbox ID<input name="mailboxId" required></label><label>Action<select name="action"><option value="probe">Probe capabilities</option><option value="sync">Sync bounded inbox</option></select></label><label>Sync limit<input name="limit" type="number" min="1" max="100" value="25"></label><button class="button secondary wide" type="submit">Queue connector task</button></form>
+        <form id="connector-verify-form" class="form-grid compact-form"><label class="wide">Research candidate ID<input name="candidateId" required></label><button class="button secondary wide" type="submit">Queue Reacher verification</button></form>
+        <div class="list-head"><h3>Configured connectors</h3><span id="connector-count" class="quiet">—</span></div><div id="connectors-list" class="data-list empty">Select a tenant to load connectors.</div>
+        <div class="list-head"><h3>Connector jobs</h3><span id="connector-job-count" class="quiet">—</span></div><div id="connector-jobs-list" class="data-list empty">Select a tenant to load jobs.</div>
+        <div class="status-box blocked-note">External provider actions are disabled in this phase. Credential values are never rendered in job or connector summaries.</div>
+        <div class="list-head"><h3>Generation policy</h3><span class="quiet">Explicit operator run only</span></div>
+        <form id="generation-policy-form" class="form-grid compact-form">
+          <label class="check-label wide"><input name="enabled" type="checkbox"> Enable bounded generation budget policy</label><label>Allowed task<select name="allowedTasks" multiple><option value="campaign_generation">Campaign copy generation</option><option value="reply_classification">Reply classification</option></select></label>
+          <label>Daily budget (microusd)<input name="dailyBudgetMicrousd" type="number" min="0" step="1" value="0"></label><label>Per-job reservation (microusd)<input name="reservationMicrousd" type="number" min="0" step="1" value="0"></label>
+          <label>Max input tokens<input name="maxInputTokens" type="number" min="0" max="128000" value="0"></label><label>Max output tokens<input name="maxOutputTokens" type="number" min="0" max="16384" value="0"></label><button class="button secondary wide" type="submit">Save tenant generation policy</button>
+        </form>
+        <div id="generation-status" class="status-box empty">Select a tenant to load generation policy and job counts.</div>
+        <form id="generation-campaign-form" class="form-grid compact-form"><label class="wide">Campaign ID<input name="campaignId" required></label><label class="wide">Idempotency key<input name="idempotencyKey" required minlength="8" maxlength="200"></label><button class="button secondary wide" type="submit">Create campaign generation job</button></form>
+        <form id="generation-reply-form" class="form-grid compact-form"><label class="wide">Inbox message ID<input name="messageId" required></label><label class="wide">Idempotency key<input name="idempotencyKey" required minlength="8" maxlength="200"></label><button class="button secondary wide" type="submit">Create reply intelligence job</button></form>
+        <form id="generation-run-form" class="form-grid compact-form"><label class="wide">Generation job ID<input name="jobId" required></label><button class="button secondary" type="submit">Load status</button><button class="button primary" id="generation-run-once" type="button">Run once</button></form>
+        <div id="generation-job-status" class="status-box empty">Create or load a generation job to view its durable status.</div>
+      </article>
+
+      <article class="work-card glass-card" id="evaluation">
+        <div class="card-heading"><div><p class="eyebrow">OFFLINE DETERMINISTIC VALIDATION</p><h2>Evaluation</h2></div><button class="button secondary refresh" data-refresh="evaluation" type="button">Refresh</button></div>
+        <p class="quiet">Frozen datasets, independent annotations, deterministic candidates and zero-model-call runs. The run button requests one local offline worker pass; release status remains pending.</p>
+        <form id="eval-dataset-form" class="form-grid"><label class="wide">Frozen dataset JSON<textarea name="dataset" rows="8" required spellcheck="false" placeholder='Include name, sourceManifest, labelRights, labelSchema, splitPolicy, and frozen examples with sourceRefs.'></textarea></label><button class="button secondary wide" type="submit">Create frozen dataset</button></form>
+        <form id="eval-candidate-form" class="form-grid compact-form"><label class="wide">Deterministic candidate JSON<textarea name="candidate" rows="5" required spellcheck="false" placeholder='{"name":"rules","version":"1","variantId":"H0","strategy":"abstain","config":{},"allowedLabels":["unknown"]}'></textarea></label><button class="button secondary wide" type="submit">Register local candidate</button></form>
+        <form id="eval-scorer-form" class="form-grid compact-form"><label class="wide">Scorer JSON<textarea name="scorer" rows="3" required spellcheck="false" placeholder='{"name":"exact-match","version":"1","classLabels":["positive","unknown"],"criticalHarmLabels":[],"abstainLabel":"unknown"}'></textarea></label><button class="button secondary wide" type="submit">Register scorer</button></form>
+        <form id="eval-label-form" class="form-grid compact-form"><label>Dataset ID<input name="datasetId" required></label><label>Label action<select name="action"><option value="annotations">Annotate</option><option value="adjudications">Adjudicate as owner</option></select></label><label class="wide">Labels JSON<textarea name="labels" rows="3" required spellcheck="false" placeholder='[{"exampleId":"…","label":"unknown"}]'></textarea></label><button class="button secondary wide" type="submit">Save independent labels</button></form>
+        <form id="eval-run-form" class="form-grid compact-form"><label class="wide">Evaluation run JSON<textarea name="run" rows="4" required spellcheck="false" placeholder='{"datasetId":"…","scorerId":"…","candidateIds":["…"],"budget":{"maxExamples":100,"maxWallClockMs":10000,"maxModelCalls":0,"maxSpendMicrousd":0}}'></textarea></label><button class="button primary wide" type="submit">Queue offline evaluation run</button></form>
+        <form id="eval-execute-form" class="form-grid compact-form"><label class="wide">Queued evaluation run ID<input name="runId" required></label><button class="button secondary wide" type="submit">Request one offline execution</button></form>
+        <div id="evaluation-status" class="status-box empty">Select a tenant to load datasets, local candidates, scorers and offline runs.</div>
+        <div class="list-head"><h3>Frozen datasets</h3><span id="eval-dataset-count" class="quiet">—</span></div><div id="eval-datasets-list" class="data-list empty">No datasets loaded.</div>
+        <div class="list-head"><h3>Runs</h3><span id="eval-run-count" class="quiet">—</span></div><div id="eval-runs-list" class="data-list empty">No evaluation runs loaded.</div>
+      </article>
+
+      <article class="work-card glass-card" id="decisions">
+        <div class="card-heading"><div><p class="eyebrow">STRUCTURED, AUDITABLE CONTROL</p><h2>Decisions &amp; autonomy</h2></div><button class="button secondary refresh" data-refresh="decisions" type="button">Refresh</button></div>
+        <p class="quiet">Policy status is evaluated by the server and defaults to unknown. Decisions are evidence records. Campaign envelopes require owner approval and can be revoked; exact exceptions require owner review. No execution ticket or send control is exposed here.</p>
+        <form id="decision-form" class="form-grid">
+          <label>Action<select name="action"><option>ABSTAIN</option><option>REVIEW</option><option>RESEARCH_MORE</option><option>WAIT</option><option>ACT</option></select></label><label>Target<input name="target" maxlength="500"></label>
+          <label>Horizon<input name="horizon" maxlength="120"></label><label>Basis<input name="basis" value="operator_structured" maxlength="80" required></label><label>Evidence support<select name="supportStatus"><option>unknown</option><option>supported</option><option>contradicted</option><option>stale</option></select></label>
+          <label>Support source reference<input name="sourceRef" maxlength="500"></label><label>Reversibility<select name="reversibility"><option>unknown</option><option>reversible</option><option>partially_reversible</option><option>irreversible</option></select></label><label class="wide">Conditioning JSON<textarea name="conditioning" rows="2" spellcheck="false">{}</textarea></label>
+          <label class="wide">Uncertainty JSON (optional)<textarea name="uncertainty" rows="2" spellcheck="false" placeholder='{"method":"manual","version":"1","sampleCount":0,"signals":[]}'></textarea></label><label class="wide">Risk JSON (optional)<textarea name="risk" rows="2" spellcheck="false" placeholder='{"level":"unknown","vetoes":[],"impact":"unknown"}'></textarea></label><label class="wide">Idempotency key<input name="idempotencyKey" required minlength="8" maxlength="200"></label>
+          <button class="button primary wide" type="submit">Record structured decision</button>
+        </form>
+        <div class="list-head"><h3>Decision records</h3><span id="decision-count" class="quiet">—</span></div><div id="decisions-list" class="data-list empty">Select a tenant to load decisions.</div>
+        <form id="authorization-form" class="form-grid compact-form">
+          <label>Campaign ID<input name="campaignId" required></label><label>Mode<select name="mode"><option>draft</option><option>routine_auto</option><option>exception_review</option></select></label>
+          <label>Audience<select name="audienceKind"><option>all_qualified</option><option>account_ids</option></select></label><label>Account IDs (if scoped)<input name="accountIds"></label>
+          <label>Model policy pin<input name="modelPolicy" required maxlength="160"></label><label>Purpose<input name="purpose" required maxlength="120"></label><label>Geography codes<input name="geography" required placeholder="US, CA"></label>
+          <label>Sequence JSON<textarea name="sequence" rows="3" required spellcheck="false" placeholder='{"version":"1","maxMessages":1,"cooldownHours":0}'></textarea></label>
+          <label>Copy constraints JSON<textarea name="copyConstraints" rows="4" required spellcheck="false" placeholder='{"version":"1","approvedCopyHash":"campaign-copy-hash","prohibitedClaims":[],"requiredDisclosures":[]}'></textarea></label>
+          <label>Schedule JSON<textarea name="schedule" rows="3" required spellcheck="false" placeholder='{"maxPerDay":1,"startHourUtc":9,"endHourUtc":17}'></textarea></label><label>Budget JSON<textarea name="budget" rows="3" required spellcheck="false" placeholder='{"maxSpendMinor":0,"currency":"USD"}'></textarea></label>
+          <label>Capacity<input name="capacity" type="number" min="1" required></label><label>Expires at<input name="expiresAt" type="datetime-local" required></label><label class="wide">Version pins JSON<textarea name="versionPins" rows="3" required spellcheck="false" placeholder='{"decision":"1","policy":"1","model":"GLM-5.3","copy":"1","sequence":"1"}'></textarea></label>
+          <button class="button secondary wide" type="submit">Create campaign authorization envelope</button>
+        </form>
+        <form id="authorization-action-form" class="form-grid compact-form"><label>Campaign ID<input name="campaignId" required></label><label>Envelope version<input name="version" type="number" min="1" required></label><label>Action<select name="action"><option value="approve">Approve as tenant owner</option><option value="revoke">Revoke with reason</option></select></label><label>Revoke reason<input name="reason" maxlength="240"></label><button class="button secondary wide" type="submit">Apply owner envelope action</button></form>
+        <div class="list-head"><h3>Campaign authorization envelopes</h3><span id="authorization-count" class="quiet">—</span></div><div id="authorizations-list" class="data-list empty">Select a campaign to view envelopes.</div>
+        <form id="exception-form" class="form-grid compact-form"><label>Campaign ID<input name="campaignId" required></label><label>Recipient ID<input name="recipientId" required></label><label class="wide">Exact intent JSON<textarea name="intent" rows="4" required spellcheck="false" placeholder='Must bind campaign, recipient, action and exact copy hashes.'></textarea></label><button class="button secondary wide" type="submit">Request exact exception review</button></form>
+        <form id="exception-approve-form" class="form-grid compact-form"><label>Campaign ID<input name="campaignId" required></label><label>Exception request ID<input name="requestId" required></label><button class="button secondary wide" type="submit">Approve exception as tenant owner</button></form>
+        <div class="list-head"><h3>Exception reviews</h3><span id="exception-count" class="quiet">—</span></div><div id="exceptions-list" class="data-list empty">Select a campaign to view exception reviews.</div>
+      </article>
+
+      <article class="work-card glass-card" id="operations">
+        <div class="card-heading"><div><p class="eyebrow">TENANT SAFETY</p><h2>Operations</h2></div><button class="button secondary refresh" data-refresh="operations" type="button">Refresh</button></div>
+        <p class="quiet">Inspect tenant queues and usage, then stop or resume dispatch for this tenant.</p>
+        <div id="operations-status" class="status-box empty">Select a tenant to load operations status.</div>
+        <form id="operations-kill-switch-form" class="form-grid compact-form"><label>Tenant dispatch<select name="enabled"><option value="true">Stop dispatch</option><option value="false">Resume dispatch</option></select></label><label>Reason code<input name="reasonCode" value="operator_stop" maxlength="80" pattern="[a-z][a-z0-9_.-]{0,79}" required></label><button class="button secondary wide" type="submit">Apply tenant stop/resume</button></form>
+      </article>
+
+      <article class="work-card glass-card" id="automation">
+        <div class="card-heading"><div><p class="eyebrow">OPERATOR STARTED</p><h2>Bounded automation</h2></div><button class="button secondary refresh" data-refresh="automation" type="button">Refresh</button></div>
+        <p class="quiet">No background poller starts automatically. A run-once request accepts only an empty body and uses the bounded local worker.</p>
+        <div id="automation-status" class="status-box empty">Select a tenant to load worker status.</div>
+        <form id="automation-form" class="form-grid"><label class="check-label wide"><input name="confirm" type="checkbox" required> I want to request one bounded local workflow pass</label><button class="button secondary wide" type="submit">Request run once</button></form>
+      </article>
+
+      <article class="work-card glass-card" id="lifecycle">
+        <div class="card-heading"><div><p class="eyebrow">AUDITABLE DATA GOVERNANCE</p><h2>Lifecycle &amp; exports</h2></div><button class="button secondary refresh" data-refresh="lifecycle" type="button">Refresh</button></div>
+        <p class="quiet">Exports run only through the dedicated worker. Deletion and retention requests produce plans; physical deletion is not performed. Inventory shows only connected tenant tables and marks external stores and backups unknown or unavailable.</p>
+        <div id="lifecycle-status" class="status-box empty">Select a tenant to load lifecycle requests and exports.</div>
+        <form id="lifecycle-export-form" class="form-grid compact-form"><label>Maximum rows<input name="rowLimit" type="number" min="1" max="100000" value="50000" required></label><button class="button secondary wide" type="submit">Request tenant export</button></form>
+        <form id="lifecycle-request-form" class="form-grid compact-form"><label>Request kind<select name="type"><option value="deletion">Deletion plan</option><option value="retention">Retention plan</option></select></label><label>Legal hold<select name="legalHold"><option value="false">No</option><option value="true">Yes</option></select></label><label class="wide">Plan JSON<textarea name="request" rows="4" required spellcheck="false" placeholder='Deletion: {"targets":[{"table":"workflows","id":"…"}],"suppressionDigests":[]} · Retention: {"retentionPolicy":{"operational_telemetry":90}}'></textarea></label><button class="button secondary wide" type="submit">Create plan-only request</button></form>
+        <div class="list-head"><h3>Requests and exports</h3><span id="lifecycle-count" class="quiet">—</span></div><div id="lifecycle-list" class="data-list empty">No lifecycle records loaded.</div>
+        <div class="list-head"><h3>Tenant inventory</h3><span class="quiet">Current tenant only</span></div><div id="lifecycle-inventory" class="status-box empty">Inventory is not loaded.</div>
+      </article>
+
+      <article class="work-card glass-card" id="radar">
+        <div class="card-heading"><div><p class="eyebrow">STORED-SNAPSHOT MONITORING</p><h2>Radar watches</h2></div><button class="button secondary refresh" data-refresh="radar" type="button">Refresh</button></div>
+        <p class="quiet">Watches compare permitted saved research snapshots. Refresh is explicit and queued after commit; current execution reports network fetch disabled. No background watcher starts automatically.</p>
+        <div id="radar-status" class="status-box empty">Select a tenant to load watches and signals.</div>
+        <form id="radar-watch-form" class="form-grid compact-form"><label>Research source ID<input name="sourceId" required placeholder="Select an existing permitted source ID"></label><label>Cadence minutes<input name="cadenceMinutes" type="number" min="60" max="10080" value="1440" required></label><label>Minimum cadence<input name="minCadenceMinutes" type="number" min="60" max="10080" value="360" required></label><label>Maximum cadence<input name="maxCadenceMinutes" type="number" min="60" max="10080" value="10080" required></label><label>Daily observation cap<input name="maxObservationsPerDay" type="number" min="1" max="48" value="24" required></label><button class="button secondary wide" type="submit">Create snapshot watch</button></form>
+        <div class="list-head"><h3>Watches</h3><span id="radar-watch-count" class="quiet">—</span></div><div id="radar-watches-list" class="data-list empty">No watches loaded.</div>
+        <div class="list-head"><h3>Signals</h3><span id="radar-signal-count" class="quiet">—</span></div><div id="radar-signals-list" class="data-list empty">No signals loaded.</div>
+      </article>
+
+      <article class="work-card glass-card" id="learning">
+        <div class="card-heading"><div><p class="eyebrow">BOUNDED OFFLINE LEARNING</p><h2>Learning &amp; allocation</h2></div><button class="button secondary refresh" data-refresh="learning" type="button">Refresh</button></div>
+        <p class="quiet">Create and inspect frozen datasets in Evaluation. Training needs an independently approved 013 release and authorized label rights. Optimizer preparation is recorded as blocked while its optional engine/license and egress are unavailable. Allocations are plans, and skills remain candidates until independent review.</p>
+        <div id="learning-status" class="status-box empty">Select a tenant to load learning artifacts and blockers.</div>
+        <form id="learning-train-form" class="form-grid compact-form"><label class="wide">Training request JSON<textarea name="body" rows="3" required spellcheck="false" placeholder='{"name":"outcome-ranker","version":"1","datasetId":"…","releaseId":"…","positiveLabel":"won"}'></textarea></label><button class="button secondary wide" type="submit">Train from approved frozen evidence</button></form>
+        <form id="learning-allocation-form" class="form-grid compact-form"><label class="wide">Allocation plan JSON<textarea name="body" rows="5" required spellcheck="false" placeholder='{"datasetId":"…","budget":10,"exploration":0.1,"seed":"allocation-v1","items":[{"exampleId":"…","cost":1}]}'></textarea></label><button class="button secondary wide" type="submit">Create allocation plan</button></form>
+        <form id="learning-optimizer-form" class="form-grid compact-form">
+          <label>Frozen dataset ID<input name="datasetId" required></label><label>Optimizer engine<select name="engine"><option value="native_bounded_v1">Native bounded</option><option value="gepa">GEPA (blocked unless adapter is verified)</option><option value="dspy">DSPy (blocked unless adapter is verified)</option></select></label>
+          <label class="wide">Candidate prompt<textarea name="candidatePrompt" rows="3" maxlength="12000" required spellcheck="false" placeholder="Bounded candidate text; never include private or customer secrets."></textarea></label>
+          <label>Iterations<input name="iterations" type="number" min="1" max="12" value="2" required></label><label>Development examples<input name="maxDevExamples" type="number" min="2" max="8" value="4" required></label>
+          <label>Maximum provider calls<input name="maxProviderCalls" type="number" min="2" max="24" value="8" required></label><label>Deadline (ms)<input name="deadlineMs" type="number" min="1000" max="60000" step="1000" value="30000" required></label>
+          <button class="button secondary wide" type="submit">Prepare bounded optimizer job</button>
+        </form>
+        <p class="quiet">Native bounded optimization is implemented, but provider calls remain blocked unless server-side optimizer authority, current GLM approval and egress policy all allow them. LOCAL_PREVIEW denies external egress absolutely. Check the returned state and provider-call count; preparation is not execution or approval.</p>
+        <form id="learning-optimizer-action-form" class="form-grid compact-form"><label class="wide">Optimizer job ID<input name="jobId" required></label><button class="button secondary" type="submit" data-action="optimizer-execute">Execute once</button><button class="button secondary" type="submit" data-action="optimizer-status">Refresh status</button></form>
+        <form id="learning-skill-form" class="form-grid compact-form"><label class="wide">Skill candidate JSON<textarea name="body" rows="6" required spellcheck="false" placeholder='Include name, version, body, scope, license, provenance, testManifest.tests, and a completed evaluationRunId.'></textarea></label><button class="button secondary wide" type="submit">Register skill candidate</button></form>
+        <form id="learning-skill-action-form" class="form-grid compact-form"><label>Skill ID<input name="skillId" required></label><label>Transition<select name="status"><option>evaluating</option><option>approved</option><option>canary</option><option>active</option><option>revoked</option></select></label><label class="wide">Reason<input name="reason" maxlength="240" required></label><button class="button secondary wide" type="submit">Record skill transition</button></form>
+        <div class="list-head"><h3>Artifacts</h3><span id="learning-count" class="quiet">—</span></div><div id="learning-artifacts-list" class="data-list empty">No learning artifacts loaded.</div>
+      </article>
+
+      <article class="work-card glass-card" id="economics">
+        <div class="card-heading"><div><p class="eyebrow">COSTS, QUOTAS &amp; DELIVERY EVIDENCE</p><h2>Economics &amp; post-sale</h2></div><button class="button secondary refresh" data-refresh="economics" type="button">Refresh</button></div>
+        <p class="quiet">Economics is evidence, not a promise of savings. Quotas default disabled and apply only to wired future worker entry points. Project records, reviewer effort and proof comparisons do not trigger outreach or CRM changes.</p>
+        <div id="economics-status" class="status-box empty">Select a tenant to load cost and post-sale evidence.</div>
+        <form id="economics-quota-form" class="form-grid compact-form"><label class="wide">Tenant quota JSON<textarea name="body" rows="4" required spellcheck="false" placeholder='{"tier":"standard","dailyLimitMicrousd":1000000,"concurrencyLimit":2,"maxTaskTokens":8192,"maxTraceBytes":100000,"enabled":false}'></textarea></label><button class="button secondary wide" type="submit">Save future-entry quota</button></form>
+        <form id="economics-bill-form" class="form-grid compact-form"><label class="wide">Vendor bill JSON<textarea name="body" rows="4" required spellcheck="false" placeholder='Include provider, providerBillId, amountMinor, currency, billedAt, optional linkedUsageId, provenance.kind and provenance.reference.'></textarea></label><button class="button secondary wide" type="submit">Record vendor invoice evidence</button></form>
+        <form id="economics-effort-form" class="form-grid compact-form"><label class="wide">Reviewer effort JSON<textarea name="body" rows="3" required spellcheck="false" placeholder='Include category, minutes, occurredAt, provenance.reference, and optional taskId.'></textarea></label><button class="button secondary wide" type="submit">Record reviewer effort</button></form>
+        <form id="postsale-project-form" class="form-grid compact-form"><label class="wide">Project JSON<textarea name="body" rows="3" required spellcheck="false" placeholder='{"accountId":"…","name":"Delivery project"} — account must have canonical won and paid outcomes.'></textarea></label><button class="button secondary wide" type="submit">Create delivery project</button></form>
+        <form id="postsale-proof-form" class="form-grid compact-form"><label>Project ID<input name="projectId" required></label><label>Proof action<select name="action"><option value="milestones">Authorize milestone</option><option value="evidence">Capture proof evidence</option><option value="comparison">Compare evidence</option><option value="case-studies">Prepare case study</option><option value="renewal-signals">Record renewal signal</option></select></label><label class="wide">Evidence / milestone JSON<textarea name="body" rows="4" required spellcheck="false" placeholder='Milestone: {"key":"delivery","title":"…","authorizationRef":"…"}. Evidence: {"kind":"observed","sourceRef":"…","sourceRights":{"basis":"authorized","reference":"…"},"snapshot":{}}. Case study: {"content":{},"evidenceIds":["…"]}. Renewal: {"signal":"renewal","evidenceIds":["…"]}.'></textarea></label><button class="button secondary wide" type="submit">Submit project proof action</button></form>
+        <div class="list-head"><h3>Customer approval · offline signature workflow</h3></div>
+        <p class="quiet">Only the customer's Ed25519 public key is enrolled here. Reviewers independently confirm keys. Challenges are copied to the customer for signing offline; submit only the detached base64 signature returned by the customer. Never enter a private key. Approval does not grant publishing or contact permission.</p>
+        <form id="customer-key-enroll-form" class="form-grid compact-form">
+          <label>Post-sale project ID<input name="projectId" required></label><label>Customer Ed25519 public key PEM<input name="publicKeyPem" maxlength="4096" required autocomplete="off" spellcheck="false" placeholder="-----BEGIN PUBLIC KEY-----"></label>
+          <label class="wide">Identity evidence bytes · canonical base64<textarea name="identityEvidence" rows="2" required spellcheck="false" autocomplete="off"></textarea></label>
+          <label class="wide">Rights / consent evidence bytes · canonical base64<textarea name="rightsEvidence" rows="2" required spellcheck="false" autocomplete="off"></textarea></label>
+          <button class="button secondary wide" type="submit">Enroll customer public key for review</button>
+        </form>
+        <form id="customer-key-confirm-form" class="form-grid compact-form"><label class="wide">Pending customer key ID<input name="keyId" required></label><button class="button secondary wide" type="submit">Reviewer: confirm customer key</button></form>
+        <form id="customer-challenge-form" class="form-grid compact-form">
+          <label>Case study ID<input name="caseStudyId" required></label><label>Confirmed customer key ID<input name="customerKeyId" required></label>
+          <label>Customer action<select name="action"><option value="approve">Approve</option><option value="reject">Reject</option></select></label><label>Challenge lifetime (seconds)<input name="expiresInSeconds" type="number" min="60" max="1800" value="900" required></label>
+          <button class="button secondary wide" type="submit">Create offline customer challenge</button>
+        </form>
+        <form id="customer-signature-form" class="form-grid compact-form">
+          <label>Challenge ID<input name="challengeId" required></label><label class="wide">Detached Ed25519 signature · canonical base64<textarea name="signature" rows="2" maxlength="88" required autocomplete="off" spellcheck="false"></textarea></label>
+          <button class="button secondary wide" type="submit">Forward customer signature for verification</button>
+        </form>
+        <form id="customer-approval-status-form" class="form-grid compact-form"><label class="wide">Case study ID<input name="caseStudyId" required></label><button class="button secondary wide" type="submit">Check customer approval status</button></form>
+        <div id="customer-approval-status" class="status-box empty">No customer key or approval action submitted.</div>
+        <div class="list-head"><h3>Delivery projects</h3><span id="postsale-project-count" class="quiet">—</span></div><div id="postsale-projects-list" class="data-list empty">No projects loaded.</div>
+        <div class="list-head"><h3>Tenant economics benchmark</h3><button id="benchmark-refresh" class="button secondary" type="button">Refresh cohorts</button></div>
+        <p class="quiet">Prepare a frozen cohort from currently permitted tenant evidence. Collection reads only workflows you explicitly select below; it never starts work. Reports are provisional or insufficient until canonical sample and independent quote evidence is complete.</p>
+        <form id="benchmark-prepare-form" class="form-grid compact-form"><label>Target permitted accounts<input name="targetAccounts" type="number" min="500" max="1000" value="500" required></label><label>Maximum source evidence age (days)<input name="evidenceAgeDays" type="number" min="1" max="3650" value="90" required></label><button class="button secondary wide" type="submit">Prepare frozen evidence cohort</button></form>
+        <div id="benchmark-cohorts-list" class="data-list empty">No benchmark cohorts loaded.</div>
+        <form id="benchmark-actions-form" class="form-grid compact-form"><label class="wide">Benchmark cohort ID<input name="benchmarkId" required></label><button class="button secondary" type="submit" data-action="benchmark-inspect">Inspect</button><button class="button secondary" type="submit" data-action="benchmark-collect">Collect selected workflows</button><button class="button secondary" type="submit" data-action="benchmark-report">Generate stored report</button></form>
+        <p class="quiet">Select persisted workflow IDs in the Workflows section before collecting. Each selected workflow must pin the cohort's exact current evidence hash and exactly one cohort account; each account contributes at most one workflow. Collection refuses expired rights or stale evidence and never queues or runs work.</p>
+        <form id="benchmark-quote-form" class="form-grid compact-form">
+          <label>Benchmark cohort ID<input name="benchmarkId" required></label><label>Vendor<input name="vendor" maxlength="120" required></label>
+          <label class="wide">Quote evidence reference<input name="evidenceReference" maxlength="2000" required></label><label>Evidence SHA-256<input name="evidenceSha256" pattern="[a-fA-F0-9]{64}" maxlength="64" required></label><label>Quote source kind<input name="provenanceKind" maxlength="80" required></label>
+          <label>Quote source reference<input name="provenanceSource" maxlength="300" required></label><label>Amount in minor currency units<input name="amountMinor" type="number" min="0" step="1" required></label>
+          <label>Currency<input name="currency" minlength="3" maxlength="3" required placeholder="USD"></label><label>Unit<input name="unit" maxlength="80" required placeholder="per 1,000 tasks"></label>
+          <label>Effective from<input name="effectiveFrom" type="date" required></label><label>Effective until (optional)<input name="effectiveUntil" type="date"></label>
+          <button class="button secondary wide" type="submit">Record unverified quote evidence</button>
+        </form>
+        <form id="benchmark-quote-review-form" class="form-grid compact-form"><label>Benchmark cohort ID<input name="benchmarkId" required></label><label>Quote ID<input name="quoteId" required></label><label>Review verdict<select name="verdict"><option value="approved">Approve evidence</option><option value="rejected">Reject evidence</option></select></label><label>Rationale code<input name="rationaleCode" maxlength="80" required placeholder="evidence_reviewed"></label><button class="button secondary wide" type="submit">Record independent quote review</button></form>
+        <div id="benchmark-quotes-list" class="data-list empty">Inspect a cohort to load quote evidence and review state.</div>
+        <div id="benchmark-status" class="status-box empty">No benchmark selected.</div>
+      </article>
+
+      <article class="work-card glass-card" id="launch-controls">
+        <div class="card-heading"><div><p class="eyebrow">PREPARE, REVIEW, VALIDATE</p><h2>Launch controls</h2></div><button class="button secondary refresh" data-refresh="launch" type="button">Refresh</button></div>
+        <p class="quiet">Release manifests, independent signoff, synthetic shadow preparation and validation records are gated by current evidence. No deployment, public activation or live pilot control is exposed; release readiness stays false.</p>
+        <div id="launch-status" class="status-box empty">Select a tenant to load launch manifests and validation.</div>
+        <form id="launch-release-form" class="form-grid compact-form"><label class="wide">Launch release request JSON<textarea name="body" rows="6" required spellcheck="false" placeholder='Use same-tenant persisted IDs only: name, version, sourceReleaseId, evaluationRunId, campaignId, componentVersions, skillId; optional priorStableReleaseId, calibrationArtifactId, conformanceRunId, validationReportId. Evidence metrics and approval booleans are never accepted.'></textarea></label><button class="button secondary wide" type="submit">Prepare tenant release manifest</button></form>
+        <form id="launch-signoff-form" class="form-grid compact-form"><label>Release ID<input name="releaseId" required></label><label>Decision<select name="decision"><option value="approve">Approve</option><option value="reject">Reject</option></select></label><label class="wide">Reason code<input name="reasonCode" maxlength="80" required></label><button class="button secondary wide" type="submit">Record independent signoff</button></form>
+        <div class="list-head"><h3>Release manifests</h3><span id="launch-release-count" class="quiet">—</span></div><div id="launch-releases-list" class="data-list empty">No launch manifests loaded.</div>
+        <div class="list-head"><h3>Validation comparisons</h3><span class="quiet">Stored snapshots only</span></div><div id="launch-validation" class="status-box empty">No validation reports loaded.</div>
+        <p class="quiet">Comparison inputs reference persisted evaluation runs, candidates, and optionally a same-tenant bandit outcome report ID; the server derives all metrics and missingness.</p>
+        <form id="launch-validation-form" class="form-grid compact-form"><label>Baseline evaluation run ID<input name="baselineRunId" required></label><label>Candidate evaluation run ID<input name="candidateRunId" required></label><label>Baseline candidate ID<input name="baselineCandidateId" required></label><label>Candidate candidate ID<input name="candidateCandidateId" required></label><label class="wide">Persisted outcome report ID (optional)<input name="outcomeReportId" placeholder="astra.bandit_evaluation_reports ID"></label><button class="button secondary wide" type="submit">Compare frozen evaluation runs</button></form>
+      </article>
+
+      <article class="work-card glass-card" id="memory">
+        <div class="card-heading"><div><p class="eyebrow">PERMISSION-BOUND RECALL</p><h2>Memory &amp; experiments</h2></div><button class="button secondary refresh" data-refresh="insights" type="button">Refresh insights</button></div>
+        <p class="quiet">Memory requires a current permission grant and a same-tenant event or evidence source. Recall can return an explicit abstention. Experiments freeze assignment and analysis plans; results are descriptive.</p>
+        <form id="memory-form" class="form-grid">
+          <label>Kind<select name="kind"><option>fact</option><option>episode</option><option>preference</option><option>strategy</option></select></label><label>Subject type<select name="subjectType"><option>tenant</option><option>account</option><option>contact</option><option>opportunity</option><option>meeting</option><option>invoice</option></select></label>
+          <label>Subject ID<input name="subjectId" required></label><label>Purpose<input name="purpose" required maxlength="120"></label><label>Key<input name="key" required maxlength="240"></label><label>Value<input name="value" required maxlength="2000"></label>
+          <label>Valid from<input name="validFrom" type="datetime-local" required></label><label>Valid to (optional)<input name="validTo" type="datetime-local"></label><label>Expires at (optional)<input name="expiresAt" type="datetime-local"></label>
+          <label>Confidence<select name="confidence"><option>unknown</option><option>high</option><option>medium</option><option>low</option></select></label><label>Authority<select name="authority"><option>source</option><option>human</option><option>crm</option><option>system</option></select></label><label>Sensitivity<select name="sensitivity"><option>public</option><option>internal</option><option>personal</option><option>confidential</option></select></label>
+          <label>Permission decision ID<input name="permissionDecisionId" required></label><label>Permission subject type<select name="permissionSubjectType"><option>recipient</option><option>domain</option><option>account</option><option>channel</option></select></label><label>Permission subject value<input name="permissionSubjectValue" required></label>
+          <label>Source kind<select name="sourceKind"><option value="event">Immutable event</option><option value="evidence">Research evidence</option></select></label><label>Source record ID<input name="sourceId" required></label><label>Source rights policy<select name="rightsPolicy"><option value="internal_event">Internal event</option><option value="user_provided">User provided</option><option value="licensed">Licensed</option><option value="public_terms_permitted">Public terms permitted</option><option value="synthetic_fixture">Synthetic fixture</option></select></label><label>Source rights expiry<input name="rightsExpiresAt" type="datetime-local"></label>
+          <label>Provenance source<input name="provenanceSource" required value="operator_record"></label><label>Provenance confidence<select name="provenanceConfidence"><option>unknown</option><option>high</option><option>medium</option><option>low</option></select></label><label>Provenance authority<select name="provenanceAuthority"><option>human</option><option>source</option><option>crm</option><option>system</option></select></label>
+          <label class="memory-conditional conditional" data-for="strategy">Strategy experiment ID<input name="experimentId"></label><label class="memory-conditional conditional" data-for="strategy">Strategy arm ID<input name="armId"></label><label class="memory-conditional conditional" data-for="strategy">Frozen plan SHA-256<input name="planSha256" maxlength="64"></label>
+          <button class="button primary wide" type="submit">Capture permission-bound memory record</button>
+        </form>
+        <form id="recall-form" class="form-grid compact-form"><label>Subject type<select name="subjectType"><option>tenant</option><option>account</option><option>contact</option><option>opportunity</option><option>meeting</option><option>invoice</option></select></label><label>Subject ID<input name="subjectId" required></label><label>Purpose<input name="purpose" required></label><label>Query<input name="q" required></label><button class="button secondary wide" type="submit">Recall with current permission</button></form>
+        <div id="memory-result" class="status-box empty">No memory recall loaded.</div>
+        <form id="experiment-form" class="form-grid compact-form"><label class="wide">Fixed experiment plan JSON<textarea name="plan" rows="12" required spellcheck="false" placeholder='Include name, hypothesis, arms:[...], primaryMetric, primaryHorizonDays, attributionWindowDays, maxAccounts, stoppingRule, costGuard, eligibilityRules, and strata.'></textarea></label><button class="button primary wide" type="submit">Create immutable experiment plan</button></form>
+        <form id="arm-builder" class="form-grid compact-form">
+          <p class="quiet wide">Freeze each variant object and compute its canonical SHA-256, then insert it into the plan arms array. Use at least two arms and exactly one control.</p>
+          <label>Arm ID<input name="id" required maxlength="80"></label><label>Arm label<input name="label" required maxlength="120"></label><label>Weight<input name="weight" type="number" min="1" value="1" required></label><label class="check-label"><input name="control" type="checkbox"> Control arm</label>
+          <label class="wide">Frozen variant JSON object<textarea name="variant" rows="3" required placeholder='{"copy":"...","version":"..."}'></textarea></label><button class="button secondary wide" type="submit">Add hashed arm to plan JSON</button>
+        </form>
+        <div class="list-head"><h3>Experiments</h3><span id="experiment-count" class="quiet">—</span></div><div id="experiments-list" class="data-list empty">No experiments loaded.</div>
+        <form id="assignment-form" class="form-grid compact-form"><label>Experiment ID<input name="experimentId" required></label><label class="wide">Canonical account IDs (comma separated)<input name="accountIds" required></label><label class="wide">Eligibility source note<input name="source" required></label><label>Observed at<input name="observedAt" type="datetime-local" required></label><label>Predeclared stratum<input name="stratum" value="all" required></label><button class="button secondary wide" type="submit">Assign eligible accounts (sticky)</button></form>
+        <div id="experiment-analysis" class="status-box empty">No experiment analysis loaded.</div>
+        <div class="list-head"><h3>Outcome funnel</h3><span class="quiet">Sparse evidence stays sparse</span></div><div id="analytics-result" class="status-box empty">Select a tenant to load analytics.</div>
+      </article>
+    </section>
+    <footer class="page-foot">Astra workbench · authenticated tenant context · no provider dispatch controls</footer>
+  </main>
+  <script type="module" src="js/astra-workbench.js"></script>
+</body>
+</html>

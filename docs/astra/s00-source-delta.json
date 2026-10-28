@@ -1,0 +1,1575 @@
+{
+  "schemaVersion": 1,
+  "sourceHead": "f30490bd892dd651fd2fb276b09b510379e27c0d",
+  "overlayManifestSha256": "a688a159676ddf3fbbce6ac8ac894d582f5644afbfee70b63416379f8f0474fd",
+  "sourceFileCount": 228,
+  "unchangedCount": 197,
+  "deltaCount": 31,
+  "deltas": [
+    {
+      "path": ".gitignore",
+      "baseSha256": "7690dd3fb071230c6a1a104aa548292ef7397528d8e899add5d85483265f8641",
+      "bytes": 219,
+      "currentSha256": "9990919f3da1eddf5ddeeea76bcaa133296f887031725146610d66000ed8e54d",
+      "explanation": "Authorized bounded fixture repair: Restore safe synthetic reviewed mailbox fixtures and loopback IMAP TLS trust coverage, preserving deny cases and sender/recipient/suppression/stop behavior. This records source provenance only, not product acceptance.",
+      "authorizationEvidence": {
+        "kind": "coordinator_scope_authorization",
+        "artifact": "orchestration/astra-fixture-scope-ruling.json",
+        "worker": "/root/repair_mail_fixtures",
+        "workerReport": ".superpowers/phase2/fixes/mail-fixtures/report.md",
+        "workerReportSha256": "9ff80925b742f70af9a2441ef3021a2df99bed10c5f6eaa143f96ab082f7a993",
+        "baselineEvidence": "docs/astra/source-snapshot.json",
+        "authorizedPurpose": "Restore safe synthetic reviewed mailbox fixtures and loopback IMAP TLS trust coverage, preserving deny cases and sender/recipient/suppression/stop behavior.",
+        "independentAcceptance": false
+      }
+    },
+    {
+      "path": "orchestration/OWNERSHIP.md",
+      "baseSha256": "25750d54ef1eed023aa45df8dbc0ab818c3adf3214403490a7841442a35109f8",
+      "currentSha256": "434ad448c70bbd07721f7059e9626c2bb4cda0dd480b3f362963e6808f8154f0",
+      "bytes": 330703,
+      "explanation": "R18 coordinator authorization delta recording product implementation ownership, integration ownership and explicitly unreleased acceptance; provenance only.",
+      "authorizationEvidence": {
+        "kind": "coordinator_scope_authorization",
+        "artifact": "orchestration/astra-r18-integration-plan.json",
+        "worker": "/root/r18_integration",
+        "baselineEvidence": "docs/astra/source-snapshot.json",
+        "authorizedPurpose": "R18 customer flow integration authorization: workspace membership discovery, authenticated route/page gating, and the ownership authorization record; source provenance only, not product acceptance.",
+        "independentAcceptance": false
+      },
+      "additionalAuthorizationEvidence": [
+        {
+          "kind": "coordinator_scope_authorization",
+          "artifact": "orchestration/astra-r19-integration-plan.json",
+          "worker": "/root/r19_integration",
+          "baselineEvidence": "docs/astra/source-snapshot.json",
+          "authorizedPurpose": "R19 source provenance integration: attribute the current ownership authorization record, inventory the released current-proof/audience database-read helpers, and preserve strict selected-source fidelity; source provenance only, not product or feature acceptance.",
+          "independentAcceptance": false
+        },
+        {
+          "kind": "coordinator_scope_authorization",
+          "artifact": "orchestration/astra-r20-metadata-integration-plan.json",
+          "worker": "/root/r20_metadata_integration",
+          "baselineEvidence": "docs/astra/source-snapshot.json",
+          "authorizedPurpose": "R20 final-source provenance and side-effect integration: retain the selected 228-file baseline and all prior R18/R19 authorizations, attach released R20 fingerprints, and classify the append-only source-rights database-write boundary without implying product, provider, or release approval.",
+          "independentAcceptance": false
+        },
+        {
+          "kind": "coordinator_scope_authorization",
+          "artifact": "orchestration/astra-r20-final-metadata-refresh-plan.json",
+          "worker": "/root/r20_metadata_refresh1",
+          "baselineEvidence": "docs/astra/source-snapshot.json",
+          "authorizedPurpose": "Refresh final metadata after independent acceptance of outcome ownership and the unchanged guided journey; record released source/test fingerprints and side-effect ownership provenance without implying product, provider, or release approval.",
+          "independentAcceptance": false
+        }
+      ]
+    },
+    {
+      "path": "package-lock.json",
+      "baseSha256": "d42ed48df586a2fa956c89923f5556d2cda49cb3b46cef8c69d3159261601d61",
+      "bytes": 74535,
+      "currentSha256": "8dbd87c0fc8e92ca65ed04ffac614b6c86aaa52364c766d1d3ca4d4cc9571738",
+      "explanation": "Authorized implementation delta: S03 exact PostgreSQL dependency chain. This records provenance/scope, not product acceptance or external approval.",
+      "authorizationEvidence": {
+        "kind": "coordinator_scope_authorization",
+        "artifact": "orchestration/astra-source-scope-ruling.json",
+        "candidateAfterArtifact": "orchestration/astra-phase2-source.json",
+        "candidateAfterSha256": "8dbd87c0fc8e92ca65ed04ffac614b6c86aaa52364c766d1d3ca4d4cc9571738",
+        "checkpointBeforeArtifact": ".superpowers/sdd/fa3710986978fc58/feature-first-before.json",
+        "authorizedPurpose": "S03 exact PostgreSQL dependency chain",
+        "independentAcceptance": false
+      }
+    },
+    {
+      "path": "package.json",
+      "baseSha256": "f4d81e57d6f04f9d5dbf71a726d83da29f66431d846a1bddd7bdf9e05a338d9b",
+      "bytes": 1558,
+      "currentSha256": "b6d862997c17dffeb396318bceb2d47b64fb26c816b4bf33f3f03a35acb2f6ce",
+      "explanation": "Authorized implementation delta: S03 PostgreSQL dependency/runtime integration. This records provenance/scope, not product acceptance or external approval.",
+      "authorizationEvidence": {
+        "kind": "coordinator_scope_authorization",
+        "artifact": "orchestration/astra-source-scope-ruling.json",
+        "candidateAfterArtifact": "orchestration/astra-phase2-source.json",
+        "candidateAfterSha256": "b6d862997c17dffeb396318bceb2d47b64fb26c816b4bf33f3f03a35acb2f6ce",
+        "checkpointBeforeArtifact": ".superpowers/sdd/fa3710986978fc58/feature-first-before.json",
+        "authorizedPurpose": "S03 PostgreSQL dependency/runtime integration",
+        "independentAcceptance": false
+      }
+    },
+    {
+      "path": "pipeline/auth-manager.js",
+      "baseSha256": "ae648deb73b2a8d0167d3daa4d1fbf5ce34271ed15d7d21f71d54e75378ef049",
+      "bytes": 54746,
+      "currentSha256": "955f5381d2f4707bacb41a9d82582c8bccb20a66a3cf7c07448bfa02f26f9504",
+      "explanation": "Authorized implementation delta: S03 auth/session and trusted principal integration. This records provenance/scope, not product acceptance or external approval.",
+      "authorizationEvidence": {
+        "kind": "coordinator_scope_authorization",
+        "artifact": "orchestration/astra-source-scope-ruling.json",
+        "candidateAfterArtifact": "orchestration/astra-phase2-source.json",
+        "candidateAfterSha256": "955f5381d2f4707bacb41a9d82582c8bccb20a66a3cf7c07448bfa02f26f9504",
+        "checkpointBeforeArtifact": ".superpowers/sdd/fa3710986978fc58/feature-first-before.json",
+        "authorizedPurpose": "S03 auth/session and trusted principal integration",
+        "independentAcceptance": false
+      }
+    },
+    {
+      "path": "pipeline/database.js",
+      "baseSha256": "21c264b83995d7e12d8a8c87fd4f74d1d2fc12478b05a4758260f013bfdd4f5b",
+      "currentSha256": "816a52e9f56cbbf2f4d9571ea61a9e3d77cc1b6b3cc54c1f83c37e49f1c741cc",
+      "bytes": 82532,
+      "explanation": "Checkpoint implementation delta: bounded discovery/verifier handoff tables plus reviewed S02 offer version/proof, capacity, and campaign metadata schema."
+    },
+    {
+      "path": "pipeline/lead-strategy.js",
+      "baseSha256": "5da7cfcfeda303281e21515ee67fcfa495d1accc7e09ace4c38a1b43c5c661c8",
+      "bytes": 30691,
+      "currentSha256": "fee4c804ff33c5daf113aade4f005d185c47d1c12e8860814040f44d46886dc8",
+      "explanation": "Authorized implementation delta: S06 sole GLM gateway/egress integration. This records provenance/scope, not product acceptance or external approval.",
+      "authorizationEvidence": {
+        "kind": "coordinator_scope_authorization",
+        "artifact": "orchestration/astra-source-scope-ruling.json",
+        "candidateAfterArtifact": "orchestration/astra-phase2-source.json",
+        "candidateAfterSha256": "fee4c804ff33c5daf113aade4f005d185c47d1c12e8860814040f44d46886dc8",
+        "checkpointBeforeArtifact": ".superpowers/sdd/fa3710986978fc58/gateway-extra-before.json",
+        "authorizedPurpose": "S06 sole GLM gateway/egress integration",
+        "independentAcceptance": false
+      }
+    },
+    {
+      "path": "pipeline/personalizer.js",
+      "baseSha256": "254971b176d4468139b8857eeee8850b850d7507a319ba5354e22d1dd81a6778",
+      "bytes": 30996,
+      "currentSha256": "dba18599b2cae13206a2afac849f6172d2a94b8b88be055b220817ed67820dfa",
+      "explanation": "Authorized implementation delta: S06 sole GLM gateway/egress integration. This records provenance/scope, not product acceptance or external approval.",
+      "authorizationEvidence": {
+        "kind": "coordinator_scope_authorization",
+        "artifact": "orchestration/astra-source-scope-ruling.json",
+        "candidateAfterArtifact": "orchestration/astra-phase2-source.json",
+        "candidateAfterSha256": "dba18599b2cae13206a2afac849f6172d2a94b8b88be055b220817ed67820dfa",
+        "checkpointBeforeArtifact": ".superpowers/sdd/fa3710986978fc58/gateway-before.json",
+        "authorizedPurpose": "S06 sole GLM gateway/egress integration",
+        "independentAcceptance": false
+      }
+    },
+    {
+      "path": "pipeline/reply-tracker.js",
+      "baseSha256": "019cdf62ed5f203521718caf49584b05df1f558addaac5aec64820fa39ed965b",
+      "bytes": 31178,
+      "currentSha256": "67f00a8716859f7ea71e4f24e5aada8b30d0d2e5f36d80238a0b4cc422262713",
+      "explanation": "Authorized implementation delta: S06/S21 reply and sole gateway integration. This records provenance/scope, not product acceptance or external approval.",
+      "authorizationEvidence": {
+        "kind": "coordinator_scope_authorization",
+        "artifact": "orchestration/astra-source-scope-ruling.json",
+        "candidateAfterArtifact": "orchestration/astra-phase2-source.json",
+        "candidateAfterSha256": "67f00a8716859f7ea71e4f24e5aada8b30d0d2e5f36d80238a0b4cc422262713",
+        "checkpointBeforeArtifact": ".superpowers/sdd/fa3710986978fc58/gateway-extra-before.json",
+        "authorizedPurpose": "S06/S21 reply and sole gateway integration",
+        "independentAcceptance": false
+      }
+    },
+    {
+      "path": "pipeline/sending-engine.js",
+      "baseSha256": "39d90158f453977721544bc08c6ad7917917a8851ed15b268a81349e960c1639",
+      "currentSha256": "3f2b0ca9285780d4a5694d7a2ef5e341ca75fb8a9bba69caa3dce066dd8940fa",
+      "bytes": 144736,
+      "explanation": "Authorized implementation delta: S02 offer proof/capacity enforcement preserving legacy null-offer snapshots. This records provenance/scope, not product acceptance or external approval.",
+      "authorizationEvidence": {
+        "kind": "coordinator_scope_authorization",
+        "artifact": "orchestration/astra-source-scope-ruling.json",
+        "candidateAfterArtifact": "orchestration/astra-phase2-source.json",
+        "candidateAfterSha256": "3f2b0ca9285780d4a5694d7a2ef5e341ca75fb8a9bba69caa3dce066dd8940fa",
+        "checkpointBeforeArtifact": ".superpowers/sdd/fa3710986978fc58/feature-first-before.json",
+        "authorizedPurpose": "S02 offer proof/capacity enforcement preserving legacy null-offer snapshots",
+        "independentAcceptance": false
+      }
+    },
+    {
+      "path": "server.js",
+      "baseSha256": "8bbd27357bb94a0f7aa9b8913381aa513d69f48d10ec09dfb411cd3806c75613",
+      "currentSha256": "ebc5c02845a707e03cae854e2708fd6c429c2cce1a98ef71b4f1047f2974fba6",
+      "bytes": 175999,
+      "explanation": "Authorized implementation delta: S03 and subsequent authenticated native route assembly. This records provenance/scope, not product acceptance or external approval.",
+      "authorizationEvidence": {
+        "kind": "coordinator_scope_authorization",
+        "artifact": "orchestration/astra-source-scope-ruling.json",
+        "candidateAfterArtifact": "orchestration/astra-phase2-source.json",
+        "candidateAfterSha256": null,
+        "checkpointBeforeArtifact": ".superpowers/sdd/fa3710986978fc58/feature-first-before.json",
+        "authorizedPurpose": "S03 and subsequent authenticated native route assembly",
+        "independentAcceptance": false
+      },
+      "additionalAuthorizationEvidence": [
+        {
+          "kind": "coordinator_scope_authorization",
+          "artifact": "orchestration/astra-r18-integration-plan.json",
+          "worker": "/root/r18_integration",
+          "baselineEvidence": "docs/astra/source-snapshot.json",
+          "authorizedPurpose": "R18 authenticated workspace discovery route and operator page membership gate; preserve existing auth/CSRF and tenant role checks.",
+          "independentAcceptance": false,
+          "checkpointBeforeArtifact": ".superpowers/r18/workspaces/before/server.js"
+        },
+        {
+          "kind": "coordinator_scope_authorization",
+          "artifact": "orchestration/astra-r20-static-privacy-plan.json",
+          "worker": "/root/r20_static_privacy",
+          "authorizedPurpose": "Restrict authenticated static file reads to the explicit public page, asset, and verification-classifier allowlist while preserving API/auth/CSRF/tenant gates.",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/r20/review-security-handoff/REPORT.md"
+        }
+      ]
+    },
+    {
+      "path": "tests/ai-usage.test.mjs",
+      "baseSha256": "8cbef19af0eaa87b2f74f6886e4b39114e4eb480f44ac9cb49ba0f78d2e76dbb",
+      "currentSha256": "10f983b3256a1552882b1822d86b07ce40fc019f2f47f6ccd416eb13f300bba7",
+      "bytes": 3769,
+      "explanation": "Authorized test-only correction: replace stale Ollama/Bedrock success fixture with a sole-GLM tenant-context denial assertion; asserts zero provider attempts, no fabricated usage, no approval and no sends.",
+      "authorizationEvidence": {
+        "kind": "task_scoped_test_authorization",
+        "artifact": "delegated Phase2 provenance-fix task update authorizing tests/ai-usage.test.mjs only",
+        "candidateAfterArtifact": null,
+        "authorizedPurpose": "Sole-GLM no-inference legacy-denial coverage with meaningful assertions",
+        "independentAcceptance": false
+      }
+    },
+    {
+      "path": "tests/campaign-audience.test.mjs",
+      "baseSha256": "94cf76ef5b926fadeb630028ac80c5b7fed98e2a543f1213a37fe702904a3475",
+      "bytes": 14558,
+      "currentSha256": "fba52a4c47e51b35ed600a726995a9f2d020232a208144c57a9c1df5f6bd8109",
+      "explanation": "Authorized bounded fixture repair: Restore safe synthetic reviewed mailbox fixtures and loopback IMAP TLS trust coverage, preserving deny cases and sender/recipient/suppression/stop behavior. This records source provenance only, not product acceptance.",
+      "authorizationEvidence": {
+        "kind": "coordinator_scope_authorization",
+        "artifact": "orchestration/astra-fixture-scope-ruling.json",
+        "worker": "/root/repair_mail_fixtures",
+        "workerReport": ".superpowers/phase2/fixes/mail-fixtures/report.md",
+        "workerReportSha256": "9ff80925b742f70af9a2441ef3021a2df99bed10c5f6eaa143f96ab082f7a993",
+        "baselineEvidence": "docs/astra/source-snapshot.json",
+        "authorizedPurpose": "Restore safe synthetic reviewed mailbox fixtures and loopback IMAP TLS trust coverage, preserving deny cases and sender/recipient/suppression/stop behavior.",
+        "independentAcceptance": false
+      }
+    },
+    {
+      "path": "tests/campaign-launch-snapshot.test.mjs",
+      "baseSha256": "902a88e9f04246f8f1cada073f50d81c17f6b88da65d1848a45fbbdba33d3de7",
+      "currentSha256": "35b282bdea6ad004b4451fb9920a52c271311c581976b6839f5bd3928a91731e",
+      "bytes": 14831,
+      "explanation": "Authorized fixture repair: authenticated tenant owner, current preflight hash, and an explicit fail-closed legacy offer assertion; this is not product acceptance.",
+      "authorizationEvidence": {
+        "kind": "task_scoped_fixture_authorization",
+        "artifact": "coordinator delegated scope",
+        "candidateAfterArtifact": "orchestration/astra-phase2-source.json",
+        "candidateAfterSha256": null,
+        "authorizedPurpose": "Phase2 provenance/offer fixture repairs",
+        "independentAcceptance": false
+      }
+    },
+    {
+      "path": "tests/campaign-lifecycle.test.mjs",
+      "baseSha256": "fbc70096f68f5085ae26bb48460adcff738028cffeee41497f203b4862107f01",
+      "currentSha256": "125f955abfd1c3341a54fbf786a07efd48b16bc473037796fbcf191c70e29349",
+      "bytes": 7855,
+      "explanation": "Checkpoint regression extension for campaign lifecycle compatibility with the selected implementation overlay."
+    },
+    {
+      "path": "tests/campaign-senders.test.mjs",
+      "baseSha256": "07a45e02fb33cf5770de94f19826da5e25a748b080c37c5add428f36713f622d",
+      "bytes": 9111,
+      "currentSha256": "d7377d436d800e2f87f1bf026382fe0ef1896ce0933f6f1134661009ebbb75af",
+      "explanation": "Authorized bounded fixture repair: Restore safe synthetic reviewed mailbox fixtures and loopback IMAP TLS trust coverage, preserving deny cases and sender/recipient/suppression/stop behavior. This records source provenance only, not product acceptance.",
+      "authorizationEvidence": {
+        "kind": "coordinator_scope_authorization",
+        "artifact": "orchestration/astra-fixture-scope-ruling.json",
+        "worker": "/root/repair_mail_fixtures",
+        "workerReport": ".superpowers/phase2/fixes/mail-fixtures/report.md",
+        "workerReportSha256": "9ff80925b742f70af9a2441ef3021a2df99bed10c5f6eaa143f96ab082f7a993",
+        "baselineEvidence": "docs/astra/source-snapshot.json",
+        "authorizedPurpose": "Restore safe synthetic reviewed mailbox fixtures and loopback IMAP TLS trust coverage, preserving deny cases and sender/recipient/suppression/stop behavior.",
+        "independentAcceptance": false
+      }
+    },
+    {
+      "path": "tests/campaign-sequence-execution.test.mjs",
+      "baseSha256": "958a312aaf5e1d710868adc2e38b07eff63d5969df073352c5766232bf6e287d",
+      "bytes": 21095,
+      "currentSha256": "317253dc6cfc4b56febd5b336fbf4ff07987f45e1af335339b6298fe204ffd6b",
+      "explanation": "Authorized bounded fixture repair: Replace stale legacy direct-provider tests with current tenant GLM authorization, no-egress/no-persistence, schema and sequence-stop guarantees. This records source provenance only, not product acceptance.",
+      "authorizationEvidence": {
+        "kind": "coordinator_scope_authorization",
+        "artifact": "orchestration/astra-fixture-scope-ruling.json",
+        "worker": "/root/repair_legacy_gateway_tests",
+        "workerReport": ".superpowers/phase2/fixes/gateway-fixtures/implementer-report.md",
+        "workerReportSha256": "feed209de2b2fd587b9c1af96aaf0bab5815771ae43c99e417bb184ef5106fa9",
+        "baselineEvidence": "docs/astra/source-snapshot.json",
+        "authorizedPurpose": "Replace stale legacy direct-provider tests with current tenant GLM authorization, no-egress/no-persistence, schema and sequence-stop guarantees.",
+        "independentAcceptance": false
+      }
+    },
+    {
+      "path": "tests/campaign-stop.test.mjs",
+      "baseSha256": "673ce7cd306abc13dd4d86171fd2ab2220e108badcf64feced982dee9f1598f8",
+      "bytes": 8186,
+      "currentSha256": "0c01aaca3508a42640f8c646c3fc0a103e1d018f9946770cb09a84c725a659fd",
+      "explanation": "Authorized bounded fixture repair: Restore safe synthetic reviewed mailbox fixtures and loopback IMAP TLS trust coverage, preserving deny cases and sender/recipient/suppression/stop behavior. This records source provenance only, not product acceptance.",
+      "authorizationEvidence": {
+        "kind": "coordinator_scope_authorization",
+        "artifact": "orchestration/astra-fixture-scope-ruling.json",
+        "worker": "/root/repair_mail_fixtures",
+        "workerReport": ".superpowers/phase2/fixes/mail-fixtures/report.md",
+        "workerReportSha256": "9ff80925b742f70af9a2441ef3021a2df99bed10c5f6eaa143f96ab082f7a993",
+        "baselineEvidence": "docs/astra/source-snapshot.json",
+        "authorizedPurpose": "Restore safe synthetic reviewed mailbox fixtures and loopback IMAP TLS trust coverage, preserving deny cases and sender/recipient/suppression/stop behavior.",
+        "independentAcceptance": false
+      }
+    },
+    {
+      "path": "tests/lead-strategy-personal-api.test.mjs",
+      "baseSha256": "6200000d4499204a8fc2daf818845639ddc2091288745308d54370d07da74f44",
+      "bytes": 8044,
+      "currentSha256": "e2eaa0649705fa16ccd5fb87e25630d8d684f473bb2db9ba299953b86252f192",
+      "explanation": "Authorized bounded fixture repair: Replace stale legacy direct-provider tests with current tenant GLM authorization, no-egress/no-persistence, schema and sequence-stop guarantees. This records source provenance only, not product acceptance.",
+      "authorizationEvidence": {
+        "kind": "coordinator_scope_authorization",
+        "artifact": "orchestration/astra-fixture-scope-ruling.json",
+        "worker": "/root/repair_legacy_gateway_tests",
+        "workerReport": ".superpowers/phase2/fixes/gateway-fixtures/implementer-report.md",
+        "workerReportSha256": "feed209de2b2fd587b9c1af96aaf0bab5815771ae43c99e417bb184ef5106fa9",
+        "baselineEvidence": "docs/astra/source-snapshot.json",
+        "authorizedPurpose": "Replace stale legacy direct-provider tests with current tenant GLM authorization, no-egress/no-persistence, schema and sequence-stop guarantees.",
+        "independentAcceptance": false
+      }
+    },
+    {
+      "path": "tests/lead-strategy-personal-settings.test.mjs",
+      "baseSha256": "20699caaa7feadaef7e6ecaaa42a2333de84cbdda8e37cf7604cc6bf6ac1bb7e",
+      "bytes": 4268,
+      "currentSha256": "78f0df9347c589e4da3a9123be6899d53bad9588886913a3a8e5a9b15ee92fed",
+      "explanation": "Authorized bounded fixture repair: Replace stale legacy direct-provider tests with current tenant GLM authorization, no-egress/no-persistence, schema and sequence-stop guarantees. This records source provenance only, not product acceptance.",
+      "authorizationEvidence": {
+        "kind": "coordinator_scope_authorization",
+        "artifact": "orchestration/astra-fixture-scope-ruling.json",
+        "worker": "/root/repair_legacy_gateway_tests",
+        "workerReport": ".superpowers/phase2/fixes/gateway-fixtures/implementer-report.md",
+        "workerReportSha256": "feed209de2b2fd587b9c1af96aaf0bab5815771ae43c99e417bb184ef5106fa9",
+        "baselineEvidence": "docs/astra/source-snapshot.json",
+        "authorizedPurpose": "Replace stale legacy direct-provider tests with current tenant GLM authorization, no-egress/no-persistence, schema and sequence-stop guarantees.",
+        "independentAcceptance": false
+      }
+    },
+    {
+      "path": "tests/lead-strategy-settings.test.mjs",
+      "baseSha256": "6f42256e0f91e3afe60b35fda6308731b1cc1a2fce4bc8fcaa6f51f8d0b03299",
+      "bytes": 4504,
+      "currentSha256": "128b0cd6e843b557934c75b10c0edc47f95584a0b4f4eb7b710287db0bece9cb",
+      "explanation": "Authorized bounded fixture repair: Replace stale legacy direct-provider tests with current tenant GLM authorization, no-egress/no-persistence, schema and sequence-stop guarantees. This records source provenance only, not product acceptance.",
+      "authorizationEvidence": {
+        "kind": "coordinator_scope_authorization",
+        "artifact": "orchestration/astra-fixture-scope-ruling.json",
+        "worker": "/root/repair_legacy_gateway_tests",
+        "workerReport": ".superpowers/phase2/fixes/gateway-fixtures/implementer-report.md",
+        "workerReportSha256": "feed209de2b2fd587b9c1af96aaf0bab5815771ae43c99e417bb184ef5106fa9",
+        "baselineEvidence": "docs/astra/source-snapshot.json",
+        "authorizedPurpose": "Replace stale legacy direct-provider tests with current tenant GLM authorization, no-egress/no-persistence, schema and sequence-stop guarantees.",
+        "independentAcceptance": false
+      }
+    },
+    {
+      "path": "tests/lead-strategy-ui.test.mjs",
+      "baseSha256": "ff9d71eb19c24c38f2afd8a42dc1deea3e403c0eb0ea51fac8dc4db39bfeece0",
+      "bytes": 24431,
+      "currentSha256": "d3ab499b2353cbe143d5ec0c4ae5e5a322c2248824409265810f21b91f57b4f5",
+      "explanation": "Authorized UI test determinism repair: hold the synthetic provider-check response until pending-state and geometry assertions complete, preserving result, persistence, and behavior checks. This records provenance only, not product acceptance.",
+      "authorizationEvidence": {
+        "kind": "coordinator_scope_authorization",
+        "artifact": "orchestration/astra-lead-ui-determinism-r8-ruling.json",
+        "baselineManifest": "orchestration/astra-phase2-source-r7.json",
+        "baselineSha256": "ff9d71eb19c24c38f2afd8a42dc1deea3e403c0eb0ea51fac8dc4db39bfeece0",
+        "authorizedPurpose": "test-only deterministic observation of existing provider-check pending state using a controlled synthetic response",
+        "workerReport": ".superpowers/phase2/fixes/fullsuite-harness-r8/REPORT.md",
+        "independentAcceptance": false
+      }
+    },
+    {
+      "path": "tests/lead-strategy.test.mjs",
+      "baseSha256": "8e2bdcd05605da5bc393e2b46169749b2d47c861d028c9087ddc9b45852e5d2f",
+      "bytes": 8931,
+      "currentSha256": "98f4da7d4e81df01e88b58d8bdd9b998d5d572ac8dbaea3c550d089c647f7db5",
+      "explanation": "Authorized bounded fixture repair: Replace stale legacy direct-provider tests with current tenant GLM authorization, no-egress/no-persistence, schema and sequence-stop guarantees. This records source provenance only, not product acceptance.",
+      "authorizationEvidence": {
+        "kind": "coordinator_scope_authorization",
+        "artifact": "orchestration/astra-fixture-scope-ruling.json",
+        "worker": "/root/repair_legacy_gateway_tests",
+        "workerReport": ".superpowers/phase2/fixes/gateway-fixtures/implementer-report.md",
+        "workerReportSha256": "feed209de2b2fd587b9c1af96aaf0bab5815771ae43c99e417bb184ef5106fa9",
+        "baselineEvidence": "docs/astra/source-snapshot.json",
+        "authorizedPurpose": "Replace stale legacy direct-provider tests with current tenant GLM authorization, no-egress/no-persistence, schema and sequence-stop guarantees.",
+        "independentAcceptance": false
+      }
+    },
+    {
+      "path": "tests/personalization-bedrock.test.mjs",
+      "baseSha256": "d194da8657da2efb0eb60b90a34ed338e53987f1458e99cad8e810457cb43c82",
+      "bytes": 2807,
+      "currentSha256": "9e7a704c2138e7784f4d20b9709f0b5b4781f8bd1e79795c00d9a977b8e59485",
+      "explanation": "Authorized bounded fixture repair: Replace stale legacy direct-provider tests with current tenant GLM authorization, no-egress/no-persistence, schema and sequence-stop guarantees. This records source provenance only, not product acceptance.",
+      "authorizationEvidence": {
+        "kind": "coordinator_scope_authorization",
+        "artifact": "orchestration/astra-fixture-scope-ruling.json",
+        "worker": "/root/repair_legacy_gateway_tests",
+        "workerReport": ".superpowers/phase2/fixes/gateway-fixtures/implementer-report.md",
+        "workerReportSha256": "feed209de2b2fd587b9c1af96aaf0bab5815771ae43c99e417bb184ef5106fa9",
+        "baselineEvidence": "docs/astra/source-snapshot.json",
+        "authorizedPurpose": "Replace stale legacy direct-provider tests with current tenant GLM authorization, no-egress/no-persistence, schema and sequence-stop guarantees.",
+        "independentAcceptance": false
+      }
+    },
+    {
+      "path": "tests/personalizer-factcheck.test.mjs",
+      "baseSha256": "45cd2fd4cfd9624a848d0873bc7405ece3ede6734495bcf4a5e18af2ed793b97",
+      "bytes": 3736,
+      "currentSha256": "1742393ce01c20c573f507b9431ee6df17e4f83ead1b5ebb5ff4e85dc7f4c9c5",
+      "explanation": "Authorized bounded fixture repair: Replace stale legacy direct-provider tests with current tenant GLM authorization, no-egress/no-persistence, schema and sequence-stop guarantees. This records source provenance only, not product acceptance.",
+      "authorizationEvidence": {
+        "kind": "coordinator_scope_authorization",
+        "artifact": "orchestration/astra-fixture-scope-ruling.json",
+        "worker": "/root/repair_legacy_gateway_tests",
+        "workerReport": ".superpowers/phase2/fixes/gateway-fixtures/implementer-report.md",
+        "workerReportSha256": "feed209de2b2fd587b9c1af96aaf0bab5815771ae43c99e417bb184ef5106fa9",
+        "baselineEvidence": "docs/astra/source-snapshot.json",
+        "authorizedPurpose": "Replace stale legacy direct-provider tests with current tenant GLM authorization, no-egress/no-persistence, schema and sequence-stop guarantees.",
+        "independentAcceptance": false
+      }
+    },
+    {
+      "path": "tests/sender-rotation.test.mjs",
+      "baseSha256": "89beb8a9c03a5953021bd4513c513b2f2b1b2c52cd24f03006144e55f3815c51",
+      "bytes": 3000,
+      "currentSha256": "f9d4225e63dd344bd690309c511416d8dd632f41ba0e0d91368f587aa5a0d9d3",
+      "explanation": "Authorized bounded fixture repair: Restore safe synthetic reviewed mailbox fixtures and loopback IMAP TLS trust coverage, preserving deny cases and sender/recipient/suppression/stop behavior. This records source provenance only, not product acceptance.",
+      "authorizationEvidence": {
+        "kind": "coordinator_scope_authorization",
+        "artifact": "orchestration/astra-fixture-scope-ruling.json",
+        "worker": "/root/repair_mail_fixtures",
+        "workerReport": ".superpowers/phase2/fixes/mail-fixtures/report.md",
+        "workerReportSha256": "9ff80925b742f70af9a2441ef3021a2df99bed10c5f6eaa143f96ab082f7a993",
+        "baselineEvidence": "docs/astra/source-snapshot.json",
+        "authorizedPurpose": "Restore safe synthetic reviewed mailbox fixtures and loopback IMAP TLS trust coverage, preserving deny cases and sender/recipient/suppression/stop behavior.",
+        "independentAcceptance": false
+      }
+    },
+    {
+      "path": "tests/sending-api.test.mjs",
+      "baseSha256": "ec82ac92bfaed8acc99a3941da792e7c3075d045307332f10f0ee1d7cf83d405",
+      "bytes": 10976,
+      "currentSha256": "26eb02bc0c3b4b55731c0c6a4bdbfa399d0526df57ea2f31504f49081b317292",
+      "explanation": "Authorized bounded fixture repair: Replace stale legacy direct-provider tests with current tenant GLM authorization, no-egress/no-persistence, schema and sequence-stop guarantees. This records source provenance only, not product acceptance.",
+      "authorizationEvidence": {
+        "kind": "coordinator_scope_authorization",
+        "artifact": "orchestration/astra-fixture-scope-ruling.json",
+        "worker": "/root/repair_legacy_gateway_tests",
+        "workerReport": ".superpowers/phase2/fixes/gateway-fixtures/implementer-report.md",
+        "workerReportSha256": "feed209de2b2fd587b9c1af96aaf0bab5815771ae43c99e417bb184ef5106fa9",
+        "baselineEvidence": "docs/astra/source-snapshot.json",
+        "authorizedPurpose": "Replace stale legacy direct-provider tests with current tenant GLM authorization, no-egress/no-persistence, schema and sequence-stop guarantees.",
+        "independentAcceptance": false
+      }
+    },
+    {
+      "path": "tests/ui-feedback.test.mjs",
+      "baseSha256": "4243bf9f72afff0210ae120de60f3c65c008f48e55c066c644f006c0275278d4",
+      "bytes": 20987,
+      "currentSha256": "a829d07acda18136259173c624f8aa305be2b20d9cb8d49bba0dd5d81b2f8ea5",
+      "explanation": "Await the actual native-dialog close result and focus restoration before asserting cancellation; retain false-result and focus guarantees without sleeps or UI source changes. This records authorized source provenance only, not historical acceptance or a product behavior change.",
+      "authorizationEvidence": {
+        "kind": "coordinator_scope_authorization",
+        "artifact": "orchestration/astra-ui-feedback-test-ruling.json",
+        "baselineManifest": "orchestration/astra-phase2-source-r4.json",
+        "baselineCandidateId": "astra-r4-9052cfd8aaf3c114",
+        "baselineSha256": "4243bf9f72afff0210ae120de60f3c65c008f48e55c066c644f006c0275278d4",
+        "authorizedPurpose": "Await the actual native-dialog close result and focus restoration before asserting cancellation; retain false-result and focus guarantees without sleeps or UI source changes.",
+        "workerReport": ".superpowers/phase2/fixes/ui-feedback-r5/implementer-report.md",
+        "independentAcceptance": false
+      }
+    },
+    {
+      "path": "tests/unsubscribe-api.test.mjs",
+      "baseSha256": "cfd2e35e8e1c524bb3951005e051906cfa0f4f24508ec83f73e26c93d3dda3ac",
+      "bytes": 8965,
+      "currentSha256": "0912a9f7994c9fa488d14d9c85b4b54eb4ffcd942642a989d9055cb48a79fdbf",
+      "explanation": "Authorized implementation delta: Synthetic loopback fixture adds explicit legacy mailbox warmup review row; coordinator reviewed actual two-line diff. This records provenance/scope, not product acceptance or external approval.",
+      "authorizationEvidence": {
+        "kind": "coordinator_scope_authorization",
+        "artifact": "orchestration/astra-source-scope-ruling.json",
+        "candidateAfterArtifact": "orchestration/astra-phase2-source.json",
+        "candidateAfterSha256": null,
+        "checkpointBeforeArtifact": ".superpowers/sdd/fa3710986978fc58/unsubscribe-before.json",
+        "authorizedPurpose": "Synthetic loopback fixture adds explicit legacy mailbox warmup review row; coordinator reviewed actual two-line diff",
+        "independentAcceptance": false
+      }
+    },
+    {
+      "path": "tests/website-discovery-jobs.test.mjs",
+      "baseSha256": "b8f4bdac2cab8ec2254c41b0901824630b0008b02971fc6c734e0a156e378b1f",
+      "bytes": 77336,
+      "currentSha256": "b48414a10030a7e1df185d0c01e294d323c29a184db747c81342e01f94f5096d",
+      "explanation": "Authorized QA determinism repair: assert every original website email source-evidence row remains byte-for-byte equivalent by stable evidence ID while permitting added page evidence; add a negative corruption probe. This records source provenance only, not product acceptance.",
+      "authorizationEvidence": {
+        "kind": "coordinator_scope_authorization",
+        "artifact": "orchestration/astra-test-determinism-r7-ruling.json",
+        "worker": "/root/stabilize_qa_r7",
+        "authorizedPurpose": "test-only source-evidence preservation and recovery determinism proof",
+        "independentAcceptance": false
+      },
+      "additionalAuthorizationEvidence": [
+        {
+          "worker": "/root/discovery_evidence_r10",
+          "kind": "coordinator_diagnostic_scope_authorization",
+          "authorizedPurpose": "On assertion failure, emit allowlisted synthetic linked-Person request metadata, API rows, stable persisted source evidence IDs and matching contact-point rows; preserve all existing expected assertions. No product fix and no acceptance claim.",
+          "independentAcceptance": false,
+          "artifact": "orchestration/astra-discovery-diagnostics-r10-ruling.json"
+        },
+        {
+          "worker": "/root/discovery_selection_r16",
+          "kind": "coordinator_scope_authorization",
+          "authorizedPurpose": "Test-only deterministic proof selects linked-Person and ContactPoint rows by source URL, evidence type, and stable evidence ID while checking unrelated evidence rows remain unenriched.",
+          "independentAcceptance": false,
+          "artifact": "orchestration/astra-discovery-selection-r16-ruling.json"
+        }
+      ]
+    },
+    {
+      "path": "tests/website-discovery-ui.test.mjs",
+      "baseSha256": "ef0d3f64945f1ccf97df4f4259219e6aa2df9d22de1f0b57df9168e7421ccb8a",
+      "currentSha256": "f796170084ab370c8307c722856e7c3648d87f5526af53a90d181cefc027c8dd",
+      "bytes": 58897,
+      "explanation": "Await exact synthetic API responses before asserting captured request bodies and counters, using a held request-body barrier to prove the selected-sites click completes before capture. This records authorized test provenance only, not product acceptance.",
+      "authorizationEvidence": {
+        "kind": "coordinator_scope_authorization",
+        "artifact": "orchestration/astra-discovery-ui-sync-r12-ruling.json",
+        "baselineManifest": "orchestration/astra-phase2-source-r11.json",
+        "baselineSha256": "ef0d3f64945f1ccf97df4f4259219e6aa2df9d22de1f0b57df9168e7421ccb8a",
+        "authorizedPurpose": "Await the exact synthetic retry API response before asserting server-side counters, preserving explicit-action-only and exactly-once behavior.",
+        "workerReport": ".superpowers/phase2/fixes/discovery-ui-sync-r12/REPORT.md",
+        "independentAcceptance": false
+      },
+      "additionalAuthorizationEvidence": [
+        {
+          "kind": "coordinator_scope_authorization",
+          "artifact": "orchestration/astra-discovery-bulk-sync-r17-ruling.json",
+          "baselineManifest": "orchestration/astra-phase2-source-r16.json",
+          "baselineSha256": "3a8b3bd1060bc4dbde81668f06811932e43aadaa4093ac9beb6ef8b350e0c2cb",
+          "worker": "/root/credential_finish_r14",
+          "workerReport": ".superpowers/phase2/fixes/discovery-bulk-sync-r17/REPORT.md",
+          "authorizedPurpose": "Test-only deterministic synchronization of EPCH selected-sites and equivalent synthetic import/scan observations with exact request/response barriers; preserve explicit-click and exactly-once assertions.",
+          "independentAcceptance": false
+        }
+      ]
+    }
+  ],
+  "unresolvedSourceDivergences": [],
+  "r20SupplementalAuthorization": {
+    "sourceRoot": "C:/Users/pooja/.codex/worktrees/astra-foundation/odd-ecosys",
+    "predecessor": "astra-r19-5da52dcb18e51f40",
+    "baseHead": "f30490bd892dd651fd2fb276b09b510379e27c0d",
+    "selectedSnapshotUnchanged": true,
+    "selectedSourceCounts": {
+      "files": 228,
+      "enumeratedDeltas": 31,
+      "unchanged": 197
+    },
+    "releaseReady": false,
+    "sourceFingerprints": [
+      {
+        "path": ".env.example",
+        "sha256": "13dc7b4c12134cf4fd547d22dd3e0208a35abaca13a6ce7942f1110611e3690b",
+        "authorization": {
+          "artifact": "orchestration/astra-r20-ui-first-plan.json",
+          "worker": "/root/r20_environment_handoff",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/r20/review-security-handoff/REPORT.md"
+        }
+      },
+      {
+        "path": "css/astra-growth.css",
+        "sha256": "9f2fadd66bb4edebdb7fba6fbb20ab0f799261bd26201c803f0fbb02982434bc",
+        "authorization": {
+          "artifact": "orchestration/astra-r20-ui-first-plan.json",
+          "worker": "/root/r20_ui_first",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/r20/UI_CHECKPOINT.json"
+        }
+      },
+      {
+        "path": "docs/astra/INTEGRATION_SETUP.md",
+        "sha256": "42a10949dfaf85c572ea0ce5e7e414b8c71bdc98b774e7aa2a47fdfea24d8a0d",
+        "authorization": {
+          "artifact": "orchestration/astra-r20-ui-first-plan.json",
+          "worker": "/root/r20_environment_handoff",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/r20/review-security-handoff/REPORT.md"
+        }
+      },
+      {
+        "path": "growth.html",
+        "sha256": "3f5ecb878a887a17565d6bb2cf97a249ce3b3d5282538682d49a36fe1cd2f9f7",
+        "authorization": {
+          "artifact": "orchestration/astra-r20-ui-first-plan.json",
+          "worker": "/root/r20_ui_first",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/r20/UI_CHECKPOINT.json"
+        }
+      },
+      {
+        "path": "js/astra-growth.js",
+        "sha256": "6ee6a6304e9e9e58dfa46693b4cf2fc25f038295b246ca98d17cf1d3340f150c",
+        "authorization": {
+          "artifact": "orchestration/astra-r20-ui-first-plan.json",
+          "worker": "/root/r20_ui_first",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/r20/UI_CHECKPOINT.json"
+        },
+        "additionalAuthorizationEvidence": [
+          {
+            "artifact": "orchestration/astra-r20a-qa-corrections-plan.json",
+            "worker": "/root/r20a_workspace_fix1",
+            "independentAcceptance": true,
+            "reviewEvidence": ".superpowers/r20a/review-workspace/REPORT.md"
+          }
+        ]
+      },
+      {
+        "path": "migrations/astra/033-source-rights-revocations.down.sql",
+        "sha256": "084c32c617bdfa081243e14eb396de400eef7a8ce7579643be37e64f5ba16c07",
+        "authorization": {
+          "artifact": "orchestration/astra-r20-source-rights-core-plan.json",
+          "worker": "/root/r20_source_rights_core",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/r20/review-core-copy/REPORT.md"
+        }
+      },
+      {
+        "path": "migrations/astra/033-source-rights-revocations.up.sql",
+        "sha256": "3f03c37ad0950260fa30f900de48061da45165a814e2ffce420ac13678850288",
+        "authorization": {
+          "artifact": "orchestration/astra-r20-source-rights-core-plan.json",
+          "worker": "/root/r20_source_rights_core",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/r20/review-core-copy/REPORT.md"
+        }
+      },
+      {
+        "path": "pipeline/astra-autonomy.js",
+        "sha256": "2d2c74de6cf0d1ec5b54e4c5b1c638f6c7b7b8e3ef5b670b22b29340b915e731",
+        "authorization": {
+          "artifact": "orchestration/astra-r20-copy-proof-plan.json",
+          "worker": "/root/r20_execution_copy",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/r20/review-core-copy/REPORT.md"
+        }
+      },
+      {
+        "path": "pipeline/astra-benchmark.js",
+        "sha256": "38f1e53064c173002655f2bfb312a5a8be5196e9b8fecc937701ebdaeb3c8477",
+        "authorization": {
+          "artifact": "orchestration/astra-r20-source-rights-consumers-plan.json",
+          "worker": "/root/r20_source_rights_consumers",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/r20/review-core-copy/REPORT.md"
+        }
+      },
+      {
+        "path": "pipeline/astra-campaign-audience.js",
+        "sha256": "2b50836c962996ab79cab5274e6cabc1889794bf47c6a1fc939352b23c1e18f6",
+        "authorization": {
+          "artifact": "orchestration/astra-r20-source-rights-consumers-plan.json",
+          "worker": "/root/r20_source_rights_consumers",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/r20/review-core-copy/REPORT.md"
+        }
+      },
+      {
+        "path": "pipeline/astra-campaigns.js",
+        "sha256": "c60b91b9c61ffeda27c31bc8bfbc3add8d7b6672a5a472e0a365889f8917f2bc",
+        "authorization": {
+          "artifact": "orchestration/astra-r20-source-rights-consumers-plan.json",
+          "worker": "/root/r20_source_rights_consumers",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/r20/review-core-copy/REPORT.md"
+        }
+      },
+      {
+        "path": "pipeline/astra-claims.js",
+        "sha256": "5b175fbea848f202f49284e7969c4a14bbabfb297475ff6b5ebed6a64eb6c907",
+        "authorization": {
+          "artifact": "orchestration/astra-r20-source-rights-consumers-plan.json",
+          "worker": "/root/r20_source_rights_consumers",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/r20/review-core-copy/REPORT.md"
+        }
+      },
+      {
+        "path": "pipeline/astra-current-claims.js",
+        "sha256": "44fc76557bbabc4bbc013e8b8f36f0a7aae8dcdd172b97dcb263b364222bade0",
+        "authorization": {
+          "artifact": "orchestration/astra-r20-source-rights-consumers-plan.json",
+          "worker": "/root/r20_source_rights_consumers",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/r20/review-core-copy/REPORT.md"
+        }
+      },
+      {
+        "path": "pipeline/astra-dispatcher.js",
+        "sha256": "e077686765c99fdd8de39475e8e19e80765d7a71d94653ac106cc0b5e1f02977",
+        "authorization": {
+          "artifact": "orchestration/astra-r20-copy-proof-plan.json",
+          "worker": "/root/r20_execution_copy",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/r20/review-core-copy/REPORT.md"
+        }
+      },
+      {
+        "path": "pipeline/astra-evidence.js",
+        "sha256": "a20db4e468783cd1d18f058ecc0be2109585242cd8aab7b5f142b238629d64b6",
+        "authorization": {
+          "artifact": "orchestration/astra-r20-source-rights-consumers-plan.json",
+          "worker": "/root/r20_source_rights_consumers",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/r20/review-core-copy/REPORT.md"
+        }
+      },
+      {
+        "path": "pipeline/astra-ledger-routes.js",
+        "sha256": "e952710c56f91c04b9c879bc870862353bb09eb46f126b4ef137f74f90876ed5",
+        "authorization": {
+          "artifact": "orchestration/astra-r20-outcome-ownership-fix-plan.json",
+          "worker": "/root/r20_outcome_resume1",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/r20/review-outcome-ownership/REPORT.md"
+        }
+      },
+      {
+        "path": "pipeline/astra-memory.js",
+        "sha256": "7aa0553d3ef711a041b3597fd3795d4e2f9f648603e146d16d3925e230172c66",
+        "authorization": {
+          "artifact": "orchestration/astra-r20-source-rights-consumers-plan.json",
+          "worker": "/root/r20_source_rights_consumers",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/r20/review-core-copy/REPORT.md"
+        }
+      },
+      {
+        "path": "pipeline/astra-outcomes.js",
+        "sha256": "f56ee094dd96e0688184a9cbd75a8fdc9446e13f975a9da10ab4005bc5a1d20c",
+        "authorization": {
+          "artifact": "orchestration/astra-r20-outcome-ownership-fix-plan.json",
+          "worker": "/root/r20_outcome_resume1",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/r20/review-outcome-ownership/REPORT.md"
+        }
+      },
+      {
+        "path": "pipeline/astra-radar.js",
+        "sha256": "3914c6b74d6223d85190df5e82de008f09400225f6c9c07dcacdaad8d28b9586",
+        "authorization": {
+          "artifact": "orchestration/astra-r20-source-rights-consumers-plan.json",
+          "worker": "/root/r20_source_rights_consumers",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/r20/review-core-copy/REPORT.md"
+        }
+      },
+      {
+        "path": "pipeline/astra-research-routes.js",
+        "sha256": "638164ff6334130e01dde1fad20834533a1503a4476f245a44e2cef65eecf4ef",
+        "authorization": {
+          "artifact": "orchestration/astra-r20-source-rights-core-plan.json",
+          "worker": "/root/r20_source_rights_core",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/r20/review-core-copy/REPORT.md"
+        }
+      },
+      {
+        "path": "pipeline/astra-research.js",
+        "sha256": "d483f7a1b2185805bdf5a1d6a601b6908d1f3af948bed31169439c028f3c80f7",
+        "authorization": {
+          "artifact": "orchestration/astra-r20-source-rights-consumers-plan.json",
+          "worker": "/root/r20_source_rights_consumers",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/r20/review-core-copy/REPORT.md"
+        },
+        "additionalAuthorizationEvidence": [
+          {
+            "artifact": "orchestration/astra-r20a-qa-corrections-plan.json",
+            "worker": "/root/r20a_expiry_fix1",
+            "independentAcceptance": true,
+            "reviewEvidence": ".superpowers/r20a/review-expiry/REVIEW.md"
+          }
+        ]
+      },
+      {
+        "path": "pipeline/astra-source-rights.js",
+        "sha256": "ba42cf67ec21aa08341305a53b7af7570ab3f48541afcfa689dec828d4e39de7",
+        "authorization": {
+          "artifact": "orchestration/astra-r20-source-rights-core-plan.json",
+          "worker": "/root/r20_source_rights_core",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/r20/review-core-copy/REPORT.md"
+        },
+        "additionalAuthorizationEvidence": [
+          {
+            "artifact": "orchestration/astra-r20a-qa-corrections-plan.json",
+            "worker": "/root/r20a_expiry_fix1",
+            "independentAcceptance": true,
+            "reviewEvidence": ".superpowers/r20a/review-expiry/REVIEW.md"
+          }
+        ]
+      },
+      {
+        "path": "pipeline/astra-xray.js",
+        "sha256": "cef2b708648de8a591780007b662aef6c6a09bb333d1ede85cfd7aeea168df51",
+        "authorization": {
+          "artifact": "orchestration/astra-r20-source-rights-consumers-plan.json",
+          "worker": "/root/r20_source_rights_consumers",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/r20/review-core-copy/REPORT.md"
+        }
+      },
+      {
+        "path": "server.js",
+        "sha256": "ebc5c02845a707e03cae854e2708fd6c429c2cce1a98ef71b4f1047f2974fba6",
+        "authorization": {
+          "artifact": "orchestration/astra-r20-static-privacy-plan.json",
+          "worker": "/root/r20_static_privacy",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/r20/review-security-handoff/REPORT.md"
+        }
+      },
+      {
+        "path": "tests/astra-bandit-registry-read.test.mjs",
+        "sha256": "ae04777c8dd2c94771f7d19b97150fc3397bd9ee550f833c38361d653cacd6d8",
+        "authorization": {
+          "artifact": "orchestration/astra-r20-fixture-integration-plan.json",
+          "worker": "/root/r20_fixture_integration",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/r20/fixture-integration/REPORT.md"
+        }
+      },
+      {
+        "path": "tests/astra-benchmark-report.test.mjs",
+        "sha256": "45e2a927a33b8fe5a7855f58df9bdeda9769dde1f941463734b3482506431924",
+        "authorization": {
+          "artifact": "orchestration/astra-r20-fixture-integration-plan.json",
+          "worker": "/root/r20_fixture_integration",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/r20/fixture-integration/REPORT.md"
+        }
+      },
+      {
+        "path": "tests/astra-customer-approvals.test.mjs",
+        "sha256": "6945f436c7a7bb7ae069118f0cc1d88b26b3f37e90df1db65f6844e6a2c3cf27",
+        "authorization": {
+          "artifact": "orchestration/astra-r20-fixture-integration-plan.json",
+          "worker": "/root/r20_fixture_integration",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/r20/fixture-integration/REPORT.md"
+        }
+      },
+      {
+        "path": "tests/astra-customer-records.test.mjs",
+        "sha256": "d5ba4297f006925946ef702d455c844c245fb0072280f6ff1fa2188c609a5350",
+        "authorization": {
+          "artifact": "orchestration/astra-r20-fixture-integration-plan.json",
+          "worker": "/root/r20_fixture_integration",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/r20/fixture-integration/REPORT.md"
+        }
+      },
+      {
+        "path": "tests/astra-execution-copy-proof.test.mjs",
+        "sha256": "b2e00fc074223152a173b77ef1c24422a0c2ba50da4181421daaf7955ecf3266",
+        "authorization": {
+          "artifact": "orchestration/astra-r20-copy-proof-plan.json",
+          "worker": "/root/r20_execution_copy",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/r20/review-core-copy/REPORT.md"
+        }
+      },
+      {
+        "path": "tests/astra-growth-design.test.mjs",
+        "sha256": "50439fd894c68025edf2474331ae01ec2d72cdd65ee183b1149f50330d8bf732",
+        "authorization": {
+          "artifact": "orchestration/astra-r20-ui-first-plan.json",
+          "worker": "/root/r20_ui_first",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/r20/UI_CHECKPOINT.json"
+        }
+      },
+      {
+        "path": "tests/astra-growth-journey.test.mjs",
+        "sha256": "3f8b1b0a50069db013a04e592a2d7eb35f2c4d3fb77149cb703ed372b6aabce1",
+        "authorization": {
+          "artifact": "orchestration/astra-r20-guided-journey-qa-plan.json",
+          "worker": "/root/r20_journey_resume1",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/r20/guided-journey/resume-1/runs/25c09a66490e40b6b3f0112acec09b27/REPORT.md"
+        },
+        "additionalAuthorizationEvidence": [
+          {
+            "artifact": "orchestration/astra-r20-guided-journey-qa-plan.json",
+            "worker": "/root/r20_journey_readback1",
+            "independentAcceptance": true,
+            "reviewEvidence": ".superpowers/r20/review-guided-journey/readback-extension/SPEC.md",
+            "qualityEvidence": ".superpowers/r20/review-guided-journey/readback-extension/QUALITY.md"
+          },
+          {
+            "artifact": "orchestration/astra-r20a-qa-corrections-plan.json",
+            "worker": "/root/r20a_workspace_fix1",
+            "independentAcceptance": true,
+            "reviewEvidence": ".superpowers/r20a/review-workspace/REPORT.md"
+          },
+          {
+            "artifact": "orchestration/astra-r20a-credential-cleanup-plan.json",
+            "worker": "/root/r20a_credential_cleanup1",
+            "independentAcceptance": true,
+            "reviewEvidence": ".superpowers/r20a/review-credential-cleanup/REPORT.md"
+          }
+        ]
+      },
+      {
+        "path": "tests/astra-growth-ui.test.mjs",
+        "sha256": "45d9e48a19f8f46ceb763434a1970d4f79b39d7956597506128a7be7bf6ac6d4",
+        "authorization": {
+          "artifact": "orchestration/astra-r20-ui-first-plan.json",
+          "worker": "/root/r20_ui_first",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/r20/UI_CHECKPOINT.json"
+        }
+      },
+      {
+        "path": "tests/astra-lifecycle-cancel.test.mjs",
+        "sha256": "6ee252791e6baebf7055da4ec819346e562efbef147550fec71576d2b2a8cfc6",
+        "authorization": {
+          "artifact": "orchestration/astra-r20-fixture-integration-plan.json",
+          "worker": "/root/r20_fixture_integration",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/r20/fixture-integration/REPORT.md"
+        }
+      },
+      {
+        "path": "tests/astra-outcome-ownership.test.mjs",
+        "sha256": "2b287b337d57613d5457ab8f48822ae1e8d6506b498c2b9ded54d98208d756d0",
+        "authorization": {
+          "artifact": "orchestration/astra-r20-outcome-ownership-fix-plan.json",
+          "worker": "/root/r20_outcome_resume1",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/r20/review-outcome-ownership/REPORT.md"
+        }
+      },
+      {
+        "path": "tests/astra-outcomes-corrections.test.mjs",
+        "sha256": "db31998d4abacb9923a385f9edc73bfff411432b335077d38f7a43790dfc6c38",
+        "authorization": {
+          "artifact": "orchestration/astra-r20-fixture-integration-plan.json",
+          "worker": "/root/r20_fixture_integration",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/r20/fixture-integration/REPORT.md"
+        },
+        "additionalAuthorizationEvidence": [
+          {
+            "artifact": "orchestration/astra-r20-outcome-ownership-fix-plan.json",
+            "worker": "/root/r20_outcome_resume1",
+            "independentAcceptance": true,
+            "reviewEvidence": ".superpowers/r20/review-outcome-ownership/REPORT.md"
+          }
+        ]
+      },
+      {
+        "path": "tests/astra-qualification-lineage.test.mjs",
+        "sha256": "c77fffae5870109bd89a19bcbfad57db5c4b5e6adb8d5fa628423c9d6460c2b2",
+        "authorization": {
+          "artifact": "orchestration/astra-r20-fixture-integration-plan.json",
+          "worker": "/root/r20_fixture_integration",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/r20/fixture-integration/REPORT.md"
+        },
+        "additionalAuthorizationEvidence": [
+          {
+            "artifact": "orchestration/astra-r20-qualification-fixture-ruling.json",
+            "worker": "/root/r20_fixture_integration",
+            "independentAcceptance": true,
+            "reviewEvidence": ".superpowers/r20/review-qualification-fix/REPORT.md"
+          }
+        ]
+      },
+      {
+        "path": "tests/astra-source-collection-policy.test.mjs",
+        "sha256": "5ba7f99dc7fd8421b7fcc4024e8dd07c7cea08b10f2bdf44978618f4e84cddb2",
+        "authorization": {
+          "artifact": "orchestration/astra-r20-fixture-integration-plan.json",
+          "worker": "/root/r20_fixture_integration",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/r20/fixture-integration/REPORT.md"
+        }
+      },
+      {
+        "path": "tests/astra-source-rights-consumers.test.mjs",
+        "sha256": "2c3bf35fe0622902ca9406dddcac3f6d35ddb14934d4bc8a30a81677afc54501",
+        "authorization": {
+          "artifact": "orchestration/astra-r20-source-rights-consumers-plan.json",
+          "worker": "/root/r20_source_rights_consumers",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/r20/review-core-copy/REPORT.md"
+        }
+      },
+      {
+        "path": "tests/astra-source-rights-ui.test.mjs",
+        "sha256": "7c908a2f1a75e280d5dcf248b4b3ac74d77c082a159385e893e4bc1966470400",
+        "authorization": {
+          "artifact": "orchestration/astra-r20-ui-first-plan.json",
+          "worker": "/root/r20_ui_first",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/r20/UI_CHECKPOINT.json"
+        }
+      },
+      {
+        "path": "tests/astra-source-rights.test.mjs",
+        "sha256": "92621cbdbb17e4eaf5d39f6492bfd38c08ac8f59f7aea5662e28fcdf6f612f2a",
+        "authorization": {
+          "artifact": "orchestration/astra-r20-source-rights-core-plan.json",
+          "worker": "/root/r20_source_rights_core",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/r20/review-core-copy/REPORT.md"
+        },
+        "additionalAuthorizationEvidence": [
+          {
+            "artifact": "orchestration/astra-r20a-qa-corrections-plan.json",
+            "worker": "/root/r20a_expiry_fix1",
+            "independentAcceptance": true,
+            "reviewEvidence": ".superpowers/r20a/review-expiry/REVIEW.md"
+          }
+        ]
+      },
+      {
+        "path": "tests/astra-static-privacy.test.mjs",
+        "sha256": "eaf74aa603f5886584e700bda7a501fe6119590ee13de30497790cbda6f3cd48",
+        "authorization": {
+          "artifact": "orchestration/astra-r20-static-privacy-plan.json",
+          "worker": "/root/r20_static_privacy",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/r20/review-security-handoff/REPORT.md"
+        }
+      },
+      {
+        "path": "tests/astra-workbench-e2e.test.mjs",
+        "sha256": "1691ad9f3bd535e6d46a687399a1a46c38981a93631f8d3910368c707db3e05f",
+        "authorization": {
+          "artifact": "orchestration/astra-r20-fixture-integration-plan.json",
+          "worker": "/root/r20_fixture_integration",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/r20/fixture-integration/REPORT.md"
+        }
+      },
+      {
+        "path": "tests/astra-workflow-recovery.test.mjs",
+        "sha256": "03580f2f1ab462d303751631ac53de203c97d390dad98e14b64aa75ef1679869",
+        "authorization": {
+          "artifact": "orchestration/astra-r20-fixture-integration-plan.json",
+          "worker": "/root/r20_fixture_integration",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/r20/fixture-integration/REPORT.md"
+        }
+      },
+      {
+        "path": "tests/support/astra-platform-fixture.mjs",
+        "sha256": "eb7bb76d147935f7e854fece0463c8e885ccf1600c63ad6ea3ef9ace390b70b5",
+        "authorization": {
+          "artifact": "orchestration/astra-r20-fixture-integration-plan.json",
+          "worker": "/root/r20_fixture_integration",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/r20/fixture-integration/REPORT.md"
+        }
+      },
+      {
+        "path": "tests/support/astra-r20-fixture.mjs",
+        "sha256": "5fd76c38d88fba94b1fef2059815b0c554f202c485125e4107cec8b1f0904a70",
+        "authorization": {
+          "artifact": "orchestration/astra-r20-source-rights-core-plan.json",
+          "worker": "/root/r20_source_rights_core",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/r20/review-core-copy/REPORT.md"
+        }
+      },
+      {
+        "path": "tools/astra/local-preview.mjs",
+        "sha256": "8997ccedd6ef9406381e22ccb911bb47164ee564d35661db45a36e20f3ede20f",
+        "authorization": {
+          "artifact": "orchestration/astra-r20-fixture-integration-plan.json",
+          "worker": "/root/r20_fixture_integration",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/r20/fixture-integration/REPORT.md"
+        }
+      },
+      {
+        "path": "tests/astra-xray.test.mjs",
+        "sha256": "aebaadf6b844d39d0bdf032e317629baa634b2598e3c13dc007c8ddfd824a4c6",
+        "authorization": {
+          "artifact": "orchestration/astra-r20a-qa-corrections-plan.json",
+          "worker": "/root/r20a_expiry_fix1",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/r20a/review-expiry/REVIEW.md"
+        }
+      }
+    ]
+  },
+  "liveIntegrationSupplementalAuthorization": {
+    "sourceRoot": "C:/Users/pooja/.codex/worktrees/astra-foundation/odd-ecosys",
+    "predecessor": "astra-r20a-6440a954f59ed529",
+    "baseHead": "f30490bd892dd651fd2fb276b09b510379e27c0d",
+    "preservesHistoricalSourceCounts": {
+      "files": 228,
+      "enumeratedDeltas": 31,
+      "unchanged": 197
+    },
+    "historicalR20SupplementalAuthorizationPreserved": true,
+    "historicalStaticBoundaryCount": 48,
+    "releaseReady": false,
+    "sourceFingerprints": [
+      {
+        "path": "package.json",
+        "sha256": "068d0b6d10483b5f27b47b27289ea12eeb253bf13ea86cc6e8f85a776187ebba",
+        "bytes": 1583,
+        "authorization": {
+          "artifact": "orchestration/astra-live-integration-plan.json",
+          "worker": "/root/live_mongodb1",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/astra-live/review-mongodb/fix-round2/review.md",
+          "authorizedPurpose": "Separate MongoDB driver/repository boundary while preserving PostgreSQL default; no Atlas/live database acceptance."
+        }
+      },
+      {
+        "path": "package-lock.json",
+        "sha256": "3c54d35fcc178c5824b4bf34b9b13561a28f1759660d7ff42f764fd3788e2072",
+        "bytes": 80131,
+        "authorization": {
+          "artifact": "orchestration/astra-live-integration-plan.json",
+          "worker": "/root/live_mongodb1",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/astra-live/review-mongodb/fix-round2/review.md",
+          "authorizedPurpose": "Separate MongoDB driver/repository boundary while preserving PostgreSQL default; no Atlas/live database acceptance."
+        }
+      },
+      {
+        "path": "pipeline/astra-freeinference-client.js",
+        "sha256": "7c3ce0c4bf437c31d638c39ef07cbb8306a2993511410701971a40a7f0a0fd11",
+        "bytes": 32965,
+        "authorization": {
+          "artifact": "orchestration/astra-live-integration-plan.json",
+          "worker": "/root/live_freeinference1",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/astra-live/review-provider/fix-round2/review.md",
+          "authorizedPurpose": "Fixed HTTPS FreeInference model catalog/chat transport and explicitly bounded synthetic probe; no production or release approval."
+        }
+      },
+      {
+        "path": "tools/astra/live-provider-probe.mjs",
+        "sha256": "ba7d6665928f936f547d247ef36aca8e7c637bd6947840c5cfe7eff52fb93a86",
+        "bytes": 4800,
+        "authorization": {
+          "artifact": "orchestration/astra-live-integration-plan.json",
+          "worker": "/root/live_freeinference1",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/astra-live/review-provider/fix-round2/review.md",
+          "authorizedPurpose": "Fixed HTTPS FreeInference model catalog/chat transport and explicitly bounded synthetic probe; no production or release approval."
+        }
+      },
+      {
+        "path": "pipeline/astra-mongo-store.js",
+        "sha256": "bed484893d6a5ad5c7ad01ac073d4c1c731f0c0494a2b5987fa7c831f5dbde8e",
+        "bytes": 38828,
+        "authorization": {
+          "artifact": "orchestration/astra-live-integration-plan.json",
+          "worker": "/root/live_mongodb1",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/astra-live/review-mongodb/fix-round2/review.md",
+          "authorizedPurpose": "Separate MongoDB driver/repository boundary while preserving PostgreSQL default; no Atlas/live database acceptance."
+        }
+      },
+      {
+        "path": "pipeline/astra-persistence.js",
+        "sha256": "7cd54d1756ee352122366cc3262a64020fa0f80b8795e042f2363deee72f69e8",
+        "bytes": 2518,
+        "authorization": {
+          "artifact": "orchestration/astra-live-integration-plan.json",
+          "worker": "/root/live_mongodb1",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/astra-live/review-mongodb/fix-round2/review.md",
+          "authorizedPurpose": "Separate MongoDB driver/repository boundary while preserving PostgreSQL default; no Atlas/live database acceptance."
+        }
+      },
+      {
+        "path": "pipeline/astra-prospecting.js",
+        "sha256": "f498faa652900c128a47afc3927314c69989c1691954536af4db6b519d861a7c",
+        "bytes": 54853,
+        "authorization": {
+          "artifact": "orchestration/astra-live-prospecting-round5-plan.json",
+          "worker": "/root/live_prospecting_fix5",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/astra-live/review-prospecting/fix-round5/review.md",
+          "authorizedPurpose": "Bounded round-five pending-source lease-handover correction only; public collection remains release-gated."
+        },
+        "additionalAuthorizationEvidence": [
+          {
+            "artifact": ".superpowers/astra-local-search-connector/PLAN.md",
+            "worker": "/root/live_local_search_connector",
+            "independentAcceptance": true,
+            "reviewEvidence": ".superpowers/astra-local-search-review/REPORT.md",
+            "authorizedPurpose": "Reviewed, default-disabled local-only Google CSE search connector; preserves source-rights, S01, request-admission, and existing public HTTPS gates. This is not a real-service or release approval."
+          }
+        ]
+      },
+      {
+        "path": "pipeline/astra-source-collection.js",
+        "sha256": "b62a7636b5c0fb539b6a3e555afd1aa83d80a55fddc82270d640c1635942bdc5",
+        "bytes": 46229,
+        "authorization": {
+          "artifact": "orchestration/astra-live-prospecting-round5-plan.json",
+          "worker": "/root/live_prospecting_fix5",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/astra-live/review-prospecting/fix-round5/review.md",
+          "authorizedPurpose": "Bounded round-five pending-source lease-handover correction only; public collection remains release-gated."
+        },
+        "additionalAuthorizationEvidence": [
+          {
+            "artifact": ".superpowers/astra-local-search-connector/PLAN.md",
+            "worker": "/root/live_local_search_connector",
+            "independentAcceptance": true,
+            "reviewEvidence": ".superpowers/astra-local-search-review/REPORT.md",
+            "authorizedPurpose": "Reviewed, default-disabled local-only Google CSE search connector; preserves source-rights, S01, request-admission, and existing public HTTPS gates. This is not a real-service or release approval."
+          }
+        ]
+      },
+      {
+        "path": "pipeline/astra-prospecting-routes.js",
+        "sha256": "04679c17dcf0c5943d26795506585515e53ef7075dac438c1a5c6eb2a4023acd",
+        "bytes": 7762,
+        "authorization": {
+          "artifact": "orchestration/astra-live-prospecting-plan.json",
+          "worker": "/root/live_prospecting1",
+          "independentAcceptance": false,
+          "reviewEvidence": ".superpowers/astra-live/review-prospecting/review.md",
+          "authorizedPurpose": "Owner-authorized route, one-shot worker and UI integration provenance; initial independent report is NOT ACCEPTED for broader prospecting capability."
+        }
+      },
+      {
+        "path": "tools/astra/run-prospecting-once.mjs",
+        "sha256": "80ddf1d40014c8b822642ec6f913c745ae43c4182b5db661d27243a080d16a1a",
+        "bytes": 1860,
+        "authorization": {
+          "artifact": "orchestration/astra-live-prospecting-plan.json",
+          "worker": "/root/live_prospecting1",
+          "independentAcceptance": false,
+          "reviewEvidence": ".superpowers/astra-live/review-prospecting/review.md",
+          "authorizedPurpose": "Owner-authorized route, one-shot worker and UI integration provenance; initial independent report is NOT ACCEPTED for broader prospecting capability."
+        }
+      },
+      {
+        "path": "server.js",
+        "sha256": "116e95153f5a25dc576845b079359fd09b866718d32bbbf899574144f7b2453f",
+        "bytes": 176306,
+        "authorization": {
+          "artifact": "orchestration/astra-live-prospecting-plan.json",
+          "worker": "/root/live_prospecting1",
+          "independentAcceptance": false,
+          "reviewEvidence": ".superpowers/astra-live/review-prospecting/review.md",
+          "authorizedPurpose": "Owner-authorized route, one-shot worker and UI integration provenance; initial independent report is NOT ACCEPTED for broader prospecting capability."
+        },
+        "supersedesHistoricalR20FingerprintSha256": "ebc5c02845a707e03cae854e2708fd6c429c2cce1a98ef71b4f1047f2974fba6"
+      },
+      {
+        "path": "growth.html",
+        "sha256": "5379bf701330b6e6bbb24019cce21254d163e7373695ab643c30b4c838311021",
+        "bytes": 34869,
+        "authorization": {
+          "artifact": "orchestration/astra-live-prospecting-plan.json",
+          "worker": "/root/live_prospecting1",
+          "independentAcceptance": false,
+          "reviewEvidence": ".superpowers/astra-live/review-prospecting/review.md",
+          "authorizedPurpose": "Owner-authorized route, one-shot worker and UI integration provenance; initial independent report is NOT ACCEPTED for broader prospecting capability."
+        },
+        "supersedesHistoricalR20FingerprintSha256": "3f5ecb878a887a17565d6bb2cf97a249ce3b3d5282538682d49a36fe1cd2f9f7"
+      },
+      {
+        "path": "js/astra-growth.js",
+        "sha256": "05e5698209b1900db7e7d109ff60b6354ac276c3f922ea1fe6f7e21549832df7",
+        "bytes": 104439,
+        "authorization": {
+          "artifact": "orchestration/astra-live-prospecting-plan.json",
+          "worker": "/root/live_prospecting1",
+          "independentAcceptance": false,
+          "reviewEvidence": ".superpowers/astra-live/review-prospecting/review.md",
+          "authorizedPurpose": "Owner-authorized route, one-shot worker and UI integration provenance; initial independent report is NOT ACCEPTED for broader prospecting capability."
+        },
+        "supersedesHistoricalR20FingerprintSha256": "6ee6a6304e9e9e58dfa46693b4cf2fc25f038295b246ca98d17cf1d3340f150c"
+      },
+      {
+        "path": "tests/astra-freeinference-client.test.mjs",
+        "sha256": "5aedca3aa549782e2f397e208d41a5b47e31c94263f3821dc4794973776d4467",
+        "bytes": 14804,
+        "authorization": {
+          "artifact": "orchestration/astra-live-integration-plan.json",
+          "worker": "/root/live_freeinference1",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/astra-live/review-provider/fix-round2/review.md",
+          "authorizedPurpose": "Fixed HTTPS FreeInference model catalog/chat transport and explicitly bounded synthetic probe; no production or release approval."
+        }
+      },
+      {
+        "path": "tests/astra-mongo-store.test.mjs",
+        "sha256": "3c072a74483e9fac2b7237a40ca0e9d54759d18fbb25622d2c9ce7350cb8c41b",
+        "bytes": 27426,
+        "authorization": {
+          "artifact": "orchestration/astra-live-integration-plan.json",
+          "worker": "/root/live_mongodb1",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/astra-live/review-mongodb/fix-round2/review.md",
+          "authorizedPurpose": "Separate MongoDB driver/repository boundary while preserving PostgreSQL default; no Atlas/live database acceptance."
+        }
+      },
+      {
+        "path": "tests/astra-prospecting.test.mjs",
+        "sha256": "099c50c2c43c2ddf6772ca29d3d5e8b6670e91acb238798a2be5bbf438d2a393",
+        "bytes": 50825,
+        "authorization": {
+          "artifact": "orchestration/astra-live-prospecting-round5-plan.json",
+          "worker": "/root/live_prospecting_fix5",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/astra-live/review-prospecting/fix-round5/review.md",
+          "authorizedPurpose": "Bounded round-five pending-source lease-handover correction only; public collection remains release-gated."
+        },
+        "additionalAuthorizationEvidence": [
+          {
+            "artifact": ".superpowers/astra-local-search-connector/PLAN.md",
+            "worker": "/root/live_local_search_connector",
+            "independentAcceptance": true,
+            "reviewEvidence": ".superpowers/astra-local-search-review/REPORT.md",
+            "authorizedPurpose": "Reviewed, default-disabled local-only Google CSE search connector; preserves source-rights, S01, request-admission, and existing public HTTPS gates. This is not a real-service or release approval."
+          }
+        ]
+      },
+      {
+        "path": "tests/astra-prospecting-source-gate.test.mjs",
+        "sha256": "a5b13f435aaf3956c7f5b9521d7583a1086acf5ef4272838530f40d6fa419905",
+        "bytes": 5713,
+        "authorization": {
+          "artifact": "orchestration/astra-live-prospecting-round5-plan.json",
+          "worker": "/root/live_prospecting_fix5",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/astra-live/review-prospecting/fix-round5/review.md",
+          "authorizedPurpose": "Bounded round-five pending-source lease-handover correction only; public collection remains release-gated."
+        }
+      },
+      {
+        "path": "tests/astra-prospecting-recovery.test.mjs",
+        "sha256": "f964b14a4e71a90821e2438e15f6c0867b22bc7b9f77790825fafa2576339e2f",
+        "bytes": 18154,
+        "authorization": {
+          "artifact": "orchestration/astra-live-prospecting-round5-plan.json",
+          "worker": "/root/live_prospecting_fix5",
+          "independentAcceptance": false,
+          "reviewEvidence": ".superpowers/astra-live/review-prospecting/fix-round5/review.md",
+          "authorizedPurpose": "Focused native strict33 repeat could not reach PostgreSQL in independent review; prior implementation 1/1 remains separately reported, not repeated here."
+        }
+      },
+      {
+        "path": "tests/astra-growth-ui.test.mjs",
+        "sha256": "45d9e48a19f8f46ceb763434a1970d4f79b39d7956597506128a7be7bf6ac6d4",
+        "bytes": 39152,
+        "authorization": {
+          "artifact": "orchestration/astra-live-prospecting-plan.json",
+          "worker": "/root/live_prospecting1",
+          "independentAcceptance": false,
+          "reviewEvidence": ".superpowers/astra-live/review-prospecting/review.md",
+          "authorizedPurpose": "Owner-authorized route, one-shot worker and UI integration provenance; initial independent report is NOT ACCEPTED for broader prospecting capability."
+        },
+        "supersedesHistoricalR20FingerprintSha256": "45d9e48a19f8f46ceb763434a1970d4f79b39d7956597506128a7be7bf6ac6d4"
+      },
+      {
+        "path": ".superpowers/astra-live/validation/register-evidence.mjs",
+        "sha256": "7640d508f97e170be2230ff82ddef81ce078638914cede10b9fc2e0f3b842a65",
+        "bytes": 29216,
+        "authorization": {
+          "artifact": "orchestration/astra-live-integration-plan.json",
+          "worker": "/root/live_validation_matrix1",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/astra-live/review-validation/fix-round1/review.md",
+          "authorizedPurpose": "Evidence registrar validation contract only; does not make underlying external-service evidence true or approve release."
+        }
+      },
+      {
+        "path": ".superpowers/astra-live/validation/test-register-hardening.mjs",
+        "sha256": "54b24a39170f5c9924720dfea2c63c8064a177884afe4cfc0502c2325d33683d",
+        "bytes": 8221,
+        "authorization": {
+          "artifact": "orchestration/astra-live-integration-plan.json",
+          "worker": "/root/live_validation_matrix1",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/astra-live/review-validation/fix-round1/review.md",
+          "authorizedPurpose": "Scratch-only registrar rejection cases; no live calls."
+        }
+      },
+      {
+        "path": "pipeline/astra-local-search-transport.js",
+        "sha256": "0b185b0caf20dc575bc9901d0d03e697c9fb609cf18e6f1194c5a0c3810b0b2e",
+        "bytes": 7211,
+        "authorization": {
+          "artifact": ".superpowers/astra-local-search-connector/PLAN.md",
+          "worker": "/root/live_local_search_connector",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/astra-local-search-review/REPORT.md",
+          "authorizedPurpose": "Reviewed, default-disabled local-only Google CSE search connector; preserves source-rights, S01, request-admission, and existing public HTTPS gates. This is not a real-service or release approval."
+        }
+      },
+      {
+        "path": "tests/astra-local-search-transport.test.mjs",
+        "sha256": "c0095e09f2e94037c12fc4fa6e1e84c71804508a25f5326f460e74ae9ce43340",
+        "bytes": 14684,
+        "authorization": {
+          "artifact": ".superpowers/astra-local-search-connector/PLAN.md",
+          "worker": "/root/live_local_search_connector",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/astra-local-search-review/REPORT.md",
+          "authorizedPurpose": "Reviewed, default-disabled local-only Google CSE search connector; preserves source-rights, S01, request-admission, and existing public HTTPS gates. This is not a real-service or release approval."
+        }
+      },
+      {
+        "path": "tests/astra-source-collection-policy.test.mjs",
+        "sha256": "cea5d0ed4277ed937e04afca9a7e87faf6c7e8c8e760d311c9c4543f02a499f7",
+        "bytes": 20115,
+        "authorization": {
+          "artifact": ".superpowers/astra-local-search-connector/PLAN.md",
+          "worker": "/root/live_local_search_connector",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/astra-local-search-review/REPORT.md",
+          "authorizedPurpose": "Reviewed, default-disabled local-only Google CSE search connector; preserves source-rights, S01, request-admission, and existing public HTTPS gates. This is not a real-service or release approval."
+        },
+        "supersedesHistoricalR20FingerprintSha256": "5ba7f99dc7fd8421b7fcc4024e8dd07c7cea08b10f2bdf44978618f4e84cddb2"
+      }
+    ],
+    "reviewState": {
+      "provider": {
+        "evidence": ".superpowers/astra-live/review-provider/fix-round2/review.md",
+        "verdict": "bounded SPEC/QUALITY pass; JSON Schema meta-schema completeness remains a documented low-severity limitation; no final-client live behavior inferred"
+      },
+      "mongo": {
+        "evidence": ".superpowers/astra-live/review-mongodb/fix-round2/review.md",
+        "verdict": "Mongo boundary pass; integrated caller issues were addressed in prospecting rounds; Atlas behavior remains unverified"
+      },
+      "prospecting": {
+        "evidence": ".superpowers/astra-live/review-prospecting/fix-round5/review.md",
+        "spec": "PASS for bounded round-five repair; no remaining P1 in that scope",
+        "quality": "PASS with native strict33 rerun limitation",
+        "focusedCommand": "node --test --test-concurrency=1 --test-reporter=spec tests/astra-prospecting.test.mjs tests/astra-prospecting-source-gate.test.mjs",
+        "focusedExitCode": 0,
+        "focusedPassed": 30,
+        "nativeCommand": "$env:ASTRA_QA_FIXTURE_PATH='.runner/astra-qa/r20-source-rights/pg.json'; node --test --test-concurrency=1 --test-reporter=spec tests/astra-prospecting-recovery.test.mjs",
+        "nativeExitCode": 1,
+        "nativeDisposition": "ECONNREFUSED to the existing local synthetic PostgreSQL fixture before database assertions; no native repeat is claimed here.",
+        "sourceCollectorSha256": "655f86a71a0f960e6b36465ada2644685ba2782d96365ace7975ee6c7c88ba5a"
+      },
+      "validationRegistrar": {
+        "evidence": ".superpowers/astra-live/review-validation/fix-round1/review.md",
+        "verdict": "bounded SPEC/QUALITY pass; result registrar does not itself establish underlying real-service claims"
+      },
+      "externalServices": {
+        "providerCallsByThisIntegration": 0,
+        "atlasCallsByThisIntegration": 0,
+        "publicSourceRequestsByThisIntegration": 0,
+        "messagesSentByThisIntegration": 0
+      }
+    },
+    "sourcePinRefreshHistory": [
+      {
+        "authorization": {
+          "artifact": "orchestration/astra-live-r2-metadata-plan.json",
+          "worker": "/root/live_r2_metadata",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/astra-live/review-mongodb/error-contract-fix/REPORT.md",
+          "authorizedPurpose": "Refresh the current source fingerprint only after the independently accepted one-line public Mongo error-contract fix; preserve historical pins and all database activation gates."
+        },
+        "limitation": "This source pin refresh does not establish that the separate Atlas ERR_ASSERTION was caused by this defect; the Atlas root-cause comparison remains pending.",
+        "files": [
+          {
+            "path": "pipeline/astra-mongo-store.js",
+            "previousSha256": "3efbdcad9d884d9d020f3a6453feb4a44c21575bde6fe7284694650e01cb2d64",
+            "previousBytes": 38809,
+            "currentSha256": "bed484893d6a5ad5c7ad01ac073d4c1c731f0c0494a2b5987fa7c831f5dbde8e",
+            "currentBytes": 38828
+          },
+          {
+            "path": "tests/astra-mongo-store.test.mjs",
+            "previousSha256": "27bbeb9fa80eb97368243b311dcf882bdfe27d5c3876608eb200d1e6cf0b2c39",
+            "previousBytes": 23798,
+            "currentSha256": "3c072a74483e9fac2b7237a40ca0e9d54759d18fbb25622d2c9ce7350cb8c41b",
+            "currentBytes": 27426
+          }
+        ]
+      },
+      {
+        "authorization": {
+          "artifact": ".superpowers/astra-local-search-connector/PLAN.md",
+          "worker": "/root/live_local_search_connector",
+          "independentAcceptance": true,
+          "reviewEvidence": ".superpowers/astra-local-search-review/REPORT.md",
+          "authorizedPurpose": "Reviewed, default-disabled local-only Google CSE search connector; preserves source-rights, S01, request-admission, and existing public HTTPS gates. This is not a real-service or release approval."
+        },
+        "limitation": "Acceptance covers the reviewed six-path product delta and 40 passing synthetic-fixture tests only. The real local SearXNG service, upstream engine fan-out, actual source-rights terms, public website retrieval, and broader end-to-end prospecting remain unverified; no service request was made in this refresh.",
+        "files": [
+          {
+            "path": "pipeline/astra-source-collection.js",
+            "previousSha256": "655f86a71a0f960e6b36465ada2644685ba2782d96365ace7975ee6c7c88ba5a",
+            "previousBytes": 42231,
+            "currentSha256": "b62a7636b5c0fb539b6a3e555afd1aa83d80a55fddc82270d640c1635942bdc5",
+            "currentBytes": 46229
+          },
+          {
+            "path": "pipeline/astra-local-search-transport.js",
+            "previousSha256": null,
+            "previousBytes": null,
+            "currentSha256": "0b185b0caf20dc575bc9901d0d03e697c9fb609cf18e6f1194c5a0c3810b0b2e",
+            "currentBytes": 7211,
+            "previouslyAbsent": true
+          },
+          {
+            "path": "pipeline/astra-prospecting.js",
+            "previousSha256": "779c157b946cd9a67258ae4fe1b919a83c5dd8e10c78004e47ff309d4a84e199",
+            "previousBytes": 54526,
+            "currentSha256": "f498faa652900c128a47afc3927314c69989c1691954536af4db6b519d861a7c",
+            "currentBytes": 54853
+          },
+          {
+            "path": "tests/astra-local-search-transport.test.mjs",
+            "previousSha256": null,
+            "previousBytes": null,
+            "currentSha256": "c0095e09f2e94037c12fc4fa6e1e84c71804508a25f5326f460e74ae9ce43340",
+            "currentBytes": 14684,
+            "previouslyAbsent": true
+          },
+          {
+            "path": "tests/astra-source-collection-policy.test.mjs",
+            "previousSha256": null,
+            "previousBytes": null,
+            "currentSha256": "cea5d0ed4277ed937e04afca9a7e87faf6c7e8c8e760d311c9c4543f02a499f7",
+            "currentBytes": 20115,
+            "previouslyAbsent": true
+          },
+          {
+            "path": "tests/astra-prospecting.test.mjs",
+            "previousSha256": "ea1c95adde490fc00cc2c5c0631ef510f0901cf722c6c5d43489d6bf54773293",
+            "previousBytes": 48176,
+            "currentSha256": "099c50c2c43c2ddf6772ca29d3d5e8b6670e91acb238798a2be5bbf438d2a393",
+            "currentBytes": 50825
+          }
+        ]
+      }
+    ]
+  }
+}

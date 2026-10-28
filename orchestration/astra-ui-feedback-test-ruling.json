@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-25T04:04:23.696Z",
+  "kind": "coordinator_scope_authorization",
+  "authority": "User explicitly requested completion of Astra Phase2 QA; root authorized this bounded async dialog test repair in /root/fix_ui_feedback_r5 before edits.",
+  "meaning": "Scope attribution only, not historical approval, independent acceptance, product behavior change, or test waiver.",
+  "immutableSourceSnapshotPreserved": true,
+  "releaseReady": false,
+  "baselineManifest": "orchestration/astra-phase2-source-r4.json",
+  "paths": [
+    {
+      "path": "tests/ui-feedback.test.mjs",
+      "baselineSha256": "4243bf9f72afff0210ae120de60f3c65c008f48e55c066c644f006c0275278d4",
+      "purpose": "Await the actual native-dialog close result and focus restoration before asserting cancellation; retain false-result and focus guarantees without sleeps or UI source changes."
+    }
+  ],
+  "evidence": [
+    ".superpowers/phase2/suite-r4/INDEPENDENT-REVIEW.md",
+    ".superpowers/phase2/fixes/ui-feedback-r5/"
+  ]
+}

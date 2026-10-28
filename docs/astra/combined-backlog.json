@@ -1,0 +1,2051 @@
+{
+  "schemaVersion": 1,
+  "repository": "https://github.com/Goutamdhanani/odd-ecosys.git",
+  "source": {
+    "sourceCheckout": "E:\\odd-ecosys-build-worktree",
+    "implementationCheckout": "C:\\Users\\pooja\\.codex\\worktrees\\astra-foundation\\odd-ecosys",
+    "head": "f30490bd892dd651fd2fb276b09b510379e27c0d",
+    "overlayManifestSha256": "a688a159676ddf3fbbce6ac8ac894d582f5644afbfee70b63416379f8f0474fd"
+  },
+  "inputSha256": {
+    "ODDECOSYS_ASTRA_MASTER_BLUEPRINT.md": "de137030bf505a22b6dd14b128a541d1dd40560437e9da887b1c913406b924ed",
+    "ODDECOSYS_ASTRA_EXTENDED_PLAN.md": "4edd719652d92b3e94f744830eecc1ae31527f2b1818a1bb1db4b656226b6ab1",
+    "ODDECOSYS_SOL_ENGINEERING_BACKLOG.md": "9b70f6be52f8cebbfe3f09e9d71a098b7bceabb9de448d1b066e16119304ce79",
+    "ODDECOSYS_SOL_EXTENDED_BACKLOG.md": "7e611e325b8b9d3048c8e0381036666b481c37c54b2189b5b5c72ededb48fb0f",
+    "SOL_READ_THIS_EXTENSION_FIRST.md": "11d576e1403a111496060d3a86930da4c5b19f0891c30a8d71941309cc108cbd"
+  },
+  "taskCount": 52,
+  "statusCounts": {
+    "needs_improvement": 32,
+    "new_development": 19,
+    "unknown": 1
+  },
+  "statusMeaning": "Task-level Astra acceptance, not existence of useful working components. Source/test presence is not a passing acceptance result.",
+  "topologicalOrder": [
+    "S00",
+    "S01",
+    "S02",
+    "S03",
+    "S04",
+    "S05",
+    "S06",
+    "S07",
+    "S08",
+    "S09",
+    "S10",
+    "S11",
+    "S13",
+    "S14",
+    "S15",
+    "S16",
+    "S17",
+    "S18",
+    "S19",
+    "S20",
+    "S21",
+    "S22",
+    "S24",
+    "S25",
+    "S26",
+    "S29",
+    "S32",
+    "X01",
+    "X02",
+    "X03",
+    "X04",
+    "X06",
+    "X07",
+    "X08",
+    "X10",
+    "X11",
+    "X12",
+    "X14",
+    "S12",
+    "S23",
+    "S31",
+    "S33",
+    "S27",
+    "S28",
+    "S34",
+    "X05",
+    "X09",
+    "X13",
+    "X15",
+    "S30",
+    "S35",
+    "X16"
+  ],
+  "executionNote": "External S01 approvals do not block independent S02/S03 work after S00 mapping. X01/X02 completion remains gated by prerequisites. X16 optional; no live release authorized.",
+  "baseAmendments": {
+    "S05": [
+      "X01 contract coverage: harness inputs/context and owner alignment"
+    ],
+    "S06": [
+      "X02 call/tool/cost/deadline limits and provider/grader whitelist"
+    ],
+    "S07": [
+      "X02 reservations and progress limits",
+      "X13 task economics after prerequisites"
+    ],
+    "S13": [
+      "X04 support/uncertainty/probability/utility/risk/reversibility separation"
+    ],
+    "S14": [
+      "X04 explicit ACT/BLOCK state migration"
+    ],
+    "S19": [
+      "X10 campaign authorization envelope"
+    ],
+    "S20": [
+      "X10 routine autosend, optional draft mode, exception routing and replay-safe ticket"
+    ],
+    "S21": [
+      "X10 envelope scope/revocation and dispatcher rechecks"
+    ],
+    "S23": [
+      "X09 versioned skill lifecycle after prerequisites"
+    ],
+    "S28": [
+      "X09 correction/revocation and tenant-scoped skill retrieval"
+    ],
+    "S29": [
+      "X14 release gates; X09 skill test/version manifests"
+    ],
+    "S25": [
+      "X11 engagement definitions and denominators"
+    ],
+    "S32": [
+      "X12 one privacy-filtered operational telemetry route"
+    ],
+    "S33": [
+      "X14 is a required dependency; sampling/review policy may be optional, and per-message review must not be a blanket permanent requirement"
+    ],
+    "S34": [
+      "X13 measured marginal costs and economics"
+    ],
+    "S26": [
+      "X06 Inspect adapter/governance and X07 H0-H3 benchmark"
+    ],
+    "optional_X16": [
+      "X16 remains P2, dependent on X04 and X14, and outside initial launch"
+    ]
+  },
+  "tasks": [
+    {
+      "id": "S00",
+      "title": "Map the updated application",
+      "priority": "P0",
+      "dependencies": [],
+      "status": "needs_improvement",
+      "existingEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\server.js",
+          "lines": "1-65",
+          "observation": "Application composition imports existing pipeline modules; source mapping is repository-wide, not an Astra implementation."
+        }
+      ],
+      "testEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\tests\\ui-route-audit.test.mjs",
+          "observation": "Existing focused test file found by source inspection; not executed for this mapping."
+        }
+      ],
+      "acceptanceTarget": "Every capability has observed evidence or an explicit unknown; owner can review migration implications.",
+      "recommendation": "Retain the inventory and workflow mapping approach; refresh from selected frozen source before implementation.",
+      "migration": "Preserve existing IDs, source/provenance, approvals, suppression, campaign snapshots, send states and historical events. Backfill only provable mappings; mark unknown evidence/permission unknown. Use additive versioned tables/adapters and shadow comparisons before cutover. Specific implication: No destructive migration justified by this mapping; add versioned adapters and preserve existing durable records.",
+      "nextAction": "Retain the inventory and workflow mapping approach; refresh from selected frozen source before implementation. Acceptance target: Every capability has observed evidence or an explicit unknown; owner can review migration implications.",
+      "blockers": [],
+      "olderCheckoutDifference": "Compared with chat checkout HEAD a67413e: this newer source has additional uncommitted pipeline/job/provenance/usage/tracking/auth work. Both checkouts remain legacy-oriented and neither is shown to meet this task acceptance; chat redesign overlay is not evidence that newer application capabilities were merged."
+    },
+    {
+      "id": "S01",
+      "title": "Resolve provider and source commercial gates",
+      "priority": "P0",
+      "dependencies": [
+        "S00"
+      ],
+      "status": "unknown",
+      "existingEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\pipeline\\personalizer.js",
+          "lines": "45-100",
+          "observation": "Production personalization supports Ollama; separate polish path supports Bedrock, so the required GLM-only route is not enforced."
+        },
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\tools\\freeinference\\gateway.mjs",
+          "lines": "1-80",
+          "observation": "A separate GLM gateway exists under tooling, not as the sole application inference path."
+        }
+      ],
+      "testEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\tests\\gateway.test.mjs",
+          "observation": "Existing focused test file found by source inspection; not executed for this mapping."
+        },
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\tests\\personalization-bedrock.test.mjs",
+          "observation": "Existing focused test file found by source inspection; not executed for this mapping."
+        }
+      ],
+      "acceptanceTarget": "Approved launch-scope register; prohibited or unresolved use stays disabled. Architecture work may continue independently.",
+      "recommendation": "Replace provider-selection paths with a gated GLM-only application gateway after external terms/privacy decision.",
+      "migration": "Preserve existing IDs, source/provenance, approvals, suppression, campaign snapshots, send states and historical events. Backfill only provable mappings; mark unknown evidence/permission unknown. Use additive versioned tables/adapters and shadow comparisons before cutover. Specific implication: commercial/privacy authorization is external and cannot be inferred from code.",
+      "nextAction": "Replace provider-selection paths with a gated GLM-only application gateway after external terms/privacy decision. Acceptance target: Approved launch-scope register; prohibited or unresolved use stays disabled. Architecture work may continue independently.",
+      "blockers": [
+        "External provider/source rights and privacy terms not verified; no production/private inference approval evidenced."
+      ],
+      "olderCheckoutDifference": "Compared with chat checkout HEAD a67413e: this newer source has additional uncommitted pipeline/job/provenance/usage/tracking/auth work. Both checkouts remain legacy-oriented and neither is shown to meet this task acceptance; chat redesign overlay is not evidence that newer application capabilities were merged."
+    },
+    {
+      "id": "S02",
+      "title": "Define offer and customer policy contracts",
+      "priority": "P0",
+      "dependencies": [
+        "S00"
+      ],
+      "status": "new_development",
+      "existingEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\pipeline\\database.js",
+          "lines": "913-982",
+          "observation": "Campaign/copy persistence exists, but no versioned offer/customer-policy contract schema appears in this section."
+        }
+      ],
+      "testEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\tests\\campaign-preflight.test.mjs",
+          "observation": "Existing focused test file found by source inspection; not executed for this mapping."
+        }
+      ],
+      "acceptanceTarget": "Invalid or unapproved offers cannot enter campaigns; changes create new versions.",
+      "recommendation": "New versioned offer and customer-policy contracts; connect campaigns after policy service exists.",
+      "migration": "Preserve existing IDs, source/provenance, approvals, suppression, campaign snapshots, send states and historical events. Backfill only provable mappings; mark unknown evidence/permission unknown. Use additive versioned tables/adapters and shadow comparisons before cutover. Specific implication: No destructive migration justified by this mapping; add versioned adapters and preserve existing durable records.",
+      "nextAction": "New versioned offer and customer-policy contracts; connect campaigns after policy service exists. Acceptance target: Invalid or unapproved offers cannot enter campaigns; changes create new versions.",
+      "blockers": [],
+      "olderCheckoutDifference": "Compared with chat checkout HEAD a67413e: this newer source has additional uncommitted pipeline/job/provenance/usage/tracking/auth work. Both checkouts remain legacy-oriented and neither is shown to meet this task acceptance; chat redesign overlay is not evidence that newer application capabilities were merged."
+    },
+    {
+      "id": "S03",
+      "title": "Establish tenant-scoped storage and migration plan",
+      "priority": "P0",
+      "dependencies": [
+        "S00"
+      ],
+      "status": "new_development",
+      "existingEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\pipeline\\database.js",
+          "lines": "1-60,179-223,913-1102",
+          "observation": "Core batches/leads/campaign/sends/events schemas are global; workspace-specific tables exist separately, not comprehensive tenant keys."
+        },
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\server.js",
+          "lines": "580-613",
+          "observation": "Workspace membership/invitation routes demonstrate workspace features, not end-to-end core-record isolation."
+        }
+      ],
+      "testEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\tests\\workspace-membership.test.mjs",
+          "observation": "Existing focused test file found by source inspection; not executed for this mapping."
+        },
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\tests\\auth-workspace-migration.test.mjs",
+          "observation": "Existing focused test file found by source inspection; not executed for this mapping."
+        }
+      ],
+      "acceptanceTarget": "Two-tenant negative tests pass across API, jobs, caches, objects and exports; app role cannot bypass isolation.",
+      "recommendation": "Extend workspace membership into composite tenant ownership for every core record, query, job, cache and export.",
+      "migration": "Preserve existing IDs, source/provenance, approvals, suppression, campaign snapshots, send states and historical events. Backfill only provable mappings; mark unknown evidence/permission unknown. Use additive versioned tables/adapters and shadow comparisons before cutover. Specific implication: core single-tenant identifiers need workspace_id/composite ownership backfill with explicit orphan/quarantine handling.",
+      "nextAction": "Extend workspace membership into composite tenant ownership for every core record, query, job, cache and export. Acceptance target: Two-tenant negative tests pass across API, jobs, caches, objects and exports; app role cannot bypass isolation.",
+      "blockers": [],
+      "olderCheckoutDifference": "Compared with chat checkout HEAD a67413e: this newer source has additional uncommitted pipeline/job/provenance/usage/tracking/auth work. Both checkouts remain legacy-oriented and neither is shown to meet this task acceptance; chat redesign overlay is not evidence that newer application capabilities were merged."
+    },
+    {
+      "id": "S04",
+      "title": "Create immutable event and outcome ledger",
+      "priority": "P0",
+      "dependencies": [
+        "S03"
+      ],
+      "status": "new_development",
+      "existingEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\pipeline\\database.js",
+          "lines": "1102-1116",
+          "observation": "Events and delivery reports are stored as operational rows; no append-only typed outcome ledger/outbox contract is evidenced."
+        },
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\pipeline\\sending-engine.js",
+          "lines": "1631-1633",
+          "observation": "Send state/event writes occur in operational dispatcher code."
+        }
+      ],
+      "testEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\tests\\campaign-analytics.test.mjs",
+          "observation": "Existing focused test file found by source inspection; not executed for this mapping."
+        }
+      ],
+      "acceptanceTarget": "Duplicate/reordered events do not duplicate effects; historical projections rebuild identically.",
+      "recommendation": "Add append-only outbox/ledger and project existing events/state through compatibility adapters.",
+      "migration": "Preserve existing IDs, source/provenance, approvals, suppression, campaign snapshots, send states and historical events. Backfill only provable mappings; mark unknown evidence/permission unknown. Use additive versioned tables/adapters and shadow comparisons before cutover. Specific implication: legacy mutable events require linkage/versioned import into new immutable ledger; never manufacture event time/outcome.",
+      "nextAction": "Add append-only outbox/ledger and project existing events/state through compatibility adapters. Acceptance target: Duplicate/reordered events do not duplicate effects; historical projections rebuild identically.",
+      "blockers": [],
+      "olderCheckoutDifference": "Compared with chat checkout HEAD a67413e: this newer source has additional uncommitted pipeline/job/provenance/usage/tracking/auth work. Both checkouts remain legacy-oriented and neither is shown to meet this task acceptance; chat redesign overlay is not evidence that newer application capabilities were merged."
+    },
+    {
+      "id": "S05",
+      "title": "Select and implement durable execution",
+      "priority": "P0",
+      "dependencies": [
+        "S03",
+        "S04"
+      ],
+      "status": "needs_improvement",
+      "existingEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\pipeline\\database.js",
+          "lines": "131-178,458-765,983-1030",
+          "observation": "Several durable import, discovery and verification job tables exist."
+        },
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\pipeline\\lead-discovery-jobs.js",
+          "lines": "616-722",
+          "observation": "Job drain, pause/resume and restart recovery logic is present for this workflow."
+        }
+      ],
+      "testEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\tests\\lead-discovery-jobs.test.mjs",
+          "observation": "Existing focused test file found by source inspection; not executed for this mapping."
+        },
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\tests\\verification-jobs.test.mjs",
+          "observation": "Existing focused test file found by source inspection; not executed for this mapping."
+        }
+      ],
+      "acceptanceTarget": "Jobs survive restarts; high-priority suppression cannot starve; workflow ownership is singular.",
+      "recommendation": "Extend persisted job patterns behind one selected workflow owner; avoid a second scheduler.",
+      "migration": "Preserve existing IDs, source/provenance, approvals, suppression, campaign snapshots, send states and historical events. Backfill only provable mappings; mark unknown evidence/permission unknown. Use additive versioned tables/adapters and shadow comparisons before cutover. Specific implication: map persisted job rows/status/cursors and version before moving workflow ownership.",
+      "nextAction": "Extend persisted job patterns behind one selected workflow owner; avoid a second scheduler. Acceptance target: Jobs survive restarts; high-priority suppression cannot starve; workflow ownership is singular.",
+      "blockers": [],
+      "olderCheckoutDifference": "Compared with chat checkout HEAD a67413e: this newer source has additional uncommitted pipeline/job/provenance/usage/tracking/auth work. Both checkouts remain legacy-oriented and neither is shown to meet this task acceptance; chat redesign overlay is not evidence that newer application capabilities were merged."
+    },
+    {
+      "id": "S06",
+      "title": "Build the sole GLM gateway and egress guard",
+      "priority": "P0",
+      "dependencies": [
+        "S01",
+        "S03"
+      ],
+      "status": "needs_improvement",
+      "existingEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\pipeline\\personalizer.js",
+          "lines": "45-100,258-365",
+          "observation": "Ollama and Bedrock routes are application paths; they conflict with sole GLM requirement."
+        },
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\tools\\freeinference\\gateway.mjs",
+          "lines": "1-120",
+          "observation": "Separate configured-model GLM gateway tooling exists."
+        }
+      ],
+      "testEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\tests\\gateway.test.mjs",
+          "observation": "Existing focused test file found by source inspection; not executed for this mapping."
+        },
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\tests\\personalization-provider-ui.test.mjs",
+          "observation": "Existing focused test file found by source inspection; not executed for this mapping."
+        }
+      ],
+      "acceptanceTarget": "Synthetic contract suite confirms correct endpoint, mandatory reasoning, output parsing, token usage and no hidden model fallback.",
+      "recommendation": "Replace direct Ollama/Bedrock application calls with sole GLM gateway and egress filtering.",
+      "migration": "Preserve existing IDs, source/provenance, approvals, suppression, campaign snapshots, send states and historical events. Backfill only provable mappings; mark unknown evidence/permission unknown. Use additive versioned tables/adapters and shadow comparisons before cutover. Specific implication: record provider/model provenance; do not replay old provider requests or infer historical GLM compatibility.",
+      "nextAction": "Replace direct Ollama/Bedrock application calls with sole GLM gateway and egress filtering. Acceptance target: Synthetic contract suite confirms correct endpoint, mandatory reasoning, output parsing, token usage and no hidden model fallback.",
+      "blockers": [],
+      "olderCheckoutDifference": "Compared with chat checkout HEAD a67413e: this newer source has additional uncommitted pipeline/job/provenance/usage/tracking/auth work. Both checkouts remain legacy-oriented and neither is shown to meet this task acceptance; chat redesign overlay is not evidence that newer application capabilities were merged."
+    },
+    {
+      "id": "S07",
+      "title": "Add usage reservations and cost circuit breakers",
+      "priority": "P0",
+      "dependencies": [
+        "S04",
+        "S06"
+      ],
+      "status": "needs_improvement",
+      "existingEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\pipeline\\ai-usage.js",
+          "lines": "1-205",
+          "observation": "Durable usage tracking and analytics exist, but no tenant budget reservation/circuit-breaker contract is evidenced."
+        },
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\pipeline\\database.js",
+          "lines": "885-910",
+          "observation": "AI usage events table is present."
+        }
+      ],
+      "testEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\tests\\ai-usage.test.mjs",
+          "observation": "Existing focused test file found by source inspection; not executed for this mapping."
+        }
+      ],
+      "acceptanceTarget": "Concurrent runs cannot overspend reserved tenant limit; missing usage remains reserved until reconciliation.",
+      "recommendation": "Extend AI usage records with tenant reservations, reconciliation and hard cost circuit breakers.",
+      "migration": "Preserve existing IDs, source/provenance, approvals, suppression, campaign snapshots, send states and historical events. Backfill only provable mappings; mark unknown evidence/permission unknown. Use additive versioned tables/adapters and shadow comparisons before cutover. Specific implication: No destructive migration justified by this mapping; add versioned adapters and preserve existing durable records.",
+      "nextAction": "Extend AI usage records with tenant reservations, reconciliation and hard cost circuit breakers. Acceptance target: Concurrent runs cannot overspend reserved tenant limit; missing usage remains reserved until reconciliation.",
+      "blockers": [],
+      "olderCheckoutDifference": "Compared with chat checkout HEAD a67413e: this newer source has additional uncommitted pipeline/job/provenance/usage/tracking/auth work. Both checkouts remain legacy-oriented and neither is shown to meet this task acceptance; chat redesign overlay is not evidence that newer application capabilities were merged."
+    },
+    {
+      "id": "S08",
+      "title": "Capture CRM outcomes before optimization",
+      "priority": "P0",
+      "dependencies": [
+        "S03",
+        "S04"
+      ],
+      "status": "needs_improvement",
+      "existingEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\pipeline\\crm-sync.js",
+          "lines": "1-125,140-215",
+          "observation": "One Twenty CRM synchronization path and lifecycle events exist; canonical distinct booked/held/paid/refunded outcome model is not evidenced."
+        }
+      ],
+      "testEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\tests\\campaign-analytics.test.mjs",
+          "observation": "Existing focused test file found by source inspection; not executed for this mapping."
+        }
+      ],
+      "acceptanceTarget": "Booked/held/qualified/won/paid/refunded remain separate and auditable.",
+      "recommendation": "Extend CRM/event model into auditable distinct outcome records and corrections.",
+      "migration": "Preserve existing IDs, source/provenance, approvals, suppression, campaign snapshots, send states and historical events. Backfill only provable mappings; mark unknown evidence/permission unknown. Use additive versioned tables/adapters and shadow comparisons before cutover. Specific implication: map old CRM/send events to outcome classes only when explicit evidence exists; keep unknown distinct.",
+      "nextAction": "Extend CRM/event model into auditable distinct outcome records and corrections. Acceptance target: Booked/held/qualified/won/paid/refunded remain separate and auditable.",
+      "blockers": [],
+      "olderCheckoutDifference": "Compared with chat checkout HEAD a67413e: this newer source has additional uncommitted pipeline/job/provenance/usage/tracking/auth work. Both checkouts remain legacy-oriented and neither is shown to meet this task acceptance; chat redesign overlay is not evidence that newer application capabilities were merged."
+    },
+    {
+      "id": "S09",
+      "title": "Implement isolated evidence collection",
+      "priority": "P0",
+      "dependencies": [
+        "S03",
+        "S05"
+      ],
+      "status": "needs_improvement",
+      "existingEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\pipeline\\ssrf-guard.js",
+          "lines": "1-160",
+          "observation": "URL/private-network safety checks exist."
+        },
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\pipeline\\database.js",
+          "lines": "370-457",
+          "observation": "Email/profile evidence tables preserve selected evidence classes, not a general immutable extraction snapshot contract."
+        }
+      ],
+      "testEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\tests\\ssrf-guard.test.mjs",
+          "observation": "Existing focused test file found by source inspection; not executed for this mapping."
+        },
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\tests\\website-discovery-verification.test.mjs",
+          "observation": "Existing focused test file found by source inspection; not executed for this mapping."
+        }
+      ],
+      "acceptanceTarget": "Each extraction has timestamp, source, content hash, coverage and version; private-network access blocked.",
+      "recommendation": "Extend SSRF-safe collectors with immutable snapshot/hash/coverage/version evidence.",
+      "migration": "Preserve existing IDs, source/provenance, approvals, suppression, campaign snapshots, send states and historical events. Backfill only provable mappings; mark unknown evidence/permission unknown. Use additive versioned tables/adapters and shadow comparisons before cutover. Specific implication: No destructive migration justified by this mapping; add versioned adapters and preserve existing durable records.",
+      "nextAction": "Extend SSRF-safe collectors with immutable snapshot/hash/coverage/version evidence. Acceptance target: Each extraction has timestamp, source, content hash, coverage and version; private-network access blocked.",
+      "blockers": [],
+      "olderCheckoutDifference": "Compared with chat checkout HEAD a67413e: this newer source has additional uncommitted pipeline/job/provenance/usage/tracking/auth work. Both checkouts remain legacy-oriented and neither is shown to meet this task acceptance; chat redesign overlay is not evidence that newer application capabilities were merged."
+    },
+    {
+      "id": "S10",
+      "title": "Add discovery and identity resolution",
+      "priority": "P0",
+      "dependencies": [
+        "S01",
+        "S09"
+      ],
+      "status": "needs_improvement",
+      "existingEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\pipeline\\lead-discovery.js",
+          "lines": "1-160",
+          "observation": "Lead discovery module exists."
+        },
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\pipeline\\contact-provenance.js",
+          "lines": "1-86",
+          "observation": "Contact provenance support exists; source/identity merge assurance remains partial."
+        }
+      ],
+      "testEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\tests\\lead-discovery-saved-search.test.mjs",
+          "observation": "Existing focused test file found by source inspection; not executed for this mapping."
+        },
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\tests\\contact-provenance.test.mjs",
+          "observation": "Existing focused test file found by source inspection; not executed for this mapping."
+        }
+      ],
+      "acceptanceTarget": "Every account has a source; no fabricated businesses; ambiguous merges do not proceed automatically.",
+      "recommendation": "Extend lead discovery and provenance with durable identity resolution and ambiguity review.",
+      "migration": "Preserve existing IDs, source/provenance, approvals, suppression, campaign snapshots, send states and historical events. Backfill only provable mappings; mark unknown evidence/permission unknown. Use additive versioned tables/adapters and shadow comparisons before cutover. Specific implication: No destructive migration justified by this mapping; add versioned adapters and preserve existing durable records.",
+      "nextAction": "Extend lead discovery and provenance with durable identity resolution and ambiguity review. Acceptance target: Every account has a source; no fabricated businesses; ambiguous merges do not proceed automatically.",
+      "blockers": [],
+      "olderCheckoutDifference": "Compared with chat checkout HEAD a67413e: this newer source has additional uncommitted pipeline/job/provenance/usage/tracking/auth work. Both checkouts remain legacy-oriented and neither is shown to meet this task acceptance; chat redesign overlay is not evidence that newer application capabilities were merged."
+    },
+    {
+      "id": "S11",
+      "title": "Implement Business X-Ray audits",
+      "priority": "P0",
+      "dependencies": [
+        "S09"
+      ],
+      "status": "new_development",
+      "existingEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\pipeline\\lead-strategy.js",
+          "lines": "1-180",
+          "observation": "Lead strategy/settings and qualification infrastructure exists, but no complete Business X-Ray report contract is evidenced."
+        }
+      ],
+      "testEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\tests\\lead-strategy.test.mjs",
+          "observation": "Existing focused test file found by source inspection; not executed for this mapping."
+        }
+      ],
+      "acceptanceTarget": "Reports distinguish measured results from hypotheses and do not estimate unsupported financial loss.",
+      "recommendation": "New bounded X-Ray audit/report contract over safe isolated evidence.",
+      "migration": "Preserve existing IDs, source/provenance, approvals, suppression, campaign snapshots, send states and historical events. Backfill only provable mappings; mark unknown evidence/permission unknown. Use additive versioned tables/adapters and shadow comparisons before cutover. Specific implication: No destructive migration justified by this mapping; add versioned adapters and preserve existing durable records.",
+      "nextAction": "New bounded X-Ray audit/report contract over safe isolated evidence. Acceptance target: Reports distinguish measured results from hypotheses and do not estimate unsupported financial loss.",
+      "blockers": [],
+      "olderCheckoutDifference": "Compared with chat checkout HEAD a67413e: this newer source has additional uncommitted pipeline/job/provenance/usage/tracking/auth work. Both checkouts remain legacy-oriented and neither is shown to meet this task acceptance; chat redesign overlay is not evidence that newer application capabilities were merged."
+    },
+    {
+      "id": "S13",
+      "title": "Build claim provenance and abstention engine",
+      "priority": "P0",
+      "dependencies": [
+        "S04",
+        "S06",
+        "S09"
+      ],
+      "status": "needs_improvement",
+      "existingEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\pipeline\\contact-provenance.js",
+          "lines": "1-86",
+          "observation": "Contact provenance module exists."
+        },
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\pipeline\\qualification-scoring.js",
+          "lines": "1-180",
+          "observation": "Qualification scoring exists; evidence freshness/contradiction abstention contract remains incomplete."
+        }
+      ],
+      "testEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\tests\\contact-provenance.test.mjs",
+          "observation": "Existing focused test file found by source inspection; not executed for this mapping."
+        },
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\tests\\qualification-scoring.test.mjs",
+          "observation": "Existing focused test file found by source inspection; not executed for this mapping."
+        }
+      ],
+      "acceptanceTarget": "Missing/contradicted/stale essential evidence blocks factual outreach; unknown is a first-class result.",
+      "recommendation": "Extend provenance/scoring to claim-level support, freshness, contradictions and first-class abstention.",
+      "migration": "Preserve existing IDs, source/provenance, approvals, suppression, campaign snapshots, send states and historical events. Backfill only provable mappings; mark unknown evidence/permission unknown. Use additive versioned tables/adapters and shadow comparisons before cutover. Specific implication: No destructive migration justified by this mapping; add versioned adapters and preserve existing durable records.",
+      "nextAction": "Extend provenance/scoring to claim-level support, freshness, contradictions and first-class abstention. Acceptance target: Missing/contradicted/stale essential evidence blocks factual outreach; unknown is a first-class result.",
+      "blockers": [],
+      "olderCheckoutDifference": "Compared with chat checkout HEAD a67413e: this newer source has additional uncommitted pipeline/job/provenance/usage/tracking/auth work. Both checkouts remain legacy-oriented and neither is shown to meet this task acceptance; chat redesign overlay is not evidence that newer application capabilities were merged."
+    },
+    {
+      "id": "S14",
+      "title": "Add offer-aware qualification",
+      "priority": "P0",
+      "dependencies": [
+        "S02",
+        "S10",
+        "S11",
+        "S13"
+      ],
+      "status": "needs_improvement",
+      "existingEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\pipeline\\qualification-scoring.js",
+          "lines": "1-180",
+          "observation": "Deterministic qualification scoring exists; offer-aware policy and calibrated probability contract not evidenced."
+        }
+      ],
+      "testEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\tests\\qualification-scoring.test.mjs",
+          "observation": "Existing focused test file found by source inspection; not executed for this mapping."
+        },
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\tests\\qualifier-scoring-integration.test.mjs",
+          "observation": "Existing focused test file found by source inspection; not executed for this mapping."
+        }
+      ],
+      "acceptanceTarget": "Customer can inspect score inputs and reasons; no probability shown before calibration.",
+      "recommendation": "Extend scorer with versioned offer/capacity policies; never call score calibrated probability without evidence.",
+      "migration": "Preserve existing IDs, source/provenance, approvals, suppression, campaign snapshots, send states and historical events. Backfill only provable mappings; mark unknown evidence/permission unknown. Use additive versioned tables/adapters and shadow comparisons before cutover. Specific implication: No destructive migration justified by this mapping; add versioned adapters and preserve existing durable records.",
+      "nextAction": "Extend scorer with versioned offer/capacity policies; never call score calibrated probability without evidence. Acceptance target: Customer can inspect score inputs and reasons; no probability shown before calibration.",
+      "blockers": [],
+      "olderCheckoutDifference": "Compared with chat checkout HEAD a67413e: this newer source has additional uncommitted pipeline/job/provenance/usage/tracking/auth work. Both checkouts remain legacy-oriented and neither is shown to meet this task acceptance; chat redesign overlay is not evidence that newer application capabilities were merged."
+    },
+    {
+      "id": "S15",
+      "title": "Add email discovery and verification adapters",
+      "priority": "P0",
+      "dependencies": [
+        "S01",
+        "S03",
+        "S10"
+      ],
+      "status": "needs_improvement",
+      "existingEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\pipeline\\email-verifier.js",
+          "lines": "1-220",
+          "observation": "Email verification adapters and multi-signal checks exist."
+        },
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\pipeline\\database.js",
+          "lines": "370-457",
+          "observation": "Persisted evidence tables support partial provenance."
+        }
+      ],
+      "testEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\tests\\email-verifier.test.mjs",
+          "observation": "Existing focused test file found by source inspection; not executed for this mapping."
+        },
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\tests\\email-verifier-pipeline-acceptance.test.mjs",
+          "observation": "Existing focused test file found by source inspection; not executed for this mapping."
+        }
+      ],
+      "acceptanceTarget": "Only addresses meeting source, verification and permission policies become eligible; suppression always wins.",
+      "recommendation": "Extend verification sources with explicit provenance and permission eligibility adapter.",
+      "migration": "Preserve existing IDs, source/provenance, approvals, suppression, campaign snapshots, send states and historical events. Backfill only provable mappings; mark unknown evidence/permission unknown. Use additive versioned tables/adapters and shadow comparisons before cutover. Specific implication: No destructive migration justified by this mapping; add versioned adapters and preserve existing durable records.",
+      "nextAction": "Extend verification sources with explicit provenance and permission eligibility adapter. Acceptance target: Only addresses meeting source, verification and permission policies become eligible; suppression always wins.",
+      "blockers": [],
+      "olderCheckoutDifference": "Compared with chat checkout HEAD a67413e: this newer source has additional uncommitted pipeline/job/provenance/usage/tracking/auth work. Both checkouts remain legacy-oriented and neither is shown to meet this task acceptance; chat redesign overlay is not evidence that newer application capabilities were merged."
+    },
+    {
+      "id": "S16",
+      "title": "Implement permission and suppression service",
+      "priority": "P0",
+      "dependencies": [
+        "S03",
+        "S04",
+        "S08"
+      ],
+      "status": "needs_improvement",
+      "existingEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\pipeline\\compliance.js",
+          "lines": "1-220",
+          "observation": "Suppression/compliance gates exist."
+        },
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\pipeline\\database.js",
+          "lines": "810-817",
+          "observation": "Global suppression table exists; tenant-scoped policy service is not evidenced."
+        }
+      ],
+      "testEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\tests\\contact-suppression.test.mjs",
+          "observation": "Existing focused test file found by source inspection; not executed for this mapping."
+        },
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\tests\\unsubscribe-api.test.mjs",
+          "observation": "Existing focused test file found by source inspection; not executed for this mapping."
+        }
+      ],
+      "acceptanceTarget": "Opt-out blocks future leases independent of model/CRM availability; minimal suppression survives ordinary contact deletion as policy allows.",
+      "recommendation": "Extend compliance/suppression to authoritative tenant-scoped service and campaign permission policy.",
+      "migration": "Preserve existing IDs, source/provenance, approvals, suppression, campaign snapshots, send states and historical events. Backfill only provable mappings; mark unknown evidence/permission unknown. Use additive versioned tables/adapters and shadow comparisons before cutover. Specific implication: No destructive migration justified by this mapping; add versioned adapters and preserve existing durable records.",
+      "nextAction": "Extend compliance/suppression to authoritative tenant-scoped service and campaign permission policy. Acceptance target: Opt-out blocks future leases independent of model/CRM availability; minimal suppression survives ordinary contact deletion as policy allows.",
+      "blockers": [],
+      "olderCheckoutDifference": "Compared with chat checkout HEAD a67413e: this newer source has additional uncommitted pipeline/job/provenance/usage/tracking/auth work. Both checkouts remain legacy-oriented and neither is shown to meet this task acceptance; chat redesign overlay is not evidence that newer application capabilities were merged."
+    },
+    {
+      "id": "S17",
+      "title": "Implement mailbox capability and unified inbox layer",
+      "priority": "P0",
+      "dependencies": [
+        "S03",
+        "S04",
+        "S16"
+      ],
+      "status": "needs_improvement",
+      "existingEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\pipeline\\imap-receiver.js",
+          "lines": "1-200",
+          "observation": "Mailbox sync and inbound receive logic exists."
+        },
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\pipeline\\imap-sync-scheduler.js",
+          "lines": "1-160",
+          "observation": "Sync scheduler persists configuration/state; tenant-scoped normalized inbox capability layer remains partial."
+        }
+      ],
+      "testEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\tests\\imap-receiver.test.mjs",
+          "observation": "Existing focused test file found by source inspection; not executed for this mapping."
+        },
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\tests\\imap-sync-scheduler.test.mjs",
+          "observation": "Existing focused test file found by source inspection; not executed for this mapping."
+        }
+      ],
+      "acceptanceTarget": "All mailbox messages visible with source identity; expired cursors recover without duplicate processing.",
+      "recommendation": "Extend IMAP sync into provider capability abstraction, normalized inbox and recoverable cursor handling.",
+      "migration": "Preserve existing IDs, source/provenance, approvals, suppression, campaign snapshots, send states and historical events. Backfill only provable mappings; mark unknown evidence/permission unknown. Use additive versioned tables/adapters and shadow comparisons before cutover. Specific implication: No destructive migration justified by this mapping; add versioned adapters and preserve existing durable records.",
+      "nextAction": "Extend IMAP sync into provider capability abstraction, normalized inbox and recoverable cursor handling. Acceptance target: All mailbox messages visible with source identity; expired cursors recover without duplicate processing.",
+      "blockers": [],
+      "olderCheckoutDifference": "Compared with chat checkout HEAD a67413e: this newer source has additional uncommitted pipeline/job/provenance/usage/tracking/auth work. Both checkouts remain legacy-oriented and neither is shown to meet this task acceptance; chat redesign overlay is not evidence that newer application capabilities were merged."
+    },
+    {
+      "id": "S18",
+      "title": "Implement constrained personalization",
+      "priority": "P0",
+      "dependencies": [
+        "S02",
+        "S06",
+        "S13",
+        "S14",
+        "S15"
+      ],
+      "status": "needs_improvement",
+      "existingEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\pipeline\\personalizer.js",
+          "lines": "390-610",
+          "observation": "Personalization, checks and approval/queue state exist; GLM-only and complete claim-source binding are absent."
+        }
+      ],
+      "testEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\tests\\personalizer-factcheck.test.mjs",
+          "observation": "Existing focused test file found by source inspection; not executed for this mapping."
+        }
+      ],
+      "acceptanceTarget": "Every factual personalized assertion is supported; model cannot choose recipient or broaden offer.",
+      "recommendation": "Extend personalization with source-bound claims, offer constraints and GLM-only route.",
+      "migration": "Preserve existing IDs, source/provenance, approvals, suppression, campaign snapshots, send states and historical events. Backfill only provable mappings; mark unknown evidence/permission unknown. Use additive versioned tables/adapters and shadow comparisons before cutover. Specific implication: No destructive migration justified by this mapping; add versioned adapters and preserve existing durable records.",
+      "nextAction": "Extend personalization with source-bound claims, offer constraints and GLM-only route. Acceptance target: Every factual personalized assertion is supported; model cannot choose recipient or broaden offer.",
+      "blockers": [],
+      "olderCheckoutDifference": "Compared with chat checkout HEAD a67413e: this newer source has additional uncommitted pipeline/job/provenance/usage/tracking/auth work. Both checkouts remain legacy-oriented and neither is shown to meet this task acceptance; chat redesign overlay is not evidence that newer application capabilities were merged."
+    },
+    {
+      "id": "S19",
+      "title": "Implement immutable campaign approvals",
+      "priority": "P0",
+      "dependencies": [
+        "S02",
+        "S04",
+        "S16",
+        "S18"
+      ],
+      "status": "needs_improvement",
+      "existingEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\pipeline\\database.js",
+          "lines": "913-982",
+          "observation": "Campaign launch snapshots, senders, sequences and copy templates exist."
+        },
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\pipeline\\sending-engine.js",
+          "lines": "1120-1478",
+          "observation": "Launch snapshot integrity/preflight gates exist; campaign-scoped signed authorization envelope absent."
+        }
+      ],
+      "testEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\tests\\campaign-launch-snapshot.test.mjs",
+          "observation": "Existing focused test file found by source inspection; not executed for this mapping."
+        },
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\tests\\campaign-preflight.test.mjs",
+          "observation": "Existing focused test file found by source inspection; not executed for this mapping."
+        }
+      ],
+      "acceptanceTarget": "Customer can authorize bounded autosend; changed scope cannot inherit prior approval.",
+      "recommendation": "Extend campaign snapshot/preflight with immutable scoped authorization, expiry/revocation.",
+      "migration": "Preserve existing IDs, source/provenance, approvals, suppression, campaign snapshots, send states and historical events. Backfill only provable mappings; mark unknown evidence/permission unknown. Use additive versioned tables/adapters and shadow comparisons before cutover. Specific implication: historical launch snapshots do not imply new authorization; do not retroactively approve.",
+      "nextAction": "Extend campaign snapshot/preflight with immutable scoped authorization, expiry/revocation. Acceptance target: Customer can authorize bounded autosend; changed scope cannot inherit prior approval.",
+      "blockers": [],
+      "olderCheckoutDifference": "Compared with chat checkout HEAD a67413e: this newer source has additional uncommitted pipeline/job/provenance/usage/tracking/auth work. Both checkouts remain legacy-oriented and neither is shown to meet this task acceptance; chat redesign overlay is not evidence that newer application capabilities were merged."
+    },
+    {
+      "id": "S20",
+      "title": "Implement resilient send dispatcher",
+      "priority": "P0",
+      "dependencies": [
+        "S05",
+        "S07",
+        "S16",
+        "S17",
+        "S19"
+      ],
+      "status": "needs_improvement",
+      "existingEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\pipeline\\sending-engine.js",
+          "lines": "1453-1585,1631-1968",
+          "observation": "Queueing, capacity reservation, atomic send claims, safeguards and uncertain submission handling exist; durable distributed lease/fencing and autonomous envelope absent."
+        }
+      ],
+      "testEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\tests\\send-claims.test.mjs",
+          "observation": "Existing focused test file found by source inspection; not executed for this mapping."
+        },
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\tests\\sending.test.mjs",
+          "observation": "Existing focused test file found by source inspection; not executed for this mapping."
+        }
+      ],
+      "acceptanceTarget": "Crash after possible acceptance never causes blind retry; pause prevents new leases; thread sender remains stable.",
+      "recommendation": "Retain dispatcher safety and uncertain-submit handling; extend with durable workflow tickets/lease fencing.",
+      "migration": "Preserve existing IDs, source/provenance, approvals, suppression, campaign snapshots, send states and historical events. Backfill only provable mappings; mark unknown evidence/permission unknown. Use additive versioned tables/adapters and shadow comparisons before cutover. Specific implication: retain sent/uncertain/processing rows and idempotency facts; never replay uncertain sends.",
+      "nextAction": "Retain dispatcher safety and uncertain-submit handling; extend with durable workflow tickets/lease fencing. Acceptance target: Crash after possible acceptance never causes blind retry; pause prevents new leases; thread sender remains stable.",
+      "blockers": [],
+      "olderCheckoutDifference": "Compared with chat checkout HEAD a67413e: this newer source has additional uncommitted pipeline/job/provenance/usage/tracking/auth work. Both checkouts remain legacy-oriented and neither is shown to meet this task acceptance; chat redesign overlay is not evidence that newer application capabilities were merged."
+    },
+    {
+      "id": "S21",
+      "title": "Implement reply intelligence and safe tasks",
+      "priority": "P0",
+      "dependencies": [
+        "S06",
+        "S08",
+        "S16",
+        "S17"
+      ],
+      "status": "needs_improvement",
+      "existingEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\pipeline\\reply-tracker.js",
+          "lines": "1-180,450-535",
+          "observation": "Inbound reply classification, unsubscribe, event handling exist; bounded safe task engine and authorized GLM route absent."
+        }
+      ],
+      "testEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\tests\\reply-tracker.test.mjs",
+          "observation": "Existing focused test file found by source inspection; not executed for this mapping."
+        },
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\tests\\inbox-replies.test.mjs",
+          "observation": "Existing focused test file found by source inspection; not executed for this mapping."
+        }
+      ],
+      "acceptanceTarget": "Any reply stops pending sequence per policy; unknown intent does not trigger aggressive follow-up.",
+      "recommendation": "Extend reply classification into safe bounded tasks and policy-driven sequence stops.",
+      "migration": "Preserve existing IDs, source/provenance, approvals, suppression, campaign snapshots, send states and historical events. Backfill only provable mappings; mark unknown evidence/permission unknown. Use additive versioned tables/adapters and shadow comparisons before cutover. Specific implication: No destructive migration justified by this mapping; add versioned adapters and preserve existing durable records.",
+      "nextAction": "Extend reply classification into safe bounded tasks and policy-driven sequence stops. Acceptance target: Any reply stops pending sequence per policy; unknown intent does not trigger aggressive follow-up.",
+      "blockers": [],
+      "olderCheckoutDifference": "Compared with chat checkout HEAD a67413e: this newer source has additional uncommitted pipeline/job/provenance/usage/tracking/auth work. Both checkouts remain legacy-oriented and neither is shown to meet this task acceptance; chat redesign overlay is not evidence that newer application capabilities were merged."
+    },
+    {
+      "id": "S22",
+      "title": "Implement one CRM synchronization adapter",
+      "priority": "P0",
+      "dependencies": [
+        "S04",
+        "S08",
+        "S17"
+      ],
+      "status": "needs_improvement",
+      "existingEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\pipeline\\crm-sync.js",
+          "lines": "1-125,140-215",
+          "observation": "One Twenty CRM adapter exists; stage authority, conflict queue and tenant ownership remain partial."
+        }
+      ],
+      "testEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\tests\\crm-sync.test.mjs",
+          "observation": "No matching named test file found during inventory; acceptance remains unverified."
+        }
+      ],
+      "acceptanceTarget": "CRM/tenant-authorized sources control stages and revenue; visible lag/conflict queue.",
+      "recommendation": "Extend the existing Twenty CRM adapter only after tenant-authorized field ownership and conflict semantics.",
+      "migration": "Preserve existing IDs, source/provenance, approvals, suppression, campaign snapshots, send states and historical events. Backfill only provable mappings; mark unknown evidence/permission unknown. Use additive versioned tables/adapters and shadow comparisons before cutover. Specific implication: No destructive migration justified by this mapping; add versioned adapters and preserve existing durable records.",
+      "nextAction": "Extend the existing Twenty CRM adapter only after tenant-authorized field ownership and conflict semantics. Acceptance target: CRM/tenant-authorized sources control stages and revenue; visible lag/conflict queue.",
+      "blockers": [],
+      "olderCheckoutDifference": "Compared with chat checkout HEAD a67413e: this newer source has additional uncommitted pipeline/job/provenance/usage/tracking/auth work. Both checkouts remain legacy-oriented and neither is shown to meet this task acceptance; chat redesign overlay is not evidence that newer application capabilities were merged."
+    },
+    {
+      "id": "S24",
+      "title": "Implement fixed account-level experiments",
+      "priority": "P0",
+      "dependencies": [
+        "S04",
+        "S08",
+        "S19"
+      ],
+      "status": "needs_improvement",
+      "existingEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\pipeline\\ab-testing.js",
+          "lines": "1-220",
+          "observation": "Campaign-level variants and promotion utilities exist; persistent account-level assignment/mature outcomes are not fully evidenced."
+        }
+      ],
+      "testEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\tests\\ab-testing.test.mjs",
+          "observation": "No matching named test file found during inventory; acceptance remains unverified."
+        }
+      ],
+      "acceptanceTarget": "All contacts at an account share assignment; pending outcomes remain pending; sample-size limits visible.",
+      "recommendation": "Extend experiments to fixed account-level assignment and mature outcome definitions.",
+      "migration": "Preserve existing IDs, source/provenance, approvals, suppression, campaign snapshots, send states and historical events. Backfill only provable mappings; mark unknown evidence/permission unknown. Use additive versioned tables/adapters and shadow comparisons before cutover. Specific implication: No destructive migration justified by this mapping; add versioned adapters and preserve existing durable records.",
+      "nextAction": "Extend experiments to fixed account-level assignment and mature outcome definitions. Acceptance target: All contacts at an account share assignment; pending outcomes remain pending; sample-size limits visible.",
+      "blockers": [],
+      "olderCheckoutDifference": "Compared with chat checkout HEAD a67413e: this newer source has additional uncommitted pipeline/job/provenance/usage/tracking/auth work. Both checkouts remain legacy-oriented and neither is shown to meet this task acceptance; chat redesign overlay is not evidence that newer application capabilities were merged."
+    },
+    {
+      "id": "S25",
+      "title": "Build funnel, attribution and experiment analytics",
+      "priority": "P0",
+      "dependencies": [
+        "S07",
+        "S08",
+        "S20",
+        "S21",
+        "S22",
+        "S24"
+      ],
+      "status": "needs_improvement",
+      "existingEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\pipeline\\ab-testing.js",
+          "lines": "1-220",
+          "observation": "Campaign experiment metrics exist."
+        },
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\pipeline\\click-tracking.js",
+          "lines": "1-111",
+          "observation": "Opaque click tracking and event recording exist; full denominator/canonical analytics contract remains incomplete."
+        }
+      ],
+      "testEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\tests\\campaign-analytics.test.mjs",
+          "observation": "Existing focused test file found by source inspection; not executed for this mapping."
+        },
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\tests\\click-tracking.test.mjs",
+          "observation": "Existing focused test file found by source inspection; not executed for this mapping."
+        }
+      ],
+      "acceptanceTarget": "Attribution is labeled separately from causal lift; totals reconcile to ledgers.",
+      "recommendation": "Extend analytics using canonical event/outcome ledger and explicit denominators/attribution.",
+      "migration": "Preserve existing IDs, source/provenance, approvals, suppression, campaign snapshots, send states and historical events. Backfill only provable mappings; mark unknown evidence/permission unknown. Use additive versioned tables/adapters and shadow comparisons before cutover. Specific implication: No destructive migration justified by this mapping; add versioned adapters and preserve existing durable records.",
+      "nextAction": "Extend analytics using canonical event/outcome ledger and explicit denominators/attribution. Acceptance target: Attribution is labeled separately from causal lift; totals reconcile to ledgers.",
+      "blockers": [],
+      "olderCheckoutDifference": "Compared with chat checkout HEAD a67413e: this newer source has additional uncommitted pipeline/job/provenance/usage/tracking/auth work. Both checkouts remain legacy-oriented and neither is shown to meet this task acceptance; chat redesign overlay is not evidence that newer application capabilities were merged."
+    },
+    {
+      "id": "S26",
+      "title": "Build frozen evaluation and adversarial harness",
+      "priority": "P0",
+      "dependencies": [
+        "S06",
+        "S13",
+        "S18",
+        "S21"
+      ],
+      "status": "new_development",
+      "existingEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\tests\\qualification-scoring.test.mjs",
+          "lines": "1-70",
+          "observation": "Focused scoring tests exist; no frozen Inspect-based evaluation/adversarial harness evidence found."
+        },
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\tools\\freeinference\\gateway.mjs",
+          "lines": "1-80",
+          "observation": "Gateway has independent tests but not application adapter/evaluation governance."
+        }
+      ],
+      "testEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\tests\\qualification-scoring.test.mjs",
+          "observation": "Existing focused test file found by source inspection; not executed for this mapping."
+        }
+      ],
+      "acceptanceTarget": "Baseline report includes risk/coverage, class metrics, cost, subgroup uncertainty and source manifest.",
+      "recommendation": "New frozen evaluation adapter and independent dataset/scorer governance; do not infer from unit tests.",
+      "migration": "Preserve existing IDs, source/provenance, approvals, suppression, campaign snapshots, send states and historical events. Backfill only provable mappings; mark unknown evidence/permission unknown. Use additive versioned tables/adapters and shadow comparisons before cutover. Specific implication: No destructive migration justified by this mapping; add versioned adapters and preserve existing durable records.",
+      "nextAction": "New frozen evaluation adapter and independent dataset/scorer governance; do not infer from unit tests. Acceptance target: Baseline report includes risk/coverage, class metrics, cost, subgroup uncertainty and source manifest.",
+      "blockers": [],
+      "olderCheckoutDifference": "Compared with chat checkout HEAD a67413e: this newer source has additional uncommitted pipeline/job/provenance/usage/tracking/auth work. Both checkouts remain legacy-oriented and neither is shown to meet this task acceptance; chat redesign overlay is not evidence that newer application capabilities were merged."
+    },
+    {
+      "id": "S29",
+      "title": "Add learning release registry and rollback",
+      "priority": "P0",
+      "dependencies": [
+        "S05",
+        "S19",
+        "S26"
+      ],
+      "status": "new_development",
+      "existingEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\pipeline\\database.js",
+          "lines": "913-982",
+          "observation": "Campaign snapshots version launch config, but generalized model/prompt/skill release registry and rollback absent."
+        }
+      ],
+      "testEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\tests\\campaign-launch-snapshot.test.mjs",
+          "observation": "Existing focused test file found by source inspection; not executed for this mapping."
+        }
+      ],
+      "acceptanceTarget": "New runs can revert without erasing outcomes; incompatible unsent drafts are invalidated.",
+      "recommendation": "New versioned release registry and rollback record for prompt/skill/harness/decision versions.",
+      "migration": "Preserve existing IDs, source/provenance, approvals, suppression, campaign snapshots, send states and historical events. Backfill only provable mappings; mark unknown evidence/permission unknown. Use additive versioned tables/adapters and shadow comparisons before cutover. Specific implication: No destructive migration justified by this mapping; add versioned adapters and preserve existing durable records.",
+      "nextAction": "New versioned release registry and rollback record for prompt/skill/harness/decision versions. Acceptance target: New runs can revert without erasing outcomes; incompatible unsent drafts are invalidated.",
+      "blockers": [],
+      "olderCheckoutDifference": "Compared with chat checkout HEAD a67413e: this newer source has additional uncommitted pipeline/job/provenance/usage/tracking/auth work. Both checkouts remain legacy-oriented and neither is shown to meet this task acceptance; chat redesign overlay is not evidence that newer application capabilities were merged."
+    },
+    {
+      "id": "S32",
+      "title": "Add operational telemetry and recovery drills",
+      "priority": "P0",
+      "dependencies": [
+        "S05",
+        "S07",
+        "S16",
+        "S20",
+        "S25"
+      ],
+      "status": "needs_improvement",
+      "existingEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\pipeline\\sending-engine.js",
+          "lines": "812-920,1631-1968",
+          "observation": "Send review, safety gates, queue state and uncertainty handling exist."
+        },
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\pipeline\\database.js",
+          "lines": "67-118",
+          "observation": "Operational control and sync event tables exist; recovery objectives/drills not evidenced."
+        }
+      ],
+      "testEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\tests\\send-claims.test.mjs",
+          "observation": "Existing focused test file found by source inspection; not executed for this mapping."
+        },
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\tests\\sending-control.test.mjs",
+          "observation": "Existing focused test file found by source inspection; not executed for this mapping."
+        }
+      ],
+      "acceptanceTarget": "Measured recovery objectives and no raw secrets/PII in ordinary logs; suppression retains priority under load.",
+      "recommendation": "Extend current control/telemetry with measured recovery objectives, redaction and recovery drills.",
+      "migration": "Preserve existing IDs, source/provenance, approvals, suppression, campaign snapshots, send states and historical events. Backfill only provable mappings; mark unknown evidence/permission unknown. Use additive versioned tables/adapters and shadow comparisons before cutover. Specific implication: No destructive migration justified by this mapping; add versioned adapters and preserve existing durable records.",
+      "nextAction": "Extend current control/telemetry with measured recovery objectives, redaction and recovery drills. Acceptance target: Measured recovery objectives and no raw secrets/PII in ordinary logs; suppression retains priority under load.",
+      "blockers": [],
+      "olderCheckoutDifference": "Compared with chat checkout HEAD a67413e: this newer source has additional uncommitted pipeline/job/provenance/usage/tracking/auth work. Both checkouts remain legacy-oriented and neither is shown to meet this task acceptance; chat redesign overlay is not evidence that newer application capabilities were merged."
+    },
+    {
+      "id": "X01",
+      "title": "Harness ownership and context contract",
+      "priority": "P0",
+      "dependencies": [
+        "S00",
+        "S05"
+      ],
+      "status": "needs_improvement",
+      "existingEvidence": [
+        {
+          "path": "pipeline/lead-discovery-jobs.js",
+          "lines": "113-119, 626-719",
+          "observation": "A durable lead-discovery coordinator owns its own job schema, runtime and recovery; neighboring workflows have separate managers."
+        },
+        {
+          "path": "pipeline/website-discovery-jobs.js",
+          "lines": "80-95, 802-847",
+          "observation": "Website collection has a separate persisted job/task owner and recovery API."
+        },
+        {
+          "path": "server.js",
+          "lines": "168-206",
+          "observation": "Server initializes and recovers multiple vertical job managers independently."
+        }
+      ],
+      "testEvidence": [
+        {
+          "path": "tests/lead-discovery-jobs.test.mjs",
+          "lines": "378-386",
+          "observation": "Source contains pause/resume/cancel/restart recovery coverage; not run for this mapping."
+        }
+      ],
+      "recommendation": "Extend the selected durable job owner through a narrow HarnessTask/Result adapter. Keep existing lead, campaign, contact and evidence IDs as domain references; do not create a parallel state machine. No common immutable context manifest or cross-workflow owner was found.",
+      "migration": "No harness tables exist to migrate. If a manifest is added, store versioned references to existing records and tenant/workspace identity; do not copy domain records into a new harness database.",
+      "nextAction": "After S00/S05 and baseline selection, choose one workflow as the adapter pilot and specify immutable input/output references plus a single authoritative state owner.",
+      "blockers": [
+        "S00 and S05 acceptance are upstream prerequisites and must be separately confirmed.",
+        "Cross-tenant identity binding for all candidate records is not demonstrated by these job modules."
+      ],
+      "olderCheckoutDifference": "The a67413e console checkout contains no lead-discovery, website-discovery job, or AI usage modules at these paths; it is a distinct older application snapshot plus console overlay. Do not transfer these findings to it."
+    },
+    {
+      "id": "X02",
+      "title": "Bounded execution and progress detection",
+      "priority": "P0",
+      "dependencies": [
+        "X01",
+        "S06",
+        "S07"
+      ],
+      "status": "needs_improvement",
+      "existingEvidence": [
+        {
+          "path": "pipeline/lead-discovery-jobs.js",
+          "lines": "320-355",
+          "observation": "Coordinator has runtime-budget termination and stops outstanding child work when the budget is reached."
+        },
+        {
+          "path": "pipeline/personalizer.js",
+          "lines": "48-80, 261-291, 302-344",
+          "observation": "Generation supports Ollama and optional Bedrock, including a Bedrock-to-Ollama fallback; this does not enforce the blueprint's GLM-5.3-only route."
+        },
+        {
+          "path": "pipeline/ai-usage.js",
+          "lines": "50-57",
+          "observation": "Usage recorder explicitly accepts Ollama and Bedrock provider IDs."
+        }
+      ],
+      "testEvidence": [
+        {
+          "path": "tests/lead-discovery-jobs.test.mjs",
+          "lines": "510-556",
+          "observation": "Source includes runtime-budget stop and child-cancel scenarios; not run for this mapping."
+        },
+        {
+          "path": "tests/ai-usage.test.mjs",
+          "lines": "93-130",
+          "observation": "Source exercises Ollama usage and a Bedrock fixture; not run for this mapping."
+        }
+      ],
+      "recommendation": "Reuse vertical runtime limits as inputs to a selected harness wrapper, then add call/tool/cost/deadline accounting, allowed-tool schemas, no-progress detection and a single repair cap. Require an explicit GLM-5.3 adapter and remove/disable hidden provider fallback for harness work only after provider decisions are approved.",
+      "migration": "No cross-runtime budget reservation or task-level usage linkage was found. Add task IDs to existing usage events with nullable migration and preserve provider request records; do not rewrite historic cost rows.",
+      "nextAction": "Define the harness provider and tool allowlist after X01; instrument one pilot and prove that budget exhaustion blocks follow-on effects.",
+      "blockers": [
+        "S06/S07 are prerequisites.",
+        "The current personalizer/provider code contradicts a GLM-only runtime requirement and has no harness-level tool budget."
+      ],
+      "olderCheckoutDifference": "The older console checkout lacks pipeline/ai-usage.js and pipeline/personalizer.js at this version; its source cannot establish current provider compliance."
+    },
+    {
+      "id": "X03",
+      "title": "Recovery and completion evidence",
+      "priority": "P0",
+      "dependencies": [
+        "X02",
+        "S04",
+        "S09"
+      ],
+      "status": "needs_improvement",
+      "existingEvidence": [
+        {
+          "path": "pipeline/website-discovery-jobs.js",
+          "lines": "575-602, 802-847",
+          "observation": "Claimed tasks increment attempts; startup recovery reconciles running/queued states in durable SQLite rows."
+        },
+        {
+          "path": "pipeline/sending-engine.js",
+          "lines": "1955-1976",
+          "observation": "Interrupted sends are recovered to an uncertain state rather than automatically retried."
+        },
+        {
+          "path": "pipeline/database.js",
+          "lines": "548-587, 1032-1102",
+          "observation": "Discovery task and canonical send/event records are durable; no generic harness checkpoint schema appears in the inspected sections."
+        }
+      ],
+      "testEvidence": [
+        {
+          "path": "tests/website-discovery-verification.test.mjs",
+          "lines": "165-179",
+          "observation": "Source reopens the manager and checks a persisted completed verification attempt; not run for this mapping."
+        }
+      ],
+      "recommendation": "Reuse per-workflow recovery and uncertain-side-effect handling. Add versioned harness checkpoints referencing evidence, usage and policy versions, plus a deterministic completion rubric before terminal state. Never equate a saved checkpoint with external effect acknowledgement.",
+      "migration": "No harness checkpoint rows exist. Add an independent nullable checkpoint table keyed to a selected owner/job; retain existing statuses and attempt history, and reconcile any legacy active jobs before rollout.",
+      "nextAction": "Once X02 is available, prototype checkpoint/reconcile behavior around one existing job manager and test process loss at each side-effect boundary using fake providers.",
+      "blockers": [
+        "X02, S04 and S09 are prerequisites.",
+        "Existing recovery differs by workflow and does not persist harness policy/version evidence or a common completion rubric."
+      ],
+      "olderCheckoutDifference": "The older checkout has the send engine but lacks the newer discovery job managers; only its own source can be used to plan a migration there."
+    },
+    {
+      "id": "X04",
+      "title": "Decision record and state migration",
+      "priority": "P0",
+      "dependencies": [
+        "S13",
+        "S14",
+        "X01"
+      ],
+      "status": "needs_improvement",
+      "existingEvidence": [
+        {
+          "path": "pipeline/qualification-scoring.js",
+          "lines": "71-128, 204-232",
+          "observation": "Scoring returns a weighted site score and penalty-derived confidence and can replay prior scoring versions; it does not establish the extension's separate event probability, utility, risk and reversibility record."
+        },
+        {
+          "path": "server.js",
+          "lines": "1984-1988, 2013",
+          "observation": "A scoring replay endpoint and auditable qualification review decision route exist."
+        },
+        {
+          "path": "tests/qualification-review.test.mjs",
+          "lines": "222-228",
+          "observation": "Source tests review decisions; not run for this mapping."
+        }
+      ],
+      "testEvidence": [
+        {
+          "path": "tests/qualification-scoring.test.mjs",
+          "lines": "38-49",
+          "observation": "Source checks deterministic versioned score and heuristic confidence penalties; not run for this mapping."
+        }
+      ],
+      "recommendation": "Extend the existing qualification/review records with separately named nullable decision quantities, calibration target/action/horizon, evidence freshness and policy version. Keep abstention and denied policy explicit; never interpret model-reported confidence as probability.",
+      "migration": "Do not reinterpret legacy confidence_score or ACT/BLOCK fields. Preserve old rows and add explicit fields/versioned translation; leave probability values null unless backed by calibrated, matching evidence.",
+      "nextAction": "Inspect the full scoring and review schema after S13/S14 contracts are frozen; write a field-by-field legacy mapping before migration.",
+      "blockers": [
+        "S13 and S14 semantics are prerequisites.",
+        "Exact legacy field semantics need a source-level audit before assigning migration values."
+      ],
+      "olderCheckoutDifference": "Both checkouts have scoring/review concepts, but the newer source contains distinct dirty scoring-related changes; re-audit the older checkout independently before porting a schema."
+    },
+    {
+      "id": "X06",
+      "title": "Inspect application adapter and evaluator governance",
+      "priority": "P0",
+      "dependencies": [
+        "X02",
+        "S26"
+      ],
+      "status": "new_development",
+      "existingEvidence": [
+        {
+          "path": "package.json",
+          "lines": "30-47",
+          "observation": "The dependency list has no Inspect package; no Inspect application adapter or evaluator module was located in the source inventory."
+        },
+        {
+          "path": "pipeline/ai-usage.js",
+          "lines": "50-57",
+          "observation": "Operational generation accounting exists but does not provide separate dataset/scorer permissions or evaluator model governance."
+        }
+      ],
+      "testEvidence": [],
+      "recommendation": "Add an Inspect adapter around the actual chosen harness endpoint. Freeze datasets, isolate scorer write permissions, enforce the GLM-5.3-only target/grader allowlist, and redact raw packets from ordinary logs.",
+      "migration": "No evaluation datasets, scorer registry or run records were found. Keep evaluation records separate from production customer records and prohibit writes to canonical labels from candidates.",
+      "nextAction": "After X02/S26, choose a fixture-only evaluation endpoint and add provider, grader, error-log and gold-label integrity checks.",
+      "blockers": [
+        "X02 and S26 are prerequisites.",
+        "GLM-only evaluator configuration and Inspect availability/licensing are not established."
+      ],
+      "olderCheckoutDifference": "The older console checkout has no located Inspect adapter/evaluator files either; this remains a new capability in both snapshots."
+    },
+    {
+      "id": "X07",
+      "title": "Matched-budget harness experiment",
+      "priority": "P0",
+      "dependencies": [
+        "X03",
+        "X04",
+        "X06"
+      ],
+      "status": "new_development",
+      "existingEvidence": [
+        {
+          "path": "package.json",
+          "lines": "7-20",
+          "observation": "The scripts expose the Node test suite and app/CLI commands; no matched-budget H0-H3 benchmark command is defined."
+        },
+        {
+          "path": "pipeline/ai-usage.js",
+          "lines": "98-127",
+          "observation": "Provider-level token and cost summaries exist as raw material, but not experiment-level budget equivalence or full risk/coverage/intervention metrics."
+        }
+      ],
+      "testEvidence": [],
+      "recommendation": "Create a versioned benchmark harness after recovery, decision records and evaluator governance exist. Freeze sources and splits; compare H0-H3 on identical accounts and explicit ceilings; publish metric definitions with every run.",
+      "migration": "No benchmark history to migrate. New runs should reference immutable fixture/dataset and harness versions, and avoid copying private records into shared evaluation data.",
+      "nextAction": "After X03/X04/X06, design a synthetic smoke benchmark and obtain reviewed annotations before any production cohort evaluation.",
+      "blockers": [
+        "X03, X04 and X06 are prerequisites.",
+        "No frozen licensed corpus, account split or mature annotation set was located."
+      ],
+      "olderCheckoutDifference": "The older checkout's console QA artifacts are not evidence of H0-H3 harness evaluation."
+    },
+    {
+      "id": "X08",
+      "title": "Adversarial application conformance",
+      "priority": "P0",
+      "dependencies": [
+        "X06",
+        "S09",
+        "S16",
+        "S20"
+      ],
+      "status": "needs_improvement",
+      "existingEvidence": [
+        {
+          "path": "pipeline/ssrf-guard.js",
+          "lines": "60-78, 139-184, 273-341",
+          "observation": "A dedicated SSRF guard validates public targets, applies redirects and request budgets; it does not prove the X08 end-to-end injection/exfiltration contract."
+        },
+        {
+          "path": "pipeline/campaign-audience.js",
+          "lines": "66-69, 294-329",
+          "observation": "Queue eligibility includes contact, campaign and approval policy checks."
+        },
+        {
+          "path": "tests/ssrf-guard.test.mjs",
+          "lines": "28-118, 163-188",
+          "observation": "Source tests isolated SSRF, redirect and request-budget controls; no integrated malicious-content suite was found and tests were not run for this map."
+        }
+      ],
+      "testEvidence": [],
+      "recommendation": "Reuse SSRF, suppression, auth and campaign gate fixtures inside an end-to-end fake harness. Add malicious page, email, tool output, skill and fake approval inputs; assert that prohibited effects remain absent and report benign completion separately.",
+      "migration": "No adversarial run ledger found. Save fixture and policy versions, sanitized outcomes and incident category without secrets or raw customer payloads.",
+      "nextAction": "After X06 and S09/S16/S20, define end-to-end fixtures against a no-network/no-mail fake environment and include replayable evidence.",
+      "blockers": [
+        "X06, S09, S16 and S20 are prerequisites.",
+        "Existing control-specific tests do not establish adversarial system conformance."
+      ],
+      "olderCheckoutDifference": "The older redesign checkout has security and route evidence, but this map does not treat that QA as application-harness adversarial acceptance."
+    },
+    {
+      "id": "X10",
+      "title": "Campaign-scoped autonomy and execution tickets",
+      "priority": "P0",
+      "dependencies": [
+        "S19",
+        "S20",
+        "S21",
+        "X04"
+      ],
+      "status": "needs_improvement",
+      "existingEvidence": [
+        {
+          "path": "pipeline/campaign-audience.js",
+          "lines": "60-69, 294-329",
+          "observation": "Audience eligibility is campaign-scoped but requires approved personalization copy for current sends."
+        },
+        {
+          "path": "pipeline/sending-engine.js",
+          "lines": "1134-1168, 1628-1674",
+          "observation": "Campaign launch snapshots are immutable and the send worker claims scheduled rows after campaign/snapshot gates."
+        },
+        {
+          "path": "pipeline/database.js",
+          "lines": "922-937, 1032-1047",
+          "observation": "Launch snapshots are immutable and sends bind to a launch snapshot; no action-ticket table or exact-intent ticket nonce was found."
+        }
+      ],
+      "testEvidence": [
+        {
+          "path": "tests/campaign-audience.test.mjs",
+          "lines": "124-155",
+          "observation": "Source verifies current approval/suppression checks before queue/send; not run for this mapping."
+        },
+        {
+          "path": "tests/campaign-launch-snapshot.test.mjs",
+          "lines": "113-124",
+          "observation": "Source tests immutable launch snapshots and configuration-drift blocking; envelope revocation, ticket replay and routine autosend acceptance was not found; not run for this map."
+        }
+      ],
+      "recommendation": "Extend campaign launch policy into a scoped authorization envelope, with routine automatic sends for valid in-scope messages, optional draft/review mode, precise exception routing, and server-issued exact-intent action tickets. Keep hard rules rechecked in the dispatcher; reject replay and revoke eligibility on scope changes.",
+      "migration": "Preserve immutable launch snapshots and existing personalization approval history. Add versioned envelope/ticket references and nullable send bindings; do not reinterpret prior per-copy approvals as envelope consent.",
+      "nextAction": "After S19-S21/X04, define the envelope's recipient, sender, offer, copy, volume, time and exception scope; implement a replay-safe fake ticket gate before enabling any autonomous send mode.",
+      "blockers": [
+        "S19, S20, S21 and X04 are prerequisites.",
+        "Current approval-required eligibility does not satisfy routine campaign-scoped autonomy; no precise ticket replay defense is identified."
+      ],
+      "olderCheckoutDifference": "The older checkout has launch/sending code but no campaign audience/snapshot modules at this newer source revision; its console QA does not imply X10 acceptance."
+    },
+    {
+      "id": "X11",
+      "title": "Engagement events and metric definitions",
+      "priority": "P0",
+      "dependencies": [
+        "S04",
+        "S17",
+        "S25"
+      ],
+      "status": "needs_improvement",
+      "existingEvidence": [
+        {
+          "path": "pipeline/click-tracking.js",
+          "lines": "35-106",
+          "observation": "Optional click tracking uses opaque tokens and canonical send/event linkage; repeat requests are countable, so they are not unique human clicks."
+        },
+        {
+          "path": "pipeline/database.js",
+          "lines": "1048-1055, 1102-1124",
+          "observation": "Tracked link rows and canonical event rows exist; no open-pixel capability or explicit open/click denominator schema was identified."
+        },
+        {
+          "path": "server.js",
+          "lines": "2454-2498",
+          "observation": "Campaign delivery history reports send and tracked-link request information; the inspected projection does not establish full denominator/late-event semantics."
+        }
+      ],
+      "testEvidence": [
+        {
+          "path": "tests/click-tracking.test.mjs",
+          "lines": "132-184",
+          "observation": "Source covers opt-out default, opaque redirect persistence and repeated request accounting; not run for this mapping."
+        }
+      ],
+      "recommendation": "Retain click tracking as optional, and define provider capability, raw versus filtered events, unique count rules, send denominator, late-event treatment and unknown delivery data. Add open tracking only after privacy/policy decisions and ensure scanner/proxy activity is not presented as a human engagement fact.",
+      "migration": "Keep historical events unchanged. Add versioned metric definitions and nullable classification metadata; do not backfill unknown or proxy-sensitive engagement into unique counts.",
+      "nextAction": "After S04/S17/S25, publish a metric dictionary against canonical events and add duplicate, scanner, proxy, timezone and late-event fixtures.",
+      "blockers": [
+        "S04, S17 and S25 are prerequisites.",
+        "Open tracking is not demonstrated; explicit denominators and filtered/unique event semantics are incomplete."
+      ],
+      "olderCheckoutDifference": "The older console checkout contains no pipeline/click-tracking.js in the mapped source tree; current click-tracking code belongs only to the newer checkout."
+    },
+    {
+      "id": "X12",
+      "title": "One telemetry route and privacy filters",
+      "priority": "P0",
+      "dependencies": [
+        "S32",
+        "X02",
+        "X04"
+      ],
+      "status": "needs_improvement",
+      "existingEvidence": [
+        {
+          "path": "pipeline/ai-usage.js",
+          "lines": "50-96",
+          "observation": "Durable sanitized provider request usage records track operation, model, tokens, outcome and request ID without storing prompt/response bodies in the usage table."
+        },
+        {
+          "path": "pipeline/database.js",
+          "lines": "885-909",
+          "observation": "AI usage events are a separate canonical usage table with provider and operation fields."
+        },
+        {
+          "path": "server.js",
+          "lines": "1789-1793",
+          "observation": "Dashboard usage analytics are assembled through the AI usage module; a general task/decision trace route was not found."
+        }
+      ],
+      "testEvidence": [
+        {
+          "path": "tests/ai-usage.test.mjs",
+          "lines": "93-113",
+          "observation": "Source checks durable usage attribution and absence of prompt/response/credential fields in that table; not run for this mapping."
+        }
+      ],
+      "recommendation": "Extend existing sanitized usage records through one operational trace route with task/decision spans, sampling rules and redaction tests. Keep canonical cost/outcome events authoritative and make optional telemetry payload collection explicit.",
+      "migration": "No general trace store found. Add task and decision identifiers as nullable references to operational spans; retain current ai_usage_events as canonical usage and avoid duplicating raw provider payloads.",
+      "nextAction": "After S32/X02/X04, define one trace boundary and redaction schema; test ordinary logs, errors, provider IDs, tenant viewer access and sampling gaps.",
+      "blockers": [
+        "S32, X02 and X04 are prerequisites.",
+        "A one-route task/decision tracing contract and privacy filters are not demonstrated."
+      ],
+      "olderCheckoutDifference": "The older checkout does not contain pipeline/ai-usage.js at this revision, so its metrics cannot be assumed equivalent."
+    },
+    {
+      "id": "X14",
+      "title": "Extension release gates and rollback",
+      "priority": "P0",
+      "dependencies": [
+        "X07",
+        "X08",
+        "X10",
+        "X11",
+        "X12",
+        "S29"
+      ],
+      "status": "needs_improvement",
+      "existingEvidence": [
+        {
+          "path": "orchestration/OWNERSHIP.md",
+          "lines": "1-16",
+          "observation": "Ownership instructions explicitly keep releaseReady false and preserve existing phase gates."
+        },
+        {
+          "path": "pipeline/sending-engine.js",
+          "lines": "1134-1168, 1955-1976",
+          "observation": "Campaign launch configuration is immutable and interrupted sends are treated as uncertain; these are local safeguards, not a harness/decision/skill/metric release manifest."
+        },
+        {
+          "path": "pipeline/database.js",
+          "lines": "922-937",
+          "observation": "Campaign launch snapshots are append-only by triggers."
+        }
+      ],
+      "testEvidence": [],
+      "recommendation": "Extend release manifests to harness, decision, skill and metric versions; require evaluated shadow/canary evidence and owner signoff, preserve backwards-compatible events, and roll back without changing send/suppression/outcome facts. Keep routine autonomy within its current envelope.",
+      "migration": "Preserve campaign launch snapshots and all canonical facts. Introduce an additive release-version manifest; never rewrite prior send or suppression outcomes during rollback.",
+      "nextAction": "After X07/X08/X10/X11/X12/S29, define release artifact/version bindings and exercise interrupted rollout, stale task, metric drift and emergency stop in fixtures.",
+      "blockers": [
+        "X07, X08, X10, X11, X12 and S29 are prerequisites.",
+        "Extension release manifest, shadow/canary controls and tested rollback are not present in the inspected source."
+      ],
+      "olderCheckoutDifference": "The older checkout's console route QA is not an extension release gate; no X14 manifest can be inferred from it."
+    },
+    {
+      "id": "S12",
+      "title": "Implement Opportunity Radar",
+      "priority": "P1",
+      "dependencies": [
+        "S09",
+        "S10",
+        "S11"
+      ],
+      "status": "new_development",
+      "existingEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\pipeline\\lead-discovery.js",
+          "lines": "1-160",
+          "observation": "Discovery primitives exist; no distinct stale-expiring, deduplicated Opportunity Radar model was found in inspected source."
+        }
+      ],
+      "testEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\tests\\lead-discovery-jobs.test.mjs",
+          "observation": "Existing focused test file found by source inspection; not executed for this mapping."
+        }
+      ],
+      "acceptanceTarget": "A repeated syndicated event is not counted as multiple independent confirmations; stale signals expire.",
+      "recommendation": "New signal model with independent-source dedupe, freshness and expiry.",
+      "migration": "Preserve existing IDs, source/provenance, approvals, suppression, campaign snapshots, send states and historical events. Backfill only provable mappings; mark unknown evidence/permission unknown. Use additive versioned tables/adapters and shadow comparisons before cutover. Specific implication: No destructive migration justified by this mapping; add versioned adapters and preserve existing durable records.",
+      "nextAction": "New signal model with independent-source dedupe, freshness and expiry. Acceptance target: A repeated syndicated event is not counted as multiple independent confirmations; stale signals expire.",
+      "blockers": [],
+      "olderCheckoutDifference": "Compared with chat checkout HEAD a67413e: this newer source has additional uncommitted pipeline/job/provenance/usage/tracking/auth work. Both checkouts remain legacy-oriented and neither is shown to meet this task acceptance; chat redesign overlay is not evidence that newer application capabilities were merged."
+    },
+    {
+      "id": "S23",
+      "title": "Add tenant-scoped temporal memory",
+      "priority": "P1",
+      "dependencies": [
+        "S03",
+        "S08",
+        "S13",
+        "S21"
+      ],
+      "status": "new_development",
+      "existingEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\pipeline\\contact-provenance.js",
+          "lines": "1-86",
+          "observation": "Evidence provenance exists; no tenant-scoped temporal memory/retrieval implementation found."
+        }
+      ],
+      "testEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\tests\\contact-provenance.test.mjs",
+          "observation": "Existing focused test file found by source inspection; not executed for this mapping."
+        }
+      ],
+      "acceptanceTarget": "Corrections override stale summaries; delete/permission changes propagate to all retrieval paths.",
+      "recommendation": "New tenant-scoped temporal memory with source lineage and deletion-aware retrieval.",
+      "migration": "Preserve existing IDs, source/provenance, approvals, suppression, campaign snapshots, send states and historical events. Backfill only provable mappings; mark unknown evidence/permission unknown. Use additive versioned tables/adapters and shadow comparisons before cutover. Specific implication: No destructive migration justified by this mapping; add versioned adapters and preserve existing durable records.",
+      "nextAction": "New tenant-scoped temporal memory with source lineage and deletion-aware retrieval. Acceptance target: Corrections override stale summaries; delete/permission changes propagate to all retrieval paths.",
+      "blockers": [],
+      "olderCheckoutDifference": "Compared with chat checkout HEAD a67413e: this newer source has additional uncommitted pipeline/job/provenance/usage/tracking/auth work. Both checkouts remain legacy-oriented and neither is shown to meet this task acceptance; chat redesign overlay is not evidence that newer application capabilities were merged."
+    },
+    {
+      "id": "S31",
+      "title": "Implement export, deletion and retention lifecycle",
+      "priority": "P0",
+      "dependencies": [
+        "S03",
+        "S04",
+        "S09",
+        "S17",
+        "S23"
+      ],
+      "status": "needs_improvement",
+      "existingEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\pipeline\\archiver.js",
+          "lines": "1-180",
+          "observation": "Archiving utilities exist."
+        },
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\server.js",
+          "lines": "2100-2250",
+          "observation": "Verification export/API paths exist; complete tenant export/deletion receipts/retention lifecycle not evidenced."
+        }
+      ],
+      "testEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\tests\\verification-export.test.mjs",
+          "observation": "Existing focused test file found by source inspection; not executed for this mapping."
+        },
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\tests\\contact-delete.test.mjs",
+          "observation": "Existing focused test file found by source inspection; not executed for this mapping."
+        }
+      ],
+      "acceptanceTarget": "User receives complete export/deletion receipt with documented backup expiry and necessary suppression retention.",
+      "recommendation": "Extend archive/export/delete endpoints into audited lifecycle and retention workflow.",
+      "migration": "Preserve existing IDs, source/provenance, approvals, suppression, campaign snapshots, send states and historical events. Backfill only provable mappings; mark unknown evidence/permission unknown. Use additive versioned tables/adapters and shadow comparisons before cutover. Specific implication: deletion/export must cover archives, evidence, jobs, telemetry and backups with suppression exceptions documented.",
+      "nextAction": "Extend archive/export/delete endpoints into audited lifecycle and retention workflow. Acceptance target: User receives complete export/deletion receipt with documented backup expiry and necessary suppression retention.",
+      "blockers": [],
+      "olderCheckoutDifference": "Compared with chat checkout HEAD a67413e: this newer source has additional uncommitted pipeline/job/provenance/usage/tracking/auth work. Both checkouts remain legacy-oriented and neither is shown to meet this task acceptance; chat redesign overlay is not evidence that newer application capabilities were merged."
+    },
+    {
+      "id": "S33",
+      "title": "Run authorized pilot and migration cutover",
+      "priority": "P0",
+      "dependencies": [
+        "S01",
+        "S20",
+        "S21",
+        "S22",
+        "S24",
+        "S25",
+        "S26",
+        "S29",
+        "S31",
+        "S32",
+        "X14"
+      ],
+      "status": "new_development",
+      "existingEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\orchestration\\OWNERSHIP.md",
+          "lines": "1-28",
+          "observation": "Local orchestration explicitly keeps releaseReady=false and preserves historical gates."
+        },
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\pipeline\\sending-engine.js",
+          "lines": "1453-1478",
+          "observation": "Real send path exists behind controls; this is not evidence of authorized pilot/cutover."
+        }
+      ],
+      "testEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\tests\\campaign-preflight.test.mjs",
+          "observation": "Existing focused test file found by source inspection; not executed for this mapping."
+        },
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\tests\\ui-route-audit.test.mjs",
+          "observation": "Existing focused test file found by source inspection; not executed for this mapping."
+        }
+      ],
+      "acceptanceTarget": "Owner-approved pilot scope, rollback manifest and daily exception review; no unresolved critical test failures.",
+      "recommendation": "Block cutover until all amended gates pass, including X14; no pilot evidence inferred.",
+      "migration": "Preserve existing IDs, source/provenance, approvals, suppression, campaign snapshots, send states and historical events. Backfill only provable mappings; mark unknown evidence/permission unknown. Use additive versioned tables/adapters and shadow comparisons before cutover. Specific implication: require immutable source-to-target manifest/checkpoint/rollback; keep releaseReady false until pilot gates.",
+      "nextAction": "Block cutover until all amended gates pass, including X14; no pilot evidence inferred. Acceptance target: Owner-approved pilot scope, rollback manifest and daily exception review; no unresolved critical test failures.",
+      "blockers": [],
+      "olderCheckoutDifference": "Compared with chat checkout HEAD a67413e: this newer source has additional uncommitted pipeline/job/provenance/usage/tracking/auth work. Both checkouts remain legacy-oriented and neither is shown to meet this task acceptance; chat redesign overlay is not evidence that newer application capabilities were merged."
+    },
+    {
+      "id": "S27",
+      "title": "Evaluate calibration and small rankers",
+      "priority": "P1",
+      "dependencies": [
+        "S08",
+        "S14",
+        "S26"
+      ],
+      "status": "new_development",
+      "existingEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\pipeline\\qualification-scoring.js",
+          "lines": "1-180",
+          "observation": "Rank/score logic exists; cohort calibration, uncertainty, drift and reviewed utility promotion absent."
+        }
+      ],
+      "testEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\tests\\qualification-scoring.test.mjs",
+          "observation": "Existing focused test file found by source inspection; not executed for this mapping."
+        }
+      ],
+      "acceptanceTarget": "Promote only with improved reviewed-budget utility and acceptable subgroup risk; unsupported cohorts remain manual.",
+      "recommendation": "New calibration/uncertainty evaluation and ranker promotion only after outcome data/harness.",
+      "migration": "Preserve existing IDs, source/provenance, approvals, suppression, campaign snapshots, send states and historical events. Backfill only provable mappings; mark unknown evidence/permission unknown. Use additive versioned tables/adapters and shadow comparisons before cutover. Specific implication: No destructive migration justified by this mapping; add versioned adapters and preserve existing durable records.",
+      "nextAction": "New calibration/uncertainty evaluation and ranker promotion only after outcome data/harness. Acceptance target: Promote only with improved reviewed-budget utility and acceptable subgroup risk; unsupported cohorts remain manual.",
+      "blockers": [],
+      "olderCheckoutDifference": "Compared with chat checkout HEAD a67413e: this newer source has additional uncommitted pipeline/job/provenance/usage/tracking/auth work. Both checkouts remain legacy-oriented and neither is shown to meet this task acceptance; chat redesign overlay is not evidence that newer application capabilities were merged."
+    },
+    {
+      "id": "S28",
+      "title": "Implement offline prompt optimization",
+      "priority": "P1",
+      "dependencies": [
+        "S01",
+        "S23",
+        "S26"
+      ],
+      "status": "new_development",
+      "existingEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\pipeline\\personalizer.js",
+          "lines": "390-610",
+          "observation": "Prompt-based production personalization exists; offline holdout-safe prompt optimization/release workflow not evidenced."
+        }
+      ],
+      "testEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\tests\\personalizer-factcheck.test.mjs",
+          "observation": "Existing focused test file found by source inspection; not executed for this mapping."
+        }
+      ],
+      "acceptanceTarget": "Candidate cannot see holdout; reproducible baseline comparison and no automatic production promotion.",
+      "recommendation": "New offline prompt candidate/holdout/review/release flow; no automatic production promotion.",
+      "migration": "Preserve existing IDs, source/provenance, approvals, suppression, campaign snapshots, send states and historical events. Backfill only provable mappings; mark unknown evidence/permission unknown. Use additive versioned tables/adapters and shadow comparisons before cutover. Specific implication: No destructive migration justified by this mapping; add versioned adapters and preserve existing durable records.",
+      "nextAction": "New offline prompt candidate/holdout/review/release flow; no automatic production promotion. Acceptance target: Candidate cannot see holdout; reproducible baseline comparison and no automatic production promotion.",
+      "blockers": [],
+      "olderCheckoutDifference": "Compared with chat checkout HEAD a67413e: this newer source has additional uncommitted pipeline/job/provenance/usage/tracking/auth work. Both checkouts remain legacy-oriented and neither is shown to meet this task acceptance; chat redesign overlay is not evidence that newer application capabilities were merged."
+    },
+    {
+      "id": "S34",
+      "title": "Measure unit economics and finalize quotas",
+      "priority": "P1",
+      "dependencies": [
+        "S25",
+        "S33"
+      ],
+      "status": "needs_improvement",
+      "existingEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\pipeline\\ai-usage.js",
+          "lines": "102-205",
+          "observation": "Partial provider usage reporting exists; comprehensive measured variable costs and quotas absent."
+        }
+      ],
+      "testEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\tests\\ai-usage.test.mjs",
+          "observation": "Existing focused test file found by source inspection; not executed for this mapping."
+        }
+      ],
+      "acceptanceTarget": "Pricing has explicit usage ceilings, headroom and complete cost exclusions; no unlimited low-price research.",
+      "recommendation": "Extend usage metrics with measured full unit costs and scenario-based quota/headroom.",
+      "migration": "Preserve existing IDs, source/provenance, approvals, suppression, campaign snapshots, send states and historical events. Backfill only provable mappings; mark unknown evidence/permission unknown. Use additive versioned tables/adapters and shadow comparisons before cutover. Specific implication: No destructive migration justified by this mapping; add versioned adapters and preserve existing durable records.",
+      "nextAction": "Extend usage metrics with measured full unit costs and scenario-based quota/headroom. Acceptance target: Pricing has explicit usage ceilings, headroom and complete cost exclusions; no unlimited low-price research.",
+      "blockers": [],
+      "olderCheckoutDifference": "Compared with chat checkout HEAD a67413e: this newer source has additional uncommitted pipeline/job/provenance/usage/tracking/auth work. Both checkouts remain legacy-oriented and neither is shown to meet this task acceptance; chat redesign overlay is not evidence that newer application capabilities were merged."
+    },
+    {
+      "id": "X05",
+      "title": "Research allocation and expected utility",
+      "priority": "P1",
+      "dependencies": [
+        "X04",
+        "S27",
+        "S24"
+      ],
+      "status": "new_development",
+      "existingEvidence": [
+        {
+          "path": "pipeline/lead-discovery-jobs.js",
+          "lines": "241-260",
+          "observation": "Lead discovery tracks unique candidate counts as an operational stop target, not as calibrated response utility or inclusion probability."
+        },
+        {
+          "path": "pipeline/qualification-scoring.js",
+          "lines": "71-128",
+          "observation": "This scoring result is a deterministic site classification, with no expected-utility or value-of-information allocation fields."
+        }
+      ],
+      "testEvidence": [
+        {
+          "path": "tests/lead-discovery-jobs.test.mjs",
+          "lines": "241-299",
+          "observation": "Source checks unique candidate targeting; this is not an allocation experiment and was not run."
+        }
+      ],
+      "recommendation": "Begin with deterministic priority and log exploration/inclusion probabilities; add calibrated ranking and value-of-information only after outcome labels and spend/source policy are available.",
+      "migration": "No allocation experiment or propensity history was found. New logs should be append-only and versioned; do not infer historical propensities from chosen records.",
+      "nextAction": "Wait for X04 plus S27/S24; define the action and outcome horizon, then add a synthetic evaluation record before customer-facing allocation.",
+      "blockers": [
+        "X04, S27 and S24 are prerequisites.",
+        "Mature outcome labels and calibrated estimates are not demonstrated."
+      ],
+      "olderCheckoutDifference": "No matching allocation contract was found in the older console checkout; its scoring paths are not proof for this newer source."
+    },
+    {
+      "id": "X09",
+      "title": "Validated procedural skill registry",
+      "priority": "P1",
+      "dependencies": [
+        "S23",
+        "S28",
+        "S29",
+        "X06"
+      ],
+      "status": "new_development",
+      "existingEvidence": [
+        {
+          "path": "orchestration/OWNERSHIP.md",
+          "lines": "1-20",
+          "observation": "Repository ownership notes describe implementation ownership; they do not define runtime skill approval/version state."
+        }
+      ],
+      "testEvidence": [],
+      "recommendation": "Build candidate/evaluating/approved/canary/active/revoked states with pinned versions, scope, provenance/license and test manifests. Only approved versions may enter tasks; correction/revocation must invalidate retrieval.",
+      "migration": "No skill rows found. Do not import personal agent instruction files as tenant skills; any future registry requires tenant ownership and deletion provenance.",
+      "nextAction": "After S23/S28/S29/X06, inventory any intended procedural artifacts and define tenant scope before implementing registry storage.",
+      "blockers": [
+        "S23, S28, S29 and X06 are prerequisites.",
+        "No application skill version or test manifest schema exists in the inspected source."
+      ],
+      "olderCheckoutDifference": "Neither checkout showed an app skill registry; local Codex skills remain outside the product runtime."
+    },
+    {
+      "id": "X13",
+      "title": "Incremental economics and autonomy dashboard",
+      "priority": "P1",
+      "dependencies": [
+        "X07",
+        "X11",
+        "X12",
+        "S07"
+      ],
+      "status": "needs_improvement",
+      "existingEvidence": [
+        {
+          "path": "pipeline/ai-usage.js",
+          "lines": "98-127, 146-211",
+          "observation": "Provider/model request counts, token totals, known costs and partial/unknown usage states are summarized; there is no per-harness-task view."
+        },
+        {
+          "path": "server.js",
+          "lines": "1789-1793",
+          "observation": "Existing dashboard usage is provider-oriented rather than challenge fraction, trace bytes, reviewer minutes or cost per verified outcome."
+        }
+      ],
+      "testEvidence": [
+        {
+          "path": "tests/ai-usage.test.mjs",
+          "lines": "123-133, 150-159",
+          "observation": "Source checks provider calls, token totals and measured/unknown usage reporting; not run for this mapping."
+        }
+      ],
+      "recommendation": "Extend provider usage as canonical per-request cost data and join it to task/evaluation/outcome records. Report p95 spend, challenge and exception categories, reviewer time and cost per verified outcome; avoid double-counting critic calls.",
+      "migration": "Keep old request events and rate cards; add nullable task/evaluation IDs and versioned metric formulas. Historical per-task economics remain unknown where linkage is absent.",
+      "nextAction": "After X07/X11/X12/S07, define outcome denominator and tier quotas; produce a synthetic dashboard report before exposing cost claims.",
+      "blockers": [
+        "X07, X11, X12 and S07 are prerequisites.",
+        "Task linkage, intervention minutes, p95 task costs and verified-outcome denominator are missing."
+      ],
+      "olderCheckoutDifference": "The older checkout has no AI usage module, so this newer provider-level cost evidence cannot be attributed to it."
+    },
+    {
+      "id": "X15",
+      "title": "Controlled learning validation",
+      "priority": "P1",
+      "dependencies": [
+        "X05",
+        "X09",
+        "X13",
+        "X14"
+      ],
+      "status": "new_development",
+      "existingEvidence": [
+        {
+          "path": "pipeline/qualification-scoring.js",
+          "lines": "204-232",
+          "observation": "Deterministic scoring replay exists, but no frozen baseline/held-out candidate promotion pipeline with mature CRM outcomes was confirmed."
+        },
+        {
+          "path": "pipeline/qualification-scoring.js",
+          "lines": "204-232",
+          "observation": "Current replay recomputes a saved score by version; no app skill registry or controlled production learning release manager was located."
+        }
+      ],
+      "testEvidence": [],
+      "recommendation": "Compare ranker, skill and prompt candidates only against frozen baselines with held-out companies/time and mature CRM outcomes. Keep promotion owner-controlled and prohibit private cross-tenant training or automatic production edits.",
+      "migration": "No candidate promotion or learning history exists to migrate. New records need dataset lineage, consent/scope, candidate hash, outcome maturity and rollback reference.",
+      "nextAction": "After X05/X09/X13/X14, define the smallest offline evaluation and wait for enough mature, authorized outcome labels.",
+      "blockers": [
+        "X05, X09, X13 and X14 are prerequisites.",
+        "No validated labels, skill lifecycle or extension release gate is available."
+      ],
+      "olderCheckoutDifference": "Older console validation does not establish learning outcomes or optimizer promotion; no equivalent controlled learning framework was located."
+    },
+    {
+      "id": "S30",
+      "title": "Evaluate delayed-reward contextual bandits",
+      "priority": "P2",
+      "dependencies": [
+        "S24",
+        "S25",
+        "S27",
+        "S29"
+      ],
+      "status": "new_development",
+      "existingEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\pipeline\\ab-testing.js",
+          "lines": "1-220",
+          "observation": "Fixed A/B and promotion utilities exist; delayed-reward contextual bandit evaluation/propensities absent."
+        }
+      ],
+      "testEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\tests\\ab-testing.test.mjs",
+          "observation": "No matching named test file found during inventory; acceptance remains unverified."
+        }
+      ],
+      "acceptanceTarget": "Offline overlap/ESS checks and randomized confirmation required; no uplift claim from proxy alone.",
+      "recommendation": "Defer bandits until fixed experiments and mature calibrated outcomes support review.",
+      "migration": "Preserve existing IDs, source/provenance, approvals, suppression, campaign snapshots, send states and historical events. Backfill only provable mappings; mark unknown evidence/permission unknown. Use additive versioned tables/adapters and shadow comparisons before cutover. Specific implication: No destructive migration justified by this mapping; add versioned adapters and preserve existing durable records.",
+      "nextAction": "Defer bandits until fixed experiments and mature calibrated outcomes support review. Acceptance target: Offline overlap/ESS checks and randomized confirmation required; no uplift claim from proxy alone.",
+      "blockers": [],
+      "olderCheckoutDifference": "Compared with chat checkout HEAD a67413e: this newer source has additional uncommitted pipeline/job/provenance/usage/tracking/auth work. Both checkouts remain legacy-oriented and neither is shown to meet this task acceptance; chat redesign overlay is not evidence that newer application capabilities were merged."
+    },
+    {
+      "id": "S35",
+      "title": "Add post-sale proof and retention loop",
+      "priority": "P2",
+      "dependencies": [
+        "S22",
+        "S25",
+        "S33"
+      ],
+      "status": "new_development",
+      "existingEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\pipeline\\crm-sync.js",
+          "lines": "1-125,140-215",
+          "observation": "CRM sync exists; post-sale proof/retention and permissioned case-study loop not found."
+        }
+      ],
+      "testEvidence": [
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\tests\\crm-sync.test.mjs",
+          "observation": "No matching named test file found during inventory; acceptance remains unverified."
+        },
+        {
+          "path": "E:\\odd-ecosys-build-worktree\\tests\\campaign-analytics.test.mjs",
+          "observation": "Existing focused test file found by source inspection; not executed for this mapping."
+        }
+      ],
+      "acceptanceTarget": "Outcome evidence tied to actual delivery; expansion recommendations obey separate contact/permission policies.",
+      "recommendation": "New post-sale evidence and permission-aware retention loop backed by canonical CRM outcomes.",
+      "migration": "Preserve existing IDs, source/provenance, approvals, suppression, campaign snapshots, send states and historical events. Backfill only provable mappings; mark unknown evidence/permission unknown. Use additive versioned tables/adapters and shadow comparisons before cutover. Specific implication: No destructive migration justified by this mapping; add versioned adapters and preserve existing durable records.",
+      "nextAction": "New post-sale evidence and permission-aware retention loop backed by canonical CRM outcomes. Acceptance target: Outcome evidence tied to actual delivery; expansion recommendations obey separate contact/permission policies.",
+      "blockers": [],
+      "olderCheckoutDifference": "Compared with chat checkout HEAD a67413e: this newer source has additional uncommitted pipeline/job/provenance/usage/tracking/auth work. Both checkouts remain legacy-oriented and neither is shown to meet this task acceptance; chat redesign overlay is not evidence that newer application capabilities were merged."
+    },
+    {
+      "id": "X16",
+      "title": "Domain-neutral interface review",
+      "priority": "P2",
+      "dependencies": [
+        "X04",
+        "X14"
+      ],
+      "status": "new_development",
+      "existingEvidence": [
+        {
+          "path": "pipeline/qualification-scoring.js",
+          "lines": "71-128",
+          "observation": "The scoring contract is sales/site-classification-specific; no separated domain-neutral evidence/decision/evaluation interface was confirmed."
+        },
+        {
+          "path": "pipeline/sending-engine.js",
+          "lines": "1988-1991",
+          "observation": "The inspected execution path configures email/SMTP transports; no broker, order or market integration was found there."
+        }
+      ],
+      "testEvidence": [],
+      "recommendation": "Keep this optional and after X04/X14. Extract only reusable evidence, decision and evaluation types; document sales-specific policy boundaries. Do not add financial execution, broker, order or market features to launch scope.",
+      "migration": "No cross-domain records exist to migrate. Keep all existing sales records tied to sales-specific policy versions.",
+      "nextAction": "After X04/X14, write a domain-boundary note and cross-domain rejection fixture; defer implementation if no supported second domain exists.",
+      "blockers": [
+        "X04 and X14 are prerequisites.",
+        "No second domain use case is authorized or evidenced; this is optional P2 work."
+      ],
+      "olderCheckoutDifference": "The older console checkout also has no cross-domain interface contract; the task remains optional in both source snapshots."
+    }
+  ],
+  "executionProgress": {
+    "mappingBaseline": "Task statusCounts describe the frozen pre-increment source, not post-increment progress.",
+    "S00": {
+      "state": "52-task source map delivered; source/API trace validation bounded",
+      "accepted": false,
+      "limitation": "No composed research-to-final-outcome run/canonical business outcome ledger was established."
+    },
+    "S02": {
+      "state": "partial local implementation independently reviewed",
+      "accepted": false,
+      "review": "foundation-review.md",
+      "tests": {
+        "passed": 22,
+        "failed": 0,
+        "skipped": 0,
+        "scope": "related offer/campaign/auth/session/membership suite; disposable fixtures and loopback SMTP"
+      },
+      "remaining": [
+        "tenant scoping",
+        "capacity consumption",
+        "proof/source-byte verification",
+        "model-egress enforcement",
+        "offer-aware copy controls",
+        "common event/idempotency infrastructure"
+      ]
+    },
+    "S03": {
+      "state": "proposed migration ADR delivered; no migration executed",
+      "accepted": false,
+      "artifact": "ADRs/0001-tenant-migration.md"
+    },
+    "S05": {
+      "state": "proposed single-owner ADR delivered; engine not selected/installed",
+      "accepted": false,
+      "artifact": "ADRs/0002-workflow-ownership.md"
+    },
+    "X01": {
+      "state": "design-only HarnessTask/Result schema validated; runtime gated on S05",
+      "accepted": false,
+      "artifact": "contracts/harness-task-v1.schema.json"
+    },
+    "releaseReady": false
+  }
+}

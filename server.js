@@ -5,7 +5,11 @@
 import http from 'http';
 import fs from 'fs';
 import path from 'path';
+import { randomBytes, timingSafeEqual } from 'node:crypto';
 import { URL, fileURLToPath } from 'url';
+import { OSM_ATTRIBUTION, parseOsmExport } from './pipeline/osm-importer.js';
+import { saveCampaignRecipientDraft } from './pipeline/campaign-preparation.js';
+import { createAstraGoalSourceRightsResolver } from './pipeline/astra-goal-source-rights.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -26,13 +30,277 @@ const MIME_TYPES = {
 
 // ── Lazy-load pipeline modules (ESM → dynamic import) ────────
 let _pipeline = null;
+let _authManager = null;
+let _websiteEmailDiscoveryTestOverride = null;
+let _websiteDiscoveryJobsTestOverride = null;
+let _epchDirectoryJobsTestOverride = null;
+let _leadDiscoveryJobsTestOverride = null;
+let _searxngSearchFetchTestOverride = null;
+let _metaLeadAdsFetchTestOverride = null;
+let _metaLeadAdsNowTestOverride = null;
+let _leadStrategyFetchTestOverride = null;
+let _imapReceiverTestOverride = null;
+let _metaWebhookRecoveryScheduled = false;
+const AUTH_TEST_BYPASS = process.env.NODE_ENV === 'test' && process.env.ODD_AUTH_ENFORCE_TESTS !== 'true';
+let _astraRouteModules = null;
+let _astraProspectingService = null;
+
+async function getAstraRouteModules() {
+  if (!_astraRouteModules) {
+    _astraRouteModules = (async () => {
+      const [api, ledger, offers, ai, workflow, research, inbox, runtime, campaigns, insights, memberships, conformance, bandits, domainHarness, customerApprovals, sourceCollection, benchmarks,
+        connectorRoutes, generation, autonomy, featureWorkers, mailboxProvider, verifierAdapter, evaluation, operations,
+        lifecycle, radar, learning, economics, launch, prospectingRoutes, businessGoalRoutes, businessGoals, goalPlanner, goalGateway] = await Promise.all([
+        import('./pipeline/astra-api.js'),
+        import('./pipeline/astra-ledger-routes.js'),
+        import('./pipeline/offer-routes.js'),
+        import('./pipeline/astra-ai-routes.js'),
+        import('./pipeline/astra-workflow-routes.js'),
+        import('./pipeline/astra-research-routes.js'),
+        import('./pipeline/astra-inbox-routes.js'),
+        import('./pipeline/astra-runtime-routes.js'),
+        import('./pipeline/astra-campaign-routes.js'),
+        import('./pipeline/astra-insights-routes.js'),
+        import('./pipeline/astra-memberships.js'),
+        import('./pipeline/astra-conformance-routes.js'),
+        import('./pipeline/astra-bandit-routes.js'),
+        import('./pipeline/astra-domain-harness-routes.js'),
+        import('./pipeline/astra-customer-approval-routes.js'),
+        import('./pipeline/astra-source-collection-routes.js'),
+        import('./pipeline/astra-benchmark-routes.js'),
+        import('./pipeline/astra-connector-routes.js'),
+        import('./pipeline/astra-generation-routes.js'),
+        import('./pipeline/astra-autonomy-routes.js'),
+        import('./pipeline/astra-feature-workers.js'),
+        import('./pipeline/astra-mailbox-provider.js'),
+        import('./pipeline/astra-verifier-adapter.js'),
+        import('./pipeline/astra-eval-routes.js'),
+        import('./pipeline/astra-operations-routes.js'),
+        import('./pipeline/astra-lifecycle-routes.js'),
+        import('./pipeline/astra-radar-routes.js'),
+        import('./pipeline/astra-learning-routes.js'),
+        import('./pipeline/astra-economics-routes.js'),
+        import('./pipeline/astra-launch-routes.js'),
+        import('./pipeline/astra-prospecting-routes.js'),
+        import('./pipeline/astra-business-goal-routes.js'),
+        import('./pipeline/astra-business-goal.js'),
+        import('./pipeline/astra-goal-planner.js'),
+        import('./pipeline/astra-goal-gateway.js'),
+      ]);
+      const mailboxJobs = mailboxProvider.createAstraMailboxJobAdapter();
+      const connectorAdapters = {
+        probe_mailbox: mailboxJobs,
+        sync_mailbox: mailboxJobs,
+        verify_candidate: {
+          prepare: verifierAdapter.prepareAstraReacherJob,
+          execute: verifierAdapter.executeAstraReacherJob,
+          commit: verifierAdapter.commitAstraReacherJob,
+        },
+      };
+      const workerCallbacks = featureWorkers.configureAstraFeatureWorkers({ connectorAdapters });
+      connectorRoutes.configureAstraConnectorRoutes(workerCallbacks);
+      api.registerAstraApiRoutesAtomically(registerAstraApiRoute => {
+        ledger.registerAstraLedgerRoutes(registerAstraApiRoute);
+        ai.registerAstraAiRoutes(registerAstraApiRoute);
+        workflow.registerAstraWorkflowRoutes({ registerAstraApiRoute });
+        research.registerAstraResearchRoutes(registerAstraApiRoute);
+        inbox.registerAstraInboxRoutes(registerAstraApiRoute);
+        runtime.registerAstraRuntimeRoutes(registerAstraApiRoute);
+        campaigns.registerAstraCampaignRoutes(registerAstraApiRoute);
+        insights.registerAstraInsightsRoutes(registerAstraApiRoute);
+        memberships.registerAstraMembershipRoutes(registerAstraApiRoute);
+        bandits.registerAstraBanditRoutes(registerAstraApiRoute);
+        connectorRoutes.registerAstraConnectorRoutes(registerAstraApiRoute);
+        generation.registerAstraGenerationRoutes(registerAstraApiRoute);
+        autonomy.registerAstraAutonomyRoutes(registerAstraApiRoute);
+        featureWorkers.registerAstraFeatureWorkerRoutes(registerAstraApiRoute);
+        operations.registerAstraOperationsRoutes(registerAstraApiRoute);
+        const workerStoreOptions = process.env.ASTRA_WORKER_DATABASE_URL?.trim()
+          ? { store: featureWorkers.getAstraFeatureWorkerStore() } : {};
+        conformance.registerAstraConformanceRoutes(registerAstraApiRoute, workerStoreOptions);
+        domainHarness.registerAstraDomainHarnessRoutes(registerAstraApiRoute, workerStoreOptions);
+        customerApprovals.registerAstraCustomerApprovalRoutes(registerAstraApiRoute);
+        sourceCollection.registerAstraSourceCollectionRoutes(registerAstraApiRoute, workerStoreOptions);
+        lifecycle.registerAstraLifecycleRoutes(registerAstraApiRoute, workerStoreOptions);
+        radar.registerAstraRadarRoutes(registerAstraApiRoute, workerStoreOptions);
+        learning.registerAstraLearningRoutes(registerAstraApiRoute);
+        economics.registerAstraEconomicsRoutes(registerAstraApiRoute);
+        benchmarks.registerAstraBenchmarkRoutes(registerAstraApiRoute);
+        launch.registerAstraLaunchRoutes(registerAstraApiRoute, workerStoreOptions);
+        _astraProspectingService = prospectingRoutes.registerAstraProspectingRoutes(registerAstraApiRoute).service;
+        const goalStore = featureWorkers.getAstraFeatureWorkerStore();
+        const goals = businessGoals.createAstraBusinessGoalService({
+          planner: goalPlanner.createAstraGoalPlanner({ env: process.env,
+            gateway: goalGateway.createAstraGoalGateway({ env: process.env, tenantStore: goalStore }) }),
+          prospectingService: _astraProspectingService || null,
+          resolveSourceRights: createAstraGoalSourceRightsResolver(),
+        });
+        businessGoalRoutes.registerAstraBusinessGoalRoutes(registerAstraApiRoute, {
+          service: goals,
+          planGoalOnce: async ({ tenantId, userId, goalId }) => {
+            const prepared = await goalStore.withWorkerTenant({ tenantId, userId }, async (db, actor) => {
+              const current = await goals.getGoalRun(db, actor, goalId);
+              return goals.prepareGoalPlan(db, actor, goalId, {
+                expectedVersion: current.stateRevision, initial: true,
+              });
+            });
+            if (prepared.noOp) return prepared.goal;
+            // Provider I/O and its independently committed usage reservations run
+            // after the brief read commits; no goal row lock spans that wait.
+            const outcome = await goals.executeGoalPlan(prepared);
+            return goalStore.withWorkerTenant({ tenantId, userId }, (db, actor) =>
+              goals.applyGoalPlan(db, actor, goalId, { expectedVersion: prepared.expectedVersion, outcome }));
+          },
+          startGoalOnce: async ({ tenantId, userId, goalId }) => {
+            const result = await goalStore.withWorkerTenant({ tenantId, userId }, (db, actor) =>
+              goals.startGoalOnce(db, actor, goalId));
+            // Never start the durable prospecting job before the goal link commits.
+            if (result.jobId) await _astraProspectingService.runOnce({ tenantId, userId, jobId: result.jobId });
+            return result.goal;
+          },
+        });
+        evaluation.registerAstraEvaluationRoutes(registerAstraApiRoute, {
+          ...(process.env.ASTRA_WORKER_DATABASE_URL?.trim()
+            ? { store: featureWorkers.getAstraFeatureWorkerStore() } : {}),
+        });
+        registerAstraApiRoute({
+          method: 'GET',
+          path: /^\/api\/astra\/tenants\/(?<tenantId>[0-9a-f-]{36})\/offers(?:\/.*)?$/i,
+          handler: async (req, res, context) => {
+            const isProofPath = context.pathname.includes('/proofs');
+            const handled = isProofPath
+              ? await offers.handleOfferProofRoute({ req, res, ...context })
+              : await offers.handleTenantOfferRoute({ req, res, ...context });
+            if (!handled) throw Object.assign(new Error('Offer route was not found.'), { statusCode: 404, publicMessage: 'Offer route was not found.' });
+          },
+        });
+        registerAstraApiRoute({
+          method: 'POST',
+          path: /^\/api\/astra\/tenants\/(?<tenantId>[0-9a-f-]{36})\/offers(?:\/.*)?$/i,
+          handler: async (req, res, context) => {
+            const isProofPath = context.pathname.includes('/proofs');
+            const handled = isProofPath
+              ? await offers.handleOfferProofRoute({ req, res, ...context })
+              : await offers.handleTenantOfferRoute({ req, res, ...context });
+            if (!handled) throw Object.assign(new Error('Offer route was not found.'), { statusCode: 404, publicMessage: 'Offer route was not found.' });
+          },
+        });
+      });
+      return api;
+    })().catch(error => {
+      _astraRouteModules = null;
+      throw error;
+    });
+  }
+  return _astraRouteModules;
+}
+
+async function getAstraLegacyOfferDb() {
+  if (process.env.ASTRA_LEGACY_OFFER_BRIDGE !== '1' || !process.env.ODD_DB_PATH?.trim()) return undefined;
+  const database = await import('./pipeline/database.js');
+  return database.initDb();
+}
+
+function isLocalPreviewEgressRequest(method, pathname) {
+  if (process.env.LOCAL_PREVIEW !== '1') return false;
+  const verb = String(method || 'GET').toUpperCase();
+  if (verb === 'POST' && /^\/api\/sending\//.test(pathname) && !/\/cancel$/.test(pathname)) return true;
+  if (/^\/api\/(?:verify|qualify)\//.test(pathname) && !['GET', 'HEAD'].includes(verb) && !/\/cancel$/.test(pathname)) return true;
+  if (/^\/api\/(?:scrape|website-discovery|discovery|lead-discovery)(?:\/|$)/.test(pathname)) return true;
+  if (verb === 'POST' && /^\/api\/personalize\//.test(pathname) && !/\/cancel$/.test(pathname)) return true;
+  if (verb === 'GET' && pathname === '/api/personalize/ollama-test') return true;
+  if (verb !== 'GET' && verb !== 'HEAD' && /^\/api\/lead-strategies(?:\/|$)/i.test(pathname)) return true;
+  if (verb === 'POST' && pathname === '/api/auth/google') return true;
+  if (/^\/api\/webhooks\/meta(?:\/|$)/.test(pathname)) return true;
+  if (/^\/api\/astra\/tenants\/[^/]+\/ai\/(?:research|requests)(?:\/|$)/i.test(pathname)) return true;
+  return false;
+}
+
+export async function setPersonalizationTestAdapters({ sdk = null, config = null } = {}) {
+  if (process.env.NODE_ENV !== 'test') throw new Error('Personalization test injection is only available in test mode.');
+  const personalizer = await import('./pipeline/personalizer.js');
+  await personalizer.setPersonalizationTestAdapters({ sdk, config });
+}
+
+export function setWebsiteEmailDiscoveryTestManager(manager) {
+  if (process.env.NODE_ENV !== 'test') throw new Error('Website email discovery test injection is only available in test mode.');
+  _websiteEmailDiscoveryTestOverride = manager;
+  if (_pipeline) _pipeline.websiteEmailDiscovery = manager;
+}
+
+export function setWebsiteDiscoveryJobsTestManager(manager) {
+  if (process.env.NODE_ENV !== 'test') throw new Error('Website discovery job test injection is only available in test mode.');
+  _websiteDiscoveryJobsTestOverride = manager;
+  if (_pipeline) _pipeline.websiteDiscoveryJobs = manager;
+}
+
+export function setEpchDirectoryJobsTestManager(manager) {
+  if (process.env.NODE_ENV !== 'test') throw new Error('EPCH directory job test injection is only available in test mode.');
+  _epchDirectoryJobsTestOverride = manager;
+  if (_pipeline) _pipeline.epchDirectoryJobs = manager;
+}
+
+export function setLeadDiscoveryJobsTestManager(manager) {
+  if (process.env.NODE_ENV !== 'test') throw new Error('Lead discovery coordinator test injection is only available in test mode.');
+  _leadDiscoveryJobsTestOverride = manager;
+  if (_pipeline) _pipeline.leadDiscoveryJobs = manager;
+}
+
+export function setSearxngSearchFetchForTests(fetchImpl) {
+  if (process.env.NODE_ENV !== 'test') throw new Error('SearXNG search test injection is only available in test mode.');
+  if (fetchImpl !== null && typeof fetchImpl !== 'function') throw new TypeError('The test fetch must be a function or null.');
+  _searxngSearchFetchTestOverride = fetchImpl;
+}
+
+export function setMetaLeadAdsFetchForTests(fetchImpl) {
+  if (process.env.NODE_ENV !== 'test') throw new Error('Meta Lead Ads test fetch injection is only available in test mode.');
+  if (fetchImpl !== null && typeof fetchImpl !== 'function') throw new TypeError('The test fetch must be a function or null.');
+  _metaLeadAdsFetchTestOverride = fetchImpl;
+}
+
+export function setMetaLeadAdsClockForTests(now) {
+  if (process.env.NODE_ENV !== 'test') throw new Error('Meta Lead Ads clock injection is only available in test mode.');
+  if (now !== null && typeof now !== 'function') throw new TypeError('The test clock must be a function or null.');
+  _metaLeadAdsNowTestOverride = now;
+}
+
+export async function setImapReceiverForTests(receiver) {
+  if (process.env.NODE_ENV !== 'test') throw new Error('IMAP receiver test injection is only available in test mode.');
+  if (!receiver || typeof receiver.syncMailbox !== 'function' || typeof receiver.testMailbox !== 'function') {
+    throw new TypeError('The IMAP receiver test double must provide testMailbox and syncMailbox.');
+  }
+  _imapReceiverTestOverride = receiver;
+  if (_pipeline) {
+    _pipeline.imapSyncScheduler.stop();
+    const { createImapSyncScheduler } = await import('./pipeline/imap-sync-scheduler.js');
+    _pipeline.imapReceiver = receiver;
+    _pipeline.imapSyncScheduler = createImapSyncScheduler({ db: _pipeline.database.getDb(), receiver });
+  }
+}
+
+export function setLeadStrategyFetchForTests(fetchImpl) {
+  if (process.env.NODE_ENV !== 'test') throw new Error('Lead strategy test injection is only available in test mode.');
+  if (fetchImpl !== null && typeof fetchImpl !== 'function') throw new TypeError('The test fetch must be a function or null.');
+  _leadStrategyFetchTestOverride = fetchImpl;
+}
+
+async function getAuthManager() {
+  if (!_authManager) {
+    const [database, auth] = await Promise.all([
+      import('./pipeline/database.js'),
+      import('./pipeline/auth-manager.js'),
+    ]);
+    _authManager = auth.createAuthManager(database.initDb());
+  }
+  return _authManager;
+}
 async function getPipeline() {
   if (!_pipeline) {
     try {
       const [
         database, batchManager, dedup, csvImporter, leadDiscovery,
-        qualifier, emailVerifier, sendingEngine, abTesting, personalizer,
-        compliance, replyTracker, crmSync, archiver
+        qualifier, emailVerifier, sendingEngine, abTesting, personalizer, websiteEmailDiscoveryModule, websiteDiscoveryJobsModule, epchDirectoryJobsModule, epchMemberDirectoryModule, eepcCbamDirectoryModule, searxngSearchModule, leadDiscoveryJobsModule,
+        compliance, replyTracker, crmSync, archiver, listManager, segmentManager, campaignAudience, contactManager, contactImportJobsModule, contactFieldsModule, campaignSequence, campaignTemplates, imapReceiverModule, imapSyncSchedulerModule
       ] = await Promise.all([
         import('./pipeline/database.js'),
         import('./pipeline/batch-manager.js'),
@@ -44,20 +312,103 @@ async function getPipeline() {
         import('./pipeline/sending-engine.js'),
         import('./pipeline/ab-testing.js'),
         import('./pipeline/personalizer.js'),
+        import('./pipeline/website-email-discovery.js'),
+        import('./pipeline/website-discovery-jobs.js'),
+        import('./pipeline/epch-directory-jobs.js'),
+        import('./pipeline/epch-member-directory.js'),
+        import('./pipeline/eepc-cbam-directory.js'),
+        import('./pipeline/searxng-search.js'),
+        import('./pipeline/lead-discovery-jobs.js'),
         import('./pipeline/compliance.js'),
         import('./pipeline/reply-tracker.js'),
         import('./pipeline/crm-sync.js'),
         import('./pipeline/archiver.js'),
+        import('./pipeline/list-manager.js'),
+        import('./pipeline/segment-manager.js'),
+        import('./pipeline/campaign-audience.js'),
+        import('./pipeline/contact-manager.js'),
+        import('./pipeline/contact-import-jobs.js'),
+        import('./pipeline/contact-fields.js'),
+        import('./pipeline/campaign-sequence.js'),
+        import('./pipeline/campaign-templates.js'),
+        import('./pipeline/imap-receiver.js'),
+        import('./pipeline/imap-sync-scheduler.js'),
       ]);
 
       database.initDb();
+      const businessSearchTemplatesModule = await import('./pipeline/business-search-templates.js');
+      const businessSearchTemplates = businessSearchTemplatesModule.createBusinessSearchTemplates({ db: database.getDb() });
+      const qualificationScoringModule = await import('./pipeline/qualification-scoring.js');
+      const qualificationScoring = qualificationScoringModule.getQualificationScoringManager(database.getDb());
+      const qualificationReviewModule = await import('./pipeline/qualification-review.js');
+      const qualificationReviews = qualificationReviewModule.createQualificationReviewManager(database.getDb());
+      const websiteEmailDiscovery = _websiteEmailDiscoveryTestOverride
+        || websiteEmailDiscoveryModule.createWebsiteEmailDiscovery({ db: database.getDb() });
+      websiteEmailDiscovery.recoverInterruptedScans();
+      const websiteDiscoveryJobs = _websiteDiscoveryJobsTestOverride
+        || websiteDiscoveryJobsModule.createWebsiteDiscoveryJobs({
+          db: database.getDb(),
+          discovery: websiteEmailDiscovery,
+          createContact: contactManager.createContact,
+          verifyCandidate: emailVerifier.reverifyEmailById,
+        });
+      websiteDiscoveryJobs.recover();
+      const epchDirectoryJobs = _epchDirectoryJobsTestOverride
+        || epchDirectoryJobsModule.createEpchDirectoryJobs({
+          db: database.getDb(),
+          adapter: epchMemberDirectoryModule.createEpchMemberDirectoryAdapter(),
+          adapters: {
+            eepc_cbam: {
+              adapter: eepcCbamDirectoryModule.createEepcCbamDirectoryAdapter(),
+              sourceUrl: eepcCbamDirectoryModule.EEPC_CBAM_SOURCE_URL,
+              label: 'EEPC CBAM advisory directory',
+              evidenceType: 'eepc_cbam_directory',
+              extractorVersion: eepcCbamDirectoryModule.EEPC_CBAM_EXTRACTOR_VERSION,
+            },
+          },
+          createContact: contactManager.createContact,
+          verifyCandidate: emailVerifier.reverifyEmailById,
+        });
+      epchDirectoryJobs.recover();
+      const leadSearch = searxngSearchModule.createSearxngSearchManager({
+        db: database.getDb(),
+        websiteDiscoveryJobs,
+        ...( _searxngSearchFetchTestOverride ? { fetcher: _searxngSearchFetchTestOverride } : {}),
+      });
+      const leadDiscoveryJobs = _leadDiscoveryJobsTestOverride
+        || leadDiscoveryJobsModule.createLeadDiscoveryJobs({ db: database.getDb(), leadSearch, websiteDiscoveryJobs, epchDirectoryJobs });
+      emailVerifier.recoverInterruptedVerificationJobs();
+      qualifier.recoverInterruptedQualificationJobs();
       qualifier.recoverStuckLeads();
+      sendingEngine.recoverInterruptedSends();
+      const imapReceiver = _imapReceiverTestOverride
+        || imapReceiverModule.createImapReceiver({ db: database.getDb(), ingestReply: replyTracker.ingestInboundReply });
+      const contactImportJobs = contactImportJobsModule.createContactImportJobs({ db: database.getDb() });
+      void contactImportJobs.recover().catch(error => console.error('Contact import recovery failed:', error.message));
 
       _pipeline = {
         database, batchManager, dedup, csvImporter, leadDiscovery,
         qualifier, emailVerifier, sendingEngine, abTesting, personalizer,
-        compliance, replyTracker, crmSync, archiver
+        compliance, replyTracker, crmSync, archiver, listManager, segmentManager, campaignAudience, contactManager, contactImportJobs, contactFields: contactFieldsModule, campaignSequence, campaignTemplates, qualificationScoring, qualificationReviews, websiteEmailDiscovery, websiteDiscoveryJobs, epchDirectoryJobs, leadSearch, leadDiscoveryJobs,
+        imapReceiver, businessSearchTemplates,
+        imapSyncScheduler: imapSyncSchedulerModule.createImapSyncScheduler({
+          db: database.getDb(),
+          receiver: imapReceiver,
+        }),
       };
+      if (process.env.LOCAL_PREVIEW !== '1') void _pipeline.imapSyncScheduler.start();
+      if (process.env.LOCAL_PREVIEW !== '1' && !_metaWebhookRecoveryScheduled) {
+        _metaWebhookRecoveryScheduled = true;
+        setImmediate(() => {
+          void recoverMetaLeadWebhooksOnStartup({
+            db: database.getDb(),
+            fetchImpl: _metaLeadAdsFetchTestOverride || globalThis.fetch,
+          now: _metaLeadAdsNowTestOverride || Date.now,
+          }).then(result => {
+            if (result.examined) console.info(`Meta webhook startup recovery examined ${result.examined} pending notification(s); ${result.imported} imported.`);
+          }).catch(error => console.error('Meta webhook startup recovery failed:', error.message));
+        });
+      }
     } catch (error) {
       console.error('⚠️  Pipeline modules not loaded:', error.message);
       _pipeline = null;
@@ -66,13 +417,43 @@ async function getPipeline() {
   return _pipeline;
 }
 
+export async function recoverMetaLeadWebhooksOnStartup({ db, fetchImpl = globalThis.fetch, now = Date.now } = {}) {
+  if (!db) throw new TypeError('A database connection is required for Meta webhook recovery.');
+  const { createMetaLeadAdsManager } = await import('./pipeline/meta-lead-ads.js');
+  const manager = createMetaLeadAdsManager({ db, fetchImpl, now });
+  const status = manager.publicStatus();
+  if (status.connectionStatus !== 'provider_verified' || !status.webhookConfigured) {
+    return { examined: 0, imported: 0, failed: 0, inserted: 0, duplicates: 0, sendingWorkCreated: false };
+  }
+  // Recover only durable pending/stale-processing events. Known provider failures
+  // stay manual-only; this is one bounded pass, not another background scheduler.
+  return manager.processWebhookEvents({ limit: 25 });
+}
+
 // ── Parse request body ───────────────────────────────────────
-function parseBody(req) {
+function parseBody(req, maxBytes = 1024 * 1024) {
   return new Promise((resolve, reject) => {
-    let body = '';
-    req.on('data', chunk => { body += chunk; });
+    const chunks = [];
+    let totalBytes = 0;
+    let tooLarge = false;
+    req.on('data', chunk => {
+      totalBytes += chunk.length;
+      if (totalBytes > maxBytes) {
+        tooLarge = true;
+        chunks.length = 0;
+        return;
+      }
+      if (!tooLarge) chunks.push(chunk);
+    });
     req.on('end', () => {
+      if (tooLarge) {
+        const error = new Error('Request body is too large.');
+        error.statusCode = 413;
+        reject(error);
+        return;
+      }
       try {
+        const body = Buffer.concat(chunks).toString('utf8');
         resolve(body ? JSON.parse(body) : {});
       } catch {
         resolve({});
@@ -82,19 +463,496 @@ function parseBody(req) {
   });
 }
 
+function readRawBody(req, maxBytes) {
+  return new Promise((resolve, reject) => {
+    const chunks = [];
+    let totalBytes = 0;
+    let tooLarge = false;
+    req.on('data', chunk => {
+      totalBytes += chunk.length;
+      if (totalBytes > maxBytes) {
+        tooLarge = true;
+        chunks.length = 0;
+      } else if (!tooLarge) chunks.push(chunk);
+    });
+    req.on('end', () => {
+      if (tooLarge) {
+        const error = new Error('Request chunk exceeds the 256 KB limit.');
+        error.statusCode = 413;
+        reject(error);
+      } else resolve(Buffer.concat(chunks, totalBytes));
+    });
+    req.on('error', reject);
+  });
+}
+
+function parseUrlEncodedBody(req, maxBytes = 4096) {
+  return new Promise((resolve, reject) => {
+    const chunks = [];
+    let totalBytes = 0;
+    let tooLarge = false;
+    req.on('data', chunk => {
+      totalBytes += chunk.length;
+      if (totalBytes > maxBytes) { tooLarge = true; chunks.length = 0; return; }
+      if (!tooLarge) chunks.push(chunk);
+    });
+    req.on('end', () => {
+      if (tooLarge) {
+        const error = new Error('Form body is too large.');
+        error.statusCode = 413;
+        reject(error);
+        return;
+      }
+      resolve(new URLSearchParams(Buffer.concat(chunks).toString('utf8')));
+    });
+    req.on('error', reject);
+  });
+}
+
 // ── JSON response helpers ────────────────────────────────────
 function jsonResponse(res, data, status = 200) {
   res.writeHead(status, {
     'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type',
+    'Cache-Control': 'no-store',
   });
   res.end(JSON.stringify(data));
 }
 
 function errorResponse(res, message, status = 400) {
   jsonResponse(res, { error: message }, status);
+}
+
+const LEAD_SORT_COLUMNS = Object.freeze({
+  discovered_at: 'leads.discovered_at',
+  business_name: 'leads.business_name',
+  category: 'leads.category',
+  city: 'leads.city',
+  status: 'leads.status',
+});
+
+function decodeLeadPageCursor(value) {
+  if (value === null) return null;
+  if (typeof value !== 'string' || value.length > 4096 || !/^[A-Za-z0-9_-]+$/.test(value)) {
+    throw Object.assign(new Error('Contact page cursor is invalid.'), { statusCode: 400 });
+  }
+  let cursor;
+  try { cursor = JSON.parse(Buffer.from(value, 'base64url').toString('utf8')); }
+  catch { throw Object.assign(new Error('Contact page cursor is invalid.'), { statusCode: 400 }); }
+  if (!cursor || typeof cursor !== 'object' || Array.isArray(cursor) || !Number.isSafeInteger(cursor.id) || cursor.id < 1) {
+    throw Object.assign(new Error('Contact page cursor is invalid.'), { statusCode: 400 });
+  }
+  // Accept cursors issued by the earlier fixed discovered-at sort when the
+  // caller still requests that default ordering.
+  if (!Object.hasOwn(cursor, 'version') && Object.hasOwn(cursor, 'discoveredAt')) {
+    if (!(cursor.discoveredAt === null || (typeof cursor.discoveredAt === 'string' && cursor.discoveredAt.length <= 100))) {
+      throw Object.assign(new Error('Contact page cursor is invalid.'), { statusCode: 400 });
+    }
+    return {
+      sortBy: 'discovered_at', sortOrder: 'desc',
+      sortValue: cursor.discoveredAt === null ? '' : cursor.discoveredAt,
+      nullRank: cursor.discoveredAt === null ? 1 : 0,
+      id: cursor.id,
+    };
+  }
+  if (cursor.version !== 2 || !Object.hasOwn(LEAD_SORT_COLUMNS, cursor.sortBy)
+    || !['asc', 'desc'].includes(cursor.sortOrder)
+    || typeof cursor.sortValue !== 'string' || cursor.sortValue.length > 2000
+    || ![0, 1].includes(cursor.nullRank)) {
+    throw Object.assign(new Error('Contact page cursor is invalid.'), { statusCode: 400 });
+  }
+  return cursor;
+}
+
+function encodeLeadPageCursor(lead, sortBy, sortOrder) {
+  const rawValue = lead[sortBy];
+  return Buffer.from(JSON.stringify({
+    version: 2,
+    sortBy,
+    sortOrder,
+    sortValue: rawValue === null || rawValue === undefined ? '' : String(rawValue),
+    nullRank: rawValue === null || rawValue === undefined ? 1 : 0,
+    id: lead.id,
+  })).toString('base64url');
+}
+
+function requestCookies(req) {
+  return Object.fromEntries(String(req.headers.cookie || '').split(';').map(part => {
+    const separator = part.indexOf('=');
+    if (separator < 0) return ['', ''];
+    const key = part.slice(0, separator).trim();
+    try { return [key, decodeURIComponent(part.slice(separator + 1).trim())]; }
+    catch { return [key, '']; }
+  }).filter(([key]) => key));
+}
+
+function cookieSecurityAttribute() {
+  if (process.env.ODD_AUTH_COOKIE_SECURE === 'true') return '; Secure';
+  if (process.env.ODD_AUTH_COOKIE_SECURE === 'false') return '';
+  return process.env.NODE_ENV === 'production' ? '; Secure' : '';
+}
+
+function setAuthCookies(res, session, additionalCookies = []) {
+  const secure = cookieSecurityAttribute();
+  const maxAge = Math.max(0, Math.floor((session.expiresAt - Date.now()) / 1000));
+  res.setHeader('Set-Cookie', [
+    `odd_session=${encodeURIComponent(session.sessionToken)}; Path=/; Max-Age=${maxAge}; HttpOnly; SameSite=Strict${secure}`,
+    `odd_csrf=${encodeURIComponent(session.csrfToken)}; Path=/; Max-Age=${maxAge}; SameSite=Strict${secure}`,
+    ...additionalCookies,
+  ]);
+}
+
+function googleNonceCookie(value, maxAge = 300) {
+  return `odd_google_nonce=${encodeURIComponent(value)}; Path=/api/auth/google; Max-Age=${maxAge}; HttpOnly; SameSite=Strict${cookieSecurityAttribute()}`;
+}
+
+function isSameOriginRequest(req) {
+  const rawOrigin = req.headers.origin;
+  if (typeof rawOrigin !== 'string' || !rawOrigin || !fetchMetadataAllowsCredentialPost(req)) return false;
+  const expectedOrigin = trustedRequestOrigin(req);
+  if (!expectedOrigin) return false;
+  try {
+    const parsed = new URL(rawOrigin);
+    return ['http:', 'https:'].includes(parsed.protocol)
+      && parsed.origin === rawOrigin
+      && parsed.origin === expectedOrigin;
+  } catch {
+    return false;
+  }
+}
+
+function trustedRequestOrigin(req) {
+  const configuredValue = process.env.ODD_PUBLIC_BASE_URL ?? process.env.APP_URL;
+  if (configuredValue !== undefined) {
+    const configured = String(configuredValue).trim();
+    if (!configured) return null;
+    try {
+      const parsed = new URL(configured);
+      if (parsed.protocol !== 'https:' || !parsed.hostname || parsed.username || parsed.password
+        || !['', '/'].includes(parsed.pathname) || parsed.search || parsed.hash) return null;
+      return parsed.origin;
+    } catch {
+      return null;
+    }
+  }
+
+  const host = req.headers.host;
+  if (typeof host !== 'string' || !host) return null;
+  const scheme = req.socket?.encrypted ? 'https:' : 'http:';
+  try {
+    const parsed = new URL(`${scheme}//${host}`);
+    if (!parsed.hostname || parsed.username || parsed.password || parsed.pathname !== '/' || parsed.search || parsed.hash) return null;
+    return parsed.origin;
+  } catch {
+    return null;
+  }
+}
+
+function fetchMetadataAllowsCredentialPost(req) {
+  const siteHeader = req.headers['sec-fetch-site'];
+  if (siteHeader === undefined) return true;
+  if (typeof siteHeader !== 'string') return false;
+  return ['same-origin', 'same-site', 'none'].includes(siteHeader.toLowerCase());
+}
+
+const AUTH_JSON_POST_ROUTES = new Set([
+  '/api/auth/google',
+  '/api/auth/mfa/challenge',
+  '/api/auth/mfa/enroll',
+  '/api/auth/mfa/enroll/confirm',
+  '/api/auth/mfa/recovery-codes',
+  '/api/auth/mfa/disable',
+  '/api/auth/bootstrap',
+  '/api/auth/invitations/accept',
+  '/api/auth/login',
+  '/api/auth/recover',
+  '/api/auth/logout',
+]);
+const STRICT_ORIGIN_AUTH_POST_ROUTES = new Set([
+  '/api/auth/google',
+  '/api/auth/mfa/challenge',
+  '/api/auth/mfa/enroll',
+  '/api/auth/mfa/enroll/confirm',
+  '/api/auth/mfa/recovery-codes',
+  '/api/auth/mfa/disable',
+]);
+const AUTH_BODYLESS_POST_ROUTES = new Set([
+  '/api/auth/logout',
+  '/api/auth/mfa/enroll',
+]);
+
+function isApplicationJson(req) {
+  const contentType = req.headers['content-type'];
+  return typeof contentType === 'string'
+    && /^application\/json(?:\s*;\s*charset\s*=\s*(?:utf-8|"utf-8"))?\s*$/i.test(contentType);
+}
+
+function credentialRequestBoundary(req, res, pathname) {
+  if (req.method !== 'POST' || !AUTH_JSON_POST_ROUTES.has(pathname)) return false;
+  const hasOrigin = req.headers.origin !== undefined;
+  // Node's Fetch implementation emits Sec-Fetch-Mode:cors for machine clients;
+  // the site/destination/user headers identify browser context without breaking them.
+  const hasFetchMetadata = ['sec-fetch-site', 'sec-fetch-dest', 'sec-fetch-user']
+    .some(name => req.headers[name] !== undefined);
+  if (hasOrigin || STRICT_ORIGIN_AUTH_POST_ROUTES.has(pathname)) {
+    if (!isSameOriginRequest(req)) {
+      errorResponse(res, 'Authentication request origin was not accepted.', 403);
+      return true;
+    }
+  } else if (hasFetchMetadata) {
+    errorResponse(res, 'Authentication request origin was not accepted.', 403);
+    return true;
+  }
+  const bodylessRequest = AUTH_BODYLESS_POST_ROUTES.has(pathname);
+  if (!isApplicationJson(req) && !(bodylessRequest && req.headers['content-type'] === undefined)) {
+    errorResponse(res, 'Authentication requests must use application/json.', 415);
+    return true;
+  }
+  return false;
+}
+
+function clearAuthCookies(res) {
+  const secure = cookieSecurityAttribute();
+  res.setHeader('Set-Cookie', [
+    `odd_session=; Path=/; Max-Age=0; HttpOnly; SameSite=Strict${secure}`,
+    `odd_csrf=; Path=/; Max-Age=0; SameSite=Strict${secure}`,
+    googleNonceCookie('', 0),
+  ]);
+}
+
+function finishSignIn(res, result, status = 200, additionalCookies = []) {
+  res.setHeader('Cache-Control', 'no-store, private');
+  if (result?.mfaRequired) {
+    clearAuthCookies(res);
+    return jsonResponse(res, {
+      ok: true,
+      mfaRequired: true,
+      challengeToken: result.challengeToken,
+      expiresAt: result.expiresAt,
+      user: result.user,
+    }, status);
+  }
+  setAuthCookies(res, result, additionalCookies);
+  return jsonResponse(res, { ok: true, user: result.user }, status);
+}
+
+async function handleAuthRoute(req, res, pathname) {
+  if (credentialRequestBoundary(req, res, pathname)) return;
+  const auth = await getAuthManager();
+  const cookies = requestCookies(req);
+  if (pathname === '/api/auth/status' && req.method === 'GET') {
+    return jsonResponse(res, auth.publicStatus(cookies.odd_session));
+  }
+  if (pathname === '/api/auth/google/nonce' && req.method === 'GET') {
+    const { getGoogleClientId } = await import('./pipeline/google-oauth.js');
+    const clientId = getGoogleClientId();
+    if (!clientId) return errorResponse(res, 'Google sign-in is not configured.', 503);
+    const nonce = randomBytes(32).toString('base64url');
+    auth.issueGoogleNonce(nonce);
+    res.setHeader('Cache-Control', 'no-store, private');
+    res.setHeader('Set-Cookie', googleNonceCookie(nonce));
+    return jsonResponse(res, { clientId, nonce });
+  }
+  if (pathname === '/api/auth/google' && req.method === 'POST') {
+    const remoteAddress = req.socket?.remoteAddress || 'unknown';
+    const expiredNonceCookie = googleNonceCookie('', 0);
+    res.setHeader('Set-Cookie', expiredNonceCookie);
+    if (!isSameOriginRequest(req)) return errorResponse(res, 'Google sign-in request was not accepted.', 403);
+    auth.checkGoogleTokenAttempt(remoteAddress);
+    const body = await parseBody(req, 20 * 1024);
+    const nonce = cookies.odd_google_nonce;
+    if (!nonce || !body?.credential || typeof body.credential !== 'string') {
+      auth.recordGoogleTokenFailure(remoteAddress);
+      return errorResponse(res, 'Google sign-in could not be verified. Start again from this page.', 401);
+    }
+    if (!auth.consumeGoogleNonce(nonce)) {
+      auth.recordGoogleTokenFailure(remoteAddress);
+      return errorResponse(res, 'Google sign-in request expired or was already used. Start again from this page.', 401);
+    }
+    let identity;
+    try {
+      const { verifyGoogleIdToken } = await import('./pipeline/google-oauth.js');
+      identity = await verifyGoogleIdToken(body.credential, nonce);
+    } catch {
+      auth.recordGoogleTokenFailure(remoteAddress);
+      return errorResponse(res, 'Google sign-in could not be verified. Check the Google account and try again.', 401);
+    }
+    auth.clearGoogleTokenFailures(remoteAddress);
+    const session = await auth.googleLogin({ ...identity, bootstrapToken: body.bootstrapToken, remoteAddress });
+    return finishSignIn(res, session, 200, [expiredNonceCookie]);
+  }
+  if (pathname === '/api/auth/mfa/status' && req.method === 'GET') {
+    const session = auth.currentSession(cookies.odd_session);
+    if (!session) return errorResponse(res, 'Sign-in required.', 401);
+    res.setHeader('Cache-Control', 'no-store, private');
+    return jsonResponse(res, auth.mfaStatus(session));
+  }
+  if (pathname === '/api/auth/mfa/challenge' && req.method === 'POST') {
+    if (!isSameOriginRequest(req)) return errorResponse(res, 'Authenticator challenge request was not accepted.', 403);
+    const body = await parseBody(req, 16 * 1024);
+    const result = auth.completeMfaChallenge({
+      ...body,
+      remoteAddress: req.socket?.remoteAddress || 'unknown',
+    });
+    return finishSignIn(res, result);
+  }
+  if (['/api/auth/mfa/enroll', '/api/auth/mfa/enroll/confirm', '/api/auth/mfa/recovery-codes', '/api/auth/mfa/disable'].includes(pathname)
+    && req.method === 'POST') {
+    const session = auth.currentSession(cookies.odd_session);
+    if (!session) return errorResponse(res, 'Sign-in required.', 401);
+    if (!isSameOriginRequest(req) || !auth.verifyCsrf(session, cookies.odd_csrf, req.headers['x-csrf-token'])) {
+      return errorResponse(res, 'Security token was not accepted. Refresh the page and try again.', 403);
+    }
+    const remoteAddress = req.socket?.remoteAddress || 'unknown';
+    res.setHeader('Cache-Control', 'no-store, private');
+    if (pathname === '/api/auth/mfa/enroll') {
+      return jsonResponse(res, auth.beginMfaEnrollment(session, remoteAddress), 201);
+    }
+    const body = await parseBody(req, 16 * 1024);
+    if (pathname === '/api/auth/mfa/enroll/confirm') {
+      return jsonResponse(res, auth.confirmMfaEnrollment(session, body.code, remoteAddress));
+    }
+    if (pathname === '/api/auth/mfa/recovery-codes') {
+      return jsonResponse(res, await auth.regenerateMfaRecoveryCodes(session, { ...body, remoteAddress }));
+    }
+    return jsonResponse(res, await auth.disableMfa(session, { ...body, remoteAddress }));
+  }
+  if (pathname === '/api/auth/events' && req.method === 'GET') {
+    if (!auth.currentSession(cookies.odd_session)) return errorResponse(res, 'Sign-in required.', 401);
+    return jsonResponse(res, { events: auth.auditEvents(new URL(req.url, `http://localhost:${PORT}`).searchParams.get('limit')) });
+  }
+  if (pathname === '/api/auth/bootstrap' && req.method === 'POST') {
+    const body = await parseBody(req, 16 * 1024);
+    const session = await auth.bootstrap({ ...body, remoteAddress: req.socket?.remoteAddress || 'unknown' });
+    setAuthCookies(res, session);
+    return jsonResponse(res, { ok: true, user: session.user }, 201);
+  }
+  if (pathname === '/api/auth/invitations/accept' && req.method === 'POST') {
+    const body = await parseBody(req, 16 * 1024);
+    const session = await auth.acceptInvitation({ ...body, remoteAddress: req.socket?.remoteAddress || 'unknown' });
+    return finishSignIn(res, session, 201);
+  }
+  if (pathname === '/api/auth/login' && req.method === 'POST') {
+    const body = await parseBody(req, 16 * 1024);
+    const session = await auth.login({
+      ...body,
+      remoteAddress: req.socket?.remoteAddress || 'unknown',
+    });
+    return finishSignIn(res, session);
+  }
+  if (pathname === '/api/auth/recover' && req.method === 'POST') {
+    const body = await parseBody(req, 16 * 1024);
+    return jsonResponse(res, await auth.recover({
+      ...body,
+      remoteAddress: req.socket?.remoteAddress || 'unknown',
+    }));
+  }
+  if (pathname === '/api/auth/logout' && req.method === 'POST') {
+    const session = auth.currentSession(cookies.odd_session);
+    if (session && !auth.verifyCsrf(session, cookies.odd_csrf, req.headers['x-csrf-token'])) {
+      return errorResponse(res, 'CSRF token was not accepted.', 403);
+    }
+    auth.logout(cookies.odd_session, req.socket?.remoteAddress || 'unknown');
+    clearAuthCookies(res);
+    return jsonResponse(res, { ok: true });
+  }
+  return errorResponse(res, 'Unknown authentication route.', 404);
+}
+
+async function handleWorkspaceRoute(req, res, parsedUrl, session) {
+  const auth = await getAuthManager();
+  const pathname = parsedUrl.pathname;
+  const method = req.method;
+  const remoteAddress = req.socket?.remoteAddress || 'unknown';
+  if (pathname === '/api/workspace/members' && method === 'GET') {
+    return jsonResponse(res, { members: auth.listMembers() });
+  }
+  if (pathname === '/api/workspace/invitations' && method === 'GET') {
+    return jsonResponse(res, { invitations: auth.listInvitations() });
+  }
+  if (pathname === '/api/workspace/invitations' && method === 'POST') {
+    const body = await parseBody(req, 16 * 1024);
+    return jsonResponse(res, auth.createInvitation({ ...body, actor: session, remoteAddress }), 201);
+  }
+  const invitationMatch = pathname.match(/^\/api\/workspace\/invitations\/(\d+)$/);
+  if (invitationMatch && method === 'DELETE') {
+    return jsonResponse(res, auth.cancelInvitation({ actor: session, invitationId: invitationMatch[1], remoteAddress }));
+  }
+  const memberMatch = pathname.match(/^\/api\/workspace\/members\/(\d+)$/);
+  if (memberMatch && method === 'PATCH') {
+    const body = await parseBody(req, 16 * 1024);
+    return jsonResponse(res, auth.updateMemberRole({ actor: session, memberId: memberMatch[1], ...body, remoteAddress }));
+  }
+  if (memberMatch && method === 'DELETE') {
+    return jsonResponse(res, auth.deactivateMember({ actor: session, memberId: memberMatch[1], remoteAddress }));
+  }
+  return errorResponse(res, `Unknown workspace route: ${method} ${pathname}`, 404);
+}
+
+function isPublicApi(req, pathname) {
+  if (pathname === '/api/unsubscribe') return true;
+  if (pathname === '/api/replies/ingest' && (process.env.ODD_REPLY_INGEST_TOKEN || '').length >= 32) {
+    const supplied = String(req.headers.authorization || '').replace(/^Bearer\s+/i, '');
+    const expectedDigest = Buffer.from(process.env.ODD_REPLY_INGEST_TOKEN);
+    const suppliedDigest = Buffer.from(supplied);
+    return suppliedDigest.length === expectedDigest.length && timingSafeEqual(suppliedDigest, expectedDigest);
+  }
+  return false;
+}
+
+function hasUnsafeStaticPathSyntax(requestUrl) {
+  const rawPath = String(requestUrl || '').split('?', 1)[0];
+  if (rawPath.includes('%')) return true;
+  if (rawPath === '/') return false;
+  const segments = rawPath.split('/');
+  return segments[0] !== '' || segments.slice(1).some(segment => !segment || segment === '.' || segment === '..');
+}
+
+function isSafeAssetPath(pathname) {
+  if (pathname === '/shared/verification-classification.js') return true;
+  if (pathname === '/favicon.ico') return false;
+  const segments = pathname.split('/');
+  if (segments.length !== 3 || segments[0] !== '' || !segments[2]
+    || segments.slice(1).some(segment => !segment || segment === '.' || segment === '..' || segment.startsWith('.'))) return false;
+  const [directory, filename] = segments.slice(1);
+  if (!/^[A-Za-z0-9][A-Za-z0-9._-]*$/.test(filename)) return false;
+  if (directory === 'css') return /\.css$/i.test(filename);
+  if (directory === 'js') return /\.js$/i.test(filename);
+  if (directory === 'assets') return /\.(?:png|jpe?g|svg|ico)$/i.test(filename);
+  return false;
+}
+
+function isPublicStaticPath(pathname) {
+  return pathname === '/'
+    || pathname === '/login'
+    || pathname === '/index.html'
+    || pathname === '/growth.html'
+    || pathname === '/astra.html'
+    || isSafeAssetPath(pathname);
+}
+
+function serveStaticFile(req, res, reqPath) {
+  if (!isPublicStaticPath(reqPath) || hasUnsafeStaticPathSyntax(req.url)) {
+    res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'no-store' });
+    return res.end('Not found');
+  }
+  const filePath = path.resolve(__dirname, `.${reqPath === '/' || reqPath === '/login' ? '/index.html' : reqPath}`);
+  if (filePath !== __dirname && !filePath.startsWith(`${__dirname}${path.sep}`)) {
+    res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
+    return res.end('Not found');
+  }
+  const ext = path.extname(filePath).toLowerCase();
+  const mimeType = MIME_TYPES[ext] || 'application/octet-stream';
+  fs.readFile(filePath, (err, content) => {
+    if (err) {
+      res.writeHead(err.code === 'ENOENT' ? 404 : 500, { 'Content-Type': 'text/plain; charset=utf-8' });
+      return res.end(err.code === 'ENOENT' ? 'Not found' : 'Server error');
+    }
+    res.writeHead(200, {
+      'Content-Type': mimeType,
+      'Cache-Control': reqPath === '/login' ? 'no-store' : 'no-cache',
+    });
+    res.end(req.method === 'HEAD' ? undefined : content);
+  });
 }
 
 // ── Rate limiting (per-IP, for qualify endpoints) ────────────
@@ -115,24 +973,179 @@ function checkRateLimit(req) {
 }
 
 // ── API Routes ───────────────────────────────────────────────
-async function handleApiRequest(req, res, parsedUrl) {
+async function handleApiRequest(req, res, parsedUrl, actor = null) {
   const pipeline = await getPipeline();
   if (!pipeline) {
     return errorResponse(res, 'Pipeline not initialized. Run "node pipeline/cli.js seed" first.', 503);
   }
 
-  const { database, batchManager, dedup } = pipeline;
+  const { database, batchManager, dedup, listManager, segmentManager, contactManager, contactImportJobs, contactFields, compliance, websiteEmailDiscovery, websiteDiscoveryJobs, epchDirectoryJobs, leadSearch, leadDiscoveryJobs, businessSearchTemplates } = pipeline;
   const db = database.getDb();
   const pathname = parsedUrl.pathname;
   const method = req.method;
   const params = parsedUrl.searchParams;
 
+  const leadDiscoveryJobsPath = '/api/leads/discovery-jobs';
+  const leadDiscoverySearchesPath = '/api/leads/discovery-searches';
+  const businessSearchTemplatesPath = '/api/leads/business-search-templates';
+  if (pathname === businessSearchTemplatesPath && method === 'GET') {
+    const effectiveActor = actor || (AUTH_TEST_BYPASS ? { id: null, role: 'owner' } : null);
+    try { return jsonResponse(res, businessSearchTemplates.list(effectiveActor)); }
+    catch (error) {
+      const status = Number.isInteger(error.statusCode) ? error.statusCode : 500;
+      return jsonResponse(res, { error: status >= 500 ? 'Search templates could not be loaded.' : error.message,
+        code: error.code || 'business_search_template_failed' }, status);
+    }
+  }
+  if (pathname === businessSearchTemplatesPath && method === 'POST') {
+    try {
+      const body = await parseBody(req, 16 * 1024);
+      const effectiveActor = actor || (AUTH_TEST_BYPASS ? { id: null, role: 'owner' } : null);
+      return jsonResponse(res, businessSearchTemplates.save(body, effectiveActor), 201);
+    } catch (error) {
+      const status = Number.isInteger(error.statusCode) ? error.statusCode : 500;
+      return jsonResponse(res, { error: status >= 500 ? 'Search template could not be saved.' : error.message,
+        code: error.code || 'business_search_template_failed' }, status);
+    }
+  }
+  const businessSearchTemplateMatch = pathname.match(/^\/api\/leads\/business-search-templates\/(\d+)$/);
+  if (businessSearchTemplateMatch && method === 'PUT') {
+    try {
+      const body = await parseBody(req, 16 * 1024);
+      const effectiveActor = actor || (AUTH_TEST_BYPASS ? { id: null, role: 'owner' } : null);
+      return jsonResponse(res, businessSearchTemplates.save(body, effectiveActor, businessSearchTemplateMatch[1]));
+    } catch (error) {
+      const status = Number.isInteger(error.statusCode) ? error.statusCode : 500;
+      return jsonResponse(res, { error: status >= 500 ? 'Search template could not be updated.' : error.message,
+        code: error.code || 'business_search_template_failed' }, status);
+    }
+  }
+  if (businessSearchTemplateMatch && method === 'DELETE') {
+    try {
+      const effectiveActor = actor || (AUTH_TEST_BYPASS ? { id: null, role: 'owner' } : null);
+      return jsonResponse(res, businessSearchTemplates.remove(businessSearchTemplateMatch[1], effectiveActor));
+    } catch (error) {
+      const status = Number.isInteger(error.statusCode) ? error.statusCode : 500;
+      return jsonResponse(res, { error: status >= 500 ? 'Search template could not be deleted.' : error.message,
+        code: error.code || 'business_search_template_failed' }, status);
+    }
+  }
+  if (pathname === leadDiscoverySearchesPath && method === 'GET') {
+    const effectiveActor = actor || (AUTH_TEST_BYPASS ? { id: null, role: 'owner' } : null);
+    return jsonResponse(res, leadDiscoveryJobs.listSavedSearches(effectiveActor));
+  }
+  if (pathname === leadDiscoverySearchesPath && method === 'POST') {
+    try {
+      const body = await parseBody(req, 16 * 1024);
+      const effectiveActor = actor || (AUTH_TEST_BYPASS ? { id: null, role: 'owner' } : null);
+      return jsonResponse(res, leadDiscoveryJobs.saveSearch(body, effectiveActor), 201);
+    } catch (error) {
+      const status = Number.isInteger(error.statusCode) ? error.statusCode : 500;
+      return jsonResponse(res, { error: status >= 500 ? 'Saved search could not be stored.' : error.message, code: error.code || 'saved_search_failed' }, status);
+    }
+  }
+  const leadDiscoverySavedSearchMatch = pathname.match(/^\/api\/leads\/discovery-searches\/(\d+)$/);
+  if (leadDiscoverySavedSearchMatch && method === 'DELETE') {
+    try {
+      const effectiveActor = actor || (AUTH_TEST_BYPASS ? { id: null, role: 'owner' } : null);
+      return jsonResponse(res, leadDiscoveryJobs.deleteSavedSearch(leadDiscoverySavedSearchMatch[1], effectiveActor));
+    } catch (error) {
+      const status = Number.isInteger(error.statusCode) ? error.statusCode : 500;
+      return jsonResponse(res, { error: status >= 500 ? 'Saved search could not be deleted.' : error.message, code: error.code || 'saved_search_failed' }, status);
+    }
+  }
+  if (pathname === leadDiscoveryJobsPath && method === 'GET') {
+    return jsonResponse(res, leadDiscoveryJobs.listJobs({ batch_id: params.get('batch_id'), limit: params.get('limit') }));
+  }
+  if (pathname === leadDiscoveryJobsPath && method === 'POST') {
+    try {
+      const body = await parseBody(req, 32 * 1024);
+      const effectiveActor = actor || (AUTH_TEST_BYPASS ? { id: null, role: 'owner' } : null);
+      return jsonResponse(res, leadDiscoveryJobs.createJob(body, effectiveActor), 201);
+    } catch (error) {
+      const status = Number.isInteger(error.statusCode) ? error.statusCode : 500;
+      return jsonResponse(res, { error: status >= 500 ? 'Lead discovery could not be started.' : error.message, code: error.code || 'lead_discovery_failed' }, status);
+    }
+  }
+  const leadDiscoveryJobMatch = pathname.match(/^\/api\/leads\/discovery-jobs\/(\d+)(?:\/(pause|resume|cancel))?$/);
+  if (leadDiscoveryJobMatch) {
+    const [, jobId, action] = leadDiscoveryJobMatch;
+    try {
+      if (!action && method === 'GET') {
+        const job = leadDiscoveryJobs.getJob(jobId);
+        return job ? jsonResponse(res, job) : errorResponse(res, 'Lead discovery job not found.', 404);
+      }
+      if (action && method === 'POST') {
+        const effectiveActor = actor || (AUTH_TEST_BYPASS ? { id: null, role: 'owner' } : null);
+        return jsonResponse(res, { job: leadDiscoveryJobs.control(jobId, action, effectiveActor) });
+      }
+      return errorResponse(res, 'Unknown lead discovery job route.', 404);
+    } catch (error) {
+      const status = Number.isInteger(error.statusCode) ? error.statusCode : 500;
+      return jsonResponse(res, { error: status >= 500 ? 'Lead discovery could not be updated.' : error.message, code: error.code || 'lead_discovery_failed' }, status);
+    }
+  }
+
+  if (pathname === '/api/leads/sources/meta' || pathname.startsWith('/api/leads/sources/meta/')) {
+    const { isMetaLeadAdsAdmin, createMetaLeadAdsManager } = await import('./pipeline/meta-lead-ads.js');
+    if (!(AUTH_TEST_BYPASS && !actor) && !isMetaLeadAdsAdmin(actor)) {
+      return errorResponse(res, 'Only workspace owners and admins can manage Meta Lead Ads connections.', 403);
+    }
+    const manager = createMetaLeadAdsManager({ db, fetchImpl: _metaLeadAdsFetchTestOverride || globalThis.fetch,
+      now: _metaLeadAdsNowTestOverride || Date.now });
+    res.setHeader('Cache-Control', 'no-store, private');
+    if (pathname === '/api/leads/sources/meta' && method === 'GET') {
+      return jsonResponse(res, manager.publicStatus());
+    }
+    if (pathname === '/api/leads/sources/meta' && method === 'PUT') {
+      const body = await parseBody(req, 12 * 1024);
+      return jsonResponse(res, manager.saveConfiguration(body));
+    }
+    if (pathname === '/api/leads/sources/meta/test' && method === 'POST') {
+      const result = await manager.testConnection();
+      return jsonResponse(res, result);
+    }
+    if (pathname === '/api/leads/sources/meta/forms' && method === 'GET') {
+      const result = await manager.listForms();
+      return jsonResponse(res, result);
+    }
+    if (pathname === '/api/leads/sources/meta/forms/next' && method === 'POST') {
+      const result = await manager.listForms({ continuePage: true });
+      return jsonResponse(res, result);
+    }
+    if (pathname === '/api/leads/sources/meta/import' && method === 'POST') {
+      const body = await parseBody(req, 24 * 1024);
+      const result = await manager.importForm(body);
+      return jsonResponse(res, result);
+    }
+    if (pathname === '/api/leads/sources/meta/webhook-status' && method === 'GET') {
+      return jsonResponse(res, manager.getWebhookStatus());
+    }
+    if (pathname === '/api/leads/sources/meta/webhook-config' && method === 'PUT') {
+      const body = await parseBody(req, 12 * 1024);
+      return jsonResponse(res, manager.saveWebhookConfiguration(body));
+    }
+    if (pathname === '/api/leads/sources/meta/webhook-subscribe' && method === 'POST') {
+      return jsonResponse(res, await manager.subscribePageToLeadgen());
+    }
+    const formWebhookSettings = pathname.match(/^\/api\/leads\/sources\/meta\/webhook-forms\/(\d+)$/);
+    if (formWebhookSettings && method === 'PUT') {
+      const body = await parseBody(req, 12 * 1024);
+      return jsonResponse(res, await manager.saveFormMapping({ ...body, form_id: formWebhookSettings[1] }));
+    }
+    if (pathname === '/api/leads/sources/meta/webhooks/process' && method === 'POST') {
+      const body = await parseBody(req, 4 * 1024);
+      return jsonResponse(res, await manager.processWebhookEvents({ includeFailed: body.retry_failed === true, operatorInitiated: true }));
+    }
+    return errorResponse(res, 'Unknown Meta Lead Ads route.', 404);
+  }
+
   // OPTIONS (CORS preflight)
   if (method === 'OPTIONS') {
     res.writeHead(204, {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+      'Access-Control-Allow-Methods': 'GET, POST, PUT, PATCH, DELETE, OPTIONS',
       'Access-Control-Allow-Headers': 'Content-Type',
+      'Cache-Control': 'no-store',
     });
     return res.end();
   }
@@ -175,13 +1188,237 @@ async function handleApiRequest(req, res, parsedUrl) {
     return jsonResponse(res, result);
   }
 
+  // ── Contact lists ────────────────────────────────────────
+  if (pathname === '/api/lists' && method === 'GET') {
+    const rawLimit = params.get('limit');
+    const rawOffset = params.get('offset');
+    const limit = rawLimit === null ? 100 : Number(rawLimit);
+    const offset = rawOffset === null ? 0 : Number(rawOffset);
+    if (!Number.isSafeInteger(limit) || limit < 1 || limit > 200) return errorResponse(res, 'limit must be an integer from 1 to 200.');
+    if (!Number.isSafeInteger(offset) || offset < 0) return errorResponse(res, 'offset must be a non-negative integer.');
+    const result = listManager.listContactLists({
+      includeArchived: params.get('include_archived') !== 'false',
+      search: (params.get('search') || '').trim().slice(0, 120),
+      limit,
+      offset,
+    });
+    return jsonResponse(res, result);
+  }
+
+  if (pathname === '/api/lists' && method === 'POST') {
+    const body = await parseBody(req);
+    if (typeof body.name !== 'string' || !body.name.trim()) return errorResponse(res, 'List name is required.');
+    const result = listManager.createContactList(body);
+    return jsonResponse(res, result, 201);
+  }
+
+  const listExportMatch = pathname.match(/^\/api\/lists\/(\d+)\/export$/);
+  if (listExportMatch && method === 'GET') {
+    const exported = listManager.exportContactList(listExportMatch[1]);
+    if (!exported) return errorResponse(res, 'List not found.', 404);
+    res.writeHead(200, {
+      'Content-Type': 'text/csv; charset=utf-8',
+      'Content-Disposition': `attachment; filename="contact-list-${exported.list.id}.csv"`,
+      'X-Content-Type-Options': 'nosniff',
+      'Cache-Control': 'no-store',
+    });
+    const headers = ['contact_id', 'business_name', 'email', 'verification_status', 'category', 'city', 'country', 'phone', 'website_url', 'status', 'added_at'];
+    const write = async chunk => {
+      try {
+        if (await writeResponseChunk(res, chunk)) return true;
+      } catch (error) {
+        if (!res.headersSent && !res.destroyed) throw error;
+      }
+      if (!res.destroyed) res.destroy();
+      return false;
+    };
+    const closeRows = () => {
+      if (typeof exported.rows.return === 'function') exported.rows.return();
+    };
+    try {
+      if (!await write(`\uFEFF${headers.map(listManager.csvCell).join(',')}\r\n`)) {
+        closeRows();
+        return;
+      }
+      for (const row of exported.rows) {
+        if (!await write(`${headers.map(header => listManager.csvCell(row[header])).join(',')}\r\n`)) return;
+      }
+      res.end();
+    } catch (error) {
+      closeRows();
+      if (!res.headersSent && !res.destroyed) throw error;
+      if (!res.destroyed) res.destroy();
+      return;
+    }
+    return;
+  }
+
+  const listMembersMatch = pathname.match(/^\/api\/lists\/(\d+)\/members$/);
+  if (listMembersMatch && method === 'GET') {
+    const rawLimit = params.get('limit');
+    const rawOffset = params.get('offset');
+    const limit = rawLimit === null ? 50 : Number(rawLimit);
+    const offset = rawOffset === null ? 0 : Number(rawOffset);
+    if (!Number.isSafeInteger(limit) || limit < 1 || limit > 200) return errorResponse(res, 'limit must be an integer from 1 to 200.');
+    if (!Number.isSafeInteger(offset) || offset < 0) return errorResponse(res, 'offset must be a non-negative integer.');
+    const result = listManager.listContactListMembers(listMembersMatch[1], {
+      search: (params.get('search') || '').trim().slice(0, 120), limit, offset,
+    });
+    if (!result) return errorResponse(res, 'List not found.', 404);
+    return jsonResponse(res, result);
+  }
+
+  if (listMembersMatch && method === 'POST') {
+    const body = await parseBody(req);
+    const result = listManager.addContactsToList(listMembersMatch[1], body.leadIds);
+    return jsonResponse(res, result);
+  }
+
+  const listMemberMatch = pathname.match(/^\/api\/lists\/(\d+)\/members\/(\d+)$/);
+  if (listMemberMatch && method === 'DELETE') {
+    const result = listManager.removeContactFromList(listMemberMatch[1], listMemberMatch[2]);
+    return jsonResponse(res, result);
+  }
+
+  if (pathname === '/api/contact-segments' && method === 'GET') {
+    return jsonResponse(res, segmentManager.listContactSegments());
+  }
+  if (pathname === '/api/contact-segments' && method === 'POST') {
+    const body = await parseBody(req);
+    return jsonResponse(res, segmentManager.createContactSegment(body), 201);
+  }
+  const contactSegmentMatch = pathname.match(/^\/api\/contact-segments\/(\d+)$/);
+  if (contactSegmentMatch && method === 'PATCH') {
+    const body = await parseBody(req);
+    const result = segmentManager.updateContactSegment(contactSegmentMatch[1], body);
+    if (!result) return errorResponse(res, 'Segment not found.', 404);
+    return jsonResponse(res, result);
+  }
+  if (contactSegmentMatch && method === 'DELETE') {
+    const deleted = segmentManager.deleteContactSegment(contactSegmentMatch[1]);
+    if (!deleted) return errorResponse(res, 'Segment not found.', 404);
+    return jsonResponse(res, { ok: true, deleted: true });
+  }
+
+  const listMatch = pathname.match(/^\/api\/lists\/(\d+)$/);
+  if (listMatch && method === 'GET') {
+    const result = listManager.getContactList(listMatch[1]);
+    if (!result) return errorResponse(res, 'List not found.', 404);
+    return jsonResponse(res, result);
+  }
+  if (listMatch && method === 'PATCH') {
+    const body = await parseBody(req);
+    const result = listManager.updateContactList(listMatch[1], body);
+    if (!result) return errorResponse(res, 'List not found.', 404);
+    return jsonResponse(res, result);
+  }
+
+  // ── Persistent contact tags ──────────────────────────────
+  if (pathname === '/api/contact-tags' && method === 'GET') {
+    return jsonResponse(res, contactManager.listContactTags({ includeArchived: params.get('include_archived') === 'true' }));
+  }
+  if (pathname === '/api/contact-tags' && method === 'POST') {
+    const body = await parseBody(req);
+    return jsonResponse(res, contactManager.createContactTag(body.name), 201);
+  }
+  const contactTagMatch = pathname.match(/^\/api\/contact-tags\/(\d+)$/);
+  if (contactTagMatch && method === 'PATCH') {
+    const body = await parseBody(req);
+    const tag = contactManager.renameContactTag(contactTagMatch[1], body.name);
+    if (!tag) return errorResponse(res, 'Active tag not found.', 404);
+    return jsonResponse(res, tag);
+  }
+  if (contactTagMatch && method === 'DELETE') {
+    const result = contactManager.archiveContactTag(contactTagMatch[1]);
+    if (!result) return errorResponse(res, 'Tag not found.', 404);
+    return jsonResponse(res, result);
+  }
+  const contactTagRestoreMatch = pathname.match(/^\/api\/contact-tags\/(\d+)\/restore$/);
+  if (contactTagRestoreMatch && method === 'POST') {
+    const result = contactManager.archiveContactTag(contactTagRestoreMatch[1], false);
+    if (!result) return errorResponse(res, 'Tag not found.', 404);
+    return jsonResponse(res, result);
+  }
+  const leadTagsMatch = pathname.match(/^\/api\/leads\/(\d+)\/tags$/);
+  if (leadTagsMatch && method === 'PUT') {
+    const body = await parseBody(req);
+    return jsonResponse(res, contactManager.assignContactTags(leadTagsMatch[1], body.tagIds, body.createTag));
+  }
+  if (pathname === '/api/leads/bulk/tags' && method === 'PUT') {
+    const body = await parseBody(req, 64 * 1024);
+    return jsonResponse(res, contactManager.assignContactTagsToMany(body.leadIds, body.tagIds));
+  }
+
   // ── GET /api/leads ───────────────────────────────────────
   if (pathname === '/api/leads' && method === 'GET') {
     const batchId = params.get('batch_id');
     const status = params.get('status');
-    const limit = parseInt(params.get('limit')) || 100;
-    const offset = parseInt(params.get('offset')) || 0;
-    const search = params.get('search');
+    const emailStatus = params.get('email_status');
+    const suppressionStatus = params.get('suppression_status');
+    const rawLimit = params.get('limit');
+    const limit = rawLimit === null ? 100 : Number(rawLimit);
+    const rawOffset = params.get('offset');
+    const offset = rawOffset === null ? 0 : Number(rawOffset);
+    const sortBy = params.get('sort_by') ?? 'discovered_at';
+    const sortOrder = params.get('sort_order') ?? 'desc';
+    if (!Object.hasOwn(LEAD_SORT_COLUMNS, sortBy)) return errorResponse(res, 'sort_by must be discovered_at, business_name, category, city, or status.');
+    if (!['asc', 'desc'].includes(sortOrder)) return errorResponse(res, 'sort_order must be asc or desc.');
+    if (!Number.isSafeInteger(limit) || limit < 1 || limit > 500) return errorResponse(res, 'limit must be an integer from 1 to 500.');
+    if (!Number.isSafeInteger(offset) || offset < 0 || offset > 100_000_000) return errorResponse(res, 'offset must be a non-negative integer no greater than 100000000.');
+    let cursor;
+    try { cursor = decodeLeadPageCursor(params.get('cursor')); }
+    catch (error) { return errorResponse(res, error.message); }
+    if (cursor && (cursor.sortBy !== sortBy || cursor.sortOrder !== sortOrder)) {
+      return errorResponse(res, 'Contact page cursor does not match the selected sort.');
+    }
+    const useOffset = params.has('offset') && cursor === null;
+    const search = (params.get('search') || '').replaceAll('\u0000', '').trim().slice(0, 120);
+    const hasCustomFieldKey = params.has('custom_field_key');
+    const hasCustomFieldValue = params.has('custom_field_value');
+    if (hasCustomFieldKey !== hasCustomFieldValue) return errorResponse(res, 'Provide both custom_field_key and custom_field_value.');
+    let customFieldFilter = null;
+    if (hasCustomFieldKey) {
+      try {
+        customFieldFilter = contactFields.normalizeContactFieldFilter(db,
+          params.get('custom_field_key'), params.get('custom_field_value'), { allowArchived: true });
+      } catch (error) {
+        return errorResponse(res, error.message, error.statusCode || 400);
+      }
+    }
+    const rawTagId = params.get('tag_id');
+    const tagId = rawTagId === null || rawTagId === '' ? null : Number(rawTagId);
+    if (tagId !== null && (!Number.isSafeInteger(tagId) || tagId < 1)) return errorResponse(res, 'tag_id must be a positive integer.');
+    const emailStatuses = new Set(['deliverable', 'risky', 'undeliverable', 'unknown', 'no_email']);
+    if (emailStatus && !emailStatuses.has(emailStatus)) return errorResponse(res, 'email_status must be deliverable, risky, undeliverable, unknown, or no_email.');
+    if (suppressionStatus && !['suppressed', 'not_suppressed'].includes(suppressionStatus)) {
+      return errorResponse(res, 'suppression_status must be suppressed or not_suppressed.');
+    }
+
+    const hasSuppressedEmail = `(
+      EXISTS (SELECT 1 FROM suppression_list sl WHERE leads.email IS NOT NULL AND lower(trim(sl.email))=lower(trim(leads.email)))
+      OR EXISTS (SELECT 1 FROM lead_emails le JOIN suppression_list sl ON lower(trim(sl.email))=lower(trim(le.email)) WHERE le.lead_id=leads.id)
+    )`;
+
+    // Website and directory discovery save email candidates in lead_emails;
+    // they do not always populate the legacy leads.email column. Treat the
+    // first explicitly-primary address (or oldest saved candidate) as the
+    // contact-list address while preserving every candidate on the contact.
+    const primaryEmail = `COALESCE(NULLIF(trim(leads.email),''),(
+      SELECT NULLIF(trim(le.email),'') FROM lead_emails le
+      WHERE le.lead_id=leads.id AND NULLIF(trim(le.email),'') IS NOT NULL
+      ORDER BY le.is_primary DESC,le.id ASC LIMIT 1
+    ))`;
+    const primaryEmailStatus = `CASE
+      WHEN NULLIF(trim(leads.email),'') IS NULL AND NOT EXISTS (
+        SELECT 1 FROM lead_emails le WHERE le.lead_id=leads.id AND NULLIF(trim(le.email),'') IS NOT NULL
+      ) THEN 'no_email'
+      ELSE COALESCE((SELECT CASE WHEN le.verification_status IN ('deliverable','risky','undeliverable')
+          THEN le.verification_status ELSE 'unknown' END
+        FROM lead_emails le WHERE le.lead_id=leads.id
+          AND (NULLIF(trim(leads.email),'') IS NULL OR lower(trim(le.email))=lower(trim(leads.email)))
+        ORDER BY CASE WHEN lower(trim(le.email))=lower(trim(leads.email)) THEN 0 ELSE 1 END,
+          le.is_primary DESC,le.id ASC LIMIT 1),'unknown')
+    END`;
 
     let query = 'SELECT * FROM leads WHERE 1=1';
     const queryParams = [];
@@ -194,42 +1431,569 @@ async function handleApiRequest(req, res, parsedUrl) {
       query += ' AND status = ?';
       queryParams.push(status);
     }
+    if (emailStatus === 'no_email') {
+      query += ` AND ${primaryEmailStatus} = 'no_email'`;
+    } else if (emailStatus) {
+      if (emailStatus === 'unknown') {
+        query += ` AND (
+          EXISTS (SELECT 1 FROM lead_emails le WHERE le.lead_id=leads.id
+            AND CASE WHEN le.verification_status IN ('deliverable','risky','undeliverable')
+              THEN le.verification_status ELSE 'unknown' END = 'unknown')
+          OR (NULLIF(trim(leads.email),'') IS NOT NULL AND NOT EXISTS (
+            SELECT 1 FROM lead_emails le WHERE le.lead_id=leads.id
+              AND lower(trim(le.email))=lower(trim(leads.email))))
+        )`;
+      } else {
+        query += ` AND EXISTS (SELECT 1 FROM lead_emails le WHERE le.lead_id=leads.id
+          AND CASE WHEN le.verification_status IN ('deliverable','risky','undeliverable')
+            THEN le.verification_status ELSE 'unknown' END = ?)`;
+        queryParams.push(emailStatus);
+      }
+    }
+    if (suppressionStatus === 'suppressed') query += ` AND ${hasSuppressedEmail}`;
+    else if (suppressionStatus === 'not_suppressed') query += ` AND NOT ${hasSuppressedEmail}`;
+    if (tagId !== null) {
+      query += ` AND EXISTS (
+        SELECT 1 FROM lead_contact_tags lct JOIN contact_tags ct ON ct.id=lct.tag_id
+        WHERE lct.lead_id=leads.id AND ct.id=? AND ct.status='active'
+      )`;
+      queryParams.push(tagId);
+    }
+    if (customFieldFilter) {
+      query += ` AND EXISTS (
+        SELECT 1 FROM lead_custom_field_values lcfv
+        WHERE lcfv.lead_id=leads.id AND lcfv.field_id=? AND lcfv.value_json=?
+      )`;
+      queryParams.push(customFieldFilter.fieldId, customFieldFilter.valueJson);
+    }
     if (search) {
-      query += ' AND (business_name LIKE ? OR city LIKE ? OR email LIKE ?)';
-      const searchTerm = `%${search}%`;
-      queryParams.push(searchTerm, searchTerm, searchTerm);
+      const searchColumns = [
+        'business_name', 'email', 'phone', 'address', 'city', 'state', 'country', 'category',
+        'website_url', 'facebook_url', 'source', 'source_details', 'source_url',
+      ];
+      query += ` AND (${searchColumns.map(column => `${column} LIKE ? ESCAPE '\\'`).join(' OR ')}
+        OR EXISTS (SELECT 1 FROM lead_emails observed WHERE observed.lead_id=leads.id AND observed.email LIKE ? ESCAPE '\\'))`;
+      const searchTerm = `%${search.replace(/[\\%_]/g, '\\$&')}%`;
+      queryParams.push(...searchColumns.map(() => searchTerm), searchTerm);
     }
 
     // Get total count
-    const countQuery = query.replace('SELECT *', 'SELECT COUNT(*) as count');
+    const countQuery = query.replace(/^SELECT \* FROM leads/, 'SELECT COUNT(*) as count FROM leads');
     const total = db.prepare(countQuery).get(...queryParams).count;
 
-    query += ' ORDER BY discovered_at DESC LIMIT ? OFFSET ?';
-    queryParams.push(limit, offset);
+    query = query.replace(/^SELECT \* FROM leads/, `SELECT leads.*,
+      (SELECT trim(observed.email) FROM lead_emails observed WHERE observed.lead_id=leads.id
+        AND NULLIF(trim(observed.email),'') IS NOT NULL ORDER BY observed.is_primary DESC,observed.id LIMIT 1) AS observed_email,
+      (SELECT COALESCE(observed.verification_status,'unknown') FROM lead_emails observed WHERE observed.lead_id=leads.id
+        AND NULLIF(trim(observed.email),'') IS NOT NULL ORDER BY observed.is_primary DESC,observed.id LIMIT 1) AS observed_email_status,
+      (SELECT COUNT(DISTINCT lower(trim(observed.email))) FROM lead_emails observed WHERE observed.lead_id=leads.id
+        AND NULLIF(trim(observed.email),'') IS NOT NULL) AS observed_email_count,
+      ${primaryEmail} AS primary_email,
+      ${primaryEmailStatus} AS primary_email_status,
+      CASE WHEN ${hasSuppressedEmail} THEN 1 ELSE 0 END AS has_suppressed_email
+      FROM leads`);
+    const sortColumn = LEAD_SORT_COLUMNS[sortBy];
+    const sortExpression = `COALESCE(${sortColumn}, '')`;
+    const nullRankExpression = `CASE WHEN ${sortColumn} IS NULL THEN 1 ELSE 0 END`;
+    const direction = sortOrder.toUpperCase();
+    if (cursor) {
+      const comparator = sortOrder === 'asc' ? '>' : '<';
+      query += ` AND (${nullRankExpression} > ? OR (${nullRankExpression} = ? AND
+        (${sortExpression} ${comparator} ? OR (${sortExpression} = ? AND leads.id ${comparator} ?))))`;
+      queryParams.push(cursor.nullRank, cursor.nullRank, cursor.sortValue, cursor.sortValue, cursor.id);
+    }
+    query += ` ORDER BY ${nullRankExpression} ASC, ${sortExpression} ${direction}, leads.id ${direction} LIMIT ?`;
+    queryParams.push(limit + 1);
+    if (useOffset) {
+      query += ' OFFSET ?';
+      queryParams.push(offset);
+    }
 
-    const leads = db.prepare(query).all(...queryParams);
+    const resultPage = db.prepare(query).all(...queryParams);
+    const hasMore = resultPage.length > limit;
+    const leads = hasMore ? resultPage.slice(0, limit) : resultPage;
+    if (leads.length) {
+      const leadIds = leads.map(lead => Number(lead.id));
+      const storedEmails = db.prepare(`SELECT le.lead_id,le.email,
+          CASE WHEN le.verification_status IN ('deliverable','risky','undeliverable')
+            THEN le.verification_status ELSE 'unknown' END AS verification_status,
+          le.is_primary
+        FROM lead_emails le
+        WHERE le.lead_id IN (${leadIds.map(() => '?').join(',')}) AND NULLIF(trim(le.email),'') IS NOT NULL
+        ORDER BY le.is_primary DESC,le.id ASC`).all(...leadIds);
+      const emailsByLead = new Map(leadIds.map(id => [id, []]));
+      for (const email of storedEmails) emailsByLead.get(Number(email.lead_id))?.push({
+        email: email.email,
+        verification_status: email.verification_status,
+        is_primary: Boolean(email.is_primary),
+      });
+      for (const lead of leads) {
+        const emails = emailsByLead.get(Number(lead.id)) || [];
+        if (lead.email && !emails.some(email => email.email.trim().toLowerCase() === lead.email.trim().toLowerCase())) {
+          emails.unshift({ email: lead.email, verification_status: 'unknown', is_primary: true });
+        }
+        lead.emails = emails;
+      }
+    }
+    const nextCursor = hasMore && leads.length ? encodeLeadPageCursor(leads.at(-1), sortBy, sortOrder) : null;
 
     return jsonResponse(res, {
       leads,
-      pagination: { total, limit, offset, pages: Math.ceil(total / limit) },
+      pagination: { total, limit, offset: useOffset ? offset : null, pages: Math.ceil(total / limit), hasMore, nextCursor },
     });
+  }
+
+  if (pathname === '/api/leads' && method === 'POST') {
+    const body = await parseBody(req);
+    const result = contactManager.createContact(body);
+    return jsonResponse(res, result, 201);
+  }
+  if (pathname === '/api/contact-fields' && method === 'GET') {
+    return jsonResponse(res, { fields: contactFields.listContactFieldDefinitions(db, { includeArchived: params.get('include_archived') === 'true' }) });
+  }
+  if (pathname === '/api/contact-fields' && method === 'POST') {
+    const body = await parseBody(req, 16 * 1024);
+    return jsonResponse(res, contactFields.createContactField(db, body), 201);
+  }
+  const contactFieldMatch = pathname.match(/^\/api\/contact-fields\/(\d+)$/);
+  if (contactFieldMatch && method === 'PATCH') {
+    const body = await parseBody(req, 16 * 1024);
+    const field = contactFields.updateContactField(db, contactFieldMatch[1], body);
+    if (!field) return errorResponse(res, 'Custom field not found.', 404);
+    return jsonResponse(res, field);
+  }
+  if (contactFieldMatch && method === 'DELETE') {
+    const field = contactFields.archiveContactField(db, contactFieldMatch[1]);
+    if (!field) return errorResponse(res, 'Custom field not found.', 404);
+    return jsonResponse(res, field);
+  }
+  if (pathname === '/api/leads/import/preview' && method === 'POST') {
+    const body = await parseBody(req, 5 * 1024 * 1024 + 64 * 1024);
+    const result = contactManager.previewContactsImport(body.batch_id, body.csv, body.columnMap || {});
+    return jsonResponse(res, result);
+  }
+  if (pathname === '/api/leads/import/preview-sample' && method === 'POST') {
+    const body = await parseBody(req, 5 * 1024 * 1024 + 64 * 1024);
+    const result = await contactManager.previewContactsImportSample(body.batch_id, body.csv, body.columnMap || {});
+    return jsonResponse(res, result);
+  }
+  if (pathname === '/api/leads/import/openstreetmap/preview' && method === 'POST') {
+    const body = await parseBody(req, 5 * 1024 * 1024 + 64 * 1024);
+    if (body.attribution_acknowledged !== true) return errorResponse(res, 'Confirm your right to use the export and the OpenStreetMap ODbL attribution requirements.', 400);
+    const batchId = Number(body.batch_id);
+    if (!Number.isSafeInteger(batchId) || batchId < 1) return errorResponse(res, 'Choose an existing open batch.', 400);
+    const batch = db.prepare('SELECT id,status FROM batches WHERE id=?').get(batchId);
+    if (!batch) return errorResponse(res, 'Batch not found.', 404);
+    if (batch.status !== 'open') return errorResponse(res, 'Contacts can only be imported into an open batch.', 409);
+    const parsed = parseOsmExport(body.export);
+    const existingSourceIds = parsed.records.filter(record => db.prepare('SELECT 1 FROM leads WHERE source_url=? LIMIT 1').get(record.source_url)).map(record => record.osm_id);
+    return jsonResponse(res, {
+      batchId,
+      attribution: OSM_ATTRIBUTION,
+      featureCount: parsed.featureCount,
+      candidateCount: parsed.records.length,
+      existingSourceDuplicates: existingSourceIds.length,
+      rejections: parsed.rejections.slice(0, 100),
+      sample: parsed.records.slice(0, 5),
+    });
+  }
+  if (pathname === '/api/leads/import/openstreetmap' && method === 'POST') {
+    const body = await parseBody(req, 5 * 1024 * 1024 + 64 * 1024);
+    if (body.attribution_acknowledged !== true) return errorResponse(res, 'Confirm your right to use the export and the OpenStreetMap ODbL attribution requirements.', 400);
+    const batchId = Number(body.batch_id);
+    if (!Number.isSafeInteger(batchId) || batchId < 1) return errorResponse(res, 'Choose an existing open batch.', 400);
+    const batch = db.prepare('SELECT id,status FROM batches WHERE id=?').get(batchId);
+    if (!batch) return errorResponse(res, 'Batch not found.', 404);
+    if (batch.status !== 'open') return errorResponse(res, 'Contacts can only be imported into an open batch.', 409);
+    const parsed = parseOsmExport(body.export);
+    const exportDuplicates = parsed.rejections.filter(row => row.reason === 'duplicate_osm_object_in_export');
+    const sourceInvalids = parsed.rejections.filter(row => row.reason !== 'duplicate_osm_object_in_export');
+    const imported = parsed.records.length
+      ? contactManager.importContactsToBatch(batchId, parsed.csv, {}, 'openstreetmap')
+      : { counts: { inserted: 0, duplicates: 0, invalid: 0 }, duplicates: [], errors: [], rejections: [] };
+    const rowForCandidate = new Map(parsed.records.map((record, index) => [index + 2, record]));
+    const remap = row => {
+      const record = rowForCandidate.get(row.row);
+      return { ...row, ...(record ? { row: record.row, osm_id: record.osm_id } : {}) };
+    };
+    const rejectedByImporter = imported.rejections.map(remap);
+    return jsonResponse(res, {
+      batchId,
+      attribution: OSM_ATTRIBUTION,
+      counts: {
+        parsed: parsed.featureCount,
+        inserted: imported.counts.inserted,
+        duplicates: imported.counts.duplicates + exportDuplicates.length,
+        invalid: imported.counts.invalid + sourceInvalids.length,
+      },
+      duplicates: [...imported.duplicates.map(remap), ...exportDuplicates].slice(0, 100),
+      errors: [...imported.errors, ...sourceInvalids.map(row => `Feature ${row.row}: ${row.reason}`)].slice(0, 100),
+      rejections: [...rejectedByImporter, ...parsed.rejections].slice(0, 5000),
+    });
+  }
+  if (pathname === '/api/leads/import-jobs' && method === 'POST') {
+    const body = await parseBody(req, 16 * 1024);
+    return jsonResponse(res, contactImportJobs.createJob(body), 201);
+  }
+  if (pathname === '/api/leads/import-jobs' && method === 'GET') {
+    return jsonResponse(res, { jobs: contactImportJobs.listJobs(params.get('batch_id'), params.get('limit')) });
+  }
+  const rejectionCsvMatch = pathname.match(/^\/api\/leads\/import-jobs\/(\d+)\/rejections\.csv$/);
+  if (rejectionCsvMatch && method === 'GET') {
+    const importJobId = rejectionCsvMatch[1];
+    if (!contactImportJobs.getJob(importJobId)) return errorResponse(res, 'Import job not found.', 404);
+    res.writeHead(200, {
+      'Content-Type': 'text/csv; charset=utf-8',
+      'Content-Disposition': `attachment; filename="contact-import-${importJobId}-rejections.csv"`,
+      'Cache-Control': 'private, no-store',
+      'X-Content-Type-Options': 'nosniff',
+    });
+    for (const chunk of contactImportJobs.rejectionCsv(importJobId)) {
+      if (!res.write(chunk)) await new Promise(resolve => res.once('drain', resolve));
+    }
+    return res.end();
+  }
+  const importJobMatch = pathname.match(/^\/api\/leads\/import-jobs\/(\d+)(?:\/(chunks|cancel|resume|rejections))?$/);
+  if (importJobMatch) {
+    const [, importJobId, importJobAction] = importJobMatch;
+    if (!importJobAction && method === 'GET') {
+      const job = contactImportJobs.getJob(importJobId);
+      if (!job) return errorResponse(res, 'Import job not found.', 404);
+      return jsonResponse(res, job);
+    }
+    if (importJobAction === 'chunks' && method === 'PUT') {
+      const bytes = await readRawBody(req, 256 * 1024);
+      const range = /^bytes (\d+)-(\d+)\/(\d+)$/.exec(String(req.headers['content-range'] || ''));
+      if (!range) return errorResponse(res, 'Content-Range must specify the exact chunk byte range.', 400);
+      const result = await contactImportJobs.uploadChunk(importJobId, {
+        start: Number(range[1]), end: Number(range[2]), total: Number(range[3]), bytes,
+      });
+      return jsonResponse(res, result);
+    }
+    if (importJobAction === 'cancel' && method === 'POST') {
+      return jsonResponse(res, { job: contactImportJobs.cancel(importJobId) });
+    }
+    if (importJobAction === 'resume' && method === 'POST') {
+      return jsonResponse(res, { job: await contactImportJobs.resume(importJobId) });
+    }
+    if (importJobAction === 'rejections' && method === 'GET') {
+      return jsonResponse(res, contactImportJobs.rejections(importJobId, {
+        limit: params.get('limit'), offset: params.get('offset'),
+      }));
+    }
+  }
+  if (pathname === '/api/leads/import' && method === 'POST') {
+    const body = await parseBody(req, 5 * 1024 * 1024 + 64 * 1024);
+    const result = contactManager.importContactsToBatch(body.batch_id, body.csv, body.columnMap || {});
+    return jsonResponse(res, result);
+  }
+
+  if (pathname === '/api/leads/search-provider' || pathname === '/api/leads/search-provider/test') {
+    const providerAdmin = AUTH_TEST_BYPASS && !actor ? true : ['owner', 'admin'].includes(actor?.role);
+    if (method !== 'GET' && !providerAdmin) return errorResponse(res, 'Only workspace owners and admins can manage the search provider.', 403);
+    res.setHeader('Cache-Control', 'no-store, private');
+    if (pathname === '/api/leads/search-provider' && method === 'GET') return jsonResponse(res, leadSearch.publicStatus());
+    if (pathname === '/api/leads/search-provider' && method === 'PUT') {
+      const body = await parseBody(req, 8 * 1024);
+      const settings = leadSearch.saveConfiguration(body, actor || { role: 'admin', id: null });
+      if (actor) {
+        try { (await getAuthManager()).recordAuditEvent('lead_search_provider_updated', actor.id, req.socket?.remoteAddress || 'unknown'); }
+        catch (error) { console.error('Lead search provider audit event could not be recorded:', error.message); }
+      }
+      return jsonResponse(res, { settings });
+    }
+    if (pathname === '/api/leads/search-provider/test' && method === 'POST') {
+      if (!checkRateLimit(req)) return errorResponse(res, 'Rate limit exceeded', 429);
+      return jsonResponse(res, await leadSearch.testConnection());
+    }
+    return errorResponse(res, 'Unknown search provider route.', 404);
+  }
+  const leadSearchJobsPath = '/api/leads/search-jobs';
+  if (pathname === leadSearchJobsPath && method === 'GET') {
+    return jsonResponse(res, leadSearch.listJobs({ batch_id: params.get('batch_id'), limit: params.get('limit') }));
+  }
+  if (pathname === leadSearchJobsPath && method === 'POST') {
+    if (!checkRateLimit(req)) return errorResponse(res, 'Rate limit exceeded', 429);
+    try {
+      const body = await parseBody(req, 8 * 1024);
+      return jsonResponse(res, await leadSearch.search(body), 201);
+    } catch (error) {
+      const status = Number.isInteger(error.statusCode) ? error.statusCode : 500;
+      return jsonResponse(res, { error: status >= 500 ? 'Business search could not be completed.' : error.message, code: error.code || 'lead_search_failed' }, status);
+    }
+  }
+  if (pathname === leadSearchJobsPath + '/import-selected' && method === 'POST') {
+    if (!checkRateLimit(req)) return errorResponse(res, 'Rate limit exceeded', 429);
+    try {
+      const body = await parseBody(req, 8 * 1024);
+      return jsonResponse(res, leadSearch.importSelectedResults(body));
+    } catch (error) {
+      const status = Number.isInteger(error.statusCode) ? error.statusCode : 500;
+      return jsonResponse(res, { error: status >= 500 ? 'Selected websites could not be added.' : error.message, code: error.code || 'lead_search_failed' }, status);
+    }
+  }
+  const leadSearchJobMatch = pathname.match(/^\/api\/leads\/search-jobs\/(\d+)(?:\/(import|next-page))?$/);
+  if (leadSearchJobMatch) {
+    const [, jobId, action] = leadSearchJobMatch;
+    try {
+      if (!action && method === 'GET') {
+        const job = leadSearch.getJob(jobId);
+        return job ? jsonResponse(res, job) : errorResponse(res, 'Business search job not found.', 404);
+      }
+      if (action === 'next-page' && method === 'POST') {
+        if (!checkRateLimit(req)) return errorResponse(res, 'Rate limit exceeded', 429);
+        return jsonResponse(res, await leadSearch.loadNextPage(jobId), 201);
+      }
+      if (action === 'import' && method === 'POST') {
+        const body = await parseBody(req, 8 * 1024);
+        return jsonResponse(res, leadSearch.importResults(jobId, body));
+      }
+      return errorResponse(res, 'Unknown business search job route.', 404);
+    } catch (error) {
+      const status = Number.isInteger(error.statusCode) ? error.statusCode : 500;
+      return jsonResponse(res, { error: status >= 500 ? 'Search results could not be imported.' : error.message, code: error.code || 'lead_search_failed' }, status);
+    }
+  }
+
+  const websiteDiscoveryJobsPath = '/api/leads/website-discovery-jobs';
+  if (pathname === websiteDiscoveryJobsPath && method === 'GET') {
+    return jsonResponse(res, websiteDiscoveryJobs.listJobs({ batch_id: params.get('batch_id'), limit: params.get('limit') }));
+  }
+
+  const epchDirectoryJobsPath = '/api/leads/directory-jobs';
+  if (pathname === epchDirectoryJobsPath && method === 'GET') {
+    return jsonResponse(res, epchDirectoryJobs.listJobs({ batch_id: params.get('batch_id'), limit: params.get('limit') }));
+  }
+  if (pathname === epchDirectoryJobsPath && method === 'POST') {
+    try {
+      const body = await parseBody(req, 16 * 1024);
+      return jsonResponse(res, epchDirectoryJobs.createJob(body), 201);
+    } catch (error) {
+      const status = Number.isInteger(error.statusCode) ? error.statusCode : 500;
+      return jsonResponse(res, { error: status >= 500 ? 'Directory import could not be created.' : error.message, code: error.code || 'directory_job_failed' }, status);
+    }
+  }
+  const epchDirectoryJobMatch = pathname.match(/^\/api\/leads\/directory-jobs\/(\d+)(?:\/(pause|resume|cancel|retry|retry-verification|export))?$/);
+  if (epchDirectoryJobMatch) {
+    const [, jobId, action] = epchDirectoryJobMatch;
+    try {
+      if (!action && method === 'GET') {
+        const job = epchDirectoryJobs.getJob(jobId);
+        return job ? jsonResponse(res, job) : errorResponse(res, 'Directory job not found.', 404);
+      }
+      if (action === 'pause' && method === 'POST') return jsonResponse(res, { job: epchDirectoryJobs.pause(jobId) });
+      if (action === 'resume' && method === 'POST') return jsonResponse(res, { job: epchDirectoryJobs.resume(jobId, { extendPages: true }) });
+      if (action === 'cancel' && method === 'POST') return jsonResponse(res, { job: epchDirectoryJobs.cancel(jobId) });
+      if (action === 'retry' && method === 'POST') return jsonResponse(res, { job: epchDirectoryJobs.retry(jobId) });
+      if (action === 'retry-verification' && method === 'POST') return jsonResponse(res, epchDirectoryJobs.retryVerification(jobId));
+      if (action === 'export' && method === 'GET') {
+        const csv = epchDirectoryJobs.exportCsv(jobId);
+        if (csv === null) return errorResponse(res, 'EPCH directory job not found.', 404);
+        res.writeHead(200, {
+          'Content-Type': 'text/csv; charset=utf-8',
+          'Content-Disposition': `attachment; filename="business-directory-${jobId}-evidence.csv"`,
+          'Cache-Control': 'no-store, private',
+        });
+        return res.end(csv);
+      }
+      return errorResponse(res, 'Unknown EPCH directory job route.', 404);
+    } catch (error) {
+      const status = Number.isInteger(error.statusCode) ? error.statusCode : 500;
+      return jsonResponse(res, { error: status >= 500 ? 'Directory import could not be completed.' : error.message, code: error.code || 'directory_job_failed' }, status);
+    }
+  }
+  if (pathname === websiteDiscoveryJobsPath && method === 'POST') {
+    try {
+      const body = await parseBody(req, 5 * 1024 * 1024);
+      return jsonResponse(res, websiteDiscoveryJobs.createJob({ ...body, source: 'website_seed' }), 201);
+    } catch (error) {
+      const status = Number.isInteger(error.statusCode) ? error.statusCode : 500;
+      return jsonResponse(res, { error: status >= 500 ? 'Website discovery job could not be created.' : error.message, code: error.code || 'website_discovery_job_failed' }, status);
+    }
+  }
+  const websiteDiscoveryJobMatch = pathname.match(/^\/api\/leads\/website-discovery-jobs\/(\d+)(?:\/(pause|resume|cancel|retry|retry-verification|export))?$/);
+  if (websiteDiscoveryJobMatch) {
+    const [, jobId, action] = websiteDiscoveryJobMatch;
+    try {
+      if (!action && method === 'GET') {
+        const rawOffset = parsedUrl.searchParams.get('offset');
+        const rawLimit = parsedUrl.searchParams.get('limit');
+        if ((rawOffset !== null && !/^\d{1,10}$/.test(rawOffset))
+          || (rawLimit !== null && !/^\d{1,4}$/.test(rawLimit))) {
+          return errorResponse(res, 'Website discovery page offset and size must be whole numbers.', 400);
+        }
+        const job = websiteDiscoveryJobs.getJob(jobId, {
+          offset: rawOffset === null ? 0 : Number(rawOffset),
+          limit: rawLimit === null ? 100 : Number(rawLimit),
+        });
+        return job ? jsonResponse(res, job) : errorResponse(res, 'Website discovery job not found.', 404);
+      }
+      if (action === 'pause' && method === 'POST') return jsonResponse(res, { job: websiteDiscoveryJobs.pause(jobId) });
+      if (action === 'resume' && method === 'POST') return jsonResponse(res, { job: websiteDiscoveryJobs.resume(jobId) });
+      if (action === 'cancel' && method === 'POST') return jsonResponse(res, { job: websiteDiscoveryJobs.cancel(jobId) });
+      if (action === 'retry' && method === 'POST') {
+        const body = await parseBody(req, 4 * 1024);
+        return jsonResponse(res, { job: websiteDiscoveryJobs.retryTask(jobId, body.task_id) });
+      }
+      if (action === 'retry-verification' && method === 'POST') {
+        return jsonResponse(res, websiteDiscoveryJobs.retryVerification(jobId));
+      }
+      if (action === 'export' && method === 'GET') {
+        const csv = websiteDiscoveryJobs.exportCsv(jobId);
+        if (csv === null) return errorResponse(res, 'Website discovery job not found.', 404);
+        res.writeHead(200, {
+          'Content-Type': 'text/csv; charset=utf-8',
+          'Content-Disposition': `attachment; filename="website-discovery-${jobId}-evidence.csv"`,
+          'Cache-Control': 'no-store, private',
+        });
+        return res.end(csv);
+      }
+      return errorResponse(res, 'Unknown website discovery job route.', 404);
+    } catch (error) {
+      const status = Number.isInteger(error.statusCode) ? error.statusCode : 500;
+      return jsonResponse(res, { error: status >= 500 ? 'Website discovery job could not be completed.' : error.message, code: error.code || 'website_discovery_job_failed' }, status);
+    }
+  }
+
+  const websiteEmailScanMatch = pathname.match(/^\/api\/leads\/(\d+)\/website-email-scan$/);
+  if (websiteEmailScanMatch && method === 'POST') {
+    try {
+      return jsonResponse(res, await websiteEmailDiscovery.scanLead(websiteEmailScanMatch[1]), 201);
+    } catch (error) {
+      const status = Number.isInteger(error.statusCode) ? error.statusCode : 500;
+      return jsonResponse(res, {
+        error: status >= 500 ? 'The website scan stopped safely.' : error.message,
+        code: error.code || 'website_scan_failed',
+        scan: error.scan || null,
+      }, status);
+    }
+  }
+
+  const websiteEmailRefreshMatch = pathname.match(/^\/api\/leads\/(\d+)\/website-email-scan\/refresh$/);
+  if (websiteEmailRefreshMatch && method === 'POST') {
+    try {
+      return jsonResponse(res, await websiteEmailDiscovery.scanLead(websiteEmailRefreshMatch[1], { refresh: true }), 200);
+    } catch (error) {
+      const status = Number.isInteger(error.statusCode) ? error.statusCode : 500;
+      return jsonResponse(res, {
+        error: status >= 500 ? 'The website refresh stopped safely.' : error.message,
+        code: error.code || 'website_refresh_failed',
+        scan: error.scan || null,
+      }, status);
+    }
   }
 
   // ── GET /api/leads/:id ───────────────────────────────────
   const leadMatch = pathname.match(/^\/api\/leads\/(\d+)$/);
+  if (leadMatch && method === 'DELETE') {
+    const result = contactManager.deleteContact(leadMatch[1]);
+    if (!result) return errorResponse(res, 'Lead not found', 404);
+    return jsonResponse(res, result);
+  }
+  if (leadMatch && method === 'PATCH') {
+    const body = await parseBody(req);
+    const result = contactManager.updateContact(leadMatch[1], body);
+    if (!result) return errorResponse(res, 'Lead not found', 404);
+    return jsonResponse(res, result);
+  }
   if (leadMatch && method === 'GET') {
     const leadId = parseInt(leadMatch[1]);
     const lead = db.prepare('SELECT * FROM leads WHERE id = ?').get(leadId);
     if (!lead) return errorResponse(res, 'Lead not found', 404);
 
-    // Include emails
-    const emails = db.prepare('SELECT * FROM lead_emails WHERE lead_id = ?').all(leadId);
+    // Include stored verification evidence and a read-only view of global
+    // suppression. The lookup is case-insensitive to cover legacy addresses.
+    const emails = db.prepare(`SELECT le.*,
+        CASE WHEN EXISTS (SELECT 1 FROM suppression_list sl WHERE lower(trim(sl.email))=lower(trim(le.email))) THEN 1 ELSE 0 END AS is_suppressed,
+        (SELECT COALESCE(NULLIF(trim(sl.reason),''),'Unspecified') FROM suppression_list sl
+          WHERE lower(trim(sl.email))=lower(trim(le.email)) ORDER BY sl.added_at DESC,sl.email LIMIT 1) AS suppression_reason
+      FROM lead_emails le WHERE le.lead_id=? ORDER BY le.is_primary DESC,le.id`).all(leadId);
+    const profileEvidence = db.prepare(`SELECT source_url,evidence_type,raw_excerpt,content_hash,extractor_version,observed_at
+      FROM lead_profile_source_evidence WHERE lead_id=? ORDER BY observed_at DESC,id DESC`).all(leadId);
+    if (emails.length) {
+      const ids = emails.map(email => email.id);
+      const evidence = db.prepare(`SELECT id,lead_email_id,source_url,evidence_type,raw_excerpt,content_hash,extractor_version,observed_at
+        FROM lead_email_source_evidence WHERE lead_email_id IN (${ids.map(() => '?').join(',')})
+        ORDER BY observed_at DESC,id DESC`).all(...ids);
+      const sourceRefreshHistory = db.prepare(`SELECT r.generation,r.status AS refresh_status,
+          p.outcome,p.observed_at AS page_observed_at,p.content_hash AS page_content_hash,o.state,
+          o.prior_content_hash,o.prior_raw_excerpt,o.prior_extractor_version,
+          o.content_hash AS current_content_hash,o.raw_excerpt AS current_raw_excerpt,
+          o.extractor_version AS current_extractor_version,o.observed_at AS email_observed_at
+        FROM lead_website_email_refreshes r
+        LEFT JOIN lead_website_email_refresh_pages p
+          ON p.refresh_id=r.id AND p.source_url=? AND p.fetch_mode=?
+        LEFT JOIN lead_website_email_refresh_observations o
+          ON o.refresh_id=r.id AND o.lead_email_id=? AND o.source_url=? AND o.fetch_mode=?
+        WHERE r.lead_id=? ORDER BY r.generation DESC LIMIT 20`);
+      const evidenceByEmail = new Map();
+      for (const item of evidence) {
+        if (!evidenceByEmail.has(item.lead_email_id)) evidenceByEmail.set(item.lead_email_id, []);
+        const fetchMode = String(item.evidence_type || '').startsWith('rendered_') ? 'rendered' : 'http';
+        const refreshHistory = sourceRefreshHistory.all(item.source_url, fetchMode, item.lead_email_id,
+          item.source_url, fetchMode, leadId).map(row => ({
+          generation: row.generation,
+          status: row.refresh_status,
+          outcome: row.outcome || 'not_rechecked',
+          state: row.outcome === 'fetched' ? row.state || 'not_rechecked' : row.outcome || 'not_rechecked',
+          observed_at: row.email_observed_at || row.page_observed_at || null,
+          page_content_hash: row.page_content_hash || null,
+          prior_content_hash: row.prior_content_hash || null,
+          prior_excerpt: row.prior_raw_excerpt || null,
+          prior_extractor_version: row.prior_extractor_version || null,
+          current_content_hash: row.current_content_hash || null,
+          current_excerpt: row.current_raw_excerpt || null,
+          current_extractor_version: row.current_extractor_version || null,
+        }));
+        const refresh = refreshHistory[0];
+        evidenceByEmail.get(item.lead_email_id).push({ id: item.id, source_url: item.source_url, evidence_type: item.evidence_type,
+          raw_excerpt: item.raw_excerpt, content_hash: item.content_hash, extractor_version: item.extractor_version, observed_at: item.observed_at,
+          refresh_state: refresh?.state || null,
+          refresh_observed_at: refresh?.observed_at || null, refresh_generation: refresh?.generation || null,
+          refresh_history: refreshHistory,
+          contact_points: [] });
+      }
+      const evidenceRows = [...evidenceByEmail.values()].flat();
+      if (evidenceRows.length) {
+        const evidenceIds = evidenceRows.map(item => item.id).filter(Number.isSafeInteger);
+        const points = evidenceIds.length ? db.prepare(`SELECT evidence_id,contact_type,contact_name,contact_title
+          FROM lead_email_contact_point_evidence WHERE evidence_id IN (${evidenceIds.map(() => '?').join(',')})
+          ORDER BY id`).all(...evidenceIds) : [];
+        const evidenceById = new Map(evidenceRows.map(item => [item.id, item]));
+        for (const point of points) evidenceById.get(point.evidence_id)?.contact_points.push({
+          contact_type: point.contact_type, contact_name: point.contact_name, contact_title: point.contact_title,
+        });
+      }
+      const latestRefreshGeneration = websiteEmailDiscovery.getLeadScan(leadId)?.latest_refresh?.generation;
+      for (const email of emails) {
+        email.source_evidence = evidenceByEmail.get(email.id) || [];
+        const currentStates = email.source_evidence
+          .filter(source => source.refresh_generation === latestRefreshGeneration && ['present', 'not_present'].includes(source.refresh_state));
+        const hasPresent = currentStates.some(source => source.refresh_state === 'present');
+        const hasAbsent = currentStates.some(source => source.refresh_state === 'not_present');
+        email.source_conflict = hasPresent && hasAbsent ? {
+          generation: latestRefreshGeneration,
+          present_sources: currentStates.filter(source => source.refresh_state === 'present').map(source => source.source_url),
+          absent_sources: currentStates.filter(source => source.refresh_state === 'not_present').map(source => source.source_url),
+        } : null;
+      }
+    }
+    const tags = contactManager.getContactTags(leadId);
+    if (!tags) return errorResponse(res, 'Lead not found', 404);
     // Include events
     const events = db.prepare(
-      'SELECT * FROM events WHERE lead_id = ? ORDER BY event_at DESC LIMIT 20'
+      "SELECT * FROM events WHERE lead_id = ? AND event_type NOT IN ('opened','clicked') ORDER BY event_at DESC LIMIT 20"
     ).all(leadId);
 
-    return jsonResponse(res, { ...lead, emails, events });
+    return jsonResponse(res, {
+      ...lead,
+      emails,
+      email_discovery: websiteEmailDiscovery.getLeadScan(leadId),
+      profile_source_evidence: profileEvidence,
+      tags,
+      events,
+      customFields: contactFields.listLeadCustomFields(db, leadId),
+    });
   }
 
   // ── GET /api/stats/discovery ─────────────────────────────
@@ -263,6 +2027,7 @@ async function handleApiRequest(req, res, parsedUrl) {
       SELECT e.*, l.business_name
       FROM events e
       LEFT JOIN leads l ON e.lead_id = l.id
+      WHERE e.event_type NOT IN ('opened','clicked')
       ORDER BY e.event_at DESC
       LIMIT 20
     `).all();
@@ -278,18 +2043,16 @@ async function handleApiRequest(req, res, parsedUrl) {
 
   // ── GET /api/stats/funnel ────────────────────────────────
   if (pathname === '/api/stats/funnel' && method === 'GET') {
-    const funnel = {};
     const stages = [
-      'discovered', 'enriching', 'site_checked', 'verifying',
+      'discovered', 'enriching', 'site_checked', 'verifying', 'verified',
       'personalizing', 'awaiting_approval', 'queued', 'sent',
       'replied', 'won', 'lost', 'disqualified',
     ];
-
-    for (const stage of stages) {
-      const row = db.prepare('SELECT COUNT(*) as count FROM leads WHERE status = ?').get(stage);
-      funnel[stage] = row.count;
-    }
-
+    const statusCounts = db.prepare('SELECT status, COUNT(*) AS count FROM leads GROUP BY status').all();
+    const counts = new Map(statusCounts.map(row => [row.status, row.count]));
+    const total = statusCounts.reduce((sum, row) => sum + row.count, 0);
+    const funnel = { total };
+    for (const stage of stages) funnel[stage] = counts.get(stage) || 0;
     return jsonResponse(res, funnel);
   }
 
@@ -302,8 +2065,7 @@ async function handleApiRequest(req, res, parsedUrl) {
       SELECT
         date(event_at) as date,
         COUNT(CASE WHEN event_type = 'sent' THEN 1 END) as sent,
-        COUNT(CASE WHEN event_type = 'opened' THEN 1 END) as opened,
-        COUNT(CASE WHEN event_type = 'clicked' THEN 1 END) as clicked,
+        COUNT(CASE WHEN event_type = 'tracked_link_requested' THEN 1 END) as tracked_link_requests,
         COUNT(CASE WHEN event_type = 'replied' THEN 1 END) as replied
       FROM events
       WHERE event_at >= date('now', '-7 days')
@@ -318,7 +2080,7 @@ async function handleApiRequest(req, res, parsedUrl) {
       d.setDate(d.getDate() - i);
       const ds = d.toISOString().slice(0, 10);
       const found = dailyRows.find(r => r.date === ds);
-      timeline.push(found || { date: ds, sent: 0, opened: 0, clicked: 0, replied: 0 });
+      timeline.push(found || { date: ds, sent: 0, tracked_link_requests: 0, replied: 0 });
     }
 
     // 2. Reply sentiment breakdown
@@ -349,35 +2111,16 @@ async function handleApiRequest(req, res, parsedUrl) {
       cost_per_reply: null,
     }));
 
-    // 4. AI usage tracking — observed call counts only.
-    // Token and USD figures require stored per-request usage plus a dated
-    // rate card; until that accounting exists they are reported as unknown,
-    // never derived from copy counts.
-    const persTotal = db.prepare('SELECT COUNT(*) as count FROM personalizations').get()?.count || 0;
-    const bedrockCount = db.prepare("SELECT COUNT(*) as count FROM personalizations WHERE model_used LIKE 'bedrock:%'").get()?.count || 0;
-    const ollamaCount = db.prepare("SELECT COUNT(*) as count FROM personalizations WHERE model_used LIKE 'ollama:%'").get()?.count || 0;
-    const templateCount = db.prepare("SELECT COUNT(*) as count FROM personalizations WHERE model_used = 'template-fallback' OR model_used LIKE 'template-fallback:%'").get()?.count || 0;
+    // 4. AI usage comes from durable provider-request events. Copy rows are
+    // outputs, not calls, and historical calls cannot be reconstructed.
+    const { getAiUsageAnalytics } = await import('./pipeline/ai-usage.js');
+    const aiCost = getAiUsageAnalytics(db);
 
     return jsonResponse(res, {
       timeline,
       sentiment,
       niches,
-      aiCost: {
-        usage_status: 'unknown',
-        usage_note: 'Token and cost accounting is not implemented yet. Figures below are observed call counts only; unknown values are null, not zero.',
-        ollama_calls: ollamaCount,
-        template_fallback_calls: templateCount,
-        bedrock_calls: bedrockCount,
-        bedrock_usd: null,
-        bedrock_tokens: null,
-        cost_per_lead: null,
-        tasks: [
-          { name: 'Lead qualification (Wappalyzer + checks)', tier: 'ollama', calls: db.prepare('SELECT COUNT(*) as count FROM leads WHERE site_status IS NOT NULL').get()?.count || 0, cost_usd: null },
-          { name: 'Cold email hook generation', tier: 'ollama', calls: ollamaCount, cost_usd: null },
-          { name: 'Spam guardrails + fact check pass', tier: 'ollama', calls: persTotal, cost_usd: null },
-          { name: 'Bedrock subject line polish', tier: 'bedrock', calls: bedrockCount, cost_usd: null },
-        ],
-      },
+      aiCost,
     });
   }
 
@@ -408,6 +2151,7 @@ async function handleApiRequest(req, res, parsedUrl) {
       SELECT e.*, l.business_name, l.category, l.city
       FROM events e
       LEFT JOIN leads l ON e.lead_id = l.id
+      WHERE e.event_type NOT IN ('opened','clicked')
       ORDER BY e.event_at DESC
       LIMIT ?
     `).all(limit);
@@ -419,8 +2163,15 @@ async function handleApiRequest(req, res, parsedUrl) {
   if (batchArchiveMatch && method === 'POST') {
     const { archiver } = pipeline;
     const batchId = parseInt(batchArchiveMatch[1]);
-    const result = archiver.archiveBatch(batchId);
-    return jsonResponse(res, result);
+    try { return jsonResponse(res, archiver.archiveBatch(batchId)); }
+    catch (error) { return errorResponse(res, error.message, error.statusCode || 500); }
+  }
+
+  const batchRestoreMatch = pathname.match(/^\/api\/batches\/(\d+)\/restore$/);
+  if (batchRestoreMatch && method === 'POST') {
+    const { archiver } = pipeline;
+    try { return jsonResponse(res, archiver.restoreBatch(parseInt(batchRestoreMatch[1]))); }
+    catch (error) { return errorResponse(res, error.message, error.statusCode || 500); }
   }
 
   // ── GET /api/stats/archive ──────────────────────────────────
@@ -431,7 +2182,6 @@ async function handleApiRequest(req, res, parsedUrl) {
 
   // ── Compliance / One-Click Unsubscribe (Phase 0) ───────────
   if (pathname === '/api/unsubscribe') {
-    const { compliance } = pipeline;
     const token = params.get('token');
     if (!token) {
       res.writeHead(400, { 'Content-Type': 'text/html' });
@@ -442,24 +2192,58 @@ async function handleApiRequest(req, res, parsedUrl) {
       res.writeHead(400, { 'Content-Type': 'text/html' });
       return res.end('<h3>Invalid or expired unsubscribe token</h3>');
     }
-    compliance.suppressEmail(verified.email, 'one_click_unsubscribe', verified.leadId);
     if (method === 'POST') {
-      return jsonResponse(res, { ok: true, email: verified.email, status: 'unsubscribed' });
+      if (!(req.headers['content-type'] || '').toLowerCase().startsWith('application/x-www-form-urlencoded')) {
+        return errorResponse(res, 'One-click unsubscribe requires an application/x-www-form-urlencoded body.', 415);
+      }
+      const form = await parseUrlEncodedBody(req);
+      if (form.get('List-Unsubscribe') !== 'One-Click') return errorResponse(res, 'Invalid one-click unsubscribe request.', 400);
+      return jsonResponse(res, compliance.unsubscribeFromToken(token));
     }
+    if (method !== 'GET') {
+      res.writeHead(405, { Allow: 'GET, POST', 'Content-Type': 'text/plain; charset=UTF-8' });
+      return res.end('Method not allowed.');
+    }
+    const action = `/api/unsubscribe?token=${encodeURIComponent(token)}`;
     res.writeHead(200, { 'Content-Type': 'text/html; charset=UTF-8' });
     return res.end(`
-      <div style="font-family:-apple-system,sans-serif;max-width:480px;margin:60px auto;padding:32px;background:#11151f;color:#fff;border-radius:18px;text-align:center;box-shadow:0 8px 32px rgba(0,0,0,0.5)">
-        <div style="font-size:36px;margin-bottom:12px">✓</div>
-        <h2 style="font-size:1.25rem;margin-bottom:8px">Successfully Unsubscribed</h2>
-        <p style="color:#8e8e93;font-size:0.88rem;line-height:1.5">You (${verified.email}) have been permanently removed from our outreach list and will not receive further emails.</p>
-      </div>
+      <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+      <title>Unsubscribe</title><body style="font-family:system-ui,sans-serif;max-width:480px;margin:60px auto;padding:24px;background:#11151f;color:#fff;border-radius:18px;text-align:center">
+        <h1 style="font-size:1.25rem">Stop future emails?</h1>
+        <p style="color:#b5bcb5;line-height:1.5">Confirm once to permanently suppress this address from future outreach.</p>
+        <form method="post" action="${action}"><input type="hidden" name="List-Unsubscribe" value="One-Click"><button style="padding:12px 20px;border:0;border-radius:10px;background:#e6eddf;color:#192119;font-weight:650;cursor:pointer">Unsubscribe</button></form>
+      </body></html>
     `);
   }
 
   // ── Ingest Inbound Reply & AI Sentiment (Phase 8) ───────────
+  if (pathname === '/api/inbox/replies' && method === 'GET') {
+    const { replyTracker } = pipeline;
+    const unreadValue = params.get('unread');
+    if (unreadValue !== null && !['true', 'false'].includes(unreadValue)) return errorResponse(res, 'unread must be true or false.');
+    return jsonResponse(res, replyTracker.listInboxReplies({
+      search: params.get('search') || '', unreadOnly: unreadValue === 'true',
+      limit: params.get('limit') ?? undefined, offset: params.get('offset') ?? undefined,
+    }));
+  }
+  const inboxReplyMatch = pathname.match(/^\/api\/inbox\/replies\/(\d+)$/);
+  if (method === 'GET' && inboxReplyMatch) {
+    const { replyTracker } = pipeline;
+    const thread = replyTracker.getInboxReplyThread(inboxReplyMatch[1]);
+    if (!thread) return errorResponse(res, 'Reply not found.', 404);
+    return jsonResponse(res, thread);
+  }
+  const inboxReadStateMatch = pathname.match(/^\/api\/inbox\/replies\/(\d+)\/(read|unread)$/);
+  if (method === 'POST' && inboxReadStateMatch) {
+    const { replyTracker } = pipeline;
+    const state = replyTracker.setInboxReplyReadState(inboxReadStateMatch[1], inboxReadStateMatch[2] === 'read');
+    if (!state) return errorResponse(res, 'Reply not found.', 404);
+    return jsonResponse(res, { ok: true, ...state });
+  }
+
   if (pathname === '/api/replies/ingest' && method === 'POST') {
     const { replyTracker } = pipeline;
-    const body = await parseBody(req);
+    const body = await parseBody(req, 256 * 1024);
     if (!body.fromEmail) return errorResponse(res, 'fromEmail is required');
     const result = await replyTracker.ingestInboundReply(body);
     return jsonResponse(res, result);
@@ -472,30 +2256,6 @@ async function handleApiRequest(req, res, parsedUrl) {
   }
 
   // ── Open Tracking Pixel (Phase 8) ───────────────────────────
-  const openTrackMatch = pathname.match(/^\/api\/track\/open\/(\d+)$/);
-  if (openTrackMatch && method === 'GET') {
-    const { replyTracker } = pipeline;
-    replyTracker.recordOpenEvent(parseInt(openTrackMatch[1]));
-    // Return 1x1 transparent GIF
-    const transparentGif = Buffer.from('R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7', 'base64');
-    res.writeHead(200, {
-      'Content-Type': 'image/gif',
-      'Content-Length': transparentGif.length,
-      'Cache-Control': 'no-store, no-cache, must-revalidate, private',
-    });
-    return res.end(transparentGif);
-  }
-
-  // ── Click Tracking Redirect (Phase 8) ───────────────────────
-  const clickTrackMatch = pathname.match(/^\/api\/track\/click\/(\d+)$/);
-  if (clickTrackMatch && method === 'GET') {
-    const { replyTracker } = pipeline;
-    const targetUrl = params.get('url') || 'https://google.com';
-    replyTracker.recordClickEvent(parseInt(clickTrackMatch[1]), targetUrl);
-    res.writeHead(302, { 'Location': targetUrl });
-    return res.end();
-  }
-
   // ── CRM Control Plane (Phase 9) ─────────────────────────────
   const crmSyncMatch = pathname.match(/^\/api\/crm\/sync\/(\d+)$/);
   if (crmSyncMatch && method === 'POST') {
@@ -563,8 +2323,8 @@ async function handleScrapeApi(req, res, parsedUrl, pipeline) {
 }
 
 // ── Qualification API Routes ─────────────────────────────────
-async function handleQualifyApi(req, res, parsedUrl, pipeline) {
-  const { qualifier, database } = pipeline;
+async function handleQualifyApi(req, res, parsedUrl, pipeline, actor) {
+  const { qualifier, database, qualificationScoring, qualificationReviews } = pipeline;
   const db = database.getDb();
   const pathname = parsedUrl.pathname;
   const method = req.method;
@@ -575,37 +2335,86 @@ async function handleQualifyApi(req, res, parsedUrl, pipeline) {
     return errorResponse(res, 'Rate limit exceeded (30 req/min)', 429);
   }
 
+  if (pathname === '/api/qualify/scoring' && method === 'GET') {
+    res.setHeader('Cache-Control', 'no-store, private');
+    return jsonResponse(res, { active: qualificationScoring.getProfile(), history: qualificationScoring.listProfiles(10) });
+  }
+  if (pathname === '/api/qualify/scoring' && method === 'PUT') {
+    const body = await parseBody(req, 32 * 1024);
+    const active = qualificationScoring.createVersion({ ...body, actor, remoteAddress: req.socket?.remoteAddress || 'unknown' });
+    const auth = await getAuthManager();
+    auth.recordAuditEvent('qualification_scoring_profile_created', actor.id, req.socket?.remoteAddress || 'unknown');
+    res.setHeader('Cache-Control', 'no-store, private');
+    return jsonResponse(res, { active, history: qualificationScoring.listProfiles(10) }, 201);
+  }
+  const replayMatch = pathname.match(/^\/api\/qualify\/lead\/(\d+)\/scoring-replay$/);
+  if (replayMatch && method === 'GET') {
+    const requestedVersion = params.has('version') ? params.get('version') : undefined;
+    res.setHeader('Cache-Control', 'no-store, private');
+    return jsonResponse(res, qualificationScoring.replayLead(replayMatch[1], requestedVersion));
+  }
+  if (pathname === '/api/qualify/review-queue' && method === 'GET') {
+    const rawBatchId = params.get('batch_id');
+    const result = qualificationReviews.getReviewQueue({
+      batchId: rawBatchId === null ? null : Number(rawBatchId),
+      maxConfidence: params.has('max_confidence') ? Number(params.get('max_confidence')) : 70,
+      limit: params.has('limit') ? Number(params.get('limit')) : 50,
+      offset: params.has('offset') ? Number(params.get('offset')) : 0,
+    });
+    res.setHeader('Cache-Control', 'no-store, private');
+    return jsonResponse(res, result);
+  }
+  const reviewHistoryMatch = pathname.match(/^\/api\/qualify\/lead\/(\d+)\/review-history$/);
+  if (reviewHistoryMatch && method === 'GET') {
+    const lead = database.getDb().prepare('SELECT id FROM leads WHERE id=?').get(Number(reviewHistoryMatch[1]));
+    if (!lead) return errorResponse(res, 'Lead was not found.', 404);
+    res.setHeader('Cache-Control', 'no-store, private');
+    return jsonResponse(res, { reviews: qualificationReviews.getReviewHistory(reviewHistoryMatch[1]) });
+  }
+  const reviewMatch = pathname.match(/^\/api\/qualify\/review\/(\d+)$/);
+  if (reviewMatch && method === 'POST') {
+    const body = await parseBody(req, 16 * 1024);
+    const review = qualificationReviews.recordReview({ ...body, leadId: reviewMatch[1], actor });
+    const auth = await getAuthManager();
+    auth.recordAuditEvent(`qualification_review_${review.decision}`, actor.id, req.socket?.remoteAddress || 'unknown');
+    res.setHeader('Cache-Control', 'no-store, private');
+    return jsonResponse(res, { review, sendingEligibilityChanged: false }, 201);
+  }
+
   // POST /api/qualify/batch/:id — start batch qualification
   const batchStartMatch = pathname.match(/^\/api\/qualify\/batch\/(\d+)$/);
   if (batchStartMatch && method === 'POST') {
     const batchId = parseInt(batchStartMatch[1]);
-    const status = qualifier.getQualificationStatus();
-    if (status.active) {
-      return errorResponse(res, `Qualification already running on batch #${status.batchId}`, 409);
+    let started;
+    try {
+      started = qualifier.startQualificationBatch(batchId);
+    } catch (error) {
+      return errorResponse(res, error.message, error.statusCode || 500);
     }
-    // Start qualification in background
-    qualifier.qualifyBatch(batchId).catch(err => {
+    started.promise.catch(err => {
       console.error('Qualification error:', err);
     });
-    return jsonResponse(res, { started: true, batchId }, 202);
+    return jsonResponse(res, { started: true, jobId: started.jobId, batchId: started.batchId }, 202);
   }
 
   // POST /api/qualify/cancel — global cancel (UI wrapper contract)
   if (method === 'POST' && pathname === '/api/qualify/cancel') {
     const cancelled = qualifier.cancelQualification();
-    return jsonResponse(res, { ok: true, cancelled });
+    return jsonResponse(res, { ok: true, ...cancelled });
   }
 
   // POST /api/qualify/batch/:id/cancel — cancel running qualification
   const batchCancelMatch = pathname.match(/^\/api\/qualify\/batch\/(\d+)\/cancel$/);
   if (batchCancelMatch && method === 'POST') {
-    const cancelled = qualifier.cancelQualification();
-    return jsonResponse(res, { cancelled });
+    const cancelled = qualifier.cancelQualification(batchCancelMatch[1]);
+    return jsonResponse(res, { cancelled: cancelled.cancelling, ...cancelled });
   }
 
   // GET /api/qualify/status — current progress
   if (pathname === '/api/qualify/status' && method === 'GET') {
-    return jsonResponse(res, qualifier.getQualificationStatus());
+    const rawBatchId = params.get('batch_id');
+    try { return jsonResponse(res, qualifier.getQualificationStatus(rawBatchId)); }
+    catch (error) { return errorResponse(res, error.message, error.statusCode || 400); }
   }
 
   // GET /api/qualify/results/:batchId — results for a batch
@@ -616,7 +2425,10 @@ async function handleQualifyApi(req, res, parsedUrl, pipeline) {
     const limit = parseInt(params.get('limit')) || 100;
     const offset = parseInt(params.get('offset')) || 0;
     const results = qualifier.getQualificationResults(batchId, { siteStatus, limit, offset });
-    return jsonResponse(res, results);
+    return jsonResponse(res, {
+      ...results,
+      results: results.results.map(lead => ({ ...lead, human_review: qualificationReviews.getCurrentReview(lead.id) })),
+    });
   }
 
   // POST /api/qualify/lead/:id — re-qualify single lead
@@ -627,7 +2439,7 @@ async function handleQualifyApi(req, res, parsedUrl, pipeline) {
       const result = await qualifier.requalifyLead(leadId);
       return jsonResponse(res, result);
     } catch (err) {
-      return errorResponse(res, err.message, 404);
+      return errorResponse(res, err.message, err.statusCode || 404);
     }
   }
 
@@ -635,15 +2447,22 @@ async function handleQualifyApi(req, res, parsedUrl, pipeline) {
   if (pathname === '/api/qualify/recheck-stale' && method === 'POST') {
     const body = await parseBody(req);
     const days = body.days || 60;
-    const result = qualifier.requeueStaleLeads(days);
-    return jsonResponse(res, result);
+    try {
+      const result = qualifier.requeueStaleLeads(days);
+      return jsonResponse(res, result);
+    } catch (error) {
+      return errorResponse(res, error.message, error.statusCode || 400);
+    }
   }
 
   // GET /api/qualify/stale-count — count of stale leads
   if (pathname === '/api/qualify/stale-count' && method === 'GET') {
     const days = parseInt(params.get('days')) || 60;
-    const stale = qualifier.getStaleLeads(days);
-    return jsonResponse(res, { count: stale.length, days });
+    try {
+      return jsonResponse(res, { count: qualifier.getStaleLeadCount(days), days });
+    } catch (error) {
+      return errorResponse(res, error.message, error.statusCode || 400);
+    }
   }
 
   // GET /api/qualify/spot-check/:batchId — lowest confidence leads
@@ -665,9 +2484,21 @@ async function handleQualifyApi(req, res, parsedUrl, pipeline) {
   return errorResponse(res, `Unknown qualify route: ${method} ${pathname}`, 404);
 }
 
+async function writeResponseChunk(res, chunk) {
+  if (res.destroyed) return false;
+  if (res.write(chunk)) return true;
+  return new Promise(resolve => {
+    const cleanup = () => { res.removeListener('drain', onDrain); res.removeListener('close', onClose); res.removeListener('error', onError); };
+    const finish = value => { cleanup(); resolve(value); };
+    const onDrain = () => finish(!res.destroyed);
+    const onClose = () => finish(false);
+    const onError = () => finish(false);
+    res.once('drain', onDrain); res.once('close', onClose); res.once('error', onError);
+  });
+}
 // ── Verify API routes ────────────────────────────────────────
 async function handleVerifyApi(req, res, parsedUrl, pipeline) {
-  const { emailVerifier } = pipeline;
+  const { emailVerifier, database } = pipeline;
   const method = req.method;
   const pathname = parsedUrl.pathname;
 
@@ -676,9 +2507,12 @@ async function handleVerifyApi(req, res, parsedUrl, pipeline) {
   if (method === 'POST' && batchMatch) {
     if (!checkRateLimit(req)) return errorResponse(res, 'Rate limit exceeded', 429);
     const batchId = parseInt(batchMatch[1]);
-    // Run in background
-    emailVerifier.verifyBatch(batchId).catch(e => console.error('Verify error:', e.message));
-    return jsonResponse(res, { ok: true, batchId, message: 'Verification started' });
+    if (!database.getDb().prepare('SELECT id FROM batches WHERE id=?').get(batchId)) return errorResponse(res, 'Batch not found.', 404);
+    const currentJob = emailVerifier.getVerificationStatus();
+    if (currentJob.active) return errorResponse(res, `Verification job #${currentJob.jobId} is already active for batch #${currentJob.batchId}.`, 409);
+    const run = emailVerifier.verifyBatch(batchId);
+    run.catch(e => console.error('Verify error:', e.message));
+    return jsonResponse(res, { ok: true, message: 'Verification job accepted.', ...emailVerifier.getVerificationStatus(batchId) }, 202);
   }
 
   // POST /api/verify/cancel — global cancel (UI wrapper contract)
@@ -690,15 +2524,41 @@ async function handleVerifyApi(req, res, parsedUrl, pipeline) {
   // POST /api/verify/batch/:id/cancel — cancel running verification
   const cancelMatch = pathname.match(/^\/api\/verify\/batch\/(\d+)\/cancel$/);
   if (method === 'POST' && cancelMatch) {
-    const cancelled = emailVerifier.cancelVerification();
-    return jsonResponse(res, { ok: true, cancelled });
+    const cancelled = emailVerifier.cancelVerification(Number(cancelMatch[1]));
+    return jsonResponse(res, { ok: true, ...cancelled });
   }
 
   // GET /api/verify/status — current verification progress
   if (method === 'GET' && pathname === '/api/verify/status') {
-    return jsonResponse(res, emailVerifier.getVerificationStatus());
+    const rawBatchId = parsedUrl.searchParams.get('batch_id');
+    return jsonResponse(res, emailVerifier.getVerificationStatus(rawBatchId));
   }
 
+  // GET /api/verify/results/:batchId/export — stream all stored evidence as CSV
+  const exportMatch = pathname.match(/^\/api\/verify\/results\/(\d+)\/export$/);
+  if (method === 'GET' && exportMatch) {
+    const status = parsedUrl.searchParams.get('status') || undefined;
+    const batchId = Number(exportMatch[1]);
+    const exported = emailVerifier.getVerificationExport(batchId, { status });
+    if (!exported) return errorResponse(res, 'Batch not found.', 404);
+    res.writeHead(200, {
+      'Content-Type': 'text/csv; charset=utf-8',
+      'Content-Disposition': `attachment; filename="verification-batch-${batchId}.csv"`,
+      'Cache-Control': 'no-store',
+      'X-Content-Type-Options': 'nosniff',
+    });
+    try {
+      if (!await writeResponseChunk(res, '\uFEFFcontact_id,email_id,business_name,email,status,verified_at,mx_host,engine,checks_json,reasons,syntax_status,dns_status,provider,provider_verdict,smtp_status,mailbox_status,suppression_status,checked_at,diagnostic_reason\r\n')) return;
+      for (const row of exported.rows) {
+        if (!await writeResponseChunk(res, emailVerifier.formatVerificationCsvRow(row))) return;
+      }
+      res.end();
+    } catch (error) {
+      console.error('Verification CSV stream failed:', error.message);
+      if (res.headersSent) res.destroy(error); else throw error;
+    }
+    return;
+  }
   // GET /api/verify/results/:batchId — paginated results
   const resultsMatch = pathname.match(/^\/api\/verify\/results\/(\d+)$/);
   if (method === 'GET' && resultsMatch) {
@@ -710,6 +2570,16 @@ async function handleVerifyApi(req, res, parsedUrl, pipeline) {
   }
 
   // POST /api/verify/email/:id — re-verify single email
+  const historyMatch = pathname.match(/^\/api\/verify\/email\/(\d+)\/history$/);
+  if (method === 'GET' && historyMatch) {
+    try {
+      return jsonResponse(res, emailVerifier.getVerificationHistory(historyMatch[1], {
+        before: parsedUrl.searchParams.has('before') ? parsedUrl.searchParams.get('before') : undefined,
+        limit: parsedUrl.searchParams.has('limit') ? parsedUrl.searchParams.get('limit') : 25,
+      }));
+    } catch (error) { return errorResponse(res, error.message, error.statusCode || 500); }
+  }
+
   const emailMatch = pathname.match(/^\/api\/verify\/email\/(\d+)$/);
   if (method === 'POST' && emailMatch) {
     if (!checkRateLimit(req)) return errorResponse(res, 'Rate limit exceeded', 429);
@@ -727,7 +2597,7 @@ async function handleVerifyApi(req, res, parsedUrl, pipeline) {
     if (!checkRateLimit(req)) return errorResponse(res, 'Rate limit exceeded', 429);
     const body = await parseBody(req);
     if (!body.email) return errorResponse(res, 'email required');
-    const result = await emailVerifier.verifyEmail(body.email);
+    const result = await emailVerifier.verifySingleEmail(body.email);
     return jsonResponse(res, { ok: true, result });
   }
 
@@ -735,6 +2605,11 @@ async function handleVerifyApi(req, res, parsedUrl, pipeline) {
   if (method === 'GET' && pathname === '/api/verify/distribution') {
     const batchId = parsedUrl.searchParams.get('batch_id');
     return jsonResponse(res, emailVerifier.getVerificationDistribution(batchId ? parseInt(batchId) : null));
+  }
+
+  if (method === 'GET' && pathname === '/api/verify/evidence-distribution') {
+    const batchId = parsedUrl.searchParams.get('batch_id');
+    return jsonResponse(res, emailVerifier.getVerificationEvidenceDistribution(batchId));
   }
 
   // GET /api/verify/reacher-status — check if Reacher Docker backend is running
@@ -747,16 +2622,122 @@ async function handleVerifyApi(req, res, parsedUrl, pipeline) {
 }
 
 // ── Sending & Campaign API routes ───────────────────────────
-async function handleSendingApi(req, res, parsedUrl, pipeline) {
-  const { sendingEngine, abTesting } = pipeline;
+async function handleSendingApi(req, res, parsedUrl, pipeline, actor = null) {
+  const { database, sendingEngine, abTesting, campaignAudience, campaignSequence, campaignTemplates, imapReceiver, imapSyncScheduler } = pipeline;
+  const db = database.getDb();
   const method = req.method;
   const pathname = parsedUrl.pathname;
 
+  if (pathname === '/api/offers' && method === 'GET') {
+    const offers = await import('./pipeline/offer-contracts.js');
+    return jsonResponse(res, { offers: offers.listOffers(db) });
+  }
+  if (pathname === '/api/offers' && method === 'POST') {
+    const effectiveActor = actor || (AUTH_TEST_BYPASS ? { id: null, role: 'owner' } : null);
+    if (!['owner', 'admin'].includes(effectiveActor?.role)) return errorResponse(res, 'Only workspace owners and admins can create offers.', 403);
+    const body = await parseBody(req, 64 * 1024);
+    const offers = await import('./pipeline/offer-contracts.js');
+    const result = offers.createOffer(db, body, effectiveActor);
+    return jsonResponse(res, { ok: true, ...result }, 201);
+  }
+  const offerRoute = pathname.match(/^\/api\/offers\/(\d+)(?:\/versions(?:\/(\d+)(?:\/(approve|revoke|proofs\/([^/]+)\/revoke))?)?)?$/);
+  if (offerRoute) {
+    const [, rawOfferId, rawVersionId, action, rawProofId] = offerRoute;
+    const offers = await import('./pipeline/offer-contracts.js');
+    const effectiveActor = actor || (AUTH_TEST_BYPASS ? { id: null, role: 'owner' } : null);
+    if (method === 'GET' && !rawVersionId) {
+      const offer = offers.getOffer(db, rawOfferId);
+      return offer ? jsonResponse(res, offer) : errorResponse(res, 'Offer not found.', 404);
+    }
+    if (method === 'POST' && !rawVersionId) {
+      if (!['owner', 'admin'].includes(effectiveActor?.role)) return errorResponse(res, 'Only workspace owners and admins can create offer versions.', 403);
+      const body = await parseBody(req, 64 * 1024);
+      return jsonResponse(res, { ok: true, version: offers.createOfferVersion(db, rawOfferId, body, effectiveActor) }, 201);
+    }
+    if (method === 'POST' && action === 'approve') {
+      if (!['owner', 'admin'].includes(effectiveActor?.role)) return errorResponse(res, 'Only workspace owners and admins can approve offers.', 403);
+      const body = await parseBody(req, 8 * 1024);
+      if (Object.keys(body).length) return errorResponse(res, 'Approval fields are server controlled; send an empty object.', 400);
+      return jsonResponse(res, { ok: true, version: offers.approveOfferVersion(db, rawOfferId, rawVersionId, effectiveActor) });
+    }
+    if (method === 'POST' && action === 'revoke') {
+      if (!['owner', 'admin'].includes(effectiveActor?.role)) return errorResponse(res, 'Only workspace owners and admins can revoke offers.', 403);
+      const body = await parseBody(req, 8 * 1024);
+      return jsonResponse(res, { ok: true, version: offers.revokeOfferVersion(db, rawOfferId, rawVersionId, body.reason, effectiveActor) });
+    }
+    if (method === 'POST' && action?.startsWith('proofs/')) {
+      if (!['owner', 'admin'].includes(effectiveActor?.role)) return errorResponse(res, 'Only workspace owners and admins can revoke offer proof.', 403);
+      const body = await parseBody(req, 8 * 1024);
+      return jsonResponse(res, { ok: true, ...offers.revokeOfferProof(db, rawOfferId, rawVersionId, decodeURIComponent(rawProofId), body.reason, effectiveActor) });
+    }
+  }
+
+  if (method === 'GET' && pathname === '/api/sending/control') {
+    return jsonResponse(res, sendingEngine.getSendControlState());
+  }
+  if (method === 'PUT' && pathname === '/api/sending/control') {
+    const body = await parseBody(req, 16 * 1024);
+    return jsonResponse(res, sendingEngine.setSendControlState({ ...body, actor }));
+  }
+  if (method === 'GET' && pathname === '/api/sending/schedule') {
+    return jsonResponse(res, sendingEngine.getSendingScheduleSettings());
+  }
+  if (method === 'GET' && pathname === '/api/sending/credential-storage') {
+    return jsonResponse(res, sendingEngine.getMailboxCredentialStorageStatus());
+  }
+  if (method === 'GET' && pathname === '/api/sending/imap-sync') {
+    return jsonResponse(res, imapSyncScheduler.status());
+  }
+  if (method === 'PUT' && pathname === '/api/sending/imap-sync') {
+    if (!['owner', 'admin'].includes(actor?.role)) return errorResponse(res, 'Only workspace owners and admins can change automatic Inbox sync.', 403);
+    const body = await parseBody(req, 8 * 1024);
+    return jsonResponse(res, imapSyncScheduler.setSettings(body, actor));
+  }
+  if (method === 'PUT' && pathname === '/api/sending/schedule') {
+    const body = await parseBody(req, 16 * 1024);
+    return jsonResponse(res, sendingEngine.setSendingScheduleSettings(body, actor));
+  }
+
   // --- Mailbox Fleet ---
+
+  // Native warm-up observations only; no upstream activation or send endpoint.
+  const nativeActivity = pathname.match(/^\/api\/sending\/mailboxes\/(\d+)\/native-warmup(?:\/(refresh))?$/);
+  if (nativeActivity) {
+    const { createWarmblyActivity, ActivityError } = await import('./pipeline/warmbly-activity.js');
+    try {
+      const manager = createWarmblyActivity({ db: pipeline.database.getDb() });
+      if (method === 'GET' && !nativeActivity[2]) return jsonResponse(res, manager.status(nativeActivity[1], actor));
+      if (method === 'PUT' && !nativeActivity[2]) {
+        const body = await parseBody(req, 4 * 1024);
+        return jsonResponse(res, await manager.link(nativeActivity[1], body.account_id, actor));
+      }
+      if (method === 'DELETE' && !nativeActivity[2]) return jsonResponse(res, manager.unlink(nativeActivity[1], actor));
+      if (method === 'POST' && nativeActivity[2] === 'refresh') return jsonResponse(res, await manager.refresh(nativeActivity[1], actor));
+      return errorResponse(res, 'Unsupported native warm-up operation.', 405);
+    } catch (error) {
+      if (!(error instanceof ActivityError)) throw error;
+      return jsonResponse(res, { error: error.message, code: error.code }, error.statusCode);
+    }
+  }
 
   // GET /api/sending/mailboxes — full fleet
   if (method === 'GET' && pathname === '/api/sending/mailboxes') {
-    return jsonResponse(res, sendingEngine.getMailboxFleet());
+    return jsonResponse(res, sendingEngine.getMailboxFleet({
+      canReviewSendAccess: ['owner', 'admin'].includes(actor?.role) || (AUTH_TEST_BYPASS && !actor),
+    }));
+  }
+
+  // POST /api/sending/mailboxes/:id/warmup-review — explicit owner/admin send-access review
+  const warmupReviewMatch = pathname.match(/^\/api\/sending\/mailboxes\/(\d+)\/warmup-review$/);
+  if (method === 'POST' && warmupReviewMatch) {
+    const body = await parseBody(req, 4 * 1024);
+    const reviewActor = actor || (AUTH_TEST_BYPASS ? { id: null, role: 'admin' } : null);
+    const result = sendingEngine.reviewMailboxForCampaignSending(warmupReviewMatch[1], {
+      decision: body.decision,
+      acknowledgeEvidenceLimits: body.acknowledgeEvidenceLimits === true,
+      actor: reviewActor,
+    });
+    return jsonResponse(res, { ok: true, ...result });
   }
 
   // POST /api/sending/mailboxes — add mailbox
@@ -773,6 +2754,25 @@ async function handleSendingApi(req, res, parsedUrl, pipeline) {
     const body = await parseBody(req);
     const result = sendingEngine.updateMailbox(parseInt(updateMatch[1]), body);
     return jsonResponse(res, { ok: true, ...result });
+  }
+
+  const testImapMatch = pathname.match(/^\/api\/sending\/mailboxes\/(\d+)\/test-imap$/);
+  if (method === 'POST' && testImapMatch) {
+    const result = await imapReceiver.testMailbox(testImapMatch[1]);
+    return jsonResponse(res, result);
+  }
+
+  const syncImapMatch = pathname.match(/^\/api\/sending\/mailboxes\/(\d+)\/sync-imap$/);
+  if (method === 'POST' && syncImapMatch) {
+    const body = await parseBody(req, 8 * 1024);
+    try {
+      const result = await imapReceiver.syncMailbox(syncImapMatch[1], { limit: body.limit, backfill: body.backfill === true });
+      imapSyncScheduler.recordManualSuccess(syncImapMatch[1], result);
+      return jsonResponse(res, result);
+    } catch (error) {
+      imapSyncScheduler.recordManualFailure(syncImapMatch[1], error);
+      throw error;
+    }
   }
 
   // DELETE /api/sending/mailboxes/:id — delete mailbox
@@ -835,15 +2835,110 @@ async function handleSendingApi(req, res, parsedUrl, pipeline) {
 
   // POST /api/sending/warmup-check — process warmup transitions
   if (method === 'POST' && pathname === '/api/sending/warmup-check') {
-    const transitioned = sendingEngine.processWarmupTransitions();
-    return jsonResponse(res, { ok: true, transitioned });
+    const result = sendingEngine.processWarmupTransitions();
+    return jsonResponse(res, { ok: true, ...result });
   }
 
   // --- Campaigns ---
 
+  if (method === 'GET' && pathname === '/api/sending/templates') {
+    const includeArchived = parsedUrl.searchParams.get('include_archived') === 'true';
+    return jsonResponse(res, campaignTemplates.listCampaignTemplates({ includeArchived }));
+  }
+  if (method === 'POST' && pathname === '/api/sending/templates') {
+    const body = await parseBody(req);
+    return jsonResponse(res, { ok: true, ...campaignTemplates.createCampaignTemplate(body) }, 201);
+  }
+  const campaignTemplateMatch = pathname.match(/^\/api\/sending\/templates\/(\d+)$/);
+  if (method === 'PATCH' && campaignTemplateMatch) {
+    const body = await parseBody(req);
+    return jsonResponse(res, { ok: true, ...campaignTemplates.updateCampaignTemplate(campaignTemplateMatch[1], body) });
+  }
+  const campaignTemplateStateMatch = pathname.match(/^\/api\/sending\/templates\/(\d+)\/(archive|restore)$/);
+  if (method === 'POST' && campaignTemplateStateMatch) {
+    return jsonResponse(res, { ok: true, ...campaignTemplates.setCampaignTemplateArchived(campaignTemplateStateMatch[1], campaignTemplateStateMatch[2] === 'archive') });
+  }
+
   // GET /api/sending/campaigns — list all campaigns with stats
   if (method === 'GET' && pathname === '/api/sending/campaigns') {
-    return jsonResponse(res, abTesting.getAllCampaignStats());
+    const result = abTesting.getAllCampaignStats().map(campaign => {
+      const audience = campaignAudience.getCampaignAudience(campaign.id, { limit: 1 });
+      const senderSelection = sendingEngine.getCampaignSenderSelection(campaign.id);
+      return {
+        ...campaign,
+        status: audience?.campaign.status || campaign.status,
+        audience_total: audience?.counts.total || 0,
+        audience_eligible: audience?.counts.eligible || 0,
+        sender_count: senderSelection?.senderIds.length || 0,
+        sender_ready_count: senderSelection?.readyCount || 0,
+        sender_locked: senderSelection?.locked || false,
+        sequence_step_count: campaignSequence.getCampaignSequence(campaign.id)?.steps.length || 0,
+        launch_snapshot: sendingEngine.getCampaignLaunchSummary(campaign.id),
+      };
+    });
+    const view = parsedUrl.searchParams.get('status');
+    if (view !== null && view !== 'archived') return errorResponse(res, 'status filter must be archived when provided.');
+    return jsonResponse(res, view === 'archived' ? result.filter(campaign => campaign.status === 'archived') : result.filter(campaign => campaign.status !== 'archived'));
+  }
+
+  // GET /api/sending/campaigns/:id/delivery-history — SMTP acceptance and
+  // mailbox-received, explicitly unverified delivery-report evidence.
+  const deliveryHistoryMatch = pathname.match(/^\/api\/sending\/campaigns\/(\d+)\/delivery-history$/);
+  if (method === 'GET' && deliveryHistoryMatch) {
+    const campaignId = Number(deliveryHistoryMatch[1]);
+    if (!db.prepare('SELECT 1 FROM campaigns WHERE id=?').get(campaignId)) return errorResponse(res, 'Campaign not found.', 404);
+    const rawLimit = parsedUrl.searchParams.get('limit');
+    const limit = rawLimit === null ? 50 : Number(rawLimit);
+    if (!Number.isInteger(limit) || limit < 1 || limit > 100) return errorResponse(res, 'History limit must be from 1 to 100.');
+    const total = Number(db.prepare('SELECT COUNT(*) AS count FROM sends WHERE campaign_id=?').get(campaignId)?.count) || 0;
+    const sends = db.prepare(`SELECT s.id,s.status,s.sent_at,s.scheduled_at,m.email AS sender_mailbox,
+        COALESCE(c.track_clicks,0) AS click_tracking_enabled,
+        COALESCE((SELECT SUM(l.request_count) FROM campaign_click_links l WHERE l.send_id=s.id),0) AS tracked_link_requests,
+        (SELECT e.meta_json FROM events e WHERE e.send_id=s.id AND e.event_type='sent' ORDER BY e.id DESC LIMIT 1) AS sent_event_json
+      FROM sends s JOIN campaigns c ON c.id=s.campaign_id LEFT JOIN mailboxes m ON m.id=s.mailbox_id
+      WHERE s.campaign_id=? ORDER BY COALESCE(s.sent_at,s.scheduled_at) DESC,s.id DESC LIMIT ?`)
+      .all(campaignId, limit);
+    const sendIds = sends.map(send => Number(send.id));
+    const reports = sendIds.length ? db.prepare(`SELECT id,send_id,mailbox_id,source_uid_validity,source_uid,
+        smtp_message_id,report_message_id,report_sender,recipient,action,status_code,diagnostic,
+        authentication_status,observed_at
+      FROM delivery_reports WHERE send_id IN (${sendIds.map(() => '?').join(',')}) ORDER BY observed_at DESC,id DESC`)
+      .all(...sendIds) : [];
+    const reportsBySend = new Map();
+    for (const report of reports) {
+      const list = reportsBySend.get(Number(report.send_id)) || [];
+      list.push({
+        id: Number(report.id), action: report.action, statusCode: report.status_code,
+        diagnostic: report.diagnostic, recipient: report.recipient,
+        smtpMessageId: report.smtp_message_id, reportMessageId: report.report_message_id,
+        reportSender: report.report_sender, mailboxId: Number(report.mailbox_id),
+        sourceUidValidity: report.source_uid_validity, sourceUid: Number(report.source_uid),
+        authenticationStatus: report.authentication_status, observedAt: report.observed_at,
+      });
+      reportsBySend.set(Number(report.send_id), list);
+    }
+    const items = sends.map(send => {
+      let sentMeta = null;
+      try { sentMeta = JSON.parse(send.sent_event_json || 'null'); } catch { /* malformed legacy event is not acceptance evidence */ }
+      const accepted = send.status === 'sent' && sentMeta?.delivery === 'unknown'
+        && typeof sentMeta.messageId === 'string' && sentMeta.messageId.trim();
+      return {
+        sendId: Number(send.id), smtpStatus: accepted ? 'accepted' : send.status,
+        deliveryStatus: 'unknown', smtpAcceptedAt: accepted ? send.sent_at : null,
+        senderMailbox: send.sender_mailbox || null,
+        recipient: typeof sentMeta?.to === 'string' ? sentMeta.to : null,
+        smtpMessageId: accepted ? sentMeta.messageId : null,
+        clickTrackingEnabled: Number(send.click_tracking_enabled) === 1,
+        trackedLinkRequests: Number(send.tracked_link_requests) || 0,
+        reports: reportsBySend.get(Number(send.id)) || [],
+      };
+    });
+    return jsonResponse(res, {
+      campaignId, totalSends: total, returnedSends: items.length, hasMore: total > items.length,
+      unverifiedReportCount: reports.length, items,
+      deliveryCount: null,
+      deliveryCountNote: 'Delivery remains unknown. Mailbox-received DSN reports are unverified evidence and are not counted as delivered.',
+    });
   }
 
   // POST /api/sending/campaigns — create campaign
@@ -854,10 +2949,125 @@ async function handleSendingApi(req, res, parsedUrl, pipeline) {
     return jsonResponse(res, { ok: true, ...result });
   }
 
+  const campaignCloneMatch = pathname.match(/^\/api\/sending\/campaigns\/(\d+)\/clone$/);
+  if (method === 'POST' && campaignCloneMatch) {
+    const body = await parseBody(req);
+    return jsonResponse(res, { ok: true, ...campaignSequence.cloneCampaignAsDraft(campaignCloneMatch[1], body) }, 201);
+  }
+
+  const campaignDraftMatch = pathname.match(/^\/api\/sending\/campaigns\/(\d+)$/);
+  if (method === 'PATCH' && campaignDraftMatch) {
+    const body = await parseBody(req);
+    return jsonResponse(res, { ok: true, ...sendingEngine.updateCampaignDraft(campaignDraftMatch[1], body) });
+  }
+  const campaignArchiveMatch = pathname.match(/^\/api\/sending\/campaigns\/(\d+)\/(archive|restore)$/);
+  if (method === 'POST' && campaignArchiveMatch) {
+    const result = sendingEngine.archiveCampaignDraft(campaignArchiveMatch[1], campaignArchiveMatch[2] === 'archive');
+    return jsonResponse(res, { ok: true, ...result });
+  }
+
+  const campaignSendersMatch = pathname.match(/^\/api\/sending\/campaigns\/(\d+)\/senders$/);
+  if (method === 'GET' && campaignSendersMatch) {
+    const result = sendingEngine.getCampaignSenderSelection(campaignSendersMatch[1]);
+    if (!result) return errorResponse(res, 'Campaign not found.', 404);
+    return jsonResponse(res, result);
+  }
+  if (method === 'PUT' && campaignSendersMatch) {
+    const body = await parseBody(req);
+    return jsonResponse(res, { ok: true, ...sendingEngine.updateCampaignSenderSelection(campaignSendersMatch[1], body.mailboxIds) });
+  }
+
+  const campaignSequenceMatch = pathname.match(/^\/api\/sending\/campaigns\/(\d+)\/sequence$/);
+  if (method === 'GET' && campaignSequenceMatch) {
+    const result = campaignSequence.getCampaignSequence(campaignSequenceMatch[1]);
+    if (!result) return errorResponse(res, 'Campaign not found.', 404);
+    return jsonResponse(res, result);
+  }
+  const campaignSequenceStepsMatch = pathname.match(/^\/api\/sending\/campaigns\/(\d+)\/sequence\/steps$/);
+  if (method === 'POST' && campaignSequenceStepsMatch) {
+    const body = await parseBody(req);
+    return jsonResponse(res, { ok: true, ...campaignSequence.createCampaignStep(campaignSequenceStepsMatch[1], body) }, 201);
+  }
+  const campaignSequenceOrderMatch = pathname.match(/^\/api\/sending\/campaigns\/(\d+)\/sequence\/order$/);
+  if (method === 'PUT' && campaignSequenceOrderMatch) {
+    const body = await parseBody(req);
+    return jsonResponse(res, { ok: true, ...campaignSequence.reorderCampaignSteps(campaignSequenceOrderMatch[1], body.stepIds) });
+  }
+  const campaignSequencePreviewMatch = pathname.match(/^\/api\/sending\/campaigns\/(\d+)\/sequence\/steps\/(\d+)\/preview$/);
+  if (method === 'POST' && campaignSequencePreviewMatch) {
+    const body = await parseBody(req);
+    return jsonResponse(res, campaignSequence.previewCampaignStep(campaignSequencePreviewMatch[1], campaignSequencePreviewMatch[2], body.leadId, body.variantKey));
+  }
+  const campaignSequenceStepMatch = pathname.match(/^\/api\/sending\/campaigns\/(\d+)\/sequence\/steps\/(\d+)$/);
+  if (method === 'PUT' && campaignSequenceStepMatch) {
+    const body = await parseBody(req);
+    return jsonResponse(res, { ok: true, ...campaignSequence.updateCampaignStep(campaignSequenceStepMatch[1], campaignSequenceStepMatch[2], body) });
+  }
+  if (method === 'DELETE' && campaignSequenceStepMatch) {
+    return jsonResponse(res, { ok: true, ...campaignSequence.deleteCampaignStep(campaignSequenceStepMatch[1], campaignSequenceStepMatch[2]) });
+  }
+
+  const campaignLifecycleMatch = pathname.match(/^\/api\/sending\/campaigns\/(\d+)\/(pause|resume|stop)$/);
+  if (method === 'POST' && campaignLifecycleMatch) {
+    const [, campaignId, action] = campaignLifecycleMatch;
+    const result = action === 'pause'
+      ? sendingEngine.pauseCampaign(campaignId)
+      : action === 'resume'
+        ? sendingEngine.resumeCampaign(campaignId)
+        : sendingEngine.stopCampaign(campaignId);
+    return jsonResponse(res, { ok: true, ...result });
+  }
+
+  // GET /api/sending/campaigns/:id/preflight — recipient, sender and launch readiness review
+  const campaignPreflightMatch = pathname.match(/^\/api\/sending\/campaigns\/(\d+)\/preflight$/);
+  if (method === 'GET' && campaignPreflightMatch) {
+    return jsonResponse(res, sendingEngine.getCampaignPreflight(campaignPreflightMatch[1]));
+  }
+
+  // GET/POST /api/sending/campaigns/:id/audience — snapshot and inspect recipients
+  const audienceMatch = pathname.match(/^\/api\/sending\/campaigns\/(\d+)\/audience$/);
+  if (method === 'GET' && audienceMatch) {
+    const rawLimit = parsedUrl.searchParams.get('limit');
+    const rawOffset = parsedUrl.searchParams.get('offset');
+    const limit = rawLimit === null ? 50 : Number(rawLimit);
+    const offset = rawOffset === null ? 0 : Number(rawOffset);
+    const result = campaignAudience.getCampaignAudience(audienceMatch[1], {
+      search: (parsedUrl.searchParams.get('search') || '').trim().slice(0, 120), limit, offset,
+    });
+    if (!result) return errorResponse(res, 'Campaign not found.', 404);
+    return jsonResponse(res, result);
+  }
+  if (method === 'POST' && audienceMatch) {
+    const body = await parseBody(req);
+    if (body.listId !== undefined && body.leadIds !== undefined) return errorResponse(res, 'Choose either one saved list or an explicit contact selection.');
+    const result = Array.isArray(body.leadIds)
+      ? campaignAudience.enrollContactsInCampaign(audienceMatch[1], body.leadIds)
+      : campaignAudience.enrollListInCampaign(audienceMatch[1], body.listId);
+    return jsonResponse(res, { ok: true, ...result });
+  }
+
+  const campaignRecipientDraftMatch = pathname.match(/^\/api\/sending\/campaigns\/(\d+)\/audience\/(\d+)\/draft$/);
+  if (method === 'POST' && campaignRecipientDraftMatch) {
+    const body = await parseBody(req, 384 * 1024);
+    return jsonResponse(res, saveCampaignRecipientDraft(campaignRecipientDraftMatch[1], campaignRecipientDraftMatch[2], body, actor), 201);
+  }
+
+  const campaignRecipientMatch = pathname.match(/^\/api\/sending\/campaigns\/(\d+)\/audience\/(\d+)$/);
+  if (method === 'DELETE' && campaignRecipientMatch) {
+    return jsonResponse(res, { ok: true, ...campaignAudience.removeCampaignRecipient(campaignRecipientMatch[1], campaignRecipientMatch[2]) });
+  }
+
+  const oooReactivateMatch = pathname.match(/^\/api\/sending\/campaigns\/(\d+)\/audience\/(\d+)\/reactivate$/);
+  if (method === 'POST' && oooReactivateMatch) {
+    const result = campaignAudience.reactivateSequenceAfterOutOfOffice(oooReactivateMatch[1], oooReactivateMatch[2]);
+    return jsonResponse(res, { ok: true, ...result });
+  }
+
   // GET /api/sending/campaigns/:id/variants — variant stats
   const variantsMatch = pathname.match(/^\/api\/sending\/campaigns\/(\d+)\/variants$/);
   if (method === 'GET' && variantsMatch) {
-    return jsonResponse(res, abTesting.getVariantStats(parseInt(variantsMatch[1])));
+    const rawStepId = parsedUrl.searchParams.get('stepId');
+    return jsonResponse(res, abTesting.getVariantStats(parseInt(variantsMatch[1]), rawStepId === null ? null : Number(rawStepId)));
   }
 
   // GET /api/sending/campaigns/:id/timeline — 14-day timeline
@@ -909,16 +3119,18 @@ async function handleSendingApi(req, res, parsedUrl, pipeline) {
 
   // --- A/B Testing ---
 
-  // POST /api/sending/ab/auto-promote — check and auto-promote winners
+  // POST /api/sending/ab/auto-promote — report eligible recommendations; never rewrite a launched experiment
   if (method === 'POST' && pathname === '/api/sending/ab/auto-promote') {
-    const promoted = abTesting.autoPromoteWinners();
-    return jsonResponse(res, { ok: true, promoted });
+    const recommendations = abTesting.autoPromoteWinners();
+    return jsonResponse(res, { ok: true, applied: false, recommendations });
   }
 
   // GET /api/sending/ab/assign/:campaignId — get next variant assignment
   const assignMatch = pathname.match(/^\/api\/sending\/ab\/assign\/(\d+)$/);
   if (method === 'GET' && assignMatch) {
-    return jsonResponse(res, { variant: abTesting.assignVariant(parseInt(assignMatch[1])) });
+    const leadId = parsedUrl.searchParams.get('leadId');
+    const stepId = parsedUrl.searchParams.get('stepId');
+    return jsonResponse(res, { variant: abTesting.assignVariant(assignMatch[1], leadId, stepId) });
   }
 
   // POST /api/sending/threshold-check — auto-pause breaching mailboxes
@@ -931,7 +3143,7 @@ async function handleSendingApi(req, res, parsedUrl, pipeline) {
 }
 
 // ── Personalization API routes ───────────────────────────
-async function handlePersonalizeApi(req, res, parsedUrl, pipeline) {
+async function handlePersonalizeApi(req, res, parsedUrl, pipeline, authenticatedSession) {
   const { personalizer } = pipeline;
   const method = req.method;
   const pathname = parsedUrl.pathname;
@@ -996,7 +3208,14 @@ async function handlePersonalizeApi(req, res, parsedUrl, pipeline) {
   const editMatch = pathname.match(/^\/api\/personalize\/(\d+)$/);
   if (method === 'PATCH' && editMatch) {
     const body = await parseBody(req);
-    return jsonResponse(res, personalizer.editPersonalization(parseInt(editMatch[1]), body));
+    try {
+      return jsonResponse(res, personalizer.editPersonalization(parseInt(editMatch[1]), body));
+    } catch (error) {
+      if (error?.statusCode === 400 || error?.statusCode === 404) {
+        return errorResponse(res, error.message, error.statusCode);
+      }
+      throw error;
+    }
   }
 
   // GET /api/personalize/ollama-test — check Ollama connection
@@ -1012,6 +3231,160 @@ async function handlePersonalizeApi(req, res, parsedUrl, pipeline) {
 export const server = http.createServer(async (req, res) => {
   const parsedUrl = new URL(req.url, `http://localhost:${PORT}`);
   const reqPath = parsedUrl.pathname;
+
+  if (isLocalPreviewEgressRequest(req.method, reqPath)) {
+    return errorResponse(res, 'This external action is disabled in LOCAL_PREVIEW.', 503);
+  }
+
+  // Legacy open/click URLs trust sequential database IDs (and click URLs trust
+  // a caller-provided redirect target). Retire them before auth or DB access so
+  // old mail links fail closed without creating analytics or exposing IDs.
+  if (/^\/api\/track\/(?:open|click)\/\d+$/.test(reqPath) && ['GET', 'HEAD'].includes(req.method)) {
+    return errorResponse(res, 'Legacy email tracking is unavailable; no analytics event was recorded.', 410);
+  }
+
+  const trackedClickMatch = reqPath.match(/^\/t\/([A-Za-z0-9_-]{43})$/);
+  if (reqPath.startsWith('/t/')) {
+    if (req.method !== 'GET') {
+      res.writeHead(405, { 'Content-Type': 'text/plain; charset=utf-8', Allow: 'GET', 'Cache-Control': 'no-store' });
+      return res.end('Method not allowed');
+    }
+    if (!trackedClickMatch) {
+      res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'no-store' });
+      return res.end('Tracking link not found.');
+    }
+    try {
+      const { resolveTrackedClickToken } = await import('./pipeline/click-tracking.js');
+      const resolved = resolveTrackedClickToken(trackedClickMatch[1]);
+      if (!resolved) {
+        res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'no-store' });
+        return res.end('Tracking link not found.');
+      }
+      res.writeHead(302, {
+        Location: resolved.targetUrl,
+        'Cache-Control': 'no-store',
+        'Referrer-Policy': 'no-referrer',
+        'X-Robots-Tag': 'noindex, nofollow',
+      });
+      return res.end();
+    } catch (error) {
+      console.error('Tracked link could not be resolved:', error.message);
+      res.writeHead(503, { 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'no-store' });
+      return res.end('Tracking link is temporarily unavailable.');
+    }
+  }
+
+  if (reqPath === '/api/webhooks/meta/leadgen') {
+    try {
+      if (!['GET', 'POST'].includes(req.method)) {
+        res.writeHead(405, { 'Content-Type': 'text/plain; charset=utf-8', Allow: 'GET, POST', 'Cache-Control': 'no-store' });
+        return res.end('Method not allowed');
+      }
+      const pipeline = await getPipeline();
+      if (!pipeline) return errorResponse(res, 'Pipeline is not available.', 503);
+      const { createMetaLeadAdsManager } = await import('./pipeline/meta-lead-ads.js');
+      const manager = createMetaLeadAdsManager({ db: pipeline.database.getDb(), fetchImpl: _metaLeadAdsFetchTestOverride || globalThis.fetch,
+        now: _metaLeadAdsNowTestOverride || Date.now });
+      if (req.method === 'GET') {
+        const challenge = manager.verifyWebhookChallenge({
+          mode: parsedUrl.searchParams.get('hub.mode'),
+          verifyToken: parsedUrl.searchParams.get('hub.verify_token'),
+          challenge: parsedUrl.searchParams.get('hub.challenge'),
+        });
+        res.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'no-store' });
+        return res.end(challenge);
+      }
+      if (!/^application\/json(?:\s*;|$)/i.test(String(req.headers['content-type'] || ''))) {
+        return errorResponse(res, 'Meta webhook requests must use application/json.', 415);
+      }
+      const rawBody = await readRawBody(req, 256 * 1024);
+      const receipt = manager.receiveWebhook({ rawBody, signature: req.headers['x-hub-signature-256'] });
+      jsonResponse(res, { received: true, ...receipt });
+      if (receipt.accepted > 0) {
+        setImmediate(() => { void manager.processWebhookEvents({ limit: 25 }).catch(() => {}); });
+      }
+      return;
+    } catch (error) {
+      const status = Number.isInteger(error.statusCode) && error.statusCode >= 400 && error.statusCode < 600 ? error.statusCode : 500;
+      if (status === 500) console.error('Meta lead webhook error:', error);
+      return errorResponse(res, status === 500 ? 'Meta webhook could not be processed.' : error.message, status);
+    }
+  }
+
+  if (reqPath.startsWith('/api/auth/')) {
+    try {
+      await handleAuthRoute(req, res, reqPath);
+    } catch (error) {
+      const status = Number.isInteger(error.statusCode) && error.statusCode >= 400 && error.statusCode < 600 ? error.statusCode : 500;
+      if (status === 500) console.error('Authentication API Error:', error);
+      errorResponse(res, status === 500 ? 'Authentication service unavailable.' : error.message, status);
+    }
+    return;
+  }
+
+  let authenticatedSession = null;
+  if (reqPath.startsWith('/api/') && !AUTH_TEST_BYPASS && !isPublicApi(req, reqPath)) {
+    try {
+      const auth = await getAuthManager();
+      const cookies = requestCookies(req);
+      const session = auth.currentSession(cookies.odd_session);
+      if (!session) return errorResponse(res, 'Sign-in required.', 401);
+      authenticatedSession = session;
+      if (!['GET', 'HEAD', 'OPTIONS'].includes(req.method)
+        && !auth.verifyCsrf(session, cookies.odd_csrf, req.headers['x-csrf-token'])) {
+        return errorResponse(res, 'CSRF token was not accepted.', 403);
+      }
+      const authenticatedInvitationAcceptance = req.method === 'POST'
+        && reqPath === '/api/astra/invitations/accept'
+        && ['owner', 'admin', 'operator', 'reviewer'].includes(session.role);
+      if (!auth.authorize(session, req.method, reqPath) && !authenticatedInvitationAcceptance) {
+        return errorResponse(res, 'Your workspace role does not allow this action.', 403);
+      }
+    } catch (error) {
+      console.error('Authentication boundary error:', error);
+      return errorResponse(res, 'Authentication service unavailable.', 503);
+    }
+  }
+
+  if (reqPath === '/api/astra' || reqPath.startsWith('/api/astra/')) {
+    if (process.env.ASTRA_TENANT_MODE !== '1') {
+      return errorResponse(res, 'Tenant APIs are disabled until Astra migrations and runtime roles are prepared.', 503);
+    }
+    try {
+      const [api, legacyDb] = await Promise.all([
+        getAstraRouteModules(),
+        reqPath.includes('/offers') || reqPath.includes('/campaigns') || /\/generation\/jobs\/[^/]+\/run-once$/.test(reqPath)
+          ? getAstraLegacyOfferDb() : Promise.resolve(undefined),
+      ]);
+      await api.handleAstraApiRequest({
+        req, res, pathname: reqPath, session: authenticatedSession, legacyDb,
+      });
+    } catch (error) {
+      const status = Number.isInteger(error.statusCode) && error.statusCode >= 400 && error.statusCode < 600 ? error.statusCode : 503;
+      if (status >= 500) console.error('Astra API unavailable:', error.message);
+      return errorResponse(res, status >= 500 ? 'Tenant API could not be completed.' : error.message, status);
+    }
+    return;
+  }
+
+  // Astra tenant mode is deliberately opt-in. Once enabled, legacy API
+  // handlers that still read the workspace-wide SQLite database stay closed;
+  // only auth and the routes above may access application APIs.
+  if (process.env.ASTRA_TENANT_MODE === '1' && reqPath.startsWith('/api/')
+      && !reqPath.startsWith('/api/auth/')) {
+    return errorResponse(res, 'This legacy API is unavailable in tenant mode.', 503);
+  }
+
+  if (reqPath.startsWith('/api/workspace/')) {
+    try {
+      await handleWorkspaceRoute(req, res, parsedUrl, authenticatedSession);
+    } catch (error) {
+      const status = Number.isInteger(error.statusCode) && error.statusCode >= 400 && error.statusCode < 500 ? error.statusCode : 500;
+      if (status === 500) console.error('Workspace API Error:', error);
+      errorResponse(res, status === 500 ? 'Workspace request could not be completed.' : error.message, status);
+    }
+    return;
+  }
 
   // API routes
   if (reqPath.startsWith('/api/scrape/')) {
@@ -1030,10 +3403,11 @@ export const server = http.createServer(async (req, res) => {
     try {
       const pipeline = await getPipeline();
       if (!pipeline) return errorResponse(res, 'Pipeline not initialized', 503);
-      await handleQualifyApi(req, res, parsedUrl, pipeline);
+      await handleQualifyApi(req, res, parsedUrl, pipeline, authenticatedSession);
     } catch (error) {
-      console.error('Qualify API Error:', error);
-      errorResponse(res, 'Internal server error', 500);
+      const status = Number.isInteger(error.statusCode) && error.statusCode >= 400 && error.statusCode < 600 ? error.statusCode : 500;
+      if (status === 500) console.error('Qualify API Error:', error);
+      errorResponse(res, status === 500 ? 'Internal server error' : error.message, status);
     }
     return;
   }
@@ -1044,20 +3418,23 @@ export const server = http.createServer(async (req, res) => {
       if (!pipeline) return errorResponse(res, 'Pipeline not initialized', 503);
       await handleVerifyApi(req, res, parsedUrl, pipeline);
     } catch (error) {
-      console.error('Verify API Error:', error);
-      errorResponse(res, 'Internal server error', 500);
+      const status = Number.isInteger(error.statusCode) && error.statusCode >= 400 && error.statusCode < 500 ? error.statusCode : 500;
+      if (status === 500) console.error('Verify API Error:', error);
+      errorResponse(res, status === 500 ? 'Internal server error' : error.message, status);
     }
     return;
   }
 
-  if (reqPath.startsWith('/api/sending/')) {
+  if (reqPath.startsWith('/api/sending/') || reqPath === '/api/offers' || reqPath.startsWith('/api/offers/')) {
     try {
       const pipeline = await getPipeline();
       if (!pipeline) return errorResponse(res, 'Pipeline not initialized', 503);
-      await handleSendingApi(req, res, parsedUrl, pipeline);
+      await handleSendingApi(req, res, parsedUrl, pipeline, authenticatedSession);
     } catch (error) {
-      console.error('Sending API Error:', error);
-      errorResponse(res, 'Internal server error', 500);
+      const status = Number.isInteger(error.statusCode)
+        && ((error.statusCode >= 400 && error.statusCode < 500) || error.statusCode === 503) ? error.statusCode : 500;
+      if (status === 500) console.error('Sending API Error:', error);
+      errorResponse(res, status === 500 ? 'Internal server error' : error.message, status);
     }
     return;
   }
@@ -1066,7 +3443,7 @@ export const server = http.createServer(async (req, res) => {
     try {
       const pipeline = await getPipeline();
       if (!pipeline) return errorResponse(res, 'Pipeline not initialized', 503);
-      await handlePersonalizeApi(req, res, parsedUrl, pipeline);
+      await handlePersonalizeApi(req, res, parsedUrl, pipeline, authenticatedSession);
     } catch (error) {
       console.error('Personalize API Error:', error);
       errorResponse(res, 'Internal server error', 500);
@@ -1074,39 +3451,140 @@ export const server = http.createServer(async (req, res) => {
     return;
   }
 
+  if (reqPath === '/api/lead-strategies' || reqPath.startsWith('/api/lead-strategies/')) {
+    try {
+      const pipeline = await getPipeline();
+      if (!pipeline) return errorResponse(res, 'Pipeline not initialized', 503);
+      const { createLeadStrategyManager } = await import('./pipeline/lead-strategy.js');
+      const manager = createLeadStrategyManager({
+        db: pipeline.database.getDb(),
+        fetchImpl: _leadStrategyFetchTestOverride || globalThis.fetch,
+      });
+      if (req.method === 'GET' && reqPath === '/api/lead-strategies') {
+        const limit = Number.parseInt(parsedUrl.searchParams.get('limit'), 10) || 25;
+        return jsonResponse(res, { provider: manager.getStatus(authenticatedSession), settings: manager.getSettings(authenticatedSession), strategies: manager.list(limit) });
+      }
+      const strategyMatch = reqPath.match(/^\/api\/lead-strategies\/(\d+)$/);
+      if (req.method === 'GET' && strategyMatch) {
+        const strategy = manager.get(strategyMatch[1]);
+        return strategy ? jsonResponse(res, strategy) : errorResponse(res, 'Targeting strategy was not found.', 404);
+      }
+      if (req.method === 'POST' && reqPath === '/api/lead-strategies/provider-check') {
+        if (!checkRateLimit(req)) return errorResponse(res, 'Rate limit exceeded', 429);
+        const body = await parseBody(req, 8 * 1024);
+        return jsonResponse(res, await manager.checkProvider(authenticatedSession, body.scope || 'effective'));
+      }
+      if (req.method === 'POST' && reqPath === '/api/lead-strategies/discovery-search-interpretation') {
+        if (!checkRateLimit(req)) return errorResponse(res, 'Rate limit exceeded', 429);
+        const body = await parseBody(req, 8 * 1024);
+        return jsonResponse(res, await manager.interpretDiscoverySearch(body, authenticatedSession));
+      }
+      if (req.method === 'PUT' && reqPath === '/api/lead-strategies/provider-settings') {
+        if (!checkRateLimit(req)) return errorResponse(res, 'Rate limit exceeded', 429);
+        const body = await parseBody(req, 8 * 1024);
+        const bypass = AUTH_TEST_BYPASS && !authenticatedSession;
+        const scope = body.scope || (Number.isSafeInteger(authenticatedSession?.id) ? 'personal' : 'workspace');
+        if (!bypass && scope === 'workspace' && !['owner', 'admin'].includes(authenticatedSession?.role)) {
+          return errorResponse(res, 'Only workspace owners and admins can change the shared AI provider.', 403);
+        }
+        if (!bypass && scope === 'personal' && (!Number.isSafeInteger(authenticatedSession?.id)
+          || !['owner', 'admin', 'operator'].includes(authenticatedSession?.role))) {
+          return errorResponse(res, 'Sign in as an owner, admin, or operator to save personal AI provider settings.', 403);
+        }
+        const actor = authenticatedSession || (bypass ? { id: null, role: 'admin' } : null);
+        const settings = manager.saveSettings({ ...body, scope }, actor);
+        if (authenticatedSession) {
+          try {
+            const auth = await getAuthManager();
+            auth.recordAuditEvent(scope === 'personal' ? 'ai_personal_provider_settings_updated' : 'ai_workspace_provider_settings_updated', authenticatedSession.id, req.socket?.remoteAddress || 'unknown');
+          } catch (error) { console.error('AI provider settings audit event could not be recorded:', error.message); }
+        }
+        return jsonResponse(res, { settings, provider: manager.getStatus(authenticatedSession, scope) });
+      }
+      if (req.method === 'DELETE' && reqPath === '/api/lead-strategies/provider-settings') {
+        if (!checkRateLimit(req)) return errorResponse(res, 'Rate limit exceeded', 429);
+        if (!authenticatedSession) return errorResponse(res, 'Sign in before clearing personal AI provider settings.', 401);
+        const settings = manager.clearPersonalSettings(authenticatedSession);
+        try {
+          const auth = await getAuthManager();
+          auth.recordAuditEvent('ai_personal_provider_settings_cleared', authenticatedSession.id, req.socket?.remoteAddress || 'unknown');
+        } catch (error) { console.error('AI provider settings audit event could not be recorded:', error.message); }
+        return jsonResponse(res, { settings, provider: manager.getStatus(authenticatedSession) });
+      }
+      if (req.method === 'POST' && reqPath === '/api/lead-strategies') {
+        if (!checkRateLimit(req)) return errorResponse(res, 'Rate limit exceeded', 429);
+        const body = await parseBody(req, 12 * 1024);
+        const strategy = await manager.generate(body, authenticatedSession);
+        return jsonResponse(res, strategy, 201);
+      }
+      return errorResponse(res, 'Unknown lead strategy route.', 404);
+    } catch (error) {
+      const status = Number.isInteger(error.statusCode) && error.statusCode >= 400 && error.statusCode < 600 ? error.statusCode : 500;
+      if (status === 500) console.error('Lead strategy API Error:', error);
+      return errorResponse(res, status === 500 ? 'Lead targeting strategy could not be completed.' : error.message, status);
+    }
+  }
+
   if (reqPath.startsWith('/api/')) {
     try {
-      await handleApiRequest(req, res, parsedUrl);
+      await handleApiRequest(req, res, parsedUrl, authenticatedSession);
     } catch (error) {
-      console.error('API Error:', error);
-      errorResponse(res, 'Internal server error', 500);
+      const status = Number.isInteger(error.statusCode)
+        && ((error.statusCode >= 400 && error.statusCode < 500) || [502, 503, 504].includes(error.statusCode))
+        ? error.statusCode : 500;
+      if (status === 500) console.error('API Error:', error);
+      errorResponse(res, status === 500 ? 'Internal server error' : error.message, status);
     }
     return;
   }
 
-  // Static file serving
-  let filePath = path.join(__dirname, reqPath === '/' ? '/index.html' : reqPath);
-  const ext = path.extname(filePath).toLowerCase();
-  const mimeType = MIME_TYPES[ext] || 'application/octet-stream';
-
-  fs.readFile(filePath, (err, content) => {
-    if (err) {
-      if (err.code === 'ENOENT') {
-        res.writeHead(404, { 'Content-Type': 'text/html' });
-        res.end('<h1>404 Not Found</h1>');
-      } else {
-        res.writeHead(500);
-        res.end(`Server Error: ${err.code}`);
+  if (!['GET', 'HEAD'].includes(req.method)) {
+    res.writeHead(405, { 'Content-Type': 'text/plain; charset=utf-8', Allow: 'GET, HEAD' });
+    return res.end('Method not allowed');
+  }
+  const isAppDocument = ['/', '/login', '/index.html', '/growth.html', '/astra.html'].includes(reqPath);
+  if (!isAppDocument && !isSafeAssetPath(reqPath)) {
+    res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8', 'X-Content-Type-Options': 'nosniff' });
+    return res.end('Not found');
+  }
+  let staticSession = null;
+  if (!AUTH_TEST_BYPASS && reqPath !== '/login' && !isSafeAssetPath(reqPath)) {
+    try {
+      const auth = await getAuthManager();
+      staticSession = auth.currentSession(requestCookies(req).odd_session);
+      if (!staticSession) {
+        res.writeHead(302, { Location: '/login', 'Cache-Control': 'no-store' });
+        return res.end();
       }
-    } else {
-      res.writeHead(200, {
-        'Content-Type': mimeType,
-        'Cache-Control': 'no-cache',
-        'Access-Control-Allow-Origin': '*',
-      });
-      res.end(content, 'utf-8');
+    } catch (error) {
+      console.error('Static authentication boundary error:', error);
+      res.writeHead(503, { 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'no-store' });
+      return res.end('Authentication service unavailable.');
     }
-  });
+  }
+  if (reqPath === '/astra.html') {
+    if (process.env.ASTRA_TENANT_MODE !== '1' || !staticSession) {
+      res.writeHead(403, { 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'no-store' });
+      return res.end('Astra Workbench requires an active operator membership in an Astra workspace.');
+    }
+    try {
+      const api = await getAstraRouteModules();
+      if (!await api.canAccessOperatorWorkspace({ session: staticSession })) {
+        res.writeHead(403, { 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'no-store' });
+        return res.end('Astra Workbench requires an active operator membership in an Astra workspace.');
+      }
+    } catch (error) {
+      console.error('Astra Workbench membership check failed:', error.message);
+      res.writeHead(503, { 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'no-store' });
+      return res.end('Astra Workbench authorization is unavailable.');
+    }
+  }
+  serveStaticFile(req, res, reqPath);
+});
+
+server.on('close', () => {
+  _pipeline?.imapSyncScheduler?.stop();
+  Promise.resolve(_astraProspectingService?.close()).catch(() => {});
 });
 
 server.listen(PORT, HOST, () => {
@@ -1136,12 +3614,14 @@ server.listen(PORT, HOST, () => {
   console.log(`  POST /api/verify/email/:id              - Re-verify single email`);
   console.log(`  POST /api/verify/single                 - Verify arbitrary email`);
   console.log(`  GET  /api/verify/distribution           - Verification status counts`);
+  console.log(`  GET  /api/verify/evidence-distribution   - Saved evidence counts`);
   console.log(`  --- Sending Engine (Phase 6) ---`);
   console.log(`  GET  /api/sending/mailboxes              - Mailbox fleet`);
   console.log(`  POST /api/sending/mailboxes              - Add mailbox`);
   console.log(`  POST /api/sending/mailboxes/:id/pause    - Pause mailbox`);
   console.log(`  POST /api/sending/mailboxes/:id/activate - Re-activate mailbox`);
   console.log(`  POST /api/sending/mailboxes/:id/retire   - Retire mailbox`);
+  console.log(`  POST /api/sending/mailboxes/:id/warmup-review - Review campaign readiness`);
   console.log(`  POST /api/sending/health-recompute       - Recompute health scores`);
   console.log(`  POST /api/sending/warmup-check           - Process warmup transitions`);
   console.log(`  GET  /api/sending/campaigns              - List campaigns + stats`);

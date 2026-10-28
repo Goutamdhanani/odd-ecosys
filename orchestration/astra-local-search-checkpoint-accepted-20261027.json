@@ -1,0 +1,104 @@
+{
+  "recordedAt": "2026-10-27T11:52:56.414624+00:00",
+  "acceptedCandidate": "astra-local-search-r1-8900555b93042d82",
+  "sourceAggregate": "8900555b93042d827246e9413a45d24a27f4e82967070106a6b8d4e3feb44e2d",
+  "suite": {
+    "PASS": 605,
+    "FAIL": 0,
+    "SKIPPED": 0,
+    "CANCELLED": 0,
+    "TODO": 0,
+    "postRunMismatchCount": 0,
+    "independentSpec": "PASS",
+    "independentQuality": "PASS"
+  },
+  "registered100": {
+    "PASS": 38,
+    "FAIL": 0,
+    "BLOCKED": 4,
+    "NOT_RUN": 58
+  },
+  "runtime": {
+    "url": "http://127.0.0.1:3212/growth.html",
+    "pid": 16068,
+    "readOnlyHandoffPass": 14,
+    "sameUserWorkspaceKeyData": true,
+    "externalActions": "disabled",
+    "liveProspectingEnabled": false
+  },
+  "searchService": {
+    "endpoint": "http://127.0.0.1:8081",
+    "hosting": "Ubuntu-24.04 / WSL",
+    "engine": "google cse",
+    "standaloneQueries": 1,
+    "productTransportQueries": 1,
+    "resultWebsitePagesFetched": 0,
+    "initialPublicAllowanceConservativelyRemaining": 8
+  },
+  "nextAuthorizedImplementation": {
+    "ticket": "canonical-FreeInference-gateway",
+    "agent": "/root/live_canonical_gateway",
+    "model": "gpt-6-luna",
+    "reasoningEffort": "max",
+    "status": "IMPLEMENTATION_ACTIVE",
+    "sourceChangesAfterThisFrozenCheckpointRequireSeparateReview": true,
+    "previewRemainsFrozenCheckpointProcess": true
+  },
+  "providerUsage": {
+    "catalogRequests": 3,
+    "remainingCatalogAllowance": 0,
+    "inferencePosts": 3,
+    "reportedTokens": 307,
+    "remainingInferenceAllowance": 7,
+    "approvedActualModel": "glm-5.3-flash"
+  },
+  "lastAcceptedNumericScore": {
+    "score": 71,
+    "candidateScope": "astra-live-r2-0a50d8dc2bd66ef6",
+    "notAutomaticallyTransferredToNewCode": true
+  },
+  "evidence": [
+    {
+      "path": "orchestration/astra-phase2-source-local-search-r1.json",
+      "sha256": "d9ebb6726fcd68656b077895b19e254bb55732c432942d94f7058b78c5c3cbf1"
+    },
+    {
+      "path": ".superpowers/astra-local-search-regression/checkpoint/index.json",
+      "sha256": "215c9d7f6dfef2e6042fe7c4775f8f1059fef4cfe1162f5d36a53fc4dd789024"
+    },
+    {
+      "path": ".superpowers/astra-local-search-regression/suite/run-metadata.json",
+      "sha256": "cf0935c2b64cee764099e2db208b0794025271e1292263972948bf4040ed5e84"
+    },
+    {
+      "path": ".superpowers/astra-local-search-regression-review/final-suite/FINAL-SUITE-REVIEW.md",
+      "sha256": "8fadb80b0d9248b417df075d8d2de5a66dd5320e28a73243501cd825b97f6e50"
+    },
+    {
+      "path": ".superpowers/astra-local-search-regression-review/final-suite/ROUTE-ADDENDUM.md",
+      "sha256": "3170873028bc6c69d48c583b4a7dce024779cfe5a25bfc883737cd70d47007bd"
+    },
+    {
+      "path": ".superpowers/astra-local-search-final-reports/REPORT_AMENDMENT_MANIFEST.json",
+      "sha256": "f1429c42cd5521dc5e267507959c1f3e11c0b37d159d3bd5a87bea077f127d96"
+    },
+    {
+      "path": ".superpowers/astra-local-search-final-report-review/fix-round2/REVIEW.md",
+      "sha256": "96f7d9391e3915da12859f7d63807235a891e14552dffe5364b0949e39e1993b"
+    },
+    {
+      "path": ".superpowers/astra-discovery-registration/REGISTRATION_RECEIPT.json",
+      "sha256": "22353fb3c18ca10e9aca813852381e1f762327ffe535f95924dd43ec2b6fa3be"
+    },
+    {
+      "path": ".superpowers/astra-discovery-native-negative-review/v5-registered/REPORT.md",
+      "sha256": "e4966b1f0b4f929e4726548101320df81a7488b4dda160c0e343469ac9736fd3"
+    },
+    {
+      "path": ".superpowers/astra-local-search-runtime/RUNTIME_HANDOFF.json",
+      "sha256": "765efc59f0d8d68d60465e74c139178aaee66c62b0dc619de2b76e9dbf24e566"
+    }
+  ],
+  "releaseReady": false,
+  "roadmap52Accepted": false
+}

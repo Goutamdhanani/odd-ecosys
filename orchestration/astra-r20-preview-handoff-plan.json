@@ -1,0 +1,20 @@
+{
+  "id": "ASTRA-R20-UI-PREVIEW-HANDOFF",
+  "reason": "Port3212 is no longer listening; restore the owner-requested local UI on current backend without replacing existing synthetic workspace or private state",
+  "root": "C:/Users/pooja/.codex/worktrees/astra-foundation/odd-ecosys",
+  "scope": "Only the recognized disposable-synthetic-qa r18-customer-preview fixture (realData=false), existing3212 private state, and orchestration evidence",
+  "coordinatorOwnedPaths": [".superpowers/r20/preview-handoff/**"],
+  "privateBackupRoot": ".runner/astra-qa/r18-customer-preview/r20-handoff-backup",
+  "sequence": [
+    "Independently review a fail-closed one-time helper before mutation",
+    "Verify canonical known fixture identity, local endpoint, pinned schema001-032 and reviewed033 hashes",
+    "Backup the complete synthetic PostgreSQL database in ignored private storage, validate dump listing, copy private fixture metadata without exposing it",
+    "Fingerprint every existing Astra table and preserve all current private preview identities and credential key",
+    "Apply only exact reviewed additive033 UP; no DOWN, cleanup, row edits or reset",
+    "Verify every prior table fingerprint and private identity are unchanged; record exact supplemental033 application in a separate receipt, leaving the original32 baseline fixture metadata untouched because concurrent clock monitors do not share a lock protocol",
+    "Launch reviewed existing local-preview helper on3212 in supervised exec; preserve3211",
+    "Read-only browser checks of actual served UI, app data, policy state and source hashes"
+  ],
+  "restrictions": ["No production/customer database", "no live calls/outreach", "no original migrations modified", "no clock/monitor changes", "no credential value output", "no replacement tenant/auth user/private key", "no writes through preview UI during QA", "no source-ready/production-ready inference"],
+  "releaseReady": false
+}

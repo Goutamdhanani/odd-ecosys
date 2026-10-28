@@ -1,0 +1,3141 @@
+{
+  "plan": "astra-combined-main-20261028",
+  "frozenAtUtc": "2026-10-28T12:20:19.071641+00:00",
+  "branch": "codex/astra-combined-main-20261028",
+  "baseHead": "a67413efb07cc462386249ded63fda829e269559",
+  "glmSourceRef": "b949d806f7051872e120cb6921b721ff49c93116",
+  "predecessorAggregateSha256": "7847ddecaa1d9348f1ed2bfa3d3f84e6aa1786568d9d94f63b2735b520490723",
+  "sourceAggregateSha256": "8d5c3ae436e1d9b40b5619e2f2da0b66dadcb3bc29404249b1e7b93ce3de9ba1",
+  "sourceCount": 775,
+  "files": [
+    {
+      "path": ".env.example",
+      "sha256": "bf47c44babc24b5509d804b1739f7f8fa917a7807be23e2425f76cd0d5e15243"
+    },
+    {
+      "path": ".gitattributes",
+      "sha256": "7a3d053a3ef61afa1c5634ba7e2043d6fc7a2a950eb1473802127a12b9de8ea0"
+    },
+    {
+      "path": ".gitignore",
+      "sha256": "ec21bb2bd36d8f490123a531ebb2b43ebf76b5dcb1bca70f3d222b4eb41a4b89"
+    },
+    {
+      "path": "AGENTS.md",
+      "sha256": "c0ceb583e1188ac2cd6a43b3661888751eabd8e59ab046ccc1c0c8d3feb48747"
+    },
+    {
+      "path": "assets/odd-ecosys-emblem.png",
+      "sha256": "246eaea6774812b14396fa3eb052397272a4d3e69c6935dd543d59816ab050ef"
+    },
+    {
+      "path": "astra.html",
+      "sha256": "a6da98c4a59e0998408192a293a5b54b95034e0b678d2b1fe33239b1d3f1d934"
+    },
+    {
+      "path": "config/ai-rate-cards.json",
+      "sha256": "16c24c9fcde04f67c32f0b385538b80e2dce07720b6f82362090c55f983e4165"
+    },
+    {
+      "path": "config/email-intelligence/LICENSE",
+      "sha256": "1e63718e48c04e3788330b7bc6ab0d0a22985522ebe9201636deb26c3a07ab68"
+    },
+    {
+      "path": "config/email-intelligence/disposable-domains.txt",
+      "sha256": "ba19d6735fc2224db58d3eaa9bb294de43437a488133c4271fb07d0ad4436fc7"
+    },
+    {
+      "path": "config/email-intelligence/metadata.json",
+      "sha256": "569ef34198eeee2ab60257350ca5542c0be0dd31745bc92c1b4073476b5debfd"
+    },
+    {
+      "path": "config/parking-signatures.json",
+      "sha256": "98e0cdc21b8312731d5fe820cc23843f5707e269f9e06df0da066844f45cc0ec"
+    },
+    {
+      "path": "config/personalization.json",
+      "sha256": "56fff92391b258a11b82713e0f1d5fbd695b6e8b4b379985bb52997e17bae390"
+    },
+    {
+      "path": "config/qualification-scoring.json",
+      "sha256": "59e0d17c3525761ac3f1c5f8ed24f475e2785832160c8ae802701a6686bbce1a"
+    },
+    {
+      "path": "config/sending-engine.json",
+      "sha256": "49902bee9ff4e3ddcb3842ef74601d5d9ade1e90d9b2d1803e831c07a044ab63"
+    },
+    {
+      "path": "config/verification-rules.json",
+      "sha256": "e8ff4b0e3b253727beb433551980237ce38dfeb1ac8b5ad2e98a031e500c3416"
+    },
+    {
+      "path": "css/astra-growth.css",
+      "sha256": "94f00b3d7f8fa3214b971b69085285f241e130226290e4cd285e28464d98dbbf"
+    },
+    {
+      "path": "css/astra-workbench.css",
+      "sha256": "320174e6beadfbdd9a1fd24059d79531d8e99812aead2bbc6c6ac2f27e5f7cc1"
+    },
+    {
+      "path": "css/auth.css",
+      "sha256": "202dfce23c683d24daaf84e5cd072f3e433fe1e45cae385476e8c37819a6f093"
+    },
+    {
+      "path": "css/campaign-audience.css",
+      "sha256": "6c5bcba0a276841084016850925f7dbeb6b49509c73f773fee23f471091cf58e"
+    },
+    {
+      "path": "css/campaign-sequence.css",
+      "sha256": "254c65000f90ca5e30f095d84d575a265270a29b83b8bfc4bce5336f49dd3d5c"
+    },
+    {
+      "path": "css/campaign-workspace.css",
+      "sha256": "a37cf82ff6a665b588403ab77b8fe86d7cc4ccee604931e3f691b6c23b797ddb"
+    },
+    {
+      "path": "css/comfort.css",
+      "sha256": "a21b3766c7652d2835aa3fad2aee689cfcd1779135a7755c3a4f98e803f8f060"
+    },
+    {
+      "path": "css/contact-edit.css",
+      "sha256": "5913e8c3fd932cd57f2af73c0558b290f1eabc8cff736bc0bdd142bf4784fd57"
+    },
+    {
+      "path": "css/inbox.css",
+      "sha256": "e676ab0ee2cac482fe1a5cb683733742c3d7a1725ce59da7233305c2a003e8e9"
+    },
+    {
+      "path": "css/lead-strategy.css",
+      "sha256": "5bd577aba37b39464da12be0395d73bc0e5b0d43b79b7cac984501b63fddff24"
+    },
+    {
+      "path": "css/lists.css",
+      "sha256": "1aa1f8fb906f53d97107629431309135c80c9dcc8f51712c53818529da87bbb4"
+    },
+    {
+      "path": "css/main.css",
+      "sha256": "061176305f51ccb3d78f3b549b3259527948a2f30c84c0f85893ba4ab8566c94"
+    },
+    {
+      "path": "css/observatory.css",
+      "sha256": "4b38772e69b5467b96bfb317ac1d063f2986961ec30c3f1f2e0bcdf16ad0d3ee"
+    },
+    {
+      "path": "css/settings.css",
+      "sha256": "e1e3fbbc1b49236d03bd57f28ce1552310a469387ee591e459b936871afd8c2e"
+    },
+    {
+      "path": "docs/astra/ADRs/0001-tenant-migration.md",
+      "sha256": "e9e6e56d608498c56accfb0f3c4ec5190ff5033a7a2bdf7e9d6a847f3ae08b40"
+    },
+    {
+      "path": "docs/astra/ADRs/0002-workflow-ownership.md",
+      "sha256": "f22765fff237b3aa52d00a16c44890efce2be8444cd934746cac801a233eecef"
+    },
+    {
+      "path": "docs/astra/CONTINUOUS_EXECUTION_PLAN.md",
+      "sha256": "bbbd1666188f051f7e1664a2855e74ea1ca86d8d56b899ed85948fa74092ab37"
+    },
+    {
+      "path": "docs/astra/IMPLEMENTATION_HANDOFF.md",
+      "sha256": "6e52409fd348b274179a129ed7500dc8687f7918836ecc7ed00ba1f10bfea29a"
+    },
+    {
+      "path": "docs/astra/INTEGRATION_SETUP.md",
+      "sha256": "42a10949dfaf85c572ea0ce5e7e414b8c71bdc98b774e7aa2a47fdfea24d8a0d"
+    },
+    {
+      "path": "docs/astra/README.md",
+      "sha256": "793dd123bcf7174b8c295b81a0884a6f20c5aaf00ad21258aaecb1eb21541b2d"
+    },
+    {
+      "path": "docs/astra/acceptance-contract/README.md",
+      "sha256": "9db550dca245b82d966348ef0393221c1c6081392cf06aae9075bac825d600f0"
+    },
+    {
+      "path": "docs/astra/acceptance-contract/requirements-map.json",
+      "sha256": "619ec4fc42e5ddeb988eff5cfec435016c03e604eba81404317975f2fe89699c"
+    },
+    {
+      "path": "docs/astra/base-capabilities.json",
+      "sha256": "504860b2485c9126a1dea16ccf3481bd1c55bb1a070314d3bb7abbd7b2d4126f"
+    },
+    {
+      "path": "docs/astra/base-capability-map.md",
+      "sha256": "fd4582542593c6b13e774be3d62fd6b78c331cbf036239f7e90cf60c5ebb502c"
+    },
+    {
+      "path": "docs/astra/baseline-validation.md",
+      "sha256": "7b1aa53e0bb069fb44bb198e1a37c245ff26f20466c39b80385039785e9a171e"
+    },
+    {
+      "path": "docs/astra/combined-backlog.json",
+      "sha256": "69f25a70bf3831279a703fdbf7c0d3ac0946c6e6bc5ba440c82a87326a461acd"
+    },
+    {
+      "path": "docs/astra/commercial-gates.json",
+      "sha256": "44fc8954ce122da99921bd7731971ceb1fa009a6b75575c204be4b01c7bcbde9"
+    },
+    {
+      "path": "docs/astra/commercial-gates.md",
+      "sha256": "b14a35aad4479fb97d8fe4b26561daa7c94ee9da11d8db8e2b3d339fa79c8008"
+    },
+    {
+      "path": "docs/astra/contracts/README.md",
+      "sha256": "b0ec026eb7bae88a40d57841cae2b56a2b7007427d96bcc06e81c04570faff33"
+    },
+    {
+      "path": "docs/astra/contracts/harness-task-v1.schema.json",
+      "sha256": "bf9144736b3b8f402073118be19063f48cb60b3119cee0f15ca26911ee475d14"
+    },
+    {
+      "path": "docs/astra/extension-capabilities.json",
+      "sha256": "1a51510726a5fae825cb9b2061830b00404e20730846d92921a4637b54a5eddb"
+    },
+    {
+      "path": "docs/astra/extension-capability-map.md",
+      "sha256": "475132ffffff7a6dd1c39de8c95d82748f5f6e83851a9829bbe04013437f3d1c"
+    },
+    {
+      "path": "docs/astra/final-hashes.json",
+      "sha256": "5ec8cf2734e82e66a38e0672f7373a986caa9ff4e8959b2dc952f6f32d495847"
+    },
+    {
+      "path": "docs/astra/foundation-assessment.md",
+      "sha256": "1d1148a04785bffe9a2894b6a3f3564501ea17bb41e5d5f9d32370e3483069c9"
+    },
+    {
+      "path": "docs/astra/foundation-review.md",
+      "sha256": "ce06b33da8e623c6e30c576820b95dcdfd0605fd2b4abafb7876667d235194af"
+    },
+    {
+      "path": "docs/astra/offer-foundation-report.md",
+      "sha256": "046ddb883b8f4531b344dd37fb049ab66250b5fd849e506630432da5186187fc"
+    },
+    {
+      "path": "docs/astra/qa-s00-trace.md",
+      "sha256": "c30f2e314cd90c9518bcdd9460aa44849e377c37433249b7585dd646133eb38a"
+    },
+    {
+      "path": "docs/astra/s00-side-effect-inventory.json",
+      "sha256": "e2713accaab0fac62d7cfeee47a728a3d8cca19b64d7b075a5528a61e5089509"
+    },
+    {
+      "path": "docs/astra/s00-side-effect-inventory.md",
+      "sha256": "20ca231f40313162069b5c5d7ccbe66f0e3835f06b0ef71b969bccc464901e9c"
+    },
+    {
+      "path": "docs/astra/s00-source-delta.json",
+      "sha256": "6078d1c97c47f7b832cd5ea6e65f45ee833074cdebfb13418ae38bfff1648ee4"
+    },
+    {
+      "path": "docs/astra/s00-source-fidelity.md",
+      "sha256": "ff4f739176d4cc75e79fea3a75e00edd085f9cfde2262a05346bf59fbb11ae06"
+    },
+    {
+      "path": "docs/astra/s00-trace.md",
+      "sha256": "1c5b510f476f24f841ed582132c28a74557a2238412918a10cea0fe1612c8992"
+    },
+    {
+      "path": "docs/astra/source-snapshot.json",
+      "sha256": "80fbac9ffeb41f46007b0e4ede6e55a86ea0d8e3254e6044bccd7b99200fbfd8"
+    },
+    {
+      "path": "growth.html",
+      "sha256": "1bf934d6a5f5a505d761767767bd2a0774e82a687ab702ab7101190ab55a00a8"
+    },
+    {
+      "path": "index.html",
+      "sha256": "cfe4c145b520f52b805cc71f07429c7019c10db854e77e9cc46f33572b7304bc"
+    },
+    {
+      "path": "js/analytics.js",
+      "sha256": "1fc8a1c712e6c4a9cef89f47d76c293f71beda81bac32b5bb4f4e825e8a39f45"
+    },
+    {
+      "path": "js/api.js",
+      "sha256": "69ba8557c94aadf5b1e09af3779befb911b2a897346f158217349b3af2a3c99b"
+    },
+    {
+      "path": "js/app.js",
+      "sha256": "5b713c679ea32ae3d439d7459c74bcdcfa28d56b7dfdb09432cbcad0f9a49202"
+    },
+    {
+      "path": "js/astra-campaign-draft.js",
+      "sha256": "a16fb70029769e18cd9da47ebeab86ad17ea882f12abc84cc60d48c1e9211680"
+    },
+    {
+      "path": "js/astra-growth.js",
+      "sha256": "607428014871596a2192b2210cceea8ffcb3f867883b9359059eebf21fc39d60"
+    },
+    {
+      "path": "js/astra-workbench.js",
+      "sha256": "09263b61c2920057b9750c80226bd804eabf62d8597f7ad3331b230e00f6629a"
+    },
+    {
+      "path": "js/batches.js",
+      "sha256": "0b2c35f8aaaf8c2242b2e81ff38f2310d15e4ec87d48ac3e80905fcffac866c0"
+    },
+    {
+      "path": "js/campaign-workspace.js",
+      "sha256": "5342405dce03bbde31b1cf0c577e17646680190698bee00f3e72377dc2f00665"
+    },
+    {
+      "path": "js/campaigns.js",
+      "sha256": "20ee86ac6ec11cbfdd22f8e24a0eee956743190c1b8f96ec78f6cf6280d6643d"
+    },
+    {
+      "path": "js/contact-import.js",
+      "sha256": "9de04b7e81a7ce7da61c75586309ada168618262f0146aca3964d7ea2aa8f0ad"
+    },
+    {
+      "path": "js/contact-selection.js",
+      "sha256": "9e05366dc55d144d1f7ebddbccb33195d057c304d512ccc60c8281be7f4c6237"
+    },
+    {
+      "path": "js/dashboard-metrics.js",
+      "sha256": "6096e6d29bbf1b99d55a775914a40b16ae2757e83fad276a6448b4f37ab8ef84"
+    },
+    {
+      "path": "js/dashboard.js",
+      "sha256": "b191e2060edaecc525759139257d206cb155098f86b5d607477d04ab19cd58ab"
+    },
+    {
+      "path": "js/download.js",
+      "sha256": "8265dc9996e1da949b435fe0e4d5195823ea8379183c9c73dffcd490a01148e0"
+    },
+    {
+      "path": "js/inbox.js",
+      "sha256": "d72ebbb1fd231c17f52cfc9a87e8cc1e02f9a98f065111e358b35a31177b79bb"
+    },
+    {
+      "path": "js/leads.js",
+      "sha256": "af9275e0f1a35f0c832f2bda08fbe788e8c2059630b5e29fc24b36fdd9db20d2"
+    },
+    {
+      "path": "js/lists.js",
+      "sha256": "830fc250b2852ac40fd58cdb6dc6e3b544c066c42649df4ec8c65cb82082ed38"
+    },
+    {
+      "path": "js/mailboxes.js",
+      "sha256": "0e5cd23ab6045dbb0b3ff48d6f2ab1bf649dbba2f526572aac9c2ec059b21aa5"
+    },
+    {
+      "path": "js/native-warmup.js",
+      "sha256": "7e5af7a56aed1e6e3ca0bbc7975b45a21490cafe1037c6ef372ded2b641ec69d"
+    },
+    {
+      "path": "js/personalization.js",
+      "sha256": "538cd71938cb3f720622a6b7c338802b8745cf10ea0ad31a462c6517ef1f6da3"
+    },
+    {
+      "path": "js/qualification.js",
+      "sha256": "b080b79b93b549971c2dc15060c9ad59e6d3e14fbbcaacc8e01db78b11c7b240"
+    },
+    {
+      "path": "js/settings.js",
+      "sha256": "8525d9c823cbc13230dbc760b0c642a52a0f8be698be17fc2071bad378b51d77"
+    },
+    {
+      "path": "js/ui.js",
+      "sha256": "744c854f57e0c611d04aeb714efcbf7b1aa886f75989f486bfce955dbd29e4dd"
+    },
+    {
+      "path": "js/utils.js",
+      "sha256": "aef5386fe2507e759bff8b6c1b03df915eb231559647e5f956ced27574110070"
+    },
+    {
+      "path": "js/verification-result-view.js",
+      "sha256": "15e8f86ee8e42ebd3c1369171df91ecee4658fea74f9e4ee073b645f2bf5d290"
+    },
+    {
+      "path": "js/verification.js",
+      "sha256": "e6cd91f729badef40f64d0d488e05faa173033cb1b2052b3fc3edf1f97ee6caa"
+    },
+    {
+      "path": "migrations/astra/001-tenant-foundation.down.sql",
+      "sha256": "dcd8126d83e17fab55835368a44c0004b1f9c0f60230eb34a4bd0a4a6beb5df1"
+    },
+    {
+      "path": "migrations/astra/001-tenant-foundation.up.sql",
+      "sha256": "327e3c8e5e0dbaf083461985c44b233fc994db5c51731878f7fe8493cc82e38b"
+    },
+    {
+      "path": "migrations/astra/002-ledger.down.sql",
+      "sha256": "19d6046dfe667d0310b81cb0232ebe6ac057fb23ce42906ceea061bc0e8f1310"
+    },
+    {
+      "path": "migrations/astra/002-ledger.up.sql",
+      "sha256": "6c2c20f167070bd819740a74eeb1f12d12594e1179a368e2a88f5e62f9ff3575"
+    },
+    {
+      "path": "migrations/astra/003-workflow.down.sql",
+      "sha256": "fc120ef1c8903c6fbf413527641324228a1be81889fd62ec759e219ab8af5756"
+    },
+    {
+      "path": "migrations/astra/003-workflow.up.sql",
+      "sha256": "bc17f70789c297c20130de9f5c5558221ed13f962d58bf2838ae62a49f4680c3"
+    },
+    {
+      "path": "migrations/astra/004-gateway.down.sql",
+      "sha256": "561d66a506dbdd1e403135ee7970482a24d2bf57affa3826fe8cb3b9fb9df8ab"
+    },
+    {
+      "path": "migrations/astra/004-gateway.up.sql",
+      "sha256": "26003482360b07d3e568c3e89096cdf4e8e0f1591716953c6be3d587c7168c91"
+    },
+    {
+      "path": "migrations/astra/005-research.down.sql",
+      "sha256": "5265aecfbe2899d6edf14ab590df97bc6e0389621a60ec17ab9803e48f880138"
+    },
+    {
+      "path": "migrations/astra/005-research.up.sql",
+      "sha256": "37a3e778a201140719e54253a65af9321ff2199ef7802085d62f67d6f954bb24"
+    },
+    {
+      "path": "migrations/astra/006-inbox-permissions.down.sql",
+      "sha256": "8a5f94972fefba7290428376d07c6efdbd252acdbe139050e34c410271de1dae"
+    },
+    {
+      "path": "migrations/astra/006-inbox-permissions.up.sql",
+      "sha256": "8992d70731aced726405af3bbf14e39b1fba7a604b70d285b3b0c82e36bd73d4"
+    },
+    {
+      "path": "migrations/astra/007-campaigns.down.sql",
+      "sha256": "b80dc5ab6810d26c013c9bffd1bc44e45b65e755cd8517f90a5cfb2bd26e89d9"
+    },
+    {
+      "path": "migrations/astra/007-campaigns.up.sql",
+      "sha256": "1fb9211bd8d5b81f4b20b4e2b09862fcc0c7b99164ab0ffedf3a87f84c1c59bf"
+    },
+    {
+      "path": "migrations/astra/008-insights.down.sql",
+      "sha256": "3b2ebfbed2ca0a37d2c589996d17a0e20bdf5d7bb8da6c41c95244cd5f9ec388"
+    },
+    {
+      "path": "migrations/astra/008-insights.up.sql",
+      "sha256": "689a812409610822331ea21721b12e735b2c5ae9e1016f3dc1bbb9691e062815"
+    },
+    {
+      "path": "migrations/astra/009-runtime.down.sql",
+      "sha256": "9ea1506011fccf9074f71c6fa4a9129c59cd029e22b872d4e4d184e2887687bc"
+    },
+    {
+      "path": "migrations/astra/009-runtime.up.sql",
+      "sha256": "aff468c35dd05484ee849e8aa881084ddb175b20f45902d8a2bbcc948653a958"
+    },
+    {
+      "path": "migrations/astra/010-connectors.down.sql",
+      "sha256": "f708b5351ed1caf0345fd4713e5101fd901f8fa75868b4f1a21807f3d3383472"
+    },
+    {
+      "path": "migrations/astra/010-connectors.up.sql",
+      "sha256": "2b218fcb2f834f7aa797b2a680268789412959dbf0cf274083543bc1e26e04c8"
+    },
+    {
+      "path": "migrations/astra/011-generation.down.sql",
+      "sha256": "2ba01c99e8acd32ad74c803302dec39a9fc9645f0a0668cd7423d6385efc7ee0"
+    },
+    {
+      "path": "migrations/astra/011-generation.up.sql",
+      "sha256": "71bc191858ff99ef3a40d4c65fbc37239c6dfb54b2d0e70a088feb5346dfc53e"
+    },
+    {
+      "path": "migrations/astra/012-autonomy.down.sql",
+      "sha256": "89b9ab6fed071bd75cccba6d0c7bd73dcf2727403015a204ad27f674f4d82d86"
+    },
+    {
+      "path": "migrations/astra/012-autonomy.up.sql",
+      "sha256": "f7cbe26de1e4811fb00ca19fd8bffe8f79edc19ffc224cb4c912355516d5503f"
+    },
+    {
+      "path": "migrations/astra/013-evaluation.down.sql",
+      "sha256": "d10e547d80f0a417d80b917128dab76dad00ca52cf6049b07f0f880cb2ba414e"
+    },
+    {
+      "path": "migrations/astra/013-evaluation.up.sql",
+      "sha256": "c43b3a94188cbd39e972434454303796057a1e0f18417eeef8117657b0b3d1e5"
+    },
+    {
+      "path": "migrations/astra/014-lifecycle.down.sql",
+      "sha256": "7ff6942aa943675e17e60fc4901ab46106d9e57e8719e7804c6cabf3254b5fbf"
+    },
+    {
+      "path": "migrations/astra/014-lifecycle.up.sql",
+      "sha256": "858ba8944ef6a64247858b33029c7f8ef9b11adbec82d26cd471ba1e5757b509"
+    },
+    {
+      "path": "migrations/astra/015-operations.down.sql",
+      "sha256": "04d680b573aeea3d9a4d14fb5b5b78573e7af6dc49c3f1726652e91b1d39687e"
+    },
+    {
+      "path": "migrations/astra/015-operations.up.sql",
+      "sha256": "30dafb540b05ee76c1c48b967e67bfa6692b65ba7a66b04a232c1e9842fb268b"
+    },
+    {
+      "path": "migrations/astra/016-radar.down.sql",
+      "sha256": "47d8cc1137c089a642402f9130b16c1a63031545ea2b27d2523519c532ff31e2"
+    },
+    {
+      "path": "migrations/astra/016-radar.up.sql",
+      "sha256": "466b31b11c8b8e0eab3c30c43443a26489eae460dccd4be4e27db969e09438a1"
+    },
+    {
+      "path": "migrations/astra/017-learning.down.sql",
+      "sha256": "fcb08ab00e3346e5bac31a9c2bf5f4a2ed3fe8a02d51ef2318712daa53cf86a2"
+    },
+    {
+      "path": "migrations/astra/017-learning.up.sql",
+      "sha256": "4efb51a12b2a92cb375de90273f909f4a5e303e13a67806454056d5bbc297857"
+    },
+    {
+      "path": "migrations/astra/018-economics-postsale.down.sql",
+      "sha256": "f0fd628d2ddf8a8881791ab7c0e3627ccc525c2ad5168af222dc7499e8b2689f"
+    },
+    {
+      "path": "migrations/astra/018-economics-postsale.up.sql",
+      "sha256": "8f512e5b7820974fe183049b361bc594db01db96b17c6847a44e72d1a388f1b9"
+    },
+    {
+      "path": "migrations/astra/019-launch-controls.down.sql",
+      "sha256": "8388b1d9b04288b723ec67fca84effe09dafcb2a853638074f9ed60ace5ab1d9"
+    },
+    {
+      "path": "migrations/astra/019-launch-controls.up.sql",
+      "sha256": "7d8cfc7a6e3fc7999b7de4abedb40e4c80785797729e49869a0c9fabfe62738a"
+    },
+    {
+      "path": "migrations/astra/020-conformance.down.sql",
+      "sha256": "b6feb89cf171b01e7f47ce9146e3ec96811c5de9b0494c1fc255edac6412d8b8"
+    },
+    {
+      "path": "migrations/astra/020-conformance.up.sql",
+      "sha256": "0ac13d1977a943379969c1bc550526484593149e5439222dd4f8dc4430c5974f"
+    },
+    {
+      "path": "migrations/astra/021-bandits.down.sql",
+      "sha256": "b81d6f72cc7fcd66e55be560953d7c9ad2045a42adf8a863adb89c67bd3679e4"
+    },
+    {
+      "path": "migrations/astra/021-bandits.up.sql",
+      "sha256": "a2992ff62387fce066c77b00e2f60c852271e72c71bb7fc853d18974698ee8b3"
+    },
+    {
+      "path": "migrations/astra/022-memberships.down.sql",
+      "sha256": "f66cb1065a73172810abf78ff35ce11da3cb2af5c046e8b5f32ebeb41edc6d02"
+    },
+    {
+      "path": "migrations/astra/022-memberships.up.sql",
+      "sha256": "8913c0c497e45ec75b8ab393e92947187308062bb52c436988d1235aa96e7faf"
+    },
+    {
+      "path": "migrations/astra/023-customer-approvals.down.sql",
+      "sha256": "364aa4c6ed04cd726145b2159d4e3c80462aad3922d29b2d75d101141e15dd32"
+    },
+    {
+      "path": "migrations/astra/023-customer-approvals.up.sql",
+      "sha256": "bad23d26f2082b947ef285924caa97996b23fd3ea60754b840a30d2ce93b00bd"
+    },
+    {
+      "path": "migrations/astra/024-domain-harness.down.sql",
+      "sha256": "50ba656cde6314e109be793262f1a3c331aa0be469053e7d2c83588e8e88ac47"
+    },
+    {
+      "path": "migrations/astra/024-domain-harness.up.sql",
+      "sha256": "2694bd7dd63667f3ca3d360c1fedd223562ba2d379c0a6292ab208acfdff18fd"
+    },
+    {
+      "path": "migrations/astra/025-source-collection.down.sql",
+      "sha256": "c9f90161550785cfdd48dccde689e6dc6e249324b3af164a8b5907447bec311c"
+    },
+    {
+      "path": "migrations/astra/025-source-collection.up.sql",
+      "sha256": "1f9ea957db2faf1b65060b31b89af2aa49490aab8f9836b1c1c72c3ab838f076"
+    },
+    {
+      "path": "migrations/astra/026-smtp-dispatch.down.sql",
+      "sha256": "d61e23275dd405154aaa41d57ee4eca1fae6e1cad2e81ace21e2a6af810a4e79"
+    },
+    {
+      "path": "migrations/astra/026-smtp-dispatch.up.sql",
+      "sha256": "dc84e1a720e213f1e37367298f58ae04682fefb9470d2839debbc4b37a1a3383"
+    },
+    {
+      "path": "migrations/astra/027-release-evidence.down.sql",
+      "sha256": "56b02527c10c411bbded8f93f1f1aa761cb2c757e72451f7aecce7b546d56209"
+    },
+    {
+      "path": "migrations/astra/027-release-evidence.up.sql",
+      "sha256": "1ccd7dd355d86aa249182f01510eba07122f2838b05a5a273f4ec697e3a18ad1"
+    },
+    {
+      "path": "migrations/astra/028-benchmark.down.sql",
+      "sha256": "ee7108876ada0124da4a20a6ebb5089990303e28d91e89853a1d4f52584a6114"
+    },
+    {
+      "path": "migrations/astra/028-benchmark.up.sql",
+      "sha256": "7f7a383dac89e51eec75496107664eb49003e1f0089fca7377236f095539ec3a"
+    },
+    {
+      "path": "migrations/astra/029-optimizer-execution.down.sql",
+      "sha256": "06a69db49e81e674c819a4430dec00824e3e1df2578f980d82a14d2434aa9559"
+    },
+    {
+      "path": "migrations/astra/029-optimizer-execution.up.sql",
+      "sha256": "ac9078cf8691c0812eec1e73bc2ab654cab1ae9304dfae4e46a4bc0c7f55cb29"
+    },
+    {
+      "path": "migrations/astra/030-membership-hardening.down.sql",
+      "sha256": "9c1c58708131fc856804db290864498dcda7931c718e75a9670fe16c52fb602f"
+    },
+    {
+      "path": "migrations/astra/030-membership-hardening.up.sql",
+      "sha256": "b6a5029c6c2cdd6c9b4c675553c6e8d8142d6d4ae3cac787db29c7b97eb43246"
+    },
+    {
+      "path": "migrations/astra/031-research-idempotency.down.sql",
+      "sha256": "969b235815730829c9669cc0615bebb2e4ceef62a8d5dabfd39db88de9c11f32"
+    },
+    {
+      "path": "migrations/astra/031-research-idempotency.up.sql",
+      "sha256": "d6601d42cd01f2c7e2d690bc03b660cfab2f828ad5f8516d0eb17d781263d76c"
+    },
+    {
+      "path": "migrations/astra/032-workspace-discovery.down.sql",
+      "sha256": "aab276754156820795a118b93a3984a8daee0a7346732ddf9b7a1a621fc63f9a"
+    },
+    {
+      "path": "migrations/astra/032-workspace-discovery.up.sql",
+      "sha256": "547fec6287dc993097ff1e6faa999e925f1b1361b34d4c472f0624e0f0e6dd44"
+    },
+    {
+      "path": "migrations/astra/033-source-rights-revocations.down.sql",
+      "sha256": "084c32c617bdfa081243e14eb396de400eef7a8ce7579643be37e64f5ba16c07"
+    },
+    {
+      "path": "migrations/astra/033-source-rights-revocations.up.sql",
+      "sha256": "3f03c37ad0950260fa30f900de48061da45165a814e2ffce420ac13678850288"
+    },
+    {
+      "path": "migrations/astra/034-freeinference-telemetry.down.sql",
+      "sha256": "fc6d9e3f14bd20962cb0eaed598f3457917898d06ecf06a9d68588b72c3cd8d3"
+    },
+    {
+      "path": "migrations/astra/034-freeinference-telemetry.up.sql",
+      "sha256": "3f4dee260d8273bd4c92f758931c19cf9ae3ba9ee9f5a876c2202317d6a7e1b8"
+    },
+    {
+      "path": "migrations/astra/035-x14-execution-revocation.up.sql",
+      "sha256": "d26216389dabe498970555c6fbc138fe5ebf6f187e9889f79f665f6a436c3b07"
+    },
+    {
+      "path": "migrations/astra/036-business-goal-runs.up.sql",
+      "sha256": "0f789671a0c62e8258c89c1ef39d5a7ee8aba508d19e327ebb348e624cba18cf"
+    },
+    {
+      "path": "migrations/astra/037-business-goal-planning-usage.down.sql",
+      "sha256": "1d954673fb664e716d813ab9cfe7178eb8aecababe8e5d9eab83eeaf37ca6f70"
+    },
+    {
+      "path": "migrations/astra/037-business-goal-planning-usage.up.sql",
+      "sha256": "6ebce2d1a11c87029660bb0ab04552f2221d6adaf8dbe4bdd4a1a3d270996680"
+    },
+    {
+      "path": "orchestration/OWNERSHIP.md",
+      "sha256": "0e5520fb12dd1a879810e01239f6ba7542b5fe03e635ed33caa7537bfa40a21e"
+    },
+    {
+      "path": "orchestration/RESUME.md",
+      "sha256": "44eadfd11dd95cfc81f2af9b4cc78e5c389925f2b77f534f77eb79d5b09142ec"
+    },
+    {
+      "path": "orchestration/UI_AND_PARITY_BRIEF.md",
+      "sha256": "41f0f811ed3cffa99013421b7eac2477b9d1584ea5d1f9c54ff3a3f0d7745e2d"
+    },
+    {
+      "path": "orchestration/astra-atlas-error-contract-repair-plan.json",
+      "sha256": "c4524890a0efd2c8b5735b931682990731c010cd53b96f2c5190dc0442bacc30"
+    },
+    {
+      "path": "orchestration/astra-atlas-preflight-implementation-ruling.json",
+      "sha256": "0aea8d3cab0c48dd33c331b09210dc9d616575d0aa3b9efa117f307acbc56187"
+    },
+    {
+      "path": "orchestration/astra-atlas-test-database-correction.json",
+      "sha256": "8d3522a8b89c02de5c5cdd38c60960256801d4f905bbe10a6c87439c30a77f88"
+    },
+    {
+      "path": "orchestration/astra-atlas-validation-extension-plan.json",
+      "sha256": "2eeaf420883e15271ac170d5d2142635f61de9bc3ae19c814c87f5b6759a819c"
+    },
+    {
+      "path": "orchestration/astra-discovery-bulk-sync-r17-ruling.json",
+      "sha256": "2a0eb8c5a3a9b0a307cbb853acd5f2fb4d48520794fd7e3635c2fa837db64d48"
+    },
+    {
+      "path": "orchestration/astra-discovery-diagnostics-r10-ruling.json",
+      "sha256": "c7efaa346147775a552f5251f3de26a61ddc2c03e19ae402e27005cc2b1dfe35"
+    },
+    {
+      "path": "orchestration/astra-discovery-selection-r16-ruling.json",
+      "sha256": "ac4c26442c607286088d6e0340837749f0377c2077dc5b68b5d6a6be0c185beb"
+    },
+    {
+      "path": "orchestration/astra-discovery-ui-sync-r12-ruling.json",
+      "sha256": "fb66441a017beb19fc9f7ba5da5f8c00351901d4a72ece1c97aec5574f2c5135"
+    },
+    {
+      "path": "orchestration/astra-execution.json",
+      "sha256": "eff3cf7bd794b403c3d3030a03d0d07b6b01acd5db5987f1668a843eb3725cf0"
+    },
+    {
+      "path": "orchestration/astra-feature-wave-2.json",
+      "sha256": "a1b1d025719177787f5efefc4720e4ee8a45891c061b57b76052e305f63dec08"
+    },
+    {
+      "path": "orchestration/astra-feature-wave-3.json",
+      "sha256": "9aba6996d9af9072f31486968bdf728616516a946ace92988e1ba2dfbf01451f"
+    },
+    {
+      "path": "orchestration/astra-feature-wave-4.json",
+      "sha256": "b2d0da730166352748b618aa6f74f041cdcafda72d6e745f336b0405c7918be1"
+    },
+    {
+      "path": "orchestration/astra-feature-wave-5.json",
+      "sha256": "0c975e3104177b8a6529c6151ee65d390217b2b23cf5209b5c11d6f58793a3a1"
+    },
+    {
+      "path": "orchestration/astra-feature-wave-7.json",
+      "sha256": "bf74e8c849bf4eb45a6c9d6e3db517ad41339e9f3ed2e7a898f2026c51ee60f2"
+    },
+    {
+      "path": "orchestration/astra-fixture-scope-ruling.json",
+      "sha256": "a87ec5498359b284ee627d4aec1437341ca84e42840f4ec29ea9ea57fd6c83e4"
+    },
+    {
+      "path": "orchestration/astra-input-normalization-r11-ruling.json",
+      "sha256": "58af2e21605bc0e2c2b396a53ad48e80325e640485867c29ccc28765bcec008c"
+    },
+    {
+      "path": "orchestration/astra-lead-ui-determinism-r8-ruling.json",
+      "sha256": "b019e332b6861c4051196e632cbb47e664d6d2fd1c555289fa94dd3f193f86d5"
+    },
+    {
+      "path": "orchestration/astra-live-20261027-ownership.md",
+      "sha256": "3cad20bf5497b7ae6f0aef1eb7e0f38da940482a1b49bf34e99f9d40014e4bf1"
+    },
+    {
+      "path": "orchestration/astra-live-application-cases-plan.json",
+      "sha256": "1fa06d31d6fd6794824b935ac2f3343d3c2e94e5380085b99bd1974c7c563188"
+    },
+    {
+      "path": "orchestration/astra-live-atlas-cases-plan.json",
+      "sha256": "a2bf899ccbe992dbc12a35ba0fcab3ba231cfac10051122916014d3fe01347d8"
+    },
+    {
+      "path": "orchestration/astra-live-integration-plan.json",
+      "sha256": "07417a33c82d3c28011e5d85270c2c51cd2c758b12996dd89193e80daedc464c"
+    },
+    {
+      "path": "orchestration/astra-live-intelligence-cases-plan.json",
+      "sha256": "26f003ba480f365dc8d0ef6818de3f814d32ee42caaf855c321e0d57b3f3a077"
+    },
+    {
+      "path": "orchestration/astra-live-license-refresh-ownership.md",
+      "sha256": "396e5a88b4c7df7f4cdee65f0613ea4f7bd4e9d59af8ed798648589f878159d0"
+    },
+    {
+      "path": "orchestration/astra-live-license-refresh-plan.json",
+      "sha256": "257325cb1594542d2d36b558d1d0b9878a539f2364911e363522cff133326fdd"
+    },
+    {
+      "path": "orchestration/astra-live-metadata-plan.json",
+      "sha256": "615407fcc9434893f4773740e5fd40c8d399f2a3f407076f9ca8a7f6fdce5443"
+    },
+    {
+      "path": "orchestration/astra-live-metadata-resume-ownership.md",
+      "sha256": "65ef620c042c41cf4d8a548b3fe8ac2823b23c491a63cb549a3bac1ff6d432c4"
+    },
+    {
+      "path": "orchestration/astra-live-ownership.md",
+      "sha256": "62f510c24454f49d32d35fbed980d0b53d91c99f1793e75c79d7be9206a6d10d"
+    },
+    {
+      "path": "orchestration/astra-live-progress-20261026.json",
+      "sha256": "4523d45e99a0f8038256a93ee287cf102326a0bb6b06dae7d61f3a5566ad8e41"
+    },
+    {
+      "path": "orchestration/astra-live-prospecting-plan.json",
+      "sha256": "1588ed32bbbc8cc94ae29e64575d1392a1ae6ef99be646de87d8df67dd4a1a49"
+    },
+    {
+      "path": "orchestration/astra-live-prospecting-round2-plan.json",
+      "sha256": "89b4dde7cda0c9483209ac43500e970be28739047fdd185624cb870b7ebd3fdc"
+    },
+    {
+      "path": "orchestration/astra-live-prospecting-round3-plan.json",
+      "sha256": "a138fbf6501deddcb6ea89b64e274c369373674605e08e1d2c75ef01edc278f9"
+    },
+    {
+      "path": "orchestration/astra-live-prospecting-round4-plan.json",
+      "sha256": "071b29109abca1bc3023a0cb2ac7228901a6e162a7665387018bad341e56218d"
+    },
+    {
+      "path": "orchestration/astra-live-prospecting-round5-plan.json",
+      "sha256": "dae9593cd479825e91b27e0120bad8144a820a0c45326864fdf4f611cba873cc"
+    },
+    {
+      "path": "orchestration/astra-live-r1-freeze-authorization.json",
+      "sha256": "facadea02ac2044ebf95642f03dc553ce00bcf46efbf50e199ede66593ede87c"
+    },
+    {
+      "path": "orchestration/astra-live-r2-freeze-authorization.json",
+      "sha256": "90bde9c8aa20009d9fe8c32d83977e4dde38d02f17826d56cd056c11bdcad9c3"
+    },
+    {
+      "path": "orchestration/astra-live-r2-metadata-plan.json",
+      "sha256": "7b26a6a23c280c56a7cba6eb640da5bfc8962663b0a0420ff90bedc4c5536df9"
+    },
+    {
+      "path": "orchestration/astra-live-round3-ownership.md",
+      "sha256": "105f9f626d76131fd4e57d760ed7eba9ad338a679cbb06b51236cb3d150be2a0"
+    },
+    {
+      "path": "orchestration/astra-live-round4-ownership.md",
+      "sha256": "c171b4fc96fe6b6c4ca74d7032f2e5501e59b8376a7cacebdb4d388e92f040d4"
+    },
+    {
+      "path": "orchestration/astra-live-round5-ownership.md",
+      "sha256": "78ae6a23b78b4e6b499b115b39ef4cc730c81f35524d435f97b406b1113a86da"
+    },
+    {
+      "path": "orchestration/astra-live-validation-extension-plan.json",
+      "sha256": "67668e10709c1df15682b217420906097004cb4df12939bd0506190ee5f44e14"
+    },
+    {
+      "path": "orchestration/astra-live-validation-native-extension-plan.json",
+      "sha256": "ac7b71b76f41b2a7a68905778efcc3cbf21afeff35454f2a204db39ba5bde738"
+    },
+    {
+      "path": "orchestration/astra-live-validation-operator-scope.json",
+      "sha256": "15331d91ec358bef9a908fc7e5c951531220369ffe982085b66c477a88a30cdd"
+    },
+    {
+      "path": "orchestration/astra-local-search-checkpoint-accepted-20261027.json",
+      "sha256": "c0e6a3c5404fe69fd2aa51f9d37ac95d59fb2c6e884002ab7f607b3cff03d1b2"
+    },
+    {
+      "path": "orchestration/astra-membership-r2.json",
+      "sha256": "0d4f7968bcbf8bc9a471ae915f0ea6547258e6fdd05c6e1889d2025a1a252e9e"
+    },
+    {
+      "path": "orchestration/astra-phase2-final-inputs-r9-plan.json",
+      "sha256": "595db4c374d855eaa5afa4c1a7381605aa5a3462694ce3a60991ef330082f3c5"
+    },
+    {
+      "path": "orchestration/astra-phase2-harness-r8-plan.json",
+      "sha256": "bde6f209b343a6df079928c6373d110b23adc0149cb34867ac0a6edb7eafe8b0"
+    },
+    {
+      "path": "orchestration/astra-phase2-r3-plan.json",
+      "sha256": "2d1c18df7d3b6c452cf350aad9699a4496d6c33f65e870c197e38128104b388e"
+    },
+    {
+      "path": "orchestration/astra-phase2-r4-plan.json",
+      "sha256": "519d748b30f02bf76d7b165b613a49b1ef06ebf4e048a9f67cb2213f6a116791"
+    },
+    {
+      "path": "orchestration/astra-phase2-r5-plan.json",
+      "sha256": "7006bf5517cbbe176eafc6cfd810f4af410ff390b5e1914fb08a38a5b3a23b2c"
+    },
+    {
+      "path": "orchestration/astra-phase2-r6-plan.json",
+      "sha256": "3d6500d1775e28665b0051cdff095abaa1132b996c2dc6fce9141d91632beec2"
+    },
+    {
+      "path": "orchestration/astra-phase2-readiness-rubric.json",
+      "sha256": "1e4b4e2d54ff7f5268a3ee165efde796dd0dd3ccf4210068cc8f3cbcdcec55af"
+    },
+    {
+      "path": "orchestration/astra-phase2-runtime-r13.json",
+      "sha256": "0bf3b8eeb1e57a33cc0bb57f8b9bd9fd4a15a881e4ecd0e6143bc5bdc2d83777"
+    },
+    {
+      "path": "orchestration/astra-phase2-runtime-r14.json",
+      "sha256": "77110ad9a9730664ea5199b2e169a458e90b688fa05ffc06aca44fbd9371e156"
+    },
+    {
+      "path": "orchestration/astra-phase2-runtime-r15.json",
+      "sha256": "fffeafaefece08396679bc2c84f3ceb527b8e701446f7b73fa5532a065b31926"
+    },
+    {
+      "path": "orchestration/astra-phase2-runtime-r7.json",
+      "sha256": "f20cdc91df12095da30afac34651da17caf672a4f7fd2255ce1f9206c57d9637"
+    },
+    {
+      "path": "orchestration/astra-phase2-runtime-r8.json",
+      "sha256": "24962ea0cd88adcbcb4ae7979f53b8c191662aa0f37793c5804d22080de36a8c"
+    },
+    {
+      "path": "orchestration/astra-phase2-runtime-r9.json",
+      "sha256": "9c227483e371efbf9d07395455d41f4ab71803707bf54bf34197b3b9263dabbc"
+    },
+    {
+      "path": "orchestration/astra-phase2-source-live-r1.json",
+      "sha256": "ec4fecb91a18bd9518ec12870f6feca47dda2ff43d0dc9f857fd1fb1aa880afe"
+    },
+    {
+      "path": "orchestration/astra-phase2-source-live-r2.json",
+      "sha256": "8ac47b3a6d56c79d3344931d6e233b3792d6329e995ad230575832dfaa436c0c"
+    },
+    {
+      "path": "orchestration/astra-phase2-source-local-search-r1.json",
+      "sha256": "d9ebb6726fcd68656b077895b19e254bb55732c432942d94f7058b78c5c3cbf1"
+    },
+    {
+      "path": "orchestration/astra-phase2-source-r10.json",
+      "sha256": "4db45eefc618be588bb79e250e2966aa58524ffd4f3c402c6c86e877507e12c7"
+    },
+    {
+      "path": "orchestration/astra-phase2-source-r11.json",
+      "sha256": "bd3c116cd56c6d4782c1c3b26bdbbd80e33009a56d634fde0816ae6b663f51bc"
+    },
+    {
+      "path": "orchestration/astra-phase2-source-r12.json",
+      "sha256": "84725a5969c04167e434d9b87e3631facce0351ccc6a78c88b8d7edb46fcc1ee"
+    },
+    {
+      "path": "orchestration/astra-phase2-source-r15.json",
+      "sha256": "a417af1a98c9417a473a6ca0550273314412423a2ee6081bb87afdf9b3b6fc2c"
+    },
+    {
+      "path": "orchestration/astra-phase2-source-r16.json",
+      "sha256": "3a27a6683214d35917642d91b233ed71ce4a1a3aa43d7b9993294a5d744569ef"
+    },
+    {
+      "path": "orchestration/astra-phase2-source-r17.json",
+      "sha256": "6f0425b84a209c83bce2bfe79e9c98872b27f6b7c4f0a54105268cba2c896b74"
+    },
+    {
+      "path": "orchestration/astra-phase2-source-r18.json",
+      "sha256": "d047a1b298f1efb308e16cb5a3b42008f3e45f5a60a1ec9144ae484171758749"
+    },
+    {
+      "path": "orchestration/astra-phase2-source-r18a.json",
+      "sha256": "9f731ab740671afc03e55467dc75f8c368ba55cf994a33d45efd59722c2fa78c"
+    },
+    {
+      "path": "orchestration/astra-phase2-source-r19.json",
+      "sha256": "d195e2319ec27c876275ed50add9b4f2df12a0307a9fda5171c17445935a1cc0"
+    },
+    {
+      "path": "orchestration/astra-phase2-source-r2.json",
+      "sha256": "6db083101deea5431b8d10d52b95bd3071f086cb6d668a76f3ad67593e202068"
+    },
+    {
+      "path": "orchestration/astra-phase2-source-r20.json",
+      "sha256": "44fdae70c4638077acc4793e09001cc69eba953ece4f371287dc78ad2352e81b"
+    },
+    {
+      "path": "orchestration/astra-phase2-source-r20a.json",
+      "sha256": "6518f51be90060096ac9aeaa3cdc20bd0fad8bac0b1595039fe687189360d84d"
+    },
+    {
+      "path": "orchestration/astra-phase2-source-r3.json",
+      "sha256": "d61a0741cc76ca01789586fe2065e9e24a5825c5a815fde3ca71faeae2206202"
+    },
+    {
+      "path": "orchestration/astra-phase2-source-r4.json",
+      "sha256": "6bd8047ac9c632844a8435c7d1fa40e991b3ad80404d73b1156cfc53f7089b64"
+    },
+    {
+      "path": "orchestration/astra-phase2-source-r5.json",
+      "sha256": "73a3101673691eff154fa0a19c0fb256f142c710de5aa50afdf15803483ac45c"
+    },
+    {
+      "path": "orchestration/astra-phase2-source-r6.json",
+      "sha256": "530cfd31715842f73d74f8c8f60badc5a9cbe19b0c443a7a2ff8304acaa1e167"
+    },
+    {
+      "path": "orchestration/astra-phase2-source-r7.json",
+      "sha256": "73065433dc096d84cb813482900995c67f0fda5d67e9c87777c54dc69009626e"
+    },
+    {
+      "path": "orchestration/astra-phase2-source-r8.json",
+      "sha256": "cf02eabfd1f572913197032f094d834ce8d61af357a75488fb2915660cfbd9b0"
+    },
+    {
+      "path": "orchestration/astra-phase2-source-r9.json",
+      "sha256": "b1dd1df16637cffe995de62ac880f629f515b50e481e604ebaac43b226a25138"
+    },
+    {
+      "path": "orchestration/astra-phase2-source.json",
+      "sha256": "b9a6cff4a4eef29c5adc943ede04c8321eed16cda972b1d35171421d58dd662f"
+    },
+    {
+      "path": "orchestration/astra-phase2-ui-expiry-r7-plan.json",
+      "sha256": "3bd50a7bbe812345ee51915be6751c6d659931571adbda63aa31fe5f6941efd7"
+    },
+    {
+      "path": "orchestration/astra-preview-maintenance-r5.json",
+      "sha256": "f9e7e039a11b4265889dc8386bdd35d486d749b19da353f467169d42631eedfc"
+    },
+    {
+      "path": "orchestration/astra-r18-collection-policy-plan.json",
+      "sha256": "0d40083b4f2bceb03a9ac7a45d8956fa00131780c3756cc747727d55d9b31356"
+    },
+    {
+      "path": "orchestration/astra-r18-customer-fixes-plan.json",
+      "sha256": "1d17ce03045629b3aedae313fa653d4e2b3a399f4f3f492f0d86aef8c7fbb9a3"
+    },
+    {
+      "path": "orchestration/astra-r18-customer-flow-plan.json",
+      "sha256": "a2ca8f7ebb4069410915de9100b867b0e0d8793b619afdb3d8e50cec1857b95c"
+    },
+    {
+      "path": "orchestration/astra-r18-freeze-authorization.json",
+      "sha256": "ed2878606075b0e2dafc735e1099a080d61315d08088dd79d5a03a765fe04a0e"
+    },
+    {
+      "path": "orchestration/astra-r18-integration-plan.json",
+      "sha256": "d6aa56ae1517c17adba1c737a57ae3573e45b7be85102d13850782ecc4add99c"
+    },
+    {
+      "path": "orchestration/astra-r18-preview-plan.json",
+      "sha256": "51bcdd5362706b6f3edb11c44716e37f997832023ee808af8f32789b0bc8fece"
+    },
+    {
+      "path": "orchestration/astra-r18-progress.json",
+      "sha256": "81dd5f2a1b2d87271a24ef308e5fc6711b0c8866d62de6ce294ea10b231cad83"
+    },
+    {
+      "path": "orchestration/astra-r18a-freeze-authorization.json",
+      "sha256": "cc41cb0e160c5a70fd2a7a4a2deb828f264bb449c13220426a44324deb649445"
+    },
+    {
+      "path": "orchestration/astra-r18a-preview-hardening-plan.json",
+      "sha256": "86e0e58b96da6977bc742b1c7d52c7c18b4b201b41995cab88cb99e809d9a2e1"
+    },
+    {
+      "path": "orchestration/astra-r18a-qa-repair-plan.json",
+      "sha256": "46e6738a15e1194ba81b5822c236dd080502b60f655da82cc839bf81da97e70b"
+    },
+    {
+      "path": "orchestration/astra-r18a-radar-baseline-fix-ruling.json",
+      "sha256": "217ec81327eeb71b97535569a47ca8c98529d1a7e9aa470129feb5a073f3e5ee"
+    },
+    {
+      "path": "orchestration/astra-r18a-radar-ordering-repair-plan.json",
+      "sha256": "87f53e247708914c27e9f18a7c43d3025ffcfc8361dadd8537144ff8afc41cca"
+    },
+    {
+      "path": "orchestration/astra-r19-audience-consumers-plan.json",
+      "sha256": "d45667c2f5673e1cddeafebedfd43fa561d11b431c4f0698e19d784dec90d900"
+    },
+    {
+      "path": "orchestration/astra-r19-customer-records-plan.json",
+      "sha256": "33009e8c43d99cf49879ada9a4a46e7f906ae6723cecd4cf4c15b9ce78c01c49"
+    },
+    {
+      "path": "orchestration/astra-r19-freeze-authorization.json",
+      "sha256": "2670841f8d2cba3b0d16ddb9518eb6055ac4a8bbc0b60f47dd5ea31c97a1771c"
+    },
+    {
+      "path": "orchestration/astra-r19-geography-proof-fix-plan.json",
+      "sha256": "70dbaccbc147324297106bb0e6b81aa6481f84772eedbb3f218b58afa66a81c8"
+    },
+    {
+      "path": "orchestration/astra-r19-integration-plan.json",
+      "sha256": "2745146ff6009056d87059a1b7b43ff8d338e8d0685823e817b1e24f3931157d"
+    },
+    {
+      "path": "orchestration/astra-r19-qualification-proof-plan.json",
+      "sha256": "eeac28549f918d19b6441b25f135c8da569b088f96e88cf250eeb970c2e802df"
+    },
+    {
+      "path": "orchestration/astra-r20-copy-proof-plan.json",
+      "sha256": "87f41ed6dcb8b50f9c9315d91768470b9ad0ead47ca1d980c983fe83e88c7d71"
+    },
+    {
+      "path": "orchestration/astra-r20-final-metadata-refresh-plan.json",
+      "sha256": "8aa2e35190f0483d84660191f38b93edb24f02f14157b8a76e1d50c08328991e"
+    },
+    {
+      "path": "orchestration/astra-r20-fixture-integration-plan.json",
+      "sha256": "fd9318dcbf86e2fb831d58320d0cb3ee5988e087fc3af4796c6593a9fa83427b"
+    },
+    {
+      "path": "orchestration/astra-r20-freeze-authorization.json",
+      "sha256": "922b53387e1820014d9cd1a0ac11abcba2bb46dd917c4f5f8193dc14f9bb777b"
+    },
+    {
+      "path": "orchestration/astra-r20-freezer-route-binding-plan.json",
+      "sha256": "f33222ed3cb771be331245fce713df19ca6a8e3a37b82ab023aaef38534534f6"
+    },
+    {
+      "path": "orchestration/astra-r20-guided-journey-qa-plan.json",
+      "sha256": "a462f7a5a98e6c6fb7f2625d8f99d92be71682a86d9c34b0c9e266567419fc84"
+    },
+    {
+      "path": "orchestration/astra-r20-journey-readback-plan.json",
+      "sha256": "779cf077760d875a8a7067bcd3a2d6daef1301ffa8c1c8acf4e17402f528546b"
+    },
+    {
+      "path": "orchestration/astra-r20-metadata-integration-plan.json",
+      "sha256": "3b260b6f9954fe89495cf063943e70c9c439af4d0bb18b29494e914c31972751"
+    },
+    {
+      "path": "orchestration/astra-r20-outcome-ownership-fix-plan.json",
+      "sha256": "a099ed2c5113c0c74d001ee8d639ec11b5e97b8396ac69d391e6b8fc0ae5cea5"
+    },
+    {
+      "path": "orchestration/astra-r20-preview-handoff-plan.json",
+      "sha256": "0390bfdd67301fc015ac8b38d62032fc05d7f568a32fc2f79b3f72917765c9dc"
+    },
+    {
+      "path": "orchestration/astra-r20-production-qa-plan.json",
+      "sha256": "25b18fbc3cdcd1590bf364663e14a44ad257ff3a73c76ab740da16adf374ef34"
+    },
+    {
+      "path": "orchestration/astra-r20-qa-ownership.md",
+      "sha256": "5846bb77b8bf25aa28d034c84adcabc53dc1706f37412a35b75044b9e53fa8aa"
+    },
+    {
+      "path": "orchestration/astra-r20-qualification-fixture-ruling.json",
+      "sha256": "f20eb12cdb01c4029fb3998a08963a0670b2d4832582d3066760d8a1509aa5f4"
+    },
+    {
+      "path": "orchestration/astra-r20-route-qa-plan.json",
+      "sha256": "74b16a6cb88f2f5e964bb6d04fe3257a2407bbf4b192d6d6e202927cc13215f2"
+    },
+    {
+      "path": "orchestration/astra-r20-route-refresh-plan.json",
+      "sha256": "868edd8d233e10ffe3f554c6fb506ec1a6307abc1d687fa68b6131d333b8b04b"
+    },
+    {
+      "path": "orchestration/astra-r20-source-rights-consumers-plan.json",
+      "sha256": "f35e037f94f17039efaee8b3b109e67c5ed69f9442f04977af681d73efcc157a"
+    },
+    {
+      "path": "orchestration/astra-r20-source-rights-core-plan.json",
+      "sha256": "89e20a5999ec7f61dd9178794dc05dca5de4e99f957e7275291ea734b995e31f"
+    },
+    {
+      "path": "orchestration/astra-r20-source-rights-ui-plan.json",
+      "sha256": "4a7f4fa557c6defc8841e7002bb7eefaac5378418f0a72a60e7a9887a9054677"
+    },
+    {
+      "path": "orchestration/astra-r20-static-privacy-plan.json",
+      "sha256": "dba7cb1cbf33aec046d0ad2ce9daba87b6da8bfc1c8639c6ec0d2f435dda0ee9"
+    },
+    {
+      "path": "orchestration/astra-r20-ui-artifact-ruling.json",
+      "sha256": "4475fa9020b121ab902f444ccc34588de002cf04d216592b57cf1853944a1a3c"
+    },
+    {
+      "path": "orchestration/astra-r20-ui-first-plan.json",
+      "sha256": "b7c922fabf09597467894f943ae00674a8021534c607f1560cc669d37ff41cba"
+    },
+    {
+      "path": "orchestration/astra-r20-ui-review-fix-1.json",
+      "sha256": "423a61cc24fac2d7ec5dec3f67f7735fff1b678150ab9537d415f9db16ed896d"
+    },
+    {
+      "path": "orchestration/astra-r20a-credential-cleanup-plan.json",
+      "sha256": "abbc7b1a3d8c8b3e5d9ce27a2cf617c6c3fe41f667f9929a23541644828673e3"
+    },
+    {
+      "path": "orchestration/astra-r20a-credential-ruling.json",
+      "sha256": "2125a8e8ff8faba658012a2078819ad8c11f5cf0ed9c456346c29b415a61cdf1"
+    },
+    {
+      "path": "orchestration/astra-r20a-freeze-authorization.json",
+      "sha256": "b4581238208d7bfb75088eb434801124b2896094a4fdf85fe58d69e547555a43"
+    },
+    {
+      "path": "orchestration/astra-r20a-metadata-integration-plan.json",
+      "sha256": "a32e0360be256382a4f1bd8162cc857fa77dfe7a89139e97b91a63edd13da965"
+    },
+    {
+      "path": "orchestration/astra-r20a-qa-corrections-plan.json",
+      "sha256": "6df5a8b3e228e347542ff3a148d478706eb3cd5899ea27f84f2b6e8ed974f303"
+    },
+    {
+      "path": "orchestration/astra-r20a-qa-ownership.md",
+      "sha256": "d2fa5b156a1662504c2ae9f9e0aace3b89814e45e49085af21a47d352f9209ef"
+    },
+    {
+      "path": "orchestration/astra-r20b-feedback-loop-plan.json",
+      "sha256": "579890395f41d89bb6b5c10159bc9142c12c29433820906611acd1c0a2c1fe15"
+    },
+    {
+      "path": "orchestration/astra-r20b-feedback-ownership.md",
+      "sha256": "8971a8766a5c675d839d5ec119a0a0653a4337d72b29a9e07c4f7e0d3c7b902f"
+    },
+    {
+      "path": "orchestration/astra-reference-sources.json",
+      "sha256": "2dcf536da7a981cf245b6b68d5b89a287a659961cbb136de94c306e825bb12c3"
+    },
+    {
+      "path": "orchestration/astra-research-inspection-r13-plan.json",
+      "sha256": "dd715d3cd04d1b82312e48a39101f7fa1137e7a28612393f34ce11aa851b58bb"
+    },
+    {
+      "path": "orchestration/astra-research-inspection-r14-ruling.json",
+      "sha256": "ab8ba47dee8dad731f96c49b8d0d6cbd3d2af76b5fe4091888453551a5720057"
+    },
+    {
+      "path": "orchestration/astra-research-inspection-r15-ruling.json",
+      "sha256": "500bd0e116e13b8505533f2fb4cd4d6ed743ee73e3fe904a3aa25b5e385e6261"
+    },
+    {
+      "path": "orchestration/astra-source-scope-ruling.json",
+      "sha256": "a24300be010adfe9dd97cb1f30bc5d5c9440e13af023c17bf89838a5ea77c62a"
+    },
+    {
+      "path": "orchestration/astra-test-determinism-r7-ruling.json",
+      "sha256": "f9d2c2173374e1f9034ad5863a9a225632cc65ae1e03f84f71aea154900af324"
+    },
+    {
+      "path": "orchestration/astra-test-tls-fixture-classification.json",
+      "sha256": "8b6f6accad19f975b4d5ea98a1b0fb15d4b25eb527f5bf322e67b2e61d3e728d"
+    },
+    {
+      "path": "orchestration/astra-ui-feedback-test-ruling.json",
+      "sha256": "0278bc5e8f7e52e1be732399b9793f3eceeeb931e84fc586fb0ac66fd0365600"
+    },
+    {
+      "path": "orchestration/defects.json",
+      "sha256": "1083d16b0468c057c3b1bc42a950913a6c6fe2fc2b937913517ca293e688e7c2"
+    },
+    {
+      "path": "orchestration/requirements.json",
+      "sha256": "b91ff0943de6172a0a6334e8e273dabbf09b801e63d6550df474ae796ea9121f"
+    },
+    {
+      "path": "orchestration/state.json",
+      "sha256": "9b29791c93eb8903229dfa30bb630a2019c3ea55d3a2f13746e1e125b5529109"
+    },
+    {
+      "path": "orchestration/tasks.json",
+      "sha256": "b086247d3a6dfada173f72b6facaeb1f969eecb3b1795ca3e36d5af5195c478f"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "28ec0962170891d28d9497b6c9ae2689cf55c5e9fec7c58390032b64f5515e8f"
+    },
+    {
+      "path": "package.json",
+      "sha256": "2f1ed9169b05d4827e1c2c3d49dfb7e4e0708ef813053b9afd14b2768a6656f0"
+    },
+    {
+      "path": "pipeline/Untitled-1.txt",
+      "sha256": "82ae58abb3f3767047cd2ed769bde8c36c6cad097113eae70755230bdc0ff603"
+    },
+    {
+      "path": "pipeline/ab-testing.js",
+      "sha256": "4495d57f0f08fa6eb5e9b2842fe122e827a24ffa78099f03874f80b8bb1e4dec"
+    },
+    {
+      "path": "pipeline/ai-spend-admission.js",
+      "sha256": "e0ae9426837746246ae853e98b8dae6400d07c5717725ed49f2be6fa34667b03"
+    },
+    {
+      "path": "pipeline/ai-usage.js",
+      "sha256": "3c71b7193331cb609a8d75a359e0a864efce25f66e2fbeef53f32eec5741b4a2"
+    },
+    {
+      "path": "pipeline/archiver.js",
+      "sha256": "b157b9b40ed0de5aecb968a746c4b061929603ad03ea068e5ee9b37532e9e35a"
+    },
+    {
+      "path": "pipeline/astra-ai-routes.js",
+      "sha256": "c66c1c3b8d410a6c80820d23efae135dae29ac28a39b2b6aee4ef6998815d3ad"
+    },
+    {
+      "path": "pipeline/astra-allocation.js",
+      "sha256": "be7d1a725c264967a77dd160b4d63f881286f948b3e5f2ee474e229d99f3f546"
+    },
+    {
+      "path": "pipeline/astra-analytics.js",
+      "sha256": "46a107f3796a96466adec96f399d0ca18b7f8bb086052e613f5eff24361d6b54"
+    },
+    {
+      "path": "pipeline/astra-api.js",
+      "sha256": "7a3139927689f9ac7a82ab1cb52680f0fea9bc8ad56ef1256e23f9355e636f2a"
+    },
+    {
+      "path": "pipeline/astra-autonomy-routes.js",
+      "sha256": "b5cdaf4d98cf023648b02e72dc467bfa94c09cb1dfa3d2de9b90ea8c453dd5b4"
+    },
+    {
+      "path": "pipeline/astra-autonomy.js",
+      "sha256": "38a6e6ad509921acf5f2395510c7192635111de33f28ceab83e56501f31c6986"
+    },
+    {
+      "path": "pipeline/astra-bandit-routes.js",
+      "sha256": "20169e3b1487c25e0548b41b1dff924c7f849ecd0bea7f34b68580a639d8f397"
+    },
+    {
+      "path": "pipeline/astra-bandits.js",
+      "sha256": "1f190c64d09a087810a9e294cb5d4f83b01b472d12ec2403064cc18002f5a443"
+    },
+    {
+      "path": "pipeline/astra-benchmark-routes.js",
+      "sha256": "211e986b413b5f5d019f08fad24b6aed91faf9cf8733a958e0b7f25ba6bb3ddd"
+    },
+    {
+      "path": "pipeline/astra-benchmark.js",
+      "sha256": "38f1e53064c173002655f2bfb312a5a8be5196e9b8fecc937701ebdaeb3c8477"
+    },
+    {
+      "path": "pipeline/astra-business-goal-routes.js",
+      "sha256": "3246121e684ec15564141a598baf1d6b828f5d6307813e63f798830ee982bdb8"
+    },
+    {
+      "path": "pipeline/astra-business-goal.js",
+      "sha256": "0448d0e865c0b9afaf0d3a2364e5bbb9ee324a91721bb60205f9539baa449632"
+    },
+    {
+      "path": "pipeline/astra-campaign-audience.js",
+      "sha256": "2b50836c962996ab79cab5274e6cabc1889794bf47c6a1fc939352b23c1e18f6"
+    },
+    {
+      "path": "pipeline/astra-campaign-routes.js",
+      "sha256": "90d9e42ddd3c8feced8d4559f1bfb223b20595e99e5d306196d4714a9457271e"
+    },
+    {
+      "path": "pipeline/astra-campaigns.js",
+      "sha256": "47ec324ba6ba0c83a1138ee44d85f45bf13b84d3d65a2990764f760d637a54ee"
+    },
+    {
+      "path": "pipeline/astra-claims.js",
+      "sha256": "5b175fbea848f202f49284e7969c4a14bbabfb297475ff6b5ebed6a64eb6c907"
+    },
+    {
+      "path": "pipeline/astra-conformance-routes.js",
+      "sha256": "22aab11dda9f2e34a3e36f866205b50ba37fc070966cf90399f4f0704a0f983d"
+    },
+    {
+      "path": "pipeline/astra-conformance.js",
+      "sha256": "4a64117d79f6de279bc31d68edc52b20b77fdd7c99c5b4b8cdd04275199cbe7f"
+    },
+    {
+      "path": "pipeline/astra-connector-routes.js",
+      "sha256": "5194ce832e9c69216c59320842e3c96e48291d28a52c9411e2db73c81c7047c0"
+    },
+    {
+      "path": "pipeline/astra-connectors.js",
+      "sha256": "2de3d60e832e6cb59a3d9bf247f0cfa97d68ad8ff4c53f4ca3f6896323ebe599"
+    },
+    {
+      "path": "pipeline/astra-copy-validation.js",
+      "sha256": "f58b4ba6be76129de55fb4cb96c2632ce98b948086a0199c81c40f64d89d2d11"
+    },
+    {
+      "path": "pipeline/astra-country-code.js",
+      "sha256": "e99503908daf98eb8117ecbb72820707b79d8e44366c74a89509019dd1042161"
+    },
+    {
+      "path": "pipeline/astra-crm-adapter.js",
+      "sha256": "13cb1220545c326f7992752e8393a2ed001d8b68199f9f2823cf711b3e562bb0"
+    },
+    {
+      "path": "pipeline/astra-crm.js",
+      "sha256": "6df80d2672a16ee222a9dc7c51963dcd9e5fb54c74c7115ff63775d4ffd596c8"
+    },
+    {
+      "path": "pipeline/astra-current-claims.js",
+      "sha256": "44fc76557bbabc4bbc013e8b8f36f0a7aae8dcdd172b97dcb263b364222bade0"
+    },
+    {
+      "path": "pipeline/astra-customer-approval-routes.js",
+      "sha256": "40771360eb6221d59ceccc8e551c6c4a35c2443ed26aef5d85a4652d953fd596"
+    },
+    {
+      "path": "pipeline/astra-customer-approvals.js",
+      "sha256": "27978e381b1b296ab5d910c79168cdf78a6d5346d9be40a72d9d3e716ff399c9"
+    },
+    {
+      "path": "pipeline/astra-decisions.js",
+      "sha256": "7ff0b448db1eea803d35ee7051689b0e59f250c080d3cb6ab90816ed1cce3934"
+    },
+    {
+      "path": "pipeline/astra-dispatcher.js",
+      "sha256": "9d8f15c385ffa45f31298ee6d5bfe6cf7ddaef56d0b62eedb65c7d1997ff6e05"
+    },
+    {
+      "path": "pipeline/astra-domain-harness-routes.js",
+      "sha256": "0a665f66232688d62af2986ae396c46e4b859a08137a16a5a213cae986553426"
+    },
+    {
+      "path": "pipeline/astra-domain-harness.js",
+      "sha256": "b1dacff2a2670f79ffff90c0471d7154bf26bc105871c7b697118b48626cf913"
+    },
+    {
+      "path": "pipeline/astra-economics-routes.js",
+      "sha256": "1c82f413aeb33a77ef624262007e023080709806f4c358e0054dc03630da3703"
+    },
+    {
+      "path": "pipeline/astra-economics.js",
+      "sha256": "c27f570c2836ff5e14832fcd0994ef24358bf7ad7033fa3fea0354134d72bba8"
+    },
+    {
+      "path": "pipeline/astra-egress.js",
+      "sha256": "8ca6d748dce11522044d075fc21636a014c12845f21b5039873343271b53e85c"
+    },
+    {
+      "path": "pipeline/astra-engagement.js",
+      "sha256": "179a235b8b202169a440b3839db8154e4d624009b1022b6340a799c06176aa05"
+    },
+    {
+      "path": "pipeline/astra-eval-routes.js",
+      "sha256": "9c8c54a97a4ee1d078c8f6926543e3239073a91704baa348984decc967ee642a"
+    },
+    {
+      "path": "pipeline/astra-evaluation.js",
+      "sha256": "d00da96fba1ccb3acc5b16de1622b88d21512a406e0c04f6fc52e2ec2cb66621"
+    },
+    {
+      "path": "pipeline/astra-evidence.js",
+      "sha256": "a20db4e468783cd1d18f058ecc0be2109585242cd8aab7b5f142b238629d64b6"
+    },
+    {
+      "path": "pipeline/astra-experiments.js",
+      "sha256": "6fe072f4a078b53c5121ab8a69ee12f23b00bb6e80ba1a896ca38c04d5ffb691"
+    },
+    {
+      "path": "pipeline/astra-feature-workers.js",
+      "sha256": "ff057ca81a13b091e7661a0705a005faa6df525b10ad30091443ffd17225d917"
+    },
+    {
+      "path": "pipeline/astra-freeinference-client.js",
+      "sha256": "9ca82b04406d5107befab732c6ed1253bbad16f693632c517cbd8f78f4e093e3"
+    },
+    {
+      "path": "pipeline/astra-generation-routes.js",
+      "sha256": "0c4ff1682338f5039ed0fb17f26e7237db442adc91eaad25c6d5f59e351084ba"
+    },
+    {
+      "path": "pipeline/astra-generation.js",
+      "sha256": "8d27bc972bd9064a75c3079a79a7c80882ccd5a22558d60cd8cbd17a0cb988f1"
+    },
+    {
+      "path": "pipeline/astra-glm-gateway.js",
+      "sha256": "85d50280968c9da4657874d40482562a83b7de88d52d8f02963d3818d9fc409c"
+    },
+    {
+      "path": "pipeline/astra-goal-gateway.js",
+      "sha256": "46cdabf53782951778c10a6f7f89e8bf594483738745f95d31c48374cf14bec4"
+    },
+    {
+      "path": "pipeline/astra-goal-planner.js",
+      "sha256": "712edfb9e3b81e2bfafdbced4c5f906a947320aa545bc94987ce2c04fa3521d2"
+    },
+    {
+      "path": "pipeline/astra-goal-source-rights.js",
+      "sha256": "06e5cf5d546810843b07e4e7c0a2f926b30a0d72a85002cb669735f5c13c3287"
+    },
+    {
+      "path": "pipeline/astra-harness.js",
+      "sha256": "d17124399d3855f584bdb976104a7ac758914bbe6e7112c785a7edd6d8af9fdb"
+    },
+    {
+      "path": "pipeline/astra-inbox-routes.js",
+      "sha256": "b271196f1d7d0aa0669625a02c310c51fc8f987c8550b4e4f59ea43eec294ae9"
+    },
+    {
+      "path": "pipeline/astra-inbox.js",
+      "sha256": "08be9b14ed29b75c27e9cfe2003d416f20710442725ad488203911b93dd66212"
+    },
+    {
+      "path": "pipeline/astra-insights-routes.js",
+      "sha256": "9fc98809f60b2c775947724260d8771072b14152e918dcd32a2acde897dc8dbb"
+    },
+    {
+      "path": "pipeline/astra-inspect-adapter.py",
+      "sha256": "6d121261cda17bceabd2a1582c4c5212513dacf86d57a19d9f0d3d9256d87f98"
+    },
+    {
+      "path": "pipeline/astra-invitation-context.js",
+      "sha256": "f92157bdbe91326ba50b400a7c7e12aa7bd9c069599f33fcd4448d1cb23adfea"
+    },
+    {
+      "path": "pipeline/astra-launch-controls.js",
+      "sha256": "69e35d070b990375bbf8ac838d52b311fc56bd0909a543fbc5af07598493d65d"
+    },
+    {
+      "path": "pipeline/astra-launch-routes.js",
+      "sha256": "7667ad7fd233d1f36096afc2b4445ebb4b0064264255601b6370956c563873f6"
+    },
+    {
+      "path": "pipeline/astra-learning-routes.js",
+      "sha256": "772726cce14d6867918d1b79390e03cb73fd0a2e213536f2cc4f7c6828f80c26"
+    },
+    {
+      "path": "pipeline/astra-learning.js",
+      "sha256": "b8cf203d5d3f68d7e9898e45226b0a9112f12746421d6377ea0a7c928592f0d4"
+    },
+    {
+      "path": "pipeline/astra-ledger-routes.js",
+      "sha256": "e952710c56f91c04b9c879bc870862353bb09eb46f126b4ef137f74f90876ed5"
+    },
+    {
+      "path": "pipeline/astra-ledger.js",
+      "sha256": "9ab97e80f9d77ee711a0b8d7003f2afa4c5c609c93eb01e1e807b75bd2a2ae16"
+    },
+    {
+      "path": "pipeline/astra-lifecycle-routes.js",
+      "sha256": "10e134fdbee87610a466b7e9b954e5983be734bd5aedb5505a6e04854330cd70"
+    },
+    {
+      "path": "pipeline/astra-lifecycle.js",
+      "sha256": "945a76515c9f66aeafe07d8cb24eb9de076dd8e885f1d0eaf097c69c5e37d8a5"
+    },
+    {
+      "path": "pipeline/astra-local-search-transport.js",
+      "sha256": "025d9acbadfbbad0fa606095f52278ef751fc6ac923943fa6eacf01c386c293f"
+    },
+    {
+      "path": "pipeline/astra-mailbox-provider.js",
+      "sha256": "082b173bc78e2cb8ea11f5fc6b36e2e6cf18d8a8efd7b7af3f3aabcf0551cfdc"
+    },
+    {
+      "path": "pipeline/astra-memberships.js",
+      "sha256": "25fef8a7d434d5ac7c9e9c6052a4250e910a9e795f949c3683ca54e34e209a7f"
+    },
+    {
+      "path": "pipeline/astra-memory.js",
+      "sha256": "7aa0553d3ef711a041b3597fd3795d4e2f9f648603e146d16d3925e230172c66"
+    },
+    {
+      "path": "pipeline/astra-mongo-store.js",
+      "sha256": "a2638c6790fb45cd7404a225d46ea3f48cb359618a5a1e013ad4b07b858d8dd6"
+    },
+    {
+      "path": "pipeline/astra-operations-routes.js",
+      "sha256": "a3d5af7fc32c02de45423767c212f9cd613c0e0c43be9a561c14c35486ccd5fc"
+    },
+    {
+      "path": "pipeline/astra-operations.js",
+      "sha256": "87cecf4d658f002db07771afa6be921c663c739a24ba7787dacc99c464ca19f1"
+    },
+    {
+      "path": "pipeline/astra-optimizer.js",
+      "sha256": "8b9428a3f96be5815ef9d3677393eb7b7ecf1a604ea128d4642680f5b76c75c6"
+    },
+    {
+      "path": "pipeline/astra-outcomes.js",
+      "sha256": "f56ee094dd96e0688184a9cbd75a8fdc9446e13f975a9da10ab4005bc5a1d20c"
+    },
+    {
+      "path": "pipeline/astra-permissions.js",
+      "sha256": "919f0618c2258740632dfc8ebda31f52bac024dde840ce66fded05373f7234c1"
+    },
+    {
+      "path": "pipeline/astra-persistence.js",
+      "sha256": "7cd54d1756ee352122366cc3262a64020fa0f80b8795e042f2363deee72f69e8"
+    },
+    {
+      "path": "pipeline/astra-postsale.js",
+      "sha256": "f28a0e3294e0cefe73be1ceaabd0cea4d53d04ceac24fcc5b673fbc3285d7a1e"
+    },
+    {
+      "path": "pipeline/astra-prospecting-claims.js",
+      "sha256": "8b38ae8e2922eb92b6ad5ba5448a9dd5edb8399ed961c099dc9bfc039511ac7b"
+    },
+    {
+      "path": "pipeline/astra-prospecting-research.js",
+      "sha256": "aa415aeecd4b086d13d617419e4018d539f9eedeb840f9c87918d13efc87c0e6"
+    },
+    {
+      "path": "pipeline/astra-prospecting-routes.js",
+      "sha256": "04813ce3cd4b7c356cb3c8f5e5cc279ff827ec049e900f5e68f8ea93526e97e6"
+    },
+    {
+      "path": "pipeline/astra-prospecting.js",
+      "sha256": "200c0cb19091f5c890085904e45f54d46d547e0549b1ffd737bc40e6dd0809f5"
+    },
+    {
+      "path": "pipeline/astra-qualification.js",
+      "sha256": "403a37616049f9d0ce5fe6ea72f00264021b22763bda415252bef2d4bdc350a0"
+    },
+    {
+      "path": "pipeline/astra-radar-routes.js",
+      "sha256": "31cfe42eb85acb740339632490b47c40a094225c751e1ca326927c83b9d1f1cf"
+    },
+    {
+      "path": "pipeline/astra-radar.js",
+      "sha256": "3914c6b74d6223d85190df5e82de008f09400225f6c9c07dcacdaad8d28b9586"
+    },
+    {
+      "path": "pipeline/astra-release-evidence.js",
+      "sha256": "c247b295a2d153519a1437c733e08ca55747e2837882eb5ae4e5b60f0b66f7cf"
+    },
+    {
+      "path": "pipeline/astra-release-registry.js",
+      "sha256": "c9470de43c42493b8d041b269055753407b8009ea13da4097f02dd87bda4ab18"
+    },
+    {
+      "path": "pipeline/astra-reply-tasks.js",
+      "sha256": "ade39af30933261c80903a4e283f6d898db771818a56998a3c642f3704ac0359"
+    },
+    {
+      "path": "pipeline/astra-research-routes.js",
+      "sha256": "638164ff6334130e01dde1fad20834533a1503a4476f245a44e2cef65eecf4ef"
+    },
+    {
+      "path": "pipeline/astra-research.js",
+      "sha256": "7a477f189b462c1a3bda9a7ef3c9f8c73ee9e5e073b830a83750150b2c1c9e78"
+    },
+    {
+      "path": "pipeline/astra-runtime-routes.js",
+      "sha256": "3d79c66ec22af40129775554f180bdb2bf07cc35de65d15e9957f85ccefe6d06"
+    },
+    {
+      "path": "pipeline/astra-runtime.js",
+      "sha256": "11c801ce28f512cb17e6d7dfc5eb068118e1abe8b507f3c45837bbdf626d7230"
+    },
+    {
+      "path": "pipeline/astra-skills.js",
+      "sha256": "44fa170f733309504c229d4f6461b1e874fee8300bd040c72054b8376305d7f7"
+    },
+    {
+      "path": "pipeline/astra-smtp-dispatch.js",
+      "sha256": "6676f1d0b04417d035efab8c9ebe13f6153f5e44c7501f80c8fb8269739a3759"
+    },
+    {
+      "path": "pipeline/astra-source-collection-routes.js",
+      "sha256": "38e3fa3d6c49627f75c944d14d7fd08009c070eb8797d96f1219472192070007"
+    },
+    {
+      "path": "pipeline/astra-source-collection.js",
+      "sha256": "6c082e4d9c3c9dc2ce2a221251b643092d1b2e4b4725b663cdf1382bbaee63f5"
+    },
+    {
+      "path": "pipeline/astra-source-rights.js",
+      "sha256": "ba42cf67ec21aa08341305a53b7af7570ab3f48541afcfa689dec828d4e39de7"
+    },
+    {
+      "path": "pipeline/astra-telemetry.js",
+      "sha256": "de36d46c0f08b6a314900be7fb78c6ca41d437843da42e4ba133745417dd6ee7"
+    },
+    {
+      "path": "pipeline/astra-tenant-context.js",
+      "sha256": "0fe37c28aba1b4408f1bd805cd964e214ac7893b29f2d4ae812497169c098210"
+    },
+    {
+      "path": "pipeline/astra-tenant-store.js",
+      "sha256": "9649cc7926ef1aa484d33a992d63b1737a10ca01c4851abebb617f2b10c9f1e8"
+    },
+    {
+      "path": "pipeline/astra-usage.js",
+      "sha256": "f043b371cf46f45510206e5549bd7f2555c2872e3dca5bbd961e1624765c92e4"
+    },
+    {
+      "path": "pipeline/astra-verification.js",
+      "sha256": "7cf5809b12f42680c20ac6fa082d15bb0cfd4f2c66dc72a6ff8d6286f52c4df0"
+    },
+    {
+      "path": "pipeline/astra-verifier-adapter.js",
+      "sha256": "3bd036afc7cbd12bd8cb749b4adf0133d731742993413dd44ae209ca0e4e6774"
+    },
+    {
+      "path": "pipeline/astra-workflow-routes.js",
+      "sha256": "1d137a6fec2e78bf67ddfd9d388f74bcdec92e3100acd137311f828846b842f5"
+    },
+    {
+      "path": "pipeline/astra-workflow.js",
+      "sha256": "c45af206dc33f7ff4e45b3c04e3aaa2477d758ecdfa5b0a5d711c5764310dfbc"
+    },
+    {
+      "path": "pipeline/astra-xray.js",
+      "sha256": "7c202112bf1a04b2a16b191154d98d95d0c4ce921fc05b102419b57b36e44789"
+    },
+    {
+      "path": "pipeline/auth-manager.js",
+      "sha256": "d02d05b5f86b279046bfccbf682164e26214bed21dc6307311f6731c2603fc36"
+    },
+    {
+      "path": "pipeline/batch-manager.js",
+      "sha256": "0e7095e78ec363d6d197fbe75781034869ff7d607224d5864fa7e508e9301e84"
+    },
+    {
+      "path": "pipeline/business-search-templates.js",
+      "sha256": "447e76f85b153bcbd7e7056feac91561d07f3cb0c97327e59d371cb953d13e3e"
+    },
+    {
+      "path": "pipeline/campaign-audience.js",
+      "sha256": "f85a4007092ab6f3b6ad36dd734296adc896ce18e4312a10299ae91565005f24"
+    },
+    {
+      "path": "pipeline/campaign-preparation.js",
+      "sha256": "e79cc00b85b8b50ff62c0b5529b2924d5e2c83722127f3b50402173a8ff1cd1d"
+    },
+    {
+      "path": "pipeline/campaign-sequence.js",
+      "sha256": "62907eaf6bb3012beef6c1abecdc08fbbcf37d2b4fb4b0ab83efc803e88b3055"
+    },
+    {
+      "path": "pipeline/campaign-templates.js",
+      "sha256": "1ab562d15b961fb276c3c0bd3ee05b0f912239208a64e4ed14075f18f95f60e7"
+    },
+    {
+      "path": "pipeline/cli.js",
+      "sha256": "f5d04f24d01a36117bcc0e40c2736b28c80ecf7f5a9ec434f2e927f93f96e2ef"
+    },
+    {
+      "path": "pipeline/click-tracking.js",
+      "sha256": "6c3c42f1b64b7c0d396597a9f00f48379b0c56ff9a6fbdfdc73b4dd39972b7d4"
+    },
+    {
+      "path": "pipeline/compliance.js",
+      "sha256": "bfd7c66e1205d1a36b23a21c08c5a8f6f6ffe0583d3628cd9387d95a3ca3e118"
+    },
+    {
+      "path": "pipeline/contact-fields.js",
+      "sha256": "600711357a22d69c42a4f4feea14db8a01320e2cbd170b8db4de4983f9e91c1d"
+    },
+    {
+      "path": "pipeline/contact-import-jobs.js",
+      "sha256": "5f6f258d1c6215728b94256b8d564bc545d3c63ed3acdd5a4709b7185795fcbe"
+    },
+    {
+      "path": "pipeline/contact-manager.js",
+      "sha256": "515f4b26f5a2c87b35191a64b292e1f02b4e72f247dc320a109988fa446da688"
+    },
+    {
+      "path": "pipeline/contact-provenance.js",
+      "sha256": "74f665333ad7cb0d2c5cbe08212566ca65af128769bd2f1f64c7e6bb569839e7"
+    },
+    {
+      "path": "pipeline/credential-vault.js",
+      "sha256": "47e3037ba8fe0da59a1a746fe20dd17ada2e1a044bef4bee4c22164c180ba648"
+    },
+    {
+      "path": "pipeline/crm-sync.js",
+      "sha256": "369da9b4bc8b3e83139ba7aba73d93653c8fd9da20218db7cffc30a5b66b613b"
+    },
+    {
+      "path": "pipeline/csv-importer.js",
+      "sha256": "d347b44168a2a025c1977ec838fd7ffa586bac9aeae73bf821980011cdcb876e"
+    },
+    {
+      "path": "pipeline/database.js",
+      "sha256": "06981c7d4c845c485aa3166857d960c4f72683d1b3a3ff8b4ed5f32aea59d3c8"
+    },
+    {
+      "path": "pipeline/dedup.js",
+      "sha256": "2cbee5d439ddcdb5df9a45d4b17caeffc6639572bf91d554b3ed5e6507e2e53d"
+    },
+    {
+      "path": "pipeline/eepc-cbam-directory.js",
+      "sha256": "2ca77bab4dd4744648a7b3565497dfc0d6a26239b9c2dd77d61fd178dfb00894"
+    },
+    {
+      "path": "pipeline/email-type-intelligence.js",
+      "sha256": "91a26a0408954fb9b9fc73c0515c051faa4d6f52369cdd6bd18c1c7b7622c4b2"
+    },
+    {
+      "path": "pipeline/email-verifier.js",
+      "sha256": "bc71bfd09061bb87276951ec87bd56c0affd5ddcd76baea52ad192759b11530e"
+    },
+    {
+      "path": "pipeline/enricher.js",
+      "sha256": "381e3c38c12ba5c238992d256a816f7832aeb2cede2224ab9519b7f57a4d5925"
+    },
+    {
+      "path": "pipeline/epch-directory-jobs.js",
+      "sha256": "fe28758f4b05853c9a090d17b24b748c22b087ac6dc9918765fbdd947124fc6b"
+    },
+    {
+      "path": "pipeline/epch-member-directory.js",
+      "sha256": "7e197b0a65c3fb6d9bfff4790180ff22dad75f0d991dc7ec06a9654179c7a700"
+    },
+    {
+      "path": "pipeline/google-oauth.js",
+      "sha256": "faaed54453b284df54aeb54608bd4bd1d796c1d20894fc00d1e1d5df9df9be3f"
+    },
+    {
+      "path": "pipeline/imap-receiver.js",
+      "sha256": "fab1139b9f079d1179de6899161aa7da046c127e46213b8c5e4d48e017294947"
+    },
+    {
+      "path": "pipeline/imap-sync-scheduler.js",
+      "sha256": "442ca063f3454cb669fcaa89fdc46ab6b6ea5242664437116716558026be2fa7"
+    },
+    {
+      "path": "pipeline/lead-discovery-jobs.js",
+      "sha256": "97ca24dc81b707fa5f3691a849e551ca89acefcb38ea189c4e20dba295602a7f"
+    },
+    {
+      "path": "pipeline/lead-discovery.js",
+      "sha256": "f2ffa86db6d91801eee2f1288af89b12e85bc9d8a59f106bc81a852514d3745b"
+    },
+    {
+      "path": "pipeline/lead-strategy.js",
+      "sha256": "fee4c804ff33c5daf113aade4f005d185c47d1c12e8860814040f44d46886dc8"
+    },
+    {
+      "path": "pipeline/list-manager.js",
+      "sha256": "92114eeb693f895a439b664c3bd5a6f52ca581fc96da291d8bf28e217f6f4418"
+    },
+    {
+      "path": "pipeline/meta-lead-ads.js",
+      "sha256": "3e373fa4b7854a0300f6b856bb1fffb55e7c6072d15f1de079df79691cdf1b3f"
+    },
+    {
+      "path": "pipeline/offer-contracts.js",
+      "sha256": "56937dda48d78e9014e9d0a173586e364e4d814fa7c24b75b9066ca2dc4bc52e"
+    },
+    {
+      "path": "pipeline/offer-policy.js",
+      "sha256": "aab600cc9b748c2a5d72280aac7931f9906df8bcc03b72fba878fd3a2b51d4e5"
+    },
+    {
+      "path": "pipeline/offer-proof-store.js",
+      "sha256": "b56e2a957304b43b9eb6db4e26974f01246514cfa27133a8503d25c8a3ca0514"
+    },
+    {
+      "path": "pipeline/offer-routes.js",
+      "sha256": "b2eb8784f0090ef3695ceb65b4e482979df83855656773f4e119be5a287ad407"
+    },
+    {
+      "path": "pipeline/osm-importer.js",
+      "sha256": "a29a70d5c3627605b245c507bf3c032f42e8698f4d3ed8f2c0449b37e722809d"
+    },
+    {
+      "path": "pipeline/pdf-text-worker.js",
+      "sha256": "bf51a9d28ee52dcca14b0a0f9e9e55fe19b404503af5b43d50c1acfe66518f5f"
+    },
+    {
+      "path": "pipeline/pdf-text.js",
+      "sha256": "90b1d9a8c12b34536a5dc88e6c6df85b14f984bd14350d7f4805a0a18b00fd3a"
+    },
+    {
+      "path": "pipeline/personalizer.js",
+      "sha256": "07f2c2401d0cafb2ed83972123cc2ab1544297f6b04f2326ebe7e519c40aba08"
+    },
+    {
+      "path": "pipeline/qualification-review.js",
+      "sha256": "5766d91ded09a97e3d7427566f4a6c85a6118c835a1f4284bc11f2894e95d835"
+    },
+    {
+      "path": "pipeline/qualification-scoring.js",
+      "sha256": "3231c949df9f2fe975a321ca23eb2c5fba7911c8b79a929696fa991ed9bbc6e6"
+    },
+    {
+      "path": "pipeline/qualifier.js",
+      "sha256": "985edfd3549d5ce71b9a36e23b886c9f2498063c74d9973be9d6d4118258e367"
+    },
+    {
+      "path": "pipeline/queries/chiropractors_austin-tx_1791624617945.txt",
+      "sha256": "e7b18dfda5a572948c4f9032db0be170569c5076eb17ec4928d10733c84e81e9"
+    },
+    {
+      "path": "pipeline/queries/chiropractors_austin-tx_1791624715747.txt",
+      "sha256": "e7b18dfda5a572948c4f9032db0be170569c5076eb17ec4928d10733c84e81e9"
+    },
+    {
+      "path": "pipeline/queries/chiropractors_austin-tx_1791625779404.txt",
+      "sha256": "e7b18dfda5a572948c4f9032db0be170569c5076eb17ec4928d10733c84e81e9"
+    },
+    {
+      "path": "pipeline/queries/chiropractors_austin-tx_1791625961809.txt",
+      "sha256": "e7b18dfda5a572948c4f9032db0be170569c5076eb17ec4928d10733c84e81e9"
+    },
+    {
+      "path": "pipeline/queries/chiropractors_austin-tx_1791626605506.txt",
+      "sha256": "e7b18dfda5a572948c4f9032db0be170569c5076eb17ec4928d10733c84e81e9"
+    },
+    {
+      "path": "pipeline/queries/chiropractors_austin-tx_1791626692282.txt",
+      "sha256": "e7b18dfda5a572948c4f9032db0be170569c5076eb17ec4928d10733c84e81e9"
+    },
+    {
+      "path": "pipeline/queries/chiropractors_austin-tx_1791633498614.txt",
+      "sha256": "e7b18dfda5a572948c4f9032db0be170569c5076eb17ec4928d10733c84e81e9"
+    },
+    {
+      "path": "pipeline/queries/chiropractors_austin-tx_1791634441706.txt",
+      "sha256": "e7b18dfda5a572948c4f9032db0be170569c5076eb17ec4928d10733c84e81e9"
+    },
+    {
+      "path": "pipeline/queries/chiropractors_austin-tx_1791635652493.txt",
+      "sha256": "e7b18dfda5a572948c4f9032db0be170569c5076eb17ec4928d10733c84e81e9"
+    },
+    {
+      "path": "pipeline/queries/chiropractors_austin-tx_1791635897813.txt",
+      "sha256": "e7b18dfda5a572948c4f9032db0be170569c5076eb17ec4928d10733c84e81e9"
+    },
+    {
+      "path": "pipeline/queries/electricians_austin-tx_1791623369581.txt",
+      "sha256": "00ad6e79d2513074b579ae41cfa5ab8c20733d51eea7db381b04c94968e00a2c"
+    },
+    {
+      "path": "pipeline/queries/electricians_austin-tx_1791624503747.txt",
+      "sha256": "392d020bf3de0fcf01c28de4a62025bcdd39fc26b4a32b0c7541a25f85dc20bb"
+    },
+    {
+      "path": "pipeline/queries/hvac_austin-tx_1791623462486.txt",
+      "sha256": "dcd2fad4d9857ebc0c5c29eeeed5fa1cc57c1477308960e0f7dd638b2752f353"
+    },
+    {
+      "path": "pipeline/queries/hvac_austin-tx_1791624498081.txt",
+      "sha256": "1569694b3d546195da0bbbaec6de60c61a0f20f86942035132bfc3b8684a63eb"
+    },
+    {
+      "path": "pipeline/queries/hvac_austin-tx_1791624571759.txt",
+      "sha256": "1569694b3d546195da0bbbaec6de60c61a0f20f86942035132bfc3b8684a63eb"
+    },
+    {
+      "path": "pipeline/queries/hvac_austin-tx_1791624685252.txt",
+      "sha256": "1569694b3d546195da0bbbaec6de60c61a0f20f86942035132bfc3b8684a63eb"
+    },
+    {
+      "path": "pipeline/queries/hvac_austin-tx_1791625768749.txt",
+      "sha256": "1569694b3d546195da0bbbaec6de60c61a0f20f86942035132bfc3b8684a63eb"
+    },
+    {
+      "path": "pipeline/queries/hvac_austin-tx_1791625941369.txt",
+      "sha256": "1569694b3d546195da0bbbaec6de60c61a0f20f86942035132bfc3b8684a63eb"
+    },
+    {
+      "path": "pipeline/queries/hvac_austin-tx_1791626589111.txt",
+      "sha256": "1569694b3d546195da0bbbaec6de60c61a0f20f86942035132bfc3b8684a63eb"
+    },
+    {
+      "path": "pipeline/queries/hvac_austin-tx_1791626688387.txt",
+      "sha256": "1569694b3d546195da0bbbaec6de60c61a0f20f86942035132bfc3b8684a63eb"
+    },
+    {
+      "path": "pipeline/queries/hvac_austin-tx_1791633486782.txt",
+      "sha256": "1569694b3d546195da0bbbaec6de60c61a0f20f86942035132bfc3b8684a63eb"
+    },
+    {
+      "path": "pipeline/queries/hvac_austin-tx_1791634421514.txt",
+      "sha256": "1569694b3d546195da0bbbaec6de60c61a0f20f86942035132bfc3b8684a63eb"
+    },
+    {
+      "path": "pipeline/queries/hvac_austin-tx_1791635638386.txt",
+      "sha256": "1569694b3d546195da0bbbaec6de60c61a0f20f86942035132bfc3b8684a63eb"
+    },
+    {
+      "path": "pipeline/queries/hvac_austin-tx_1791635876605.txt",
+      "sha256": "1569694b3d546195da0bbbaec6de60c61a0f20f86942035132bfc3b8684a63eb"
+    },
+    {
+      "path": "pipeline/queries/roofers_austin-tx_1791623209972.txt",
+      "sha256": "8d0ec091bc53da28a45bf35e52b95015d028894c412038334750f7ea09715e5d"
+    },
+    {
+      "path": "pipeline/queries/roofers_austin-tx_1791624496778.txt",
+      "sha256": "db1500a64da41fb507d38f3e88f8ed82735ee3faf361bf607b56337f269c40e2"
+    },
+    {
+      "path": "pipeline/queries/roofers_austin-tx_1791624570613.txt",
+      "sha256": "db1500a64da41fb507d38f3e88f8ed82735ee3faf361bf607b56337f269c40e2"
+    },
+    {
+      "path": "pipeline/queries/roofers_austin-tx_1791624684278.txt",
+      "sha256": "db1500a64da41fb507d38f3e88f8ed82735ee3faf361bf607b56337f269c40e2"
+    },
+    {
+      "path": "pipeline/queries/roofers_austin-tx_1791625760202.txt",
+      "sha256": "db1500a64da41fb507d38f3e88f8ed82735ee3faf361bf607b56337f269c40e2"
+    },
+    {
+      "path": "pipeline/queries/roofers_austin-tx_1791625939916.txt",
+      "sha256": "db1500a64da41fb507d38f3e88f8ed82735ee3faf361bf607b56337f269c40e2"
+    },
+    {
+      "path": "pipeline/queries/roofers_austin-tx_1791626587934.txt",
+      "sha256": "db1500a64da41fb507d38f3e88f8ed82735ee3faf361bf607b56337f269c40e2"
+    },
+    {
+      "path": "pipeline/queries/roofers_austin-tx_1791626687139.txt",
+      "sha256": "db1500a64da41fb507d38f3e88f8ed82735ee3faf361bf607b56337f269c40e2"
+    },
+    {
+      "path": "pipeline/queries/roofers_austin-tx_1791633484905.txt",
+      "sha256": "db1500a64da41fb507d38f3e88f8ed82735ee3faf361bf607b56337f269c40e2"
+    },
+    {
+      "path": "pipeline/queries/roofers_austin-tx_1791634420359.txt",
+      "sha256": "db1500a64da41fb507d38f3e88f8ed82735ee3faf361bf607b56337f269c40e2"
+    },
+    {
+      "path": "pipeline/queries/roofers_austin-tx_1791635636905.txt",
+      "sha256": "db1500a64da41fb507d38f3e88f8ed82735ee3faf361bf607b56337f269c40e2"
+    },
+    {
+      "path": "pipeline/queries/roofers_austin-tx_1791635875636.txt",
+      "sha256": "db1500a64da41fb507d38f3e88f8ed82735ee3faf361bf607b56337f269c40e2"
+    },
+    {
+      "path": "pipeline/reply-tracker.js",
+      "sha256": "537a62024ca9e9838ee138c98427b2ec2a34d151464133ca1e9a795a76c7e3ca"
+    },
+    {
+      "path": "pipeline/scraper.js",
+      "sha256": "aa6746e6c9839f162e99369f0e8becf5a05025e6750fed8e94efe2cc78714e20"
+    },
+    {
+      "path": "pipeline/screenshot.js",
+      "sha256": "58373ea78f041d882c5c19ba5e4a22e1c41e4384c3460fc0ffd06b3831437d68"
+    },
+    {
+      "path": "pipeline/searxng-local-transport.js",
+      "sha256": "e906babe571872510cc6307c80ade08d00072b4d5732d8ab29644bd0ee8bad7a"
+    },
+    {
+      "path": "pipeline/searxng-search.js",
+      "sha256": "447cbc90f3c16973d93c683caffde426427d7c847dfc5d456c5d23da8162d9fa"
+    },
+    {
+      "path": "pipeline/seed.js",
+      "sha256": "7f3baae7872abff03ad21e816a4fb7d9af07b7c4b9e2bc970ff86e9893944d8e"
+    },
+    {
+      "path": "pipeline/segment-manager.js",
+      "sha256": "edfa9bb034b30cc44a1cd5f92424b7310d2a7a3ab66de4eb93c29cab4722e4d5"
+    },
+    {
+      "path": "pipeline/sending-engine.js",
+      "sha256": "6cb4205f23c2e4a892f393a157768be01b621ba587cf9dc6585499a8062b5418"
+    },
+    {
+      "path": "pipeline/sending-schedule.js",
+      "sha256": "c886a853252f07e22418d0c37dcbb9bf3deb60569277c0a33b424a26533765fb"
+    },
+    {
+      "path": "pipeline/ssrf-guard.js",
+      "sha256": "b49c24ddeb14f58025ea92810a9b234c245cd37fa89ffcf7a8b2ff151e00f03a"
+    },
+    {
+      "path": "pipeline/totp.js",
+      "sha256": "c91a53802cd8bed96baee5407403f6e5e1a1412c1e46f6aba750a32866b1c230"
+    },
+    {
+      "path": "pipeline/warmbly-activity.js",
+      "sha256": "c315ee3a11140b881b2903cc3550abdd0d7f3f2ecd6a4e162c77fb9f12bc2e92"
+    },
+    {
+      "path": "pipeline/website-discovery-jobs.js",
+      "sha256": "777451530375c85fe18641e1409304865bf8ade8da036bc8a76c69bf722ba410"
+    },
+    {
+      "path": "pipeline/website-email-discovery.js",
+      "sha256": "ff401d954fa5adfaff9a8bc2e519a2a655e0663dde58c61a86e059d3f55b0a11"
+    },
+    {
+      "path": "server.js",
+      "sha256": "6fe65cff6be6d63822fb7da7293604e747a8f098e0fb968992389fd274b5cac7"
+    },
+    {
+      "path": "shared/verification-classification.js",
+      "sha256": "2f9f0d216007fd433477140559d8195e805b50cf99e685da74a0b7a1e5c3882a"
+    },
+    {
+      "path": "tests/acceptance-contract.test.mjs",
+      "sha256": "4363a9e1afd8ed942f47a7d50565b8e0db08beb093c13a5575c934999c9df9d5"
+    },
+    {
+      "path": "tests/ai-spend-admission.test.mjs",
+      "sha256": "25a624bca48313de7aec9b5f85979564741d14ab356bd754c1eb0b749df67ed0"
+    },
+    {
+      "path": "tests/ai-usage.test.mjs",
+      "sha256": "10f983b3256a1552882b1822d86b07ce40fc019f2f47f6ccd416eb13f300bba7"
+    },
+    {
+      "path": "tests/api-client-errors.test.mjs",
+      "sha256": "66d4a9f754237761553d959738f6dc17b410b85d039fa3aa13e243eff4ba8fa2"
+    },
+    {
+      "path": "tests/api-client.test.mjs",
+      "sha256": "852024903de8d6398a9a9db9d8de01e5eb72382df429bb5a806b3183a482167b"
+    },
+    {
+      "path": "tests/archive-json-references.test.mjs",
+      "sha256": "1c7e79f8dfcaa289d1019949b84df7ca6f4790665defcc309cd9afa558e5e1d0"
+    },
+    {
+      "path": "tests/archiver-lifecycle.test.mjs",
+      "sha256": "fef3fb6e1746388d38579f5a6ce5876d1346b3c9b76d3824842f4a00b87c6588"
+    },
+    {
+      "path": "tests/astra-ai-receipts.test.mjs",
+      "sha256": "7503c7037a905fb52df6ef23e5ef2b39012e2ebed71532980ec3b088f9ea8bcf"
+    },
+    {
+      "path": "tests/astra-audience-consumers.test.mjs",
+      "sha256": "b625828348927f15b8ddf8ba6439bc2a147b9eb187cd41bca613a35a881addc0"
+    },
+    {
+      "path": "tests/astra-bandit-registry-read.test.mjs",
+      "sha256": "ae04777c8dd2c94771f7d19b97150fc3397bd9ee550f833c38361d653cacd6d8"
+    },
+    {
+      "path": "tests/astra-benchmark-report.test.mjs",
+      "sha256": "45e2a927a33b8fe5a7855f58df9bdeda9769dde1f941463734b3482506431924"
+    },
+    {
+      "path": "tests/astra-business-goal-ui.test.mjs",
+      "sha256": "1bdb03211dba16eda5a412b559b77c669cb2776aee143b2e0fa19ce77b2bf5e1"
+    },
+    {
+      "path": "tests/astra-business-goal.test.mjs",
+      "sha256": "fe14088d701714121a074f9f2404fc1744a538d3790d2ff225fd3d0dbe581ba0"
+    },
+    {
+      "path": "tests/astra-campaign-approval-version.test.mjs",
+      "sha256": "bfa1b51c807f53790981f3b8abde9d0e8155dc3c1c69f8fa5f2c51832255ce06"
+    },
+    {
+      "path": "tests/astra-campaign-copy-editor.test.mjs",
+      "sha256": "bcbf8fe1ca625d1606bc0099aa4f212dbdb3ce9a8957cfd6b60f4edfe3419837"
+    },
+    {
+      "path": "tests/astra-campaign-review-ui.test.mjs",
+      "sha256": "341bddd7ccdc54f1d47fba904a83d6d0d2f2a01797a45491a9a7601c91e0ddf9"
+    },
+    {
+      "path": "tests/astra-campaign-review.test.mjs",
+      "sha256": "a02023d1323b62643947642726a93395c86b992596f9118d6ffd2508b7634df8"
+    },
+    {
+      "path": "tests/astra-catalog-receipt.test.mjs",
+      "sha256": "5c574c60f96c3b47cdbb2d0b60cf3f16f35c32a569bc0dc3df5592506c74a6df"
+    },
+    {
+      "path": "tests/astra-combined-app.test.mjs",
+      "sha256": "5f16005bbcbb5dbac9fe048a014adb559db8e559086efce31ae7782af0448bbc"
+    },
+    {
+      "path": "tests/astra-commercial-gates.test.mjs",
+      "sha256": "f35f291c7c7c1b4bb0b117ea690d15ade63dbbca523489d06bad099454e8d40d"
+    },
+    {
+      "path": "tests/astra-composer-generation.test.mjs",
+      "sha256": "c1964ef115379383f9284d80075cd15ee7d2d6fb4edd49d3ccd74fb64859c53e"
+    },
+    {
+      "path": "tests/astra-composer-persistence.test.mjs",
+      "sha256": "a9dd60d0ffeabcdb475fe0146e33ffa4007281c939fce8088a180574dc1ae6eb"
+    },
+    {
+      "path": "tests/astra-country-code.test.mjs",
+      "sha256": "79d143a0ff6962f01ab54e3c50f0f55269a56a1ff1ef191b98da3b200c4b6813"
+    },
+    {
+      "path": "tests/astra-customer-approvals.test.mjs",
+      "sha256": "6945f436c7a7bb7ae069118f0cc1d88b26b3f37e90df1db65f6844e6a2c3cf27"
+    },
+    {
+      "path": "tests/astra-customer-records.test.mjs",
+      "sha256": "d5ba4297f006925946ef702d455c844c245fb0072280f6ff1fa2188c609a5350"
+    },
+    {
+      "path": "tests/astra-discovery-journey.test.mjs",
+      "sha256": "38ae752373983d6592b33d7275b252f59eb3230c4246494efb65708da0340488"
+    },
+    {
+      "path": "tests/astra-evidence-composer-ui.test.mjs",
+      "sha256": "6d1f8bec2737c577742d046598bea8480db6c090d108baac3807d92c58d7d5e1"
+    },
+    {
+      "path": "tests/astra-evidence-composer.test.mjs",
+      "sha256": "a8575a5de14aeabc2bcf05718c29a6118bcc105199520d442856a8edec2d60a9"
+    },
+    {
+      "path": "tests/astra-execution-copy-proof.test.mjs",
+      "sha256": "f682967c2db9bcb25a7a12dcba42bda671ba18a9c3b6a532f0d8bb047195d7d6"
+    },
+    {
+      "path": "tests/astra-freeinference-client.test.mjs",
+      "sha256": "cfce0fee372b4587e5fc957688c343114113f2b1c0856a57137d0df9c723a368"
+    },
+    {
+      "path": "tests/astra-gateway-native.test.mjs",
+      "sha256": "a36fea7de582f55d3b0397103d8ad0e0b7fa20816bedda585d97a3b9d9d29d0c"
+    },
+    {
+      "path": "tests/astra-glm-gateway-freeinference.test.mjs",
+      "sha256": "a136109b3af287cabd7bd03a344e95fd469529960443dd773720e9e303e18059"
+    },
+    {
+      "path": "tests/astra-goal-backend.test.mjs",
+      "sha256": "5732d9d2b59893753583c6dc01c1f8af9a123458e3c6dadb2297a4f354a769f9"
+    },
+    {
+      "path": "tests/astra-goal-source-rights.test.mjs",
+      "sha256": "0200ccc510f8e1ec99a402f74958f77286a7fcdeb26dbee4944357b17ce610f9"
+    },
+    {
+      "path": "tests/astra-growth-design.test.mjs",
+      "sha256": "e3eb230c5e0d2252334d842585fb2367402fe5812c0a1cbd6e0ae6c04cf77708"
+    },
+    {
+      "path": "tests/astra-growth-entry.test.mjs",
+      "sha256": "31e17b7aca15f0bc3948270628b0bf0be3f441e92cb5d73e0d880e737f96514f"
+    },
+    {
+      "path": "tests/astra-growth-integrations.test.mjs",
+      "sha256": "29f33406ed7dfbb0d5e9a6970b3889eb123e251077746efc3bb05ba26abbfe06"
+    },
+    {
+      "path": "tests/astra-growth-journey.test.mjs",
+      "sha256": "64497a2ded527014e956a42ad5fc6fd47df1c5f44e9d262ff99a7472fedf8a04"
+    },
+    {
+      "path": "tests/astra-growth-ui.test.mjs",
+      "sha256": "f7ee04cdc8697491384afe053157476867d2bf67b6fdd6d76c4fc686cc1c9f11"
+    },
+    {
+      "path": "tests/astra-launch-revocation.test.mjs",
+      "sha256": "10fe2bb1a9a083b448e8b1fa99a2885053b2019de085f13219553761338ee1de"
+    },
+    {
+      "path": "tests/astra-lifecycle-cancel.test.mjs",
+      "sha256": "f87baaf86659b59af01324ea2aeb797faa964491b7acd78c5021de371ee4b423"
+    },
+    {
+      "path": "tests/astra-local-search-transport.test.mjs",
+      "sha256": "c0095e09f2e94037c12fc4fa6e1e84c71804508a25f5326f460e74ae9ce43340"
+    },
+    {
+      "path": "tests/astra-mongo-store.test.mjs",
+      "sha256": "3c072a74483e9fac2b7237a40ca0e9d54759d18fbb25622d2c9ce7350cb8c41b"
+    },
+    {
+      "path": "tests/astra-outcome-ownership.test.mjs",
+      "sha256": "2b287b337d57613d5457ab8f48822ae1e8d6506b498c2b9ded54d98208d756d0"
+    },
+    {
+      "path": "tests/astra-outcomes-corrections.test.mjs",
+      "sha256": "db31998d4abacb9923a385f9edc73bfff411432b335077d38f7a43790dfc6c38"
+    },
+    {
+      "path": "tests/astra-prospecting-claims.test.mjs",
+      "sha256": "b1412d7a73593560bd2c69b861b223e9bed3a7868151b91ab0cbd2b44365f4b8"
+    },
+    {
+      "path": "tests/astra-prospecting-recovery.test.mjs",
+      "sha256": "753af53183a9b50e76fa03c05ab66d40e474832564f2531649a8f224d54b955b"
+    },
+    {
+      "path": "tests/astra-prospecting-request-context.test.mjs",
+      "sha256": "b40a139183e482517d28714502cfb834923224f7a3feddf6294f27757ffecfbc"
+    },
+    {
+      "path": "tests/astra-prospecting-research.test.mjs",
+      "sha256": "3a39d50c967e922b2876f82b176e74c42d14bb05fbeda572f878e4bafed64c2f"
+    },
+    {
+      "path": "tests/astra-prospecting-source-gate.test.mjs",
+      "sha256": "a5b13f435aaf3956c7f5b9521d7583a1086acf5ef4272838530f40d6fa419905"
+    },
+    {
+      "path": "tests/astra-prospecting.test.mjs",
+      "sha256": "c24d2b48537bb1c707575299121827a953aaaa96b500d708f4195e73ff7cc658"
+    },
+    {
+      "path": "tests/astra-qa-browser-guard.test.mjs",
+      "sha256": "dc74095e9f8ca86a47b7e31b2fcd198319187fda968c182d5486e9c38f2fad51"
+    },
+    {
+      "path": "tests/astra-qa-egress-guard.test.mjs",
+      "sha256": "99030c3dd9b662d845779cdcab910a4a9205d4ebfd163ee7561c353cd65e9a16"
+    },
+    {
+      "path": "tests/astra-qa-egress-literal-ip.test.mjs",
+      "sha256": "bdb3f5646dc3d6f3f6262fdb241160fe475de1d040d883e7b25d9701d1873edc"
+    },
+    {
+      "path": "tests/astra-qualification-lineage.test.mjs",
+      "sha256": "79db3c13e9fcee8d12a08204ddcfeac87eb4e785076153d93078220a6413dbb0"
+    },
+    {
+      "path": "tests/astra-research-dates.test.mjs",
+      "sha256": "524461cd773752ede39a2d2ac1d5196de44c320aee24453be047bdcb55537f73"
+    },
+    {
+      "path": "tests/astra-research-inspection-ui.test.mjs",
+      "sha256": "7c8260dfa251481fde031c3568b02079ca2c4f05d69459a74054911df8ff77e1"
+    },
+    {
+      "path": "tests/astra-side-effect-inventory.test.mjs",
+      "sha256": "c319fdacf9253ae9578183d4917dc952d808b51ff898ee354f8aa7e136051aee"
+    },
+    {
+      "path": "tests/astra-source-collection-policy.test.mjs",
+      "sha256": "347fec86a571ad7be950781ee24b899d9a887695c2f55598256ca716b47bb8af"
+    },
+    {
+      "path": "tests/astra-source-fidelity.test.mjs",
+      "sha256": "d1641ff5260422e1d5322f512022b943e15e8b597b5609052a7c97a475b95ea6"
+    },
+    {
+      "path": "tests/astra-source-rights-consumers.test.mjs",
+      "sha256": "2c3bf35fe0622902ca9406dddcac3f6d35ddb14934d4bc8a30a81677afc54501"
+    },
+    {
+      "path": "tests/astra-source-rights-ui.test.mjs",
+      "sha256": "056fbc18be4345d079d4630abdf82521c05565cdb428f01d09cb9e1836c282d8"
+    },
+    {
+      "path": "tests/astra-source-rights.test.mjs",
+      "sha256": "c585f5ac6c6b6bf94693c0bf8cd0e21f3c8a5038a906c8851df80b7fac92f2ef"
+    },
+    {
+      "path": "tests/astra-source-trace.test.mjs",
+      "sha256": "8f13767017d6d9ae048dcd79f105ea0de38510f97c39bb3dc4eda90b3024a589"
+    },
+    {
+      "path": "tests/astra-static-privacy.test.mjs",
+      "sha256": "5bbeb8e4133238c5a99d3e7cfb03a4fb20fd86ceb99d1767cc65b302a56fb49f"
+    },
+    {
+      "path": "tests/astra-workbench-e2e.test.mjs",
+      "sha256": "3ffea8141bf62f99d94fc1ba1ef384958d1407386d474f46f63344a146a8630a"
+    },
+    {
+      "path": "tests/astra-workflow-recovery.test.mjs",
+      "sha256": "45154162f07cbd72915e5464aab6d404cf56e035eb5c73664b08624eebd9509c"
+    },
+    {
+      "path": "tests/astra-workspace-discovery.test.mjs",
+      "sha256": "2c3e8ec8512d64b4c80e88f9870e33ed25cb9deddffb1a4efdb2121be952c8e4"
+    },
+    {
+      "path": "tests/astra-xray.test.mjs",
+      "sha256": "1424ae3046635fba35bd2a14521c60358086a624d3f2c70f62c425dffdca743f"
+    },
+    {
+      "path": "tests/auth-client.test.mjs",
+      "sha256": "32c1d2e7c72499bba89d532b0b3ae406ae159edb2d666016f00f92b4ebcbb42f"
+    },
+    {
+      "path": "tests/auth-concurrency.test.mjs",
+      "sha256": "55111abf564330a2d29907cfefc8f5a109df59e174b38e6fff2b54b7112aa125"
+    },
+    {
+      "path": "tests/auth-mfa.test.mjs",
+      "sha256": "98ee794fc32ce7ad095d0bf55a4cbb283cd31a3be8a1c5b9b98159b37f07f884"
+    },
+    {
+      "path": "tests/auth-origin-boundary.test.mjs",
+      "sha256": "f54f4f9f079a266a0a1c493b896d1f9274477364cd168823da1c34cca675d9b1"
+    },
+    {
+      "path": "tests/auth-session.test.mjs",
+      "sha256": "01808cb0a85f5308c6f76ce78f9980e1341b89b09ae4afcbf7ae6f12e7e0f562"
+    },
+    {
+      "path": "tests/auth-workspace-migration.test.mjs",
+      "sha256": "d41664a868cbcd566f51e53a311205604d1cd3725a53f0e5927352c3240aa399"
+    },
+    {
+      "path": "tests/business-search-templates-api.test.mjs",
+      "sha256": "192096934e4807e3eb7f47b92d2eac463e89f239ddd586bbd1c367c0593d786c"
+    },
+    {
+      "path": "tests/campaign-analytics.test.mjs",
+      "sha256": "d3607f3bbf091e238b0e38d010f6444d8d5439b0b8eb137aa6d977999b776f73"
+    },
+    {
+      "path": "tests/campaign-audience-select.test.mjs",
+      "sha256": "4f2a6f6c84436e3abe8a36e178ca64a8f7b21f6b0d9597514e387df5ea149c10"
+    },
+    {
+      "path": "tests/campaign-audience.test.mjs",
+      "sha256": "053b5d888d7febd9b7138a3f77788c9867bf2736a38c575a78e5d80e6cea071a"
+    },
+    {
+      "path": "tests/campaign-clone.test.mjs",
+      "sha256": "9f067b6e8e471b49c65ac172c5b7fcd00c4b49f5d294298fbbb752323b327a65"
+    },
+    {
+      "path": "tests/campaign-created-at-migration.test.mjs",
+      "sha256": "595d447e4df93aa333c99828ffca13894c4dd687e4b7e60255ffd9b9bc35b9d0"
+    },
+    {
+      "path": "tests/campaign-custom-fields-merge.test.mjs",
+      "sha256": "d5ef9ff326acc1bf07ffb9e2d198c47c135ab6d23b55bb750608b522ae1449a1"
+    },
+    {
+      "path": "tests/campaign-draft-management.test.mjs",
+      "sha256": "d110735cdcd2faffbd2fffa9fe9869fff17284f9062aabc0b5de417253532c8f"
+    },
+    {
+      "path": "tests/campaign-launch-archive.test.mjs",
+      "sha256": "41a9cf96ace8b40bd01dec5bf3f46891a1ae68ea3234193b7d274b4fb27c3aa9"
+    },
+    {
+      "path": "tests/campaign-launch-snapshot.test.mjs",
+      "sha256": "8d7e43b0830fff5633f8cae452f17743b0f50507a7e360a98604b7d27cfced28"
+    },
+    {
+      "path": "tests/campaign-lifecycle.test.mjs",
+      "sha256": "c41312c18648541d67d5b9c4d6a2321a6ad6d37b6554ce80f923927902467f34"
+    },
+    {
+      "path": "tests/campaign-ooo.test.mjs",
+      "sha256": "6935582fe50881285c9e954dc4492dc2b68ef286a06f46cea2350d8a71ce6b44"
+    },
+    {
+      "path": "tests/campaign-preflight.test.mjs",
+      "sha256": "ef753752f866c698663f5b38bc1e19152b9f525bedd0e87c1c8e948896300fe8"
+    },
+    {
+      "path": "tests/campaign-recipient-removal.test.mjs",
+      "sha256": "97fa6b7faa88cfba7a6558c97943d312871a160dadae0d637eb0a23dca0bc501"
+    },
+    {
+      "path": "tests/campaign-review-evidence.test.mjs",
+      "sha256": "72c77215f21c11a09d619c1734ebd08f995926d2827a989dcfa282ef3fec1382"
+    },
+    {
+      "path": "tests/campaign-senders.test.mjs",
+      "sha256": "112a2ed6ad5cf1ab297885d87914c99a396d1e0b2683b2aa45623071547270b2"
+    },
+    {
+      "path": "tests/campaign-sequence-execution.test.mjs",
+      "sha256": "704d3fae12edeb28c0aa14ed5abc9d8ee8515931cb495f3e0d350025c7b90dec"
+    },
+    {
+      "path": "tests/campaign-sequence-migration.test.mjs",
+      "sha256": "16307dd40f9981e4e961454ef6277a8063a815753566b08a65b3ba8a01e6484f"
+    },
+    {
+      "path": "tests/campaign-sequence.test.mjs",
+      "sha256": "5803fc24c24f076063b013b34b7453f5588c731601767776e60c50dd32a86066"
+    },
+    {
+      "path": "tests/campaign-stop.test.mjs",
+      "sha256": "e22b93f44381e6e21f79077c284b6e63b98b111e2973a662d66e03c0042b4f7d"
+    },
+    {
+      "path": "tests/campaign-templates.test.mjs",
+      "sha256": "f00c134521b7d30976ab77d9010af2f81012be4f9814cd4136123aa0789eba8d"
+    },
+    {
+      "path": "tests/cli.test.mjs",
+      "sha256": "43e5b0be34a4d8036c7e2f2231178589cd0bce15e59e19fe65da16e0fca83524"
+    },
+    {
+      "path": "tests/click-tracking.test.mjs",
+      "sha256": "c64af70ca947a9e2b5e419832a90f4bea8346aa892cc429dffcac61180c15191"
+    },
+    {
+      "path": "tests/combined-legacy-migration.test.mjs",
+      "sha256": "4aa3f3e292cf7033dbb8974970556c3ffe869ae6d0f0409c43b840a2883124a1"
+    },
+    {
+      "path": "tests/comfortable-ui.test.mjs",
+      "sha256": "1c00590cf64c82a75fc61219196be2f767d61ecb9253c0f53ec738afb5b6aab7"
+    },
+    {
+      "path": "tests/compliance-readiness.test.mjs",
+      "sha256": "3801e3ed7c029d060960203fe559de5c97a786575660b975883fee7ad41accea"
+    },
+    {
+      "path": "tests/contact-bulk-tags.test.mjs",
+      "sha256": "0c18c556929302df08c72b5727d3204057ae23a5973870e8f157c9f53ec861c2"
+    },
+    {
+      "path": "tests/contact-create.test.mjs",
+      "sha256": "83d38757d9314171cca76c55667c1111dbf744f2a39253a91eaed9f5104e0f08"
+    },
+    {
+      "path": "tests/contact-custom-field-filter.test.mjs",
+      "sha256": "4763bacd495444e73e78909bbc8e0c8d3f8858f8173edfda6f99d889d0e288b2"
+    },
+    {
+      "path": "tests/contact-delete.test.mjs",
+      "sha256": "ee309930d0dc99f54cf3f6bff53868d377131340200af144254af986e71440c7"
+    },
+    {
+      "path": "tests/contact-email-status-filter.test.mjs",
+      "sha256": "d5223c0aaa0180e1d78f2de9b7c5a020f06e731088a8914a36726a803103f2d4"
+    },
+    {
+      "path": "tests/contact-fields.test.mjs",
+      "sha256": "f082e487171c9127a0eff3754368a8bea7ea77838f07fe1735fc55c420e5f240"
+    },
+    {
+      "path": "tests/contact-import-jobs.test.mjs",
+      "sha256": "e613b9e484970cce30c06d44be7c68176ba6d8898734b029601811fa2ecc8766"
+    },
+    {
+      "path": "tests/contact-import.test.mjs",
+      "sha256": "3435815c8ccaffb4f63416074cb8eb0bafddec14571e3fa03c85f70fdac4ed16"
+    },
+    {
+      "path": "tests/contact-pagination.test.mjs",
+      "sha256": "058db8ed5b968a0b6f5b3d919dbfe218c1712b045950aab0440587c3ec897fe6"
+    },
+    {
+      "path": "tests/contact-provenance.test.mjs",
+      "sha256": "5b50187a6a0111bd879c95a7a72df90193ee0c91390e54db2caea57990dc09fc"
+    },
+    {
+      "path": "tests/contact-segments.test.mjs",
+      "sha256": "061388d7bdea7b9af5623d8b9e4804d46488262b51971d3821aa8c541e6daa44"
+    },
+    {
+      "path": "tests/contact-selection.test.mjs",
+      "sha256": "93bd98a1859770af6007753dcd2185d875a58e0347eb72365fd5eac593c5fe79"
+    },
+    {
+      "path": "tests/contact-sorting.test.mjs",
+      "sha256": "b487746fe27139a93ba6c51708539b17d877e7fe46703a67c129bd01f5dafcc6"
+    },
+    {
+      "path": "tests/contact-suppression-filter.test.mjs",
+      "sha256": "dfeb82b40f0e077677abc37eeed9a90970405983fc3ddaa5c5d15f02a8e828d3"
+    },
+    {
+      "path": "tests/contact-suppression-visibility.test.mjs",
+      "sha256": "35cacfc446201dfb589dd7f0a8378eff381cd0f5688bd6ed2ea7ad6e8b252568"
+    },
+    {
+      "path": "tests/contact-suppression.test.mjs",
+      "sha256": "d46cffce0761849710de7b4b62d206323430377b3c7444c48ad63de44c1bb7a7"
+    },
+    {
+      "path": "tests/contact-tags.test.mjs",
+      "sha256": "c1b11ebae88578b951bf3cfce76d9c4141d1a30c3b41bed3d3b0e98920fb53ee"
+    },
+    {
+      "path": "tests/contact-update.test.mjs",
+      "sha256": "f4c976715df95c00452d88f590f025c3f97637f64372ba2f1293294fbbfb53fb"
+    },
+    {
+      "path": "tests/contact-workspace-counts.test.mjs",
+      "sha256": "1709abba88328d22d9307f4a387a67590fef3d2d624798bfe63649d26cd7cee4"
+    },
+    {
+      "path": "tests/cors-policy.test.mjs",
+      "sha256": "f9982d3354bb834b4cb7f7c5916d4efb5360990697adc032622470bf39a6c355"
+    },
+    {
+      "path": "tests/credential-vault.test.mjs",
+      "sha256": "42920645f86583c779ebdf5ffc39a4317bc4d573f2a71401be2a7680f5752c62"
+    },
+    {
+      "path": "tests/database-migrations.test.mjs",
+      "sha256": "b5366e95c3455a20fe9e38f997f9bd8ef09b4d2f0cfb2d55b22ff067231be931"
+    },
+    {
+      "path": "tests/delivery-reports-ui.test.mjs",
+      "sha256": "9480efd2dfc4b8f76710422951e7f6c7b2d272cc1c1cc779ea9d0f9d79e29985"
+    },
+    {
+      "path": "tests/discovery-contact-verification.test.mjs",
+      "sha256": "05fa89084a0cd8134c20f891e1975d58599175817d517054e08ca8ed8871434d"
+    },
+    {
+      "path": "tests/disify-domain-check.test.mjs",
+      "sha256": "d27bf0ded15f5ce8848414a088828a96554c3ea30bbe9732d5411a5eeb826961"
+    },
+    {
+      "path": "tests/download.test.mjs",
+      "sha256": "c4c7cea9b98f532ac3aaedc413632277bdd0f821c9a899931a9bd99db9e08b5f"
+    },
+    {
+      "path": "tests/email-dns-evidence.test.mjs",
+      "sha256": "9e0aeb73e9e49f8c4789aff6d3e048a93d17e1a3d9f8fa80c04b6d319304defe"
+    },
+    {
+      "path": "tests/email-idn-validation.test.mjs",
+      "sha256": "cffd89a987478ae666351834f40caeb1e5e1ac89ab19330cd199f4a4995af3c6"
+    },
+    {
+      "path": "tests/email-type-intelligence.test.mjs",
+      "sha256": "e7d3fd6bbf021aac6d09d480b4bfab218286b4927d260389bde11deeb67bb6d4"
+    },
+    {
+      "path": "tests/email-verifier-pipeline-acceptance.test.mjs",
+      "sha256": "0c82e3cc3c42d6ed7748874d20ff2fe3734c3596d1c2aace1f4f9aa1bd89fcc6"
+    },
+    {
+      "path": "tests/email-verifier-reliability.test.mjs",
+      "sha256": "6795ceb992090476ce83bee70a6babd1ad78fc0a001e028c09f7dede97820ca0"
+    },
+    {
+      "path": "tests/email-verifier-smooth.test.mjs",
+      "sha256": "65dc2ceef50e089c080045f5ed52b1bd5e6bc650fe01889fdad09254665be4f8"
+    },
+    {
+      "path": "tests/email-verifier-storage.test.mjs",
+      "sha256": "41a374cb3831d8123e58bbdd06e3f29a18beb9f18d292e39eecf7a30ea5d8406"
+    },
+    {
+      "path": "tests/email-verifier.test.mjs",
+      "sha256": "6c478cc45cc8f91a8d580d698edb52c5ab4da6f82f70bcacb9e8f9a94c7552d8"
+    },
+    {
+      "path": "tests/epch-directory-jobs.test.mjs",
+      "sha256": "4134c978f873dff26389ebd8b6949f2052be72eab4560678665516b349335c7d"
+    },
+    {
+      "path": "tests/gateway.test.mjs",
+      "sha256": "fe08afa8f710fb3a0d0de8c538c83a23ec101691d7e8ea3181ce19ffb4989b7e"
+    },
+    {
+      "path": "tests/google-auth.test.mjs",
+      "sha256": "33329733b35fe1683799b29a95a0c3ad01088c6e166f25d0a6daab7fceb5a7ad"
+    },
+    {
+      "path": "tests/google-existing-owner.test.mjs",
+      "sha256": "a259b5b3459a58ea1600137da629f5ce1aec2f994228c618808b89fac072cb0d"
+    },
+    {
+      "path": "tests/google-login-ui.test.mjs",
+      "sha256": "64f4cae17b48e6520acd5e044af7d3851b9c32d82a3410612c53f1920ed15076"
+    },
+    {
+      "path": "tests/guided-campaign-editor.test.mjs",
+      "sha256": "b3a8af0c0d9088ca209526ae2b3eabcd815313671969636f3c100ea85422719e"
+    },
+    {
+      "path": "tests/guided-campaign-journey.test.mjs",
+      "sha256": "955d282307990a6bc5e64933378105a19e72f5a674f18bb9965263ae6c0a9748"
+    },
+    {
+      "path": "tests/imap-receiver.test.mjs",
+      "sha256": "ba8f2526d8d5064e344ae6981ec1961f22e94d24214803c28ac9998a348b4e2f"
+    },
+    {
+      "path": "tests/imap-sync-scheduler.test.mjs",
+      "sha256": "4c01a23d581dc2e9cbf7467434bfc56df3711ba4321c34da507b7aab53780ea1"
+    },
+    {
+      "path": "tests/inbox-identifiers.test.mjs",
+      "sha256": "99825e91337282a1b4ef2eef2600aa0ac6a6efb6cf0b56a922c28eb75e806dac"
+    },
+    {
+      "path": "tests/inbox-replies.test.mjs",
+      "sha256": "92ffcf8be87afb7b19bbc354d17955d6de7bfc327f0c8fb3968fc44e48c47f3e"
+    },
+    {
+      "path": "tests/lead-discovery-jobs.test.mjs",
+      "sha256": "9620a3f9b0c8bbac74001ec9d7ad9abb809eaec04be328cca72d7ceed183882a"
+    },
+    {
+      "path": "tests/lead-discovery-saved-search-api.test.mjs",
+      "sha256": "666cffe0a1da5e4c30f366c593a65f8f1e369b68e04efe4c33163f8d99ae7ada"
+    },
+    {
+      "path": "tests/lead-discovery-saved-search.test.mjs",
+      "sha256": "5f5e9bdb3a7c20ec3eb5c22de24da256c991de0bfcdf003081a3da8feb9e7306"
+    },
+    {
+      "path": "tests/lead-discovery-ui.test.mjs",
+      "sha256": "4005cc75870367a6028ee346f0891d5787df5f007d4139a86135737775143c71"
+    },
+    {
+      "path": "tests/lead-search.test.mjs",
+      "sha256": "d358f9c798934833e60b5c0632f116bd6655120a508c20ac9d8022dad87ae170"
+    },
+    {
+      "path": "tests/lead-strategy-personal-api.test.mjs",
+      "sha256": "e2eaa0649705fa16ccd5fb87e25630d8d684f473bb2db9ba299953b86252f192"
+    },
+    {
+      "path": "tests/lead-strategy-personal-settings.test.mjs",
+      "sha256": "78f0df9347c589e4da3a9123be6899d53bad9588886913a3a8e5a9b15ee92fed"
+    },
+    {
+      "path": "tests/lead-strategy-settings.test.mjs",
+      "sha256": "128b0cd6e843b557934c75b10c0edc47f95584a0b4f4eb7b710287db0bece9cb"
+    },
+    {
+      "path": "tests/lead-strategy-ui.test.mjs",
+      "sha256": "d3ab499b2353cbe143d5ec0c4ae5e5a322c2248824409265810f21b91f57b4f5"
+    },
+    {
+      "path": "tests/lead-strategy.test.mjs",
+      "sha256": "98f4da7d4e81df01e88b58d8bdd9b998d5d572ac8dbaea3c550d089c647f7db5"
+    },
+    {
+      "path": "tests/lead-website-email-discovery.test.mjs",
+      "sha256": "1381bb4a35dcecf52a4a959693433d3196aaf00c4e9daa10531fd6ce76d5fd2f"
+    },
+    {
+      "path": "tests/legacy-email-tracking-disabled.test.mjs",
+      "sha256": "30c5f74995128c879bfab8e7a08d2c0d7e1705d7e81618812ce699fcdd16c1de"
+    },
+    {
+      "path": "tests/list-export-backpressure.test.mjs",
+      "sha256": "8fd685cbbee7430c8d6c7b13ad1aa9f74cc9f1e295a0768b2fd4e908d2758343"
+    },
+    {
+      "path": "tests/lists-api.test.mjs",
+      "sha256": "8b47a7cf62c1a1423329cd56ac552c7491bdb0add30e23cd5b1464d9835a3860"
+    },
+    {
+      "path": "tests/mailbox-inbox-view.test.mjs",
+      "sha256": "819e5e41a1727b3cb8cbf40add0a8ad0c20915d627a8d969958e74c6d68d8358"
+    },
+    {
+      "path": "tests/mailbox-warmup-review.test.mjs",
+      "sha256": "2f537568aaf61a94a391e47faa41d3df130abc2d57b76bf0ebf2b6e80b298fe9"
+    },
+    {
+      "path": "tests/mailboxes-warmup-ui.test.mjs",
+      "sha256": "8074bcd4fdbdb3999ac13ae7c7a0c2edb09dee3ef8b8d58021b0cae5cefe1042"
+    },
+    {
+      "path": "tests/manual-campaign-copy.test.mjs",
+      "sha256": "1b3a7a1c129c11f398629877884d0e48e4c308d808b7555f5227150e7a9f661f"
+    },
+    {
+      "path": "tests/maps-facebook-focus.test.mjs",
+      "sha256": "4ff0e322f63a6de60ad112030bf444be5ab3a5cc0e559115fad76db77dd1f0fb"
+    },
+    {
+      "path": "tests/meta-lead-ads.test.mjs",
+      "sha256": "52490f31c6240f0fb21cc79cd6fe3662399d1969d0202f383963b05986132781"
+    },
+    {
+      "path": "tests/native-warmup-activity.test.mjs",
+      "sha256": "57004063d18b87f3dfc58229c00fe73ed99628d151bcfc7eec3a7fe2d5ead39a"
+    },
+    {
+      "path": "tests/native-warmup-api.test.mjs",
+      "sha256": "73124bf7532b7ddb370c702ed835f5e38b72a9219d5f9a0e5112325baad2352b"
+    },
+    {
+      "path": "tests/offer-contracts-api.test.mjs",
+      "sha256": "3b846146d1250bb8b7ee5667abea630d623f81d159fec46180920d416e61ea00"
+    },
+    {
+      "path": "tests/offer-contracts.test.mjs",
+      "sha256": "7a0eda90f547213ba558d07930db37171b78789f5a7f94620740384f4f431a9c"
+    },
+    {
+      "path": "tests/osm-lead-import.test.mjs",
+      "sha256": "13b6df868b55b081e089e7aea839af74b08d19fd7561f32bb26f34a9fc7056ec"
+    },
+    {
+      "path": "tests/personalization-bedrock.test.mjs",
+      "sha256": "9e7a704c2138e7784f4d20b9709f0b5b4781f8bd1e79795c00d9a977b8e59485"
+    },
+    {
+      "path": "tests/personalization-edit-guards.test.mjs",
+      "sha256": "93b4a1f11de53166669a9fc0d93ecca079df759908ab8ffc5d2f56ebec5b773a"
+    },
+    {
+      "path": "tests/personalization-provider-ui.test.mjs",
+      "sha256": "758bc948602450ebe4135b0f5507411f539bb0913b14b346afcb2379cab7aa98"
+    },
+    {
+      "path": "tests/personalizer-factcheck.test.mjs",
+      "sha256": "1742393ce01c20c573f507b9431ee6df17e4f83ead1b5ebb5ff4e85dc7f4c9c5"
+    },
+    {
+      "path": "tests/product-customer-journey.test.mjs",
+      "sha256": "e50473705815afde9acabb6e12ff7dd91689fbb6dac3348914e4626603edef91"
+    },
+    {
+      "path": "tests/qualification-jobs.test.mjs",
+      "sha256": "9a3e3b9967352e330e742366a56f9769b8efcc0ad5863f01b62e629972ffb2bd"
+    },
+    {
+      "path": "tests/qualification-review.test.mjs",
+      "sha256": "0087232c78fe16d93f0d4a66e30535150c32fe6c8a85bd9722da58353ac11033"
+    },
+    {
+      "path": "tests/qualification-scoring-api.test.mjs",
+      "sha256": "ef122f7daa9265e8e68b2521efcf046289ab4a40ff708b9ce78acd22bf37356b"
+    },
+    {
+      "path": "tests/qualification-scoring.test.mjs",
+      "sha256": "3526dda1861f23508ed9b9da4e6e57dd833e3743bc5300bd3217a817f607242f"
+    },
+    {
+      "path": "tests/qualification-source-access.test.mjs",
+      "sha256": "41904ad1bed605f5ac5b1f65bfaa4d831b75089559cc8cc0aded4a2b053ddd45"
+    },
+    {
+      "path": "tests/qualifier-scoring-integration.test.mjs",
+      "sha256": "e36436322a0b18593343ea9670633367dd910bae852c735631476a6d7ea3a657"
+    },
+    {
+      "path": "tests/reply-tracker.test.mjs",
+      "sha256": "c5d84b8d2b6f8ec3c0eae8bc872493d6809d7e6f181a1f6af5ebe5daa0c59d59"
+    },
+    {
+      "path": "tests/request-body-limits.test.mjs",
+      "sha256": "5f4bd0bc32db0d77b328b531b767f1d41715812b921fa3ee6eba461ed39bc598"
+    },
+    {
+      "path": "tests/scraper-endpoint.test.mjs",
+      "sha256": "4656b31b91d0ed5628d6da7372e28af8365e0df2b5d1ad447ace91f8c61db07e"
+    },
+    {
+      "path": "tests/searxng-local-transport.test.mjs",
+      "sha256": "a300ec4a1e827fc37f4c270ae53fa5e8f5d8ccd5b3ad6b5c27df9193bf0be59d"
+    },
+    {
+      "path": "tests/searxng-local-workflow.test.mjs",
+      "sha256": "91177b2019d270fb44e244b7fcf1bb6e19af985f6af21b551056934ae400429e"
+    },
+    {
+      "path": "tests/searxng-search-migration.test.mjs",
+      "sha256": "84d096d9067066b9924f8e362e3898c1bc577aa5638c1991e1c684ab864bec37"
+    },
+    {
+      "path": "tests/searxng-search-ui.test.mjs",
+      "sha256": "0dd782adcd1bf5fb01ac5e1798c014e28e8a1d897c13ccdfb6c851dc868b1c5f"
+    },
+    {
+      "path": "tests/searxng-search.test.mjs",
+      "sha256": "b680512db1bebe87404580aeadbce8b7ed5f2fe0f2214bf08f04965ed7bf3a16"
+    },
+    {
+      "path": "tests/send-claims.test.mjs",
+      "sha256": "a0434564f182a71810780bfd91dabdac35f59655e02c685c917429527cb123e5"
+    },
+    {
+      "path": "tests/send-outcome-classification.test.mjs",
+      "sha256": "606bb048e7abd57be5ea7005062acd535a76fe4f9eaf52657740ce5d4cec1f5f"
+    },
+    {
+      "path": "tests/sender-rotation.test.mjs",
+      "sha256": "a966821cd0e6b44c11808c2134b3f66d4f69b1d75e02f5f201b0238e1546189d"
+    },
+    {
+      "path": "tests/sending-api.test.mjs",
+      "sha256": "0edf30977a1f24057b83f393a83d1fc5f89e89d46f01e93ca1f63ed9150b73b1"
+    },
+    {
+      "path": "tests/sending-capacity.test.mjs",
+      "sha256": "46f67c7228127df564741ee8298f286a37280d0d3f882d31e11f8fcd0939b6dd"
+    },
+    {
+      "path": "tests/sending-control.test.mjs",
+      "sha256": "d90072964d97006b514937c4994b069a4934cfdc90a4d666d29d0ef11f9b185e"
+    },
+    {
+      "path": "tests/sending-pacing.test.mjs",
+      "sha256": "56a14f6c5e1250e618b328f2452afe1c36c8e35c18a172ef6000950a3da6a692"
+    },
+    {
+      "path": "tests/sending-schedule.test.mjs",
+      "sha256": "8ecda92bd50794c41c172225d7658445597ec457d73b502156cde7c49f8a9576"
+    },
+    {
+      "path": "tests/sending.test.mjs",
+      "sha256": "2b973b62660b7238edc3335c29da2670b53eb90d3d23a91358db2aebacad49c9"
+    },
+    {
+      "path": "tests/smtp-probe-safety.test.mjs",
+      "sha256": "c635dcf6e9363799e8073be9a6924e6a1f017d9cab6e2299637e340e59e5156e"
+    },
+    {
+      "path": "tests/smtp-probe.test.mjs",
+      "sha256": "1259945e92f6920087fec6eee3d126de8d18c6cf583f7573127d15dff87ea590"
+    },
+    {
+      "path": "tests/spa-renderer.test.mjs",
+      "sha256": "2ed9be77399aa199e549df453a82cbb1a0fa74bb8e1ad1dc54fed3998bd5257d"
+    },
+    {
+      "path": "tests/ssrf-guard.test.mjs",
+      "sha256": "4224c87febf1ee81beeef723770ee2f0464d144a99c2aaf009947b096055c569"
+    },
+    {
+      "path": "tests/static-file-allowlist.test.mjs",
+      "sha256": "97151c1d0a00a330d5891abe31c3a7fb2ec52516a86f327e0249f7425ab3c73d"
+    },
+    {
+      "path": "tests/support/all-hours-send-window.js",
+      "sha256": "1fbc72d9cb5014519cd091228586688ecd798ca9bdb7eb80e7346796c9eb5cc2"
+    },
+    {
+      "path": "tests/support/astra-gateway-r34-fixture.mjs",
+      "sha256": "82519730d6b7baebcea0a316a65a09537e3f6975511ae397d689cfb59a891f20"
+    },
+    {
+      "path": "tests/support/astra-platform-fixture.mjs",
+      "sha256": "eb7bb76d147935f7e854fece0463c8e885ccf1600c63ad6ea3ef9ace390b70b5"
+    },
+    {
+      "path": "tests/support/astra-qa-egress-guard.mjs",
+      "sha256": "fbd64f3a7a018f1f5f38241d639265adc37c4ee5b1468759c327d3470ea6e83e"
+    },
+    {
+      "path": "tests/support/astra-r18-fixture.mjs",
+      "sha256": "2361c1df22c6e3246e99288fa7accfea4a84d5417c8c1f23e421f9f63e590bc6"
+    },
+    {
+      "path": "tests/support/astra-r20-fixture.mjs",
+      "sha256": "0cf52bbd781d500b7bb73ee17cc90ce7ebbbd9869a70191c47a547321f84f3cd"
+    },
+    {
+      "path": "tests/support/imap-test-cert.pem",
+      "sha256": "a915a977cc824233405ac22c070cc1fde775461c7db645be0665fa8f76f6a156"
+    },
+    {
+      "path": "tests/support/imap-test-key.pem",
+      "sha256": "84d127a961ff62394333a0552f231d77c64acf02c11900f2a6448c9d6f89811c"
+    },
+    {
+      "path": "tests/support/loopback-browser-guard.mjs",
+      "sha256": "647a259bb2fb67802a7b0192ea29f56302e3434e550452edbb13ec55048b9141"
+    },
+    {
+      "path": "tests/support/loopback-only.mjs",
+      "sha256": "e6cc38318a211df0959971b7e1b74c4cad826ff50a60ed07dbe0c3d6b6877edc"
+    },
+    {
+      "path": "tests/support/minimal-pdf.mjs",
+      "sha256": "fe6cc1d17f95610add9dbabe8bd54a2bf53cdbb3c22141ee039d6d27d556ca10"
+    },
+    {
+      "path": "tests/support/reacher-contract-fixture.mjs",
+      "sha256": "5278383f3874acc80c8cfe69edd6654d0c33a373ac5c491b264f7ab9fe9f32bd"
+    },
+    {
+      "path": "tests/support/reviewed-mailbox-fixture.mjs",
+      "sha256": "46b32cf26f1f2f0fb07bca36b60c3f02021dc899b8d798c92f419897c01a6c17"
+    },
+    {
+      "path": "tests/support/send-worker.mjs",
+      "sha256": "5840eec79f7ced72f1e5d2a7c930d48997c1cd13a46b51aeb972683c0b3371e5"
+    },
+    {
+      "path": "tests/support/verifier-syntax-before-f30490b.mjs",
+      "sha256": "f9d88da3a7597ab64ce5f576ad4352117981f26fe4b156a79b92ea6f81ee96f3"
+    },
+    {
+      "path": "tests/totp.test.mjs",
+      "sha256": "d5e9fc12387dfd3f39e577e02db8a2d90e06ef611bd70f593ab18a0f0dc043a1"
+    },
+    {
+      "path": "tests/truthfulness.test.mjs",
+      "sha256": "97312a2ed224671e6a5f301367d84cc49b7cabf3d11ffd1f5dc470081e5fde57"
+    },
+    {
+      "path": "tests/ui-action-auth.test.mjs",
+      "sha256": "ad23c06ca38d936de33b036a6f34e2c757fda4b5c2edb4b713d45ae583937d30"
+    },
+    {
+      "path": "tests/ui-feedback.test.mjs",
+      "sha256": "c831cecc090a56dc8dcaf33fa1ab4b3cace32f8f5ee767fc509365ed0d2c9a41"
+    },
+    {
+      "path": "tests/ui-route-audit.test.mjs",
+      "sha256": "d89ecf8ad5291a5f24d996d4569ca6b8ea796d959bc47fcc9222c31dc29e1600"
+    },
+    {
+      "path": "tests/unsubscribe-api.test.mjs",
+      "sha256": "db8bd2641e3c3917e5ab0ba805044ebc0f4af1693510bb9250b101decad8e16f"
+    },
+    {
+      "path": "tests/verification-classification-view.test.mjs",
+      "sha256": "e378d2d115348e8cd50c5cda14b1395255598f27c4e39d0bac7911efb5ca24c1"
+    },
+    {
+      "path": "tests/verification-export.test.mjs",
+      "sha256": "1b6a8bab3a8bfa8758d1a530acd7c4c507a3fe4de9a7bb17b507fec202aead94"
+    },
+    {
+      "path": "tests/verification-jobs.test.mjs",
+      "sha256": "62196db003085af898c339a985f990cf87834a714a33e8bc038fcab0cd392cd6"
+    },
+    {
+      "path": "tests/verification-result-view.test.mjs",
+      "sha256": "bb96d0d3636717590c1bb48a89869e8212f39f5249f065d56660ae7440a92761"
+    },
+    {
+      "path": "tests/verifier-domain-input.test.mjs",
+      "sha256": "15db649c0ffa61c73022d4f4310193df8868e1c644ab836ac85bce9abf844c39"
+    },
+    {
+      "path": "tests/verifier-evidence-regression.test.mjs",
+      "sha256": "ad099fb957d4ebe57455ab756dfaf620906e336894d92e689eee6c1c9047f949"
+    },
+    {
+      "path": "tests/verifier-history.test.mjs",
+      "sha256": "6944827337df427303e79a9bc00db3cda92ea49c3fffbd73130d118e12e82cd4"
+    },
+    {
+      "path": "tests/verifier-offline-integration.test.mjs",
+      "sha256": "df63099e294570cc8563ad826294d0d27fa0a253bca3f9dd4a066bfc3580b55a"
+    },
+    {
+      "path": "tests/warmup-evidence.test.mjs",
+      "sha256": "5afa7e6cae60629ea0e7c87f29991ea7b49a99047478ac4962a078b4bb7ab7a1"
+    },
+    {
+      "path": "tests/website-discovery-jobs.test.mjs",
+      "sha256": "942920842f61c7f8245332b71410b2ebf7266a5c444790768a5d7ed3a9ee3fc8"
+    },
+    {
+      "path": "tests/website-discovery-ui.test.mjs",
+      "sha256": "f796170084ab370c8307c722856e7c3648d87f5526af53a90d181cefc027c8dd"
+    },
+    {
+      "path": "tests/website-discovery-verification.test.mjs",
+      "sha256": "6d95a05951a16ce52fab0ce269a151ec4ec9b3605a5bceca604a83fbac5210f6"
+    },
+    {
+      "path": "tests/website-pdf-extraction.test.mjs",
+      "sha256": "2a095a7062d379dcb0117f531fa64d596a82b8a436ea77ddd1417ac0dc565bd9"
+    },
+    {
+      "path": "tests/website-rendered-fallback.test.mjs",
+      "sha256": "15cb74383ec07aee887bd9f50b4b8fae45a36fe48e98f1e311b131087e03b3ff"
+    },
+    {
+      "path": "tests/workspace-membership.test.mjs",
+      "sha256": "c44b47ea9817702eea17a4abc28a2dc11b319e5e638ff8bf51600c017686237d"
+    },
+    {
+      "path": "tools/astra/__pycache__/prepare-preview-pg.cpython-313.pyc",
+      "sha256": "a6b9d6b6ce75e795b2725d6a8923b7a7ba2c125cda1cc9074b094c5bc445df05"
+    },
+    {
+      "path": "tools/astra/__pycache__/prepare-qa-db.cpython-313.pyc",
+      "sha256": "a7b8a7f14b78f87a5795a25770ce472acf84438cca4f7ba51f0d53d090ee4db8"
+    },
+    {
+      "path": "tools/astra/__pycache__/restore-customer-preview.cpython-312.pyc",
+      "sha256": "aceb042525a161cc99ccad6951406ffcd116345810ff9094196792395111643b"
+    },
+    {
+      "path": "tools/astra/commercial-gates.mjs",
+      "sha256": "8f68fc37ccd1306d51853ca2b1bf498b7af6ae22d20e5013a9a49ff1595dfe53"
+    },
+    {
+      "path": "tools/astra/derive-acceptance.mjs",
+      "sha256": "94556ae464ce210c09034bf6a91ac653ddd837bc0ca1cf4f627559ee461be562"
+    },
+    {
+      "path": "tools/astra/ensure-preview-pg.py",
+      "sha256": "a0d82186054206206406cd8a6ee846f450ae48760bd344f79b65ac5d5e9fa2eb"
+    },
+    {
+      "path": "tools/astra/legacy-migration.mjs",
+      "sha256": "0bf4af53bda76583057bce4105ad6d4fb6e9c4e5487e4335848e5f9a59b1aef7"
+    },
+    {
+      "path": "tools/astra/live-provider-probe.mjs",
+      "sha256": "ba7d6665928f936f547d247ef36aca8e7c637bd6947840c5cfe7eff52fb93a86"
+    },
+    {
+      "path": "tools/astra/local-preview.mjs",
+      "sha256": "e59688b4ee3069b1cd0173f53d1095c244ffd951ed7e672d011e0dcc74a42d46"
+    },
+    {
+      "path": "tools/astra/monitor-fixture-clocks.py",
+      "sha256": "3d13bf6e732eac3ab8ae1e40c093294d1564546248314188120c5768b42a34c3"
+    },
+    {
+      "path": "tools/astra/prepare-preview-pg.py",
+      "sha256": "3cabcf87f7864c9bb36c485fffeff42c9d4d0f3ad2fd3570d066e0574515d150"
+    },
+    {
+      "path": "tools/astra/prepare-qa-db.py",
+      "sha256": "8d809e93a52eb01df0924a5724ed01156c38b1902c8a83988dfccf99c7b9d74b"
+    },
+    {
+      "path": "tools/astra/prospecting-integration.mjs",
+      "sha256": "2fb6b2b79da15cb0b1d7c88d84255468dcbb0d4617baf65b75e3f21b59a60e43"
+    },
+    {
+      "path": "tools/astra/restore-customer-preview.py",
+      "sha256": "a09f2f0ee2d2d8045be7a6d49b49e0d709d6fe83c13e4b42d8e6b0292650a7f9"
+    },
+    {
+      "path": "tools/astra/rotate-preview-credentials.py",
+      "sha256": "2830f4b0c57e13148caf4722bd5505ad810ded60d306f6bc9d0807014ce72780"
+    },
+    {
+      "path": "tools/astra/rotate-qa-credentials.py",
+      "sha256": "d44bbd5334ebaec374ceb818b644315e0a9e5bc4983a45f54b7847015912b0c9"
+    },
+    {
+      "path": "tools/astra/run-prospecting-once.mjs",
+      "sha256": "80ddf1d40014c8b822642ec6f913c745ae43c4182b5db661d27243a080d16a1a"
+    },
+    {
+      "path": "tools/astra/start-customer-prototype.ps1",
+      "sha256": "6898a6b30be4df2e0aea578b3b7999e25a2d1a9c0f42d8c5e54b70d7a9b81252"
+    },
+    {
+      "path": "tools/freeinference/Dockerfile",
+      "sha256": "10f430586a0d775f93786e4013ea5c6c8c240a8808197a7df18dbb9c269af84c"
+    },
+    {
+      "path": "tools/freeinference/README.md",
+      "sha256": "ca845e152d34542d72726d5e091616a78fa5128efadfc539e02f215263904b2f"
+    },
+    {
+      "path": "tools/freeinference/Start-Runner.ps1",
+      "sha256": "934e2c275283c4e66474cfcc900be6e1ed4cb1fd5c22d83c634b9d378f42b1c1"
+    },
+    {
+      "path": "tools/freeinference/backup.mjs",
+      "sha256": "36b2cafeab8849ac037f3f5a0d81dde867fa37df25dac12078cba5ba66fe9f50"
+    },
+    {
+      "path": "tools/freeinference/bootstrap.mjs",
+      "sha256": "cbf2fce31feac164a19dc4ce783d82390e2cc1184e7c4401a9ed2044a1255e5f"
+    },
+    {
+      "path": "tools/freeinference/establish-state.mjs",
+      "sha256": "a1c5b84c1dcc804ec0642abe4034206149e6948ad66311d1bdde493bfe6d0140"
+    },
+    {
+      "path": "tools/freeinference/gateway.mjs",
+      "sha256": "77035751a856630e02d32da9bc0cf7489786edc2b2256662c2fec286e92e85fa"
+    },
+    {
+      "path": "tools/freeinference/paths.mjs",
+      "sha256": "3100133197c79c4dedf3a7cd4f17e7015c736c2093fd436f2b1299a2e9834e4a"
+    },
+    {
+      "path": "tools/freeinference/probe.mjs",
+      "sha256": "61f9e40c21474b1ad580b2615140deace329266767614c3d78093a9c1490955f"
+    },
+    {
+      "path": "tools/freeinference/runner.mjs",
+      "sha256": "1e280f4a38bc9a3c41fbd101269c884652408a11e6a5f6093751bbd6f6e2e98f"
+    }
+  ],
+  "postR2Changes": [
+    {
+      "path": "astra.html",
+      "before": "e37fd18acf50f871111dd4e95ced819af594127f3301401b9a0ec3c6fda2869f",
+      "after": "a6da98c4a59e0998408192a293a5b54b95034e0b678d2b1fe33239b1d3f1d934"
+    },
+    {
+      "path": "js/astra-workbench.js",
+      "before": "73d57fe44b4f098f07e8ad46989ed140703ffd9588daf1f3876eda49fd07d74f",
+      "after": "09263b61c2920057b9750c80226bd804eabf62d8597f7ad3331b230e00f6629a"
+    },
+    {
+      "path": "pipeline/archiver.js",
+      "before": "bf762e639577a560106db39f7666b9e905c6082db80561164e343fd60e6cd253",
+      "after": "b157b9b40ed0de5aecb968a746c4b061929603ad03ea068e5ee9b37532e9e35a"
+    },
+    {
+      "path": "tests/archive-json-references.test.mjs",
+      "before": null,
+      "after": "1c7e79f8dfcaa289d1019949b84df7ca6f4790665defcc309cd9afa558e5e1d0"
+    },
+    {
+      "path": "tests/astra-workbench-e2e.test.mjs",
+      "before": "1691ad9f3bd535e6d46a687399a1a46c38981a93631f8d3910368c707db3e05f",
+      "after": "3ffea8141bf62f99d94fc1ba1ef384958d1407386d474f46f63344a146a8630a"
+    }
+  ],
+  "releaseReady": false,
+  "scope": "Final bounded local integration. R2 broad suite is predecessor evidence; final archive/operator deltas have focused reruns. Private archives/runtime not imported."
+}

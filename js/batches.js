@@ -4,6 +4,7 @@
 //  Terminal Lead Archival & SQLite VACUUM Defragmentation
 // ============================================================
 import { Batches, Qualify, Stats, relTime, fmtNum } from './api.js';
+import { confirmAction, notify } from './ui.js';
 
 export async function renderBatches(container) {
   container.innerHTML = `<div class="loading-state"><div class="spinner"></div><span>Loading cohorts…</span></div>`;
@@ -16,6 +17,7 @@ export async function renderBatches(container) {
 
   const list = batches || [];
   const arch = archStats || {};
+  const restorableBatchIds = new Set((arch.restorableBatchIds || []).map(Number));
 
   container.innerHTML = `
   <div class="dash-header">
@@ -82,7 +84,7 @@ export async function renderBatches(container) {
         <p>No cohorts yet</p>
         <p class="empty-hint">Click <strong>+ New Batch</strong> to start your first bounded processing cohort</p>
       </div>
-    </div>` : list.map(b => renderBatchCard(b)).join('')}
+    </div>` : list.map(b => renderBatchCard(b, restorableBatchIds.has(Number(b.id)))).join('')}
   </div>`;
 
   // Wire
@@ -102,21 +104,29 @@ export async function renderBatches(container) {
     window.__nav('qualification');
   };
   window.__batchClose = async (id) => {
-    if (!confirm('Close this batch?')) return;
-    await Batches.close(id);
-    renderBatches(container);
+    if (!await confirmAction({ title: 'Close batch', message: 'Closing stops new leads from being added. Existing records and history are retained.', confirmLabel: 'Close batch', danger: true })) return;
+    try { await Batches.close(id); notify('Batch closed; its records were retained.'); await renderBatches(container); }
+    catch (error) { notify(error.message || 'Could not close this batch.', 'error'); }
   };
   window.__batchArchive = async (id, name) => {
-    if (!confirm(`Archive Batch "${name}" and run SQLite VACUUM?\nThis moves terminal leads to leads_archive and defragments storage.`)) return;
-    const res = await Batches.archive(id);
-    if (res?.ok) {
-      alert(`✅ Archived ${res.archivedLeads} leads and ${res.archivedSends} sends to cold archive storage.`);
-    }
-    renderBatches(container);
+    if (!await confirmAction({ title: `Archive batch “${name}”`, message: 'A full restorable snapshot keeps contact, verification, source and send history. Active or uncertain campaign work blocks archiving.', confirmLabel: 'Archive batch', danger: true })) return;
+    try {
+      const res = await Batches.archive(id);
+      if (res?.ok) notify(`Archived ${res.archivedLeads} contacts and ${res.archivedSends} sends. You can restore this batch later.`, 'success');
+      await renderBatches(container);
+    } catch (error) { notify(error.message || 'Could not archive this batch.', 'error'); }
+  };
+  window.__batchRestore = async (id, name) => {
+    if (!await confirmAction({ title: `Restore batch “${name}”`, message: 'Restore its contacts and linked history from the saved archive snapshot?', confirmLabel: 'Restore batch', danger: false })) return;
+    try {
+      const res = await Batches.restore(id);
+      if (res?.ok) notify(`Restored ${res.restoredLeads} contacts and ${res.restoredSends} sends.`, 'success');
+      await renderBatches(container);
+    } catch (error) { notify(error.message || 'Could not restore this batch.', 'error'); }
   };
 }
 
-function renderBatchCard(b) {
+function renderBatchCard(b, archived = false) {
   const processed = b.actual_leads || b.lead_count || 0;
   const qualified = b.qualified || 0;
   const pct = processed > 0 ? Math.round((qualified / processed) * 100) : 0;
@@ -167,15 +177,17 @@ function renderBatchCard(b) {
     </div>` : ''}
 
     <div class="batch-card-actions">
-      ${b.status !== 'closed' ? `
+      ${archived ? `
+        <span style="font-size:0.75rem;color:var(--text-muted)">Archived snapshot · history retained</span>
+        <button class="btn btn-ghost btn-sm" style="margin-left:auto;color:var(--system-purple)" onclick="window.__batchRestore(${b.id},'${(b.name||'').replace(/'/g,"\\'")}')">↩ Restore batch</button>
+      ` : `
+        ${b.status !== 'closed' ? `
         <button class="btn btn-ghost btn-sm" onclick="window.__batchStartQualify(${b.id})">◎ Run Qualification</button>
         <button class="btn btn-ghost btn-sm" onclick="window.__nav('verification')">✉ Verify Emails</button>
         <button class="btn btn-ghost btn-sm" onclick="window.__nav('personalization')">✍ Personalize</button>
         <button class="btn btn-ghost btn-sm" style="color:var(--system-orange)" onclick="window.__batchClose(${b.id})">Close Cohort</button>
-        <button class="btn btn-ghost btn-sm" style="color:var(--system-purple)" onclick="window.__batchArchive(${b.id},'${(b.name||'').replace(/'/g,"\\'")}')">📦 Archive & VACUUM</button>
-      ` : `
-        <span style="font-size:0.75rem;color:var(--text-muted)">Archived cohort · storage reclaimed</span>
-        <button class="btn btn-ghost btn-sm" style="margin-left:auto;color:var(--system-purple)" onclick="window.__batchArchive(${b.id},'${(b.name||'').replace(/'/g,"\\'")}')">Re-Archive</button>
+        ` : `<span style="font-size:0.75rem;color:var(--text-muted)">Closed · records are still available</span>`}
+        <button class="btn btn-ghost btn-sm" style="color:var(--system-purple)" onclick="window.__batchArchive(${b.id},'${(b.name||'').replace(/'/g,"\\'")}')">📦 Archive batch</button>
       `}
     </div>
   </div>`;

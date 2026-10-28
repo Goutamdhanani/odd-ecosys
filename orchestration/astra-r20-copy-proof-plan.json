@@ -1,0 +1,14 @@
+{
+  "planId": "ASTRA-R20-EXECUTION-COPY-CURRENT-PROOF",
+  "authority": "Current human continuation request and the source-level finding in .superpowers/r20/preflight-copy/report.md",
+  "writer": "/root/r20_execution_copy",
+  "ownedPaths": ["pipeline/astra-autonomy.js", "pipeline/astra-dispatcher.js", "tests/astra-execution-copy-proof.test.mjs", ".superpowers/r20/execution-copy/**"],
+  "requirements": [
+    "Replace both separate original-proof/UUID-ordered copy-claim checks with a shared current effective-proof validator, retaining every existing audience, copy hash, approval, permission, budget, capacity, source and transport gate",
+    "Include a valid draft claim outside industry/country qualification references; fail closed for retraction, correction ambiguity, invalid effective proof, missing/expired rights and incorrect literal sentence support",
+    "Use actual PostgreSQL pure-validator tests and prove both consumers invoke it. Do not issue execution tickets, invoke live eligibility, enable transport, or run a provider to exercise this",
+    "Keep the geography fix, immutable audience history and all existing public contracts. Preserve before copies, every failed run, commands, raw logs and exact hashes; release for fresh independent review"
+  ],
+  "constraints": ["Only explicit astra-foundation checkout", "Luna/high only", "One writer per file", "No other source or test changes", "No provider, outreach, migration, preview or Git actions", "Original R19 artifacts remain immutable", "releaseReady=false"],
+  "releaseReady": false
+}

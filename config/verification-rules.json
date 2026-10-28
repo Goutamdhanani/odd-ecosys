@@ -8,7 +8,7 @@
   "suppress_no_mx": true,
   "suppress_role_accounts": false,
   "flag_catch_all_as": "risky",
-  "flag_free_provider_as": "deliverable",
+  "flag_free_provider_as": "unknown",
   "role_account_prefixes": [
     "info", "admin", "support", "sales", "contact", "help",
     "office", "billing", "accounts", "team", "hello",

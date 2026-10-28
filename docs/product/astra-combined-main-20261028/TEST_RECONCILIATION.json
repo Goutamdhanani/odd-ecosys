@@ -1,0 +1,160 @@
+{
+  "plan": "astra-combined-main-20261028",
+  "runs": [
+    {
+      "run": "R1",
+      "command": "node --test --test-concurrency=2 --test-reporter=tap tests/*.test.mjs",
+      "totals": {
+        "tests": 847,
+        "pass": 788,
+        "fail": 54,
+        "cancelled": 0,
+        "skipped": 5,
+        "durationMs": 982643.3266
+      },
+      "exitCode": 1,
+      "logPrivatePath": ".runner/combined-full.tap",
+      "logSha256": "cf5a4458fd72cda9d55986920998bbd5706381446c18e21a6d23216281659710",
+      "binding": "R1 evolving combined source with retained repair history",
+      "skipReasons": [
+        "ok 105 - real synthetic PG34 persists billing, malformed-output receipts, overruns, reconciliation and tenant isolation # SKIP Requires the dedicated synthetic gateway-telemetry-r34 fixture",
+        "ok 222 - 032 real fixture: users see only active memberships; proof replay/expiry/malformed input and app table reads fail # SKIP requires a new disposable PostgreSQL fixture migrated through 032",
+        "ok 226 - R18 disposable PostgreSQL: account X-Ray persists multi-page evidence, rejects unsafe targets, and retains evidenceId compatibility # SKIP requires the fresh disposable synthetic PostgreSQL fixture through migration 032",
+        "ok 227 - R18 disposable PostgreSQL: watched recapture lineage is exact-URL, rights-current, and append-only # SKIP requires the fresh disposable synthetic PostgreSQL fixture through migration 032",
+        "ok 228 - R18 disposable PostgreSQL: X-Ray Radar uses only a unique strictly earlier same-tenant account baseline # SKIP requires the fresh disposable synthetic PostgreSQL fixture through migration 032"
+      ]
+    },
+    {
+      "run": "R2",
+      "command": "node --test --test-concurrency=4 --test-timeout=180000 --test-reporter=tap tests/*.test.mjs",
+      "totals": {
+        "tests": 861,
+        "pass": 850,
+        "fail": 5,
+        "cancelled": 1,
+        "skipped": 5,
+        "durationMs": 686631.2454
+      },
+      "exitCode": 1,
+      "logPrivatePath": ".runner/combined-full-r2.tap",
+      "logSha256": "514a3adb1749ddf490473867a74a10dcb0f0cb55f6554780bd814526ced556fe",
+      "binding": "Frozen predecessor 7847ddecaa1d9348f1ed2bfa3d3f84e6aa1786568d9d94f63b2735b520490723; final archive/operator changes verified separately",
+      "skipReasons": [
+        "ok 105 - real synthetic PG34 persists billing, malformed-output receipts, overruns, reconciliation and tenant isolation # SKIP Requires the dedicated synthetic gateway-telemetry-r34 fixture",
+        "ok 223 - 032 real fixture: users see only active memberships; proof replay/expiry/malformed input and app table reads fail # SKIP requires a new disposable PostgreSQL fixture migrated through 032",
+        "ok 227 - R18 disposable PostgreSQL: account X-Ray persists multi-page evidence, rejects unsafe targets, and retains evidenceId compatibility # SKIP requires the fresh disposable synthetic PostgreSQL fixture through migration 032",
+        "ok 228 - R18 disposable PostgreSQL: watched recapture lineage is exact-URL, rights-current, and append-only # SKIP requires the fresh disposable synthetic PostgreSQL fixture through migration 032",
+        "ok 229 - R18 disposable PostgreSQL: X-Ray Radar uses only a unique strictly earlier same-tenant account baseline # SKIP requires the fresh disposable synthetic PostgreSQL fixture through migration 032"
+      ]
+    }
+  ],
+  "R2Exceptions": [
+    {
+      "test": "S01-B01 locks exact dependency pins and records license unknowns without root-MIT inheritance",
+      "path": "tests/astra-commercial-gates.test.mjs:18",
+      "classification": "HISTORICAL_BASELINE_MISMATCH",
+      "actual": "Combined lockfile SHA differs from frozen license inventory",
+      "state": "OPEN_VALIDATION_LIMIT",
+      "remaining": "Re-inventory combined exact dependencies/licenses before commercial production acceptance; no source/provider rights inferred."
+    },
+    {
+      "test": "astra-side-effect-inventory module historical capture load",
+      "path": "tests/astra-side-effect-inventory.test.mjs:9",
+      "classification": "MISSING_EXCLUDED_ARCHIVE",
+      "actual": "Private .superpowers historical side-effect inventory intentionally not imported",
+      "state": "HISTORICAL_NOT_ACCEPTED",
+      "remaining": "Preserved original branch/archive remains separate. Do not recreate or mark frozen acceptance green."
+    },
+    {
+      "test": "R20 supplemental provenance fingerprints only released current sources and keeps R18/R19 history",
+      "path": "tests/astra-source-fidelity.test.mjs:60",
+      "classification": "MISSING_EXCLUDED_ARCHIVE",
+      "actual": "Requires private R20a metadata before capture",
+      "state": "HISTORICAL_NOT_ACCEPTED"
+    },
+    {
+      "test": "S00-01 all 228 selected-source files match explicit baseline/delta",
+      "path": "tests/astra-source-fidelity.test.mjs:323",
+      "classification": "HISTORICAL_BASELINE_MISMATCH",
+      "actual": "New combined source intentionally differs from old 228-file baseline",
+      "state": "HISTORICAL_NOT_ACCEPTED"
+    },
+    {
+      "test": "Astra workbench synthetic offline journey",
+      "path": "tests/astra-workbench-e2e.test.mjs",
+      "classification": "CONFIRMED_UI_CONTRACT_DEFECT",
+      "actual": "R2 manual draft save omitted current version/composer proof; returned400",
+      "state": "REPAIRED_FOCUSED_NATIVE_BROWSER_PASS",
+      "remaining": "No reproduced deterministic defect remains in this bounded flow. Full broad R2 remains historical predecessor evidence.",
+      "rerun": {
+        "tests": 2,
+        "pass": 2,
+        "fail": 0,
+        "exitCode": 0,
+        "durationMs": 37165,
+        "scope": "Actual authenticated app + PostgreSQL + Edge full offline journey and delayed campaign selection regression",
+        "report": "ui/WORKBENCH_CHECK.md"
+      }
+    },
+    {
+      "test": "qualification progress/cancel/retry/restart",
+      "path": "tests/qualification-jobs.test.mjs:62",
+      "classification": "OBSERVED_RESOURCE_SENSITIVE_TIMEOUT",
+      "actual": "R2 concurrency4 timed out180000ms; timed-out disposable child explicitly cleaned up",
+      "state": "UNCHANGED_SERIAL_RERUN_PASS",
+      "rerun": {
+        "tests": 1,
+        "pass": 1,
+        "fail": 0,
+        "durationMs": 6458.6661,
+        "logPrivatePath": ".runner/combined-qualification-rerun.log"
+      },
+      "remaining": "Raw timeout is retained; no claim of flake-free full-suite success."
+    }
+  ],
+  "finalFocusedRuns": {
+    "goalNativeAndGateway": {
+      "tests": 10,
+      "pass": 10,
+      "scope": "37-migration disposable PostgreSQL lifecycle and synthetic gateway; includes actual registered owner-start handler"
+    },
+    "actualAppBrowser": {
+      "tests": 1,
+      "pass": 1,
+      "observations": 3,
+      "scope": "Actual auth/API/Edge goalcreate->persisted honestblock->reload; no route mocks or provider calls"
+    },
+    "guard": {
+      "tests": 2,
+      "pass": 2,
+      "scope": "Restored original full guard self-check plus separate transport-stubbed IP regression; with/without preload"
+    },
+    "archiveIndependent": {
+      "tests": 24,
+      "pass": 24,
+      "scope": "Fresh independent archive JSON/linked-reference/restore/SMTPUTF8 checks"
+    },
+    "growthFixtures": {
+      "tests": 3,
+      "pass": 3,
+      "scope": "Current browser fixture composition and retained behavior assertions"
+    },
+    "UIRace": {
+      "tests": 3,
+      "pass": 3,
+      "scope": "Goal UI stale read regression and retained growth/campaign review"
+    },
+    "operatorWorkbench": {
+      "tests": 2,
+      "pass": 2,
+      "fail": 0,
+      "exitCode": 0,
+      "durationMs": 37165,
+      "scope": "Actual Edge/HTTP/PostgreSQL composer/save/approval/offline plan/quarantine/outcomes/refunds/analytics; no provider calls"
+    }
+  },
+  "interpretation": "No summed unique-test claim across reruns. The raw full suites remain non-green. Post-R2 source deltas require their own final hashes and focused evidence. This is local integration evidence, not 100-scenario registry or52-roadmap acceptance.",
+  "releaseReady": false,
+  "externalActions": "No new inference/search/website/SMTP Internet call or production migration in this integration; local loopback SMTP fixtures only.",
+  "finalSourceAggregateSha256": "2e275edbb9b5f77f7635a87633f19ddb896395cdb56351502d2a62975b07700a"
+}

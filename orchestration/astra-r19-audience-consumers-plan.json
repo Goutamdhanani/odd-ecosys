@@ -1,0 +1,18 @@
+{
+  "planId": "ASTRA-R19-CURRENT-AUDIENCE-CONSUMER-INTEGRATION",
+  "authority": "R19 qualification now uses immutable receipts plus the versioned approval-hashed current audience. The released writer identified five remaining direct readers that must be integrated before this feature group can be accepted.",
+  "writer": "/root/r19_audience_consumers",
+  "ownedPaths": ["pipeline/astra-campaigns.js", "pipeline/astra-campaign-audience.js", "pipeline/astra-autonomy.js", "pipeline/astra-dispatcher.js", "pipeline/astra-engagement.js", "pipeline/astra-generation.js", "pipeline/astra-verifier-adapter.js", "tests/astra-audience-consumers.test.mjs", "tests/astra-qualification-lineage.test.mjs", ".superpowers/r19/audience-consumers/**"],
+  "transfers": ["pipeline/astra-campaigns.js and tests/astra-qualification-lineage.test.mjs released by /root/r19_qualification_proof", "Other service modules have no active writer; this ticket exclusively reserves their bounded audience-reader integration"],
+  "requirements": [
+    "Classify each direct campaign_qualifications reader as current eligibility/context or historical receipt attribution. Do not blindly replace historical delivery/outcome attribution, retention/export or deletion inventories.",
+    "Use a shared current-audience reader/validator where appropriate so autonomy binding/capacity, dispatch eligibility, generation context and verifier result fan-out cannot use stale initial qualification receipts after requalification.",
+    "Preserve exact current candidate/account/proof relationships, source rights/expiry/retractions, tenant boundaries, offer/approval versions, suppression and verification gates. A stale or removed candidate must not gain current membership or borrow another candidate's verification.",
+    "Keep historical engagement attribution anchored to the actual immutable dispatch/task context, including a candidate introduced by later qualification. Preserve historical observations when the current audience changes.",
+    "Keep immutable first receipts, append-only qualification ledger versions, unchanged-replay idempotency and incremental merge. No trigger/schema bypass, destructive data update or provider action.",
+    "Add meaningful guarded actual-PostgreSQL service regressions for fit-to-blocked, replacement/current candidates, stale autonomy/generation/dispatch inputs, verifier fan-out membership and historical attribution as applicable. Retain the existing qualification lineage assertions.",
+    "Preserve before hashes and failed runs; report exactly which readers changed or intentionally remain historical. Release all paths for independent review and final source integration."
+  ],
+  "constraints": ["Luna/high only", "Only explicit astra-foundation checkout; no a4a4 edits", "No other product/test edits", "No migrations, live providers, outreach, deployment, real data or Git mutations", "No commercial/transport gate enablement", "No changes to frozen R18/R18a artifacts", "Keep releaseReady=false"],
+  "releaseReady": false
+}

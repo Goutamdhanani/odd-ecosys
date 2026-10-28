@@ -1,0 +1,27 @@
+{
+  "rulingId": "ASTRA-PHASE2-DISCOVERY-SELECTION-R16",
+  "phase": "Phase 2 test correctness repair only",
+  "baselineManifest": "orchestration/astra-phase2-source-r15.json",
+  "baselineCandidate": "astra-r15-b93c79ce9725b72f",
+  "runtimeManifest": "orchestration/astra-phase2-runtime-r15.json",
+  "owner": "/root/discovery_selection_r16",
+  "finding": "R15 full run: 495 tests, 494 passed, 1 failed, no cancellations/skips, post-hash mismatch zero. Failure-only diagnostics show Aarya Nair / Sales Lead persisted and returned on homepage evidence ID 36, while the test selects the first row for that email, evidence ID 40 from /about with a distinct mailto source and no Person metadata. This establishes an ambiguous test selection concern; confirm the per-source API contract and ordering before editing.",
+  "ownedPaths": [
+    "tests/website-discovery-jobs.test.mjs",
+    "tests/astra-source-fidelity.test.mjs",
+    "docs/astra/s00-source-delta.json",
+    ".superpowers/phase2/fixes/discovery-selection-r16/**"
+  ],
+  "requirements": [
+    "Inspect actual per-source job review and CSV contracts; show why multiple rows for the same email are legitimate. Use R15 failure diagnostics as actual evidence, and reproduce deterministically with explicit evidence-row ordering or controlled timestamp boundary.",
+    "If a product defect is instead established, stop and report before expanding file ownership. No product source, endpoint ordering, extraction, database, migration, UI, credential or guard edits are authorized.",
+    "Select linked-Person evidence by exact source identity (source URL and evidence type, with stable evidence ID checks), rather than arbitrary first matching email. Assert all relevant rows: named contact metadata remains on the correct original source; unrelated mailto rows must not acquire fabricated Person metadata.",
+    "Preserve unknown verification status, both named contacts and titles, durable persistence, CSV assertions and all no-send/tenant/source-evidence checks. Add a deterministic regression that fails the former first-email selection when other source rows come first; do not change expected metadata or skip tests.",
+    "Keep allowlisted failure diagnostics and all existing source-fidelity delta rows. Update only the website test's existing current hash/byte count and append this additional authorization; do not rewrite prior authorizations or the immutable 228-file source snapshot.",
+    "If the scalar deltaCount is stale, reconcile only that count to the existing deltas array length. No delta row may be added, removed or otherwise rewritten; this is a provenance count correction only.",
+    "Run focused behavioral file checks and strict source-fidelity checks, write exact commands/results/hashes and relinquish files. Independent review and a new frozen full suite follow. Runtime R15 product files remain immutable and E2E binding unchanged.",
+    "Record R9/R15 as historical ambiguous-selection failures only after causal proof and independent acceptance, never merely because a rerun passes. No feature wave or live external actions."
+  ],
+  "independentAcceptance": false,
+  "releaseReady": false
+}

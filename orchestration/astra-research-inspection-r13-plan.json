@@ -1,0 +1,35 @@
+{
+  "planId": "ASTRA-PHASE2-RESEARCH-INSPECTION-R13",
+  "phase": "Phase 2 defect repair, no feature wave",
+  "baselineManifest": "orchestration/astra-phase2-source-r12.json",
+  "baselineCandidate": "astra-r12-bb21249183f6d35e",
+  "baselineProductSha256": "3eaa64b2e7938c0ae7349f4c01599f9b3f1749686caf4abec3c11e901372f024",
+  "finding": "R12 full suite: 493 tests, 492 passed, 1 failed, 0 cancelled/skipped. Snapshot submission automatically inspects evidence while an explicit inspection may overlap; both asynchronous calls can append account rows into the same shared panel. The observed duplicate is a product concurrency concern until deterministically reproduced and repaired.",
+  "owner": "/root/research_inspection_r13",
+  "ownedPaths": [
+    "js/astra-workbench.js",
+    "tests/astra-research-inspection-ui.test.mjs",
+    "tests/astra-workbench-e2e.test.mjs",
+    "docs/astra/s00-side-effect-inventory.json",
+    "docs/astra/commercial-gates.json",
+    ".superpowers/phase2/fixes/research-inspection-r13/**"
+  ],
+  "requirements": [
+    "Use deterministic held synthetic responses to reproduce overlapping inspection of the same evidence and out-of-order different evidence. No live provider or customer data.",
+    "Apply the smallest complete UI fix: only the latest requested inspection in the current tenant may update selected evidence, forms, account actions or candidates. Stale results must not mix or duplicate rendered content; inspect buttons and API authorization remain intact.",
+    "Keep all existing workbench journey assertions and exact saved evidence GET 200 check. Do not use first() or weakened text matching to hide duplicate content. Any test synchronization must name the exact request/result identity.",
+    "Refresh only the workbench JS fingerprint in the side-effect inventory and the resulting single inventory fingerprint in commercial provenance. All commercial approvals, unknown decisions and disabled release states remain unchanged.",
+    "Preserve source-snapshot.json and original source-delta rows. If selected-source scope unexpectedly requires edits, stop and report before expanding ownership.",
+    "Root freezes runtime R13 after product changes; only then update the existing E2E test's runtime binding to the supplied immutable runtime R13 candidate, with unchanged HTML/JS hash equality assertions.",
+    "Require before evidence, focused guarded Edge tests, complete report with hashes and exact commands, independent review and a fresh complete automated run."
+  ],
+  "implementationLedger": [
+    { "task": "Deterministic reproduction, product repair and focused overlap probes", "owner": "/root/research_inspection_r13", "status": "assigned" },
+    { "task": "Runtime freeze after product writer relinquishes product paths", "owner": "/root", "status": "waiting" },
+    { "task": "E2E runtime binding and focused actual journey", "owner": "/root/research_inspection_r13", "status": "waiting_on_runtime_freeze" },
+    { "task": "Independent review, global freeze and full suite", "owner": "/root/final_qa_r5", "status": "waiting_on_implementation" }
+  ],
+  "independentAcceptance": false,
+  "releaseReady": false,
+  "roadmapCompletionClaimed": false
+}

@@ -1,0 +1,210 @@
+/* Readable workspace scale. Loaded after component styles so small-screen
+   layouts keep the same text size as desktop rather than shrinking controls. */
+:root {
+  --sidebar-w: 248px;
+  --text-secondary: #c2cbc3;
+  --text-muted: #a9b5aa;
+  --text-tertiary: #9baa9d;
+}
+html { font-size: 16px; }
+body { font-size: 16px; line-height: 1.6; padding: 12px; }
+#app { height: calc(100dvh - 24px); border-radius: 20px; }
+#main-content { padding: 32px clamp(20px, 3vw, 40px) 24px; scrollbar-gutter: stable; }
+.page-view { min-width: 0; }
+.sidebar-logo { padding-inline: 22px; }
+.workspace-switch { margin-inline: 16px; padding: 14px 12px; }
+.workspace-switch strong { font-size: 14px; font-weight: 600; }
+.workspace-switch div > span { font-size: 13px; color: var(--text-muted); }
+.workspace-initial { font-size: 12px; min-width: 28px; height: 28px; }
+.sidebar-nav { padding: 8px 14px; gap: 5px; }
+.nav-item { min-height: 46px; font-size: 15px; font-weight: 500; padding: 11px 14px; gap: 12px; }
+.nav-section-label { font-size: 12px; letter-spacing: .08em; color: var(--text-muted); padding-top: 22px; }
+.sidebar-note { min-height: 0; padding: 16px 24px; flex-shrink: 0; }
+.sidebar-note > span { font-size: 20px; }
+.sidebar-note small,.sidebar-version { font-size: 11px; letter-spacing: .05em; color: var(--text-muted); }
+.sidebar-footer { padding: 16px 20px; }
+.sidebar-status { font-size: 13px; flex-wrap: wrap; }
+.top-header { padding-inline: clamp(20px, 3vw, 40px); gap: 16px; }
+.header-breadcrumb { font-size: 14px; }
+.header-tabs button { font-size: 14px; min-height: 44px; padding: 9px 15px; }
+.header-right { min-width: 0; gap: 10px; }
+.command-trigger { font-size: 14px; min-height: 44px; }
+.command-trigger kbd { font-size: 12px; }
+.header-status-pill { font-size: 13px; }
+.auth-account { max-width: 180px; font-size: 14px; min-height: 44px; }
+.auth-logout { font-size: 14px; min-height: 44px; padding-inline: 14px; flex-shrink: 0; }
+.icon-btn { width: 44px; height: 44px; min-width: 44px; min-height: 44px; }
+.btn,.btn-sm,.btn-lg,.auth-text-button,.text-action { min-height: 44px; font-size: 14px; line-height: 1.5; padding: 10px 16px; gap: 8px; }
+.btn { white-space: normal; text-align: center; }
+.btn .ui-icon { flex-shrink: 0; }
+.text-action { padding-inline: 4px; }
+.eyebrow { font-size: 12px; letter-spacing: .1em; line-height: 1.6; }
+.workspace-date { font-size: 14px; }
+.section-title { font-size: clamp(28px, 2.6vw, 36px); line-height: 1.25; letter-spacing: -.04em; }
+.section-sub { font-size: 15px; line-height: 1.65; margin-top: 10px; }
+.section-header,.dash-header { gap: 20px; flex-wrap: wrap; margin-bottom: 28px; }
+.hero-copy h1 { font-size: clamp(36px, 4vw, 58px); letter-spacing: -.05em; }
+.hero-copy p { font-size: 16px; line-height: 1.7; }
+.hero-label { font-size: 13px; }
+.hero-caption,.hero-bottom,.hero-bottom button { font-size: 12px; letter-spacing: .025em; }
+.hero-bottom { flex-wrap: wrap; gap: 12px; padding: 16px 24px; }
+.orbit-node { font-size: 13px; }
+.node-sub { font-size: 12px; }
+.orbit-coordinate { font-size: 11px; }
+.overview-section-heading h2 { font-size: 24px; }
+.observed-label { font-size: 13px; }
+.metric-card { padding: 22px; }
+.metric-top,.metric-note { font-size: 14px; color: var(--text-secondary); }
+.metric-value { font-size: 36px; line-height: 1.5; }
+.metric-index { font-size: 11px; opacity: .8; }
+.studio-panel-header { padding: 22px 24px 18px; }
+.studio-panel-header h2 { font-size: 20px; }
+.studio-panel-header .eyebrow { font-size: 12px; }
+.studio-panel-footer,.studio-panel-footer button { font-size: 13px; line-height: 1.6; white-space: normal; }
+.studio-panel-footer { flex-wrap: wrap; }
+.journey-summary small,.journey-legend { font-size: 13px; }
+.journey-label { font-size: 12px; white-space: normal; overflow-wrap: anywhere; }
+.journey-number { font-size: 11px; }
+.journey-value { font-size: 13px; }
+.journey-bars { gap: 8px; }
+.signal-empty h3 { font-size: 18px; }
+.signal-empty p,.fleet-content p,.fleet-value span { font-size: 14px; }
+.studio-activity-row strong { font-size: 14px; }
+.studio-activity-row div span,.studio-activity-row time { font-size: 12px; }
+.workspace-footer,.footer-location { font-size: 12px; letter-spacing: .025em; flex-wrap: wrap; }
+.kpi-card { padding: 22px; }
+.kpi-label,.kpi-sub { font-size: 14px; }
+.kpi-value { font-size: 34px; }
+.panel-header { padding: 20px 24px; gap: 14px; flex-wrap: wrap; }
+.panel-title { font-size: 18px; }
+.panel-hint { font-size: 14px; }
+.form-label,.auth-form label,.team-invite-panel label { font-size: 14px; font-weight: 600; }
+/* Explicit sizes also cover legacy inline sizing in forms. Checkbox/range/file
+   controls retain their native geometry and semantics. */
+input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=file]):not([type=hidden]):not([type=color]),
+select,textarea {
+  font-size: 16px !important;
+  line-height: 1.5;
+  min-height: 46px;
+  padding: 11px 14px;
+  border-radius: 10px;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+textarea { min-height: 112px; }
+input::placeholder,textarea::placeholder { color: #a1ada2; opacity: 1; }
+input[type=checkbox],input[type=radio] { width: 18px; height: 18px; accent-color: #b6d1ab; }
+.auth-card { width: min(100%, 520px); padding: clamp(24px, 5vw, 44px); }
+.auth-card .eyebrow { font-size: 12px; }
+.auth-description { font-size: 16px; }
+.auth-form { gap: 20px; }
+.auth-setup-help,.auth-footnote,.auth-divider,.google-signin-message { font-size: 14px; line-height: 1.65; }
+.auth-error,.auth-success { font-size: 15px; }
+.auth-submit,.google-signin-button { min-height: 48px; }
+.page-view p,.page-view small { font-size: 14px; line-height: 1.65; }
+.page-view :is(p,small,label,summary,button) { font-size: max(14px, 1em); }
+.hero-actions .btn { font-size: 14px; }
+.overview-topline .eyebrow { font-size: 12px; }
+th { font-size: 13px !important; letter-spacing: .025em; padding: 14px 16px; }
+td { font-size: 14px; padding: 14px 16px; line-height: 1.6; }
+td .btn { min-height: 44px; }
+.badge-status,.status-badge,.badge { font-size: 12px; line-height: 1.5; padding: 4px 9px; }
+.loading-state,.empty-state { font-size: 16px; }
+.campaign-name,.batch-name { font-size: 20px; }
+.campaign-meta,.batch-meta,.campaign-variant-summary { font-size: 14px; }
+.campaign-metric-label,.batch-metric-label { font-size: 13px; }
+.campaign-actions,.batch-actions { flex-wrap: wrap; gap: 10px; }
+.campaign-actions .btn,.batch-actions .btn { min-height: 44px; font-size: 14px; }
+.inbox-auto-sync h2,.inbox-list-head h2 { font-size: 18px; }
+.inbox-auto-sync form label { font-size: 14px; }
+.inbox-reply-row-top strong { font-size: 15px; }
+.inbox-reply-row-email,.inbox-reply-row-subject { font-size: 14px; }
+.inbox-reply-row-snippet,.inbox-reply-row-bottom,.inbox-reply-row-top time,.inbox-thread-meta,
+.inbox-message-head span,.inbox-message-head time,.inbox-message-addresses,.inbox-unread-count,.inbox-sentiment { font-size: 13px; }
+.inbox-list-head > div > span { font-size: 13px; }
+.inbox-message-head strong,.inbox-message h3,.inbox-message-body { font-size: 15px; line-height: 1.7; }
+.inbox-thread-head h2 { font-size: 24px; }
+.inbox-thread-empty h2,.inbox-empty h3 { font-size: 18px; }
+.lead-strategy-provider strong,.lead-strategy-provider span:not(.lead-strategy-provider-dot),
+.lead-strategy-settings-details summary { font-size: 14px; }
+.settings-page { min-width: 0; width: 100%; grid-template-columns: minmax(0, 1fr); container-type: inline-size; }
+.settings-page > * { min-width: 0; overflow-wrap: anywhere; }
+@container (max-width: 600px) {
+  .settings-schedule-form,.settings-scoring-form fieldset,.settings-scoring-fields,.settings-scoring-penalties { grid-template-columns: minmax(0, 1fr); }
+  .settings-schedule-submit { grid-column: 1; }
+  .settings-audit-heading { align-items: flex-start; flex-direction: column; gap: 6px; }
+  .settings-audit-row { grid-template-columns: minmax(0, 1fr) auto; gap: 6px 12px; }
+  .settings-audit-reason { grid-column: 1 / -1; grid-row: 2; }
+}
+.studio-dialog-header h2,.pers-modal-title,.detail-drawer-title { font-size: 24px; line-height: 1.3; }
+.studio-dialog-header p,.studio-dialog-description,.studio-dialog-body,.studio-dialog-field label,
+.field-error,.studio-toast { font-size: 14px; line-height: 1.6; }
+.studio-dialog-footer { gap: 12px; flex-wrap: wrap; }
+.studio-dialog-footer .btn { min-height: 46px; }
+.studio-toast { padding: 14px 18px; }
+.studio-toast-dismiss { width: 44px; height: 44px; flex-shrink: 0; }
+/* Animate feedback, never the containing block of a fixed dialog. */
+.page-view { transform: none; }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .btn:not(:disabled):hover,.nav-item:hover { transform: translateY(-1px); }
+}
+@media (max-width: 1280px) {
+  .header-tabs { display: none; }
+  .command-trigger { display: none; }
+  .header-status-pill { display: none; }
+  .metrics-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 1000px) {
+  :root { --sidebar-w: 224px; }
+  .header-breadcrumb { font-size: 14px; }
+  .hero-orbit { display: none; }
+  .hero-copy { max-width: none; }
+  .orbit-hero { display: block; min-height: 0; }
+  .hero-copy { padding: 28px 24px; }
+  .hero-bottom { position: static; }
+}
+@media (min-width: 701px) { .sidebar { width: var(--sidebar-w); } }
+@media (max-width: 700px) {
+  body { padding: 6px; }
+  #app { height: calc(100dvh - 12px); border-radius: 16px; }
+  .sidebar { width: min(280px, calc(100vw - 28px)); top: 6px; bottom: 6px; left: 6px; height: auto; }
+  .nav-item { min-height: 46px; font-size: 15px; }
+  .nav-section-label { font-size: 12px; }
+  .top-header { min-height: 72px; height: auto; padding-inline: 14px; gap: 8px; }
+  .header-left { gap: 8px; }
+  .header-breadcrumb { font-size: 14px; gap: 6px; }
+  .bc-root,.bc-sep { display: none; }
+  .header-right { margin-left: auto; gap: 8px; }
+  .auth-logout { min-height: 44px; padding-inline: 10px; font-size: 14px; }
+  #main-content { padding: 24px 16px 20px; }
+  .hero-copy h1 { font-size: 38px; }
+  .hero-copy p { font-size: 16px; }
+  .eyebrow { font-size: 12px; }
+  .metric-top,.metric-note { font-size: 13px; }
+  .metric-card { padding: 16px; }
+  .metric-value { font-size: 32px; }
+  .studio-panel-header h2 { font-size: 20px; }
+  .journey-bars { grid-template-columns: repeat(4, minmax(0, 1fr)); row-gap: 16px; }
+  .journey-label { font-size: 12px; }
+  .studio-panel-footer { align-items: flex-start; }
+  .workspace-footer,.footer-location { font-size: 12px; }
+  .section-header { align-items: flex-start; }
+  .section-header > div:last-child:has(> .btn),.dash-header > div:last-child:has(> .btn) { width: 100%; flex-wrap: wrap; gap: 10px; }
+  [data-campaign-create] { flex: 0 0 auto; order: -1; }
+  .settings-page { padding-inline: 0; }
+  .section-title { font-size: 28px; }
+  .section-sub { font-size: 15px; }
+  .campaign-card,.batch-card { padding: 20px; }
+  .campaign-actions .btn,.batch-actions .btn { flex: 1 1 140px; }
+  .studio-dialog-header,.studio-dialog-body,.studio-dialog-footer { padding-inline: 20px; }
+  .studio-dialog-header h2 { font-size: 24px; }
+  .studio-toast { font-size: 14px; }
+  #notification-region .studio-toast { font-size: 14px; padding: 6px 12px; }
+}
+@media (max-width: 380px) {
+  .metrics-grid { grid-template-columns: minmax(0, 1fr); }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,*::before,*::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}

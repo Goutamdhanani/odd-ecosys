@@ -1,0 +1,18 @@
+{
+  "id": "ASTRA-PUBLIC-TEST-TLS-FIXTURE-CLASSIFICATION",
+  "exactPaths": ["tests/support/imap-test-cert.pem", "tests/support/imap-test-key.pem"],
+  "classification": "Existing synthetic loopback IMAP TLS source fixtures; not protected application or production credentials",
+  "evidence": {
+    "acceptedR20aManifestDeclaresBoth": true,
+    "bothCurrentFilesMatchAcceptedR20aPins": true,
+    "testUsage": "tests/imap-receiver.test.mjs imports this pair for its local TLS test server",
+    "certificateSelfIssued": true,
+    "certificateSelfSignatureVerified": true,
+    "certificateNamesLoopbackOnly": true,
+    "gitTracking": "Not tracked at base HEAD; preserved as inherited overlay files and source-bound by prior accepted candidate manifests"
+  },
+  "allowedReview": "Hash exact declared ZIP members and compare to their public test-input pins, without displaying PEM contents. This narrow classification applies only to these two fixture paths.",
+  "unchangedProhibitions": "Do not open protected .codex/secrets files, actual environment credentials, .runner configuration/ciphertext, production encryption or mailbox keys, or arbitrary PEM/key paths.",
+  "noProductionTrustOrSecretReuseAuthorized": true,
+  "releaseReady": false
+}

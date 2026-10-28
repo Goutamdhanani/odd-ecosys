@@ -1,0 +1,9 @@
+{
+  "authority": "Current human continuation request plus independently reproduced R18a P1 future-baseline signal suppression.",
+  "finding": ".superpowers/r18a/review-radar-integration/REPORT.md",
+  "writer": "/root/r18a_radar_repair",
+  "scope": ["pipeline/astra-research.js", "pipeline/astra-radar.js", "tests/astra-xray.test.mjs", ".superpowers/r18a/radar-repair/fix-round1/**"],
+  "transfer": "Prior radar scope was completed and released; original review/implementer evidence remains immutable.",
+  "requirements": ["Only strictly earlier, same-tenant/account persisted audits can supply the current baseline", "Latest eligible timestamp ambiguity returns unknown rather than arbitrary UUID selection", "Preserve exact watched URL/hash lineage, both-source current rights and tenant isolation", "Meaningful future/tied/foreign baseline regressions; no sleeps, gate bypasses or weakened tests"],
+  "releaseReady": false
+}

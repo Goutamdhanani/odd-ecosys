@@ -1,0 +1,1029 @@
+{
+  "schemaVersion": 1,
+  "sourceHead": "f30490bd892dd651fd2fb276b09b510379e27c0d",
+  "sourceOverlayManifestSha256": "a688a159676ddf3fbbce6ac8ac894d582f5644afbfee70b63416379f8f0474fd",
+  "authoritativeDagSha256": "dd488744f647baf03e6dac1fdcd1ed3ea095b65c78b72554f50019d736acc042",
+  "reviewAuthority": "Real independent gpt-6-luna session plus exact-candidate test replay and post-integration evidence; coordinator cannot self-accept.",
+  "tasks": [
+    {
+      "id": "S00",
+      "status": "IMPLEMENTED_UNREVIEWED",
+      "dependencies": [],
+      "optional": false,
+      "acceptedCandidate": null,
+      "notes": "Current mapping, source fidelity, actual synthetic trace and side-effect inventory implemented. Full acceptance deferred Phase2.",
+      "implementationState": "IMPLEMENTED"
+    },
+    {
+      "id": "S01",
+      "status": "BLOCKED",
+      "dependencies": [
+        "S00"
+      ],
+      "optional": false,
+      "acceptedCandidate": null,
+      "notes": "External commercial/privacy/source approvals unknown; prepare local register independently.",
+      "implementationState": "LOCAL_REGISTER_IMPLEMENTED_EXTERNAL_APPROVAL_BLOCKED"
+    },
+    {
+      "id": "S02",
+      "status": "IMPLEMENTED_UNREVIEWED",
+      "dependencies": [
+        "S00"
+      ],
+      "optional": false,
+      "acceptedCandidate": null,
+      "notes": "Uploaded proof bytes and UUID tenant ownership, price checks and capacity reservations implemented; Phase2 replay pending.",
+      "lastReview": {
+        "candidatePatchSha256": "b2ecfd348d340fa9cd46547ce80c57a86706fa6c5023c7da5eb1110e4c8a9015",
+        "reviewerSession": "/root/continuous_s02_review",
+        "decision": "REJECTED",
+        "evidenceDirectory": "evidence/acceptance/S02/c02-review-20261024"
+      },
+      "implementationState": "REPAIRS_IMPLEMENTED"
+    },
+    {
+      "id": "S03",
+      "status": "ACTIVE",
+      "dependencies": [
+        "S00"
+      ],
+      "optional": false,
+      "acceptedCandidate": null,
+      "notes": "Signed PostgreSQL RLS foundation plus app-role role/invitation management implemented;022 applied synthetic only. Legacy migration is explicit mapped preparation, no real-data cutover.",
+      "implementationState": "FOUNDATION_AND_MEMBERSHIPS_IMPLEMENTED"
+    },
+    {
+      "id": "S04",
+      "status": "IMPLEMENTED_UNREVIEWED",
+      "dependencies": [
+        "S03"
+      ],
+      "optional": false,
+      "acceptedCandidate": null,
+      "notes": "Immutable ledger/outbox/consumer receipts prepared and wired; Phase2 acceptance pending.",
+      "implementationState": "MODULE_IMPLEMENTED"
+    },
+    {
+      "id": "S05",
+      "status": "IMPLEMENTED_UNREVIEWED",
+      "dependencies": [
+        "S03",
+        "S04"
+      ],
+      "optional": false,
+      "acceptedCandidate": null,
+      "notes": "Durable workflow leases, fencing, checkpoints, cancellation and typed ledger events implemented; meaningful research harness integration active.",
+      "implementationState": "MODULE_IMPLEMENTED"
+    },
+    {
+      "id": "S06",
+      "status": "IN_PROGRESS",
+      "dependencies": [
+        "S01",
+        "S03"
+      ],
+      "optional": false,
+      "acceptedCandidate": null,
+      "notes": "Bound GLM5.3 generation jobs, provenance/minimization, reservations, explicit worker and campaign/reply adapters implemented; central integration pending. Current S01 blocks private egress; no live model calls.",
+      "implementationState": "PARTIAL_GENERATION_CODE_IMPLEMENTED_INTEGRATION_PENDING"
+    },
+    {
+      "id": "S07",
+      "status": "IMPLEMENTED_UNREVIEWED",
+      "dependencies": [
+        "S04",
+        "S06"
+      ],
+      "optional": false,
+      "acceptedCandidate": null,
+      "notes": "Durable usage reservations and breaker implemented; full replay deferred.",
+      "implementationState": "MODULE_IMPLEMENTED"
+    },
+    {
+      "id": "S08",
+      "status": "IMPLEMENTED_UNREVIEWED",
+      "dependencies": [
+        "S03",
+        "S04"
+      ],
+      "optional": false,
+      "acceptedCandidate": null,
+      "notes": "Outcome/correction/projection API prepared and wired; Phase2 acceptance pending.",
+      "implementationState": "MODULE_IMPLEMENTED"
+    },
+    {
+      "id": "S09",
+      "status": "IMPLEMENTED_UNREVIEWED",
+      "dependencies": [
+        "S03",
+        "S05"
+      ],
+      "optional": false,
+      "acceptedCandidate": null,
+      "notes": "Supplied HTML evidence and offline research worker implemented; local queue/run completed with hash-validated report. Remote collection remains gated; full acceptance deferred.",
+      "implementationState": "MODULE_IMPLEMENTED"
+    },
+    {
+      "id": "S10",
+      "status": "IMPLEMENTED_UNREVIEWED",
+      "dependencies": [
+        "S01",
+        "S09"
+      ],
+      "optional": false,
+      "acceptedCandidate": null,
+      "notes": "Deterministic domain/account and unverified contact identity from supplied evidence; external discovery adapters remain gated.",
+      "implementationState": "MODULE_IMPLEMENTED"
+    },
+    {
+      "id": "S11",
+      "status": "IMPLEMENTED_UNREVIEWED",
+      "dependencies": [
+        "S09"
+      ],
+      "optional": false,
+      "acceptedCandidate": null,
+      "notes": "Deterministic single-page audit with explicit unknown coverage.",
+      "implementationState": "MODULE_IMPLEMENTED"
+    },
+    {
+      "id": "S13",
+      "status": "IMPLEMENTED_UNREVIEWED",
+      "dependencies": [
+        "S04",
+        "S06",
+        "S09"
+      ],
+      "optional": false,
+      "acceptedCandidate": null,
+      "notes": "Exact-excerpt/hash provenance, correction and abstention.",
+      "implementationState": "MODULE_IMPLEMENTED"
+    },
+    {
+      "id": "S14",
+      "status": "ACTIVE",
+      "dependencies": [
+        "S02",
+        "S10",
+        "S11",
+        "S13"
+      ],
+      "optional": false,
+      "acceptedCandidate": null,
+      "notes": "Offer/evidence-aware deterministic qualification only; broader calibration/adapter paths pending.",
+      "implementationState": "PARTIAL_IMPLEMENTATION"
+    },
+    {
+      "id": "S15",
+      "status": "IN_PROGRESS",
+      "dependencies": [
+        "S01",
+        "S03",
+        "S10"
+      ],
+      "optional": false,
+      "acceptedCandidate": null,
+      "notes": "Provider-observed exact-address Reacher receipts and split prepare/execute/commit worker implemented; 010 applied only to disposable synthetic fixture; API/UI integration underway.",
+      "implementationState": "SCOPED_MODULE_IMPLEMENTED_INTEGRATING"
+    },
+    {
+      "id": "S16",
+      "status": "IMPLEMENTED_UNREVIEWED",
+      "dependencies": [
+        "S03",
+        "S04",
+        "S08"
+      ],
+      "optional": false,
+      "acceptedCandidate": null,
+      "notes": "Append-only permission and suppression decisions with use-time evaluation.",
+      "implementationState": "MODULE_IMPLEMENTED"
+    },
+    {
+      "id": "S17",
+      "status": "IN_PROGRESS",
+      "dependencies": [
+        "S03",
+        "S04",
+        "S16"
+      ],
+      "optional": false,
+      "acceptedCandidate": null,
+      "notes": "Encrypted SMTP/IMAP configs, mailbox bindings, bounded probes/sync and dedicated worker jobs implemented; real transports globally blocked by S01/local preview.",
+      "implementationState": "SCOPED_MODULE_IMPLEMENTED_INTEGRATING"
+    },
+    {
+      "id": "S18",
+      "status": "IN_PROGRESS",
+      "dependencies": [
+        "S02",
+        "S06",
+        "S13",
+        "S14",
+        "S15"
+      ],
+      "optional": false,
+      "acceptedCandidate": null,
+      "notes": "Claim/offer-bound campaign generation implemented through existing unapproved draft service; central wiring pending; comprehensive acceptance deferred.",
+      "implementationState": "PARTIAL_GENERATION_CODE_IMPLEMENTED_INTEGRATION_PENDING"
+    },
+    {
+      "id": "S19",
+      "status": "ACTIVE",
+      "dependencies": [
+        "S02",
+        "S04",
+        "S16",
+        "S18"
+      ],
+      "optional": false,
+      "acceptedCandidate": null,
+      "notes": "Immutable approval snapshots implemented; full lifecycle acceptance deferred.",
+      "implementationState": "PARTIAL_IMPLEMENTATION"
+    },
+    {
+      "id": "S20",
+      "status": "IN_PROGRESS",
+      "dependencies": [
+        "S05",
+        "S07",
+        "S16",
+        "S17",
+        "S19"
+      ],
+      "optional": false,
+      "acceptedCandidate": null,
+      "notes": "Default split SMTP adapter, exact ticket payload/receipt validation, current configuration-bound mailbox proof and terminal uncertain handling implemented. No live transport run;026 synthetic only.",
+      "implementationState": "PREPARED_DISPATCH_ADAPTER_IMPLEMENTED"
+    },
+    {
+      "id": "S21",
+      "status": "IN_PROGRESS",
+      "dependencies": [
+        "S06",
+        "S08",
+        "S16",
+        "S17"
+      ],
+      "optional": false,
+      "acceptedCandidate": null,
+      "notes": "Deterministic negative reply suppression precedes generation; model proposal remains read-only human review; central integration pending.",
+      "implementationState": "PARTIAL_GENERATION_CODE_IMPLEMENTED_INTEGRATION_PENDING"
+    },
+    {
+      "id": "S22",
+      "status": "IN_PROGRESS",
+      "dependencies": [
+        "S04",
+        "S08",
+        "S17"
+      ],
+      "optional": false,
+      "acceptedCandidate": null,
+      "notes": "Twenty gated HTTPS company outbox and signed webhook worker boundary implemented; server wiring underway; no provider calls.",
+      "implementationState": "SCOPED_MODULE_IMPLEMENTED_INTEGRATING"
+    },
+    {
+      "id": "S24",
+      "status": "IMPLEMENTED_UNREVIEWED",
+      "dependencies": [
+        "S04",
+        "S08",
+        "S19"
+      ],
+      "optional": false,
+      "acceptedCandidate": null,
+      "notes": "Frozen fixed account experiments and immutable assignments; exposure declarations unsupported without verified source event.",
+      "implementationState": "MODULE_IMPLEMENTED"
+    },
+    {
+      "id": "S25",
+      "status": "IMPLEMENTED_UNREVIEWED",
+      "dependencies": [
+        "S07",
+        "S08",
+        "S20",
+        "S21",
+        "S22",
+        "S24"
+      ],
+      "optional": false,
+      "acceptedCandidate": null,
+      "notes": "Correction-aware outcomes and funnel analytics; costs and missing attribution remain explicit.",
+      "implementationState": "MODULE_IMPLEMENTED"
+    },
+    {
+      "id": "S26",
+      "status": "IN_PROGRESS",
+      "dependencies": [
+        "S06",
+        "S13",
+        "S18",
+        "S21"
+      ],
+      "optional": false,
+      "acceptedCandidate": null,
+      "notes": "Frozen authorized/synthetic datasets, account/time split validation, separate annotation/adjudication, deterministic server-side runs and reports implemented; execution integration pending.",
+      "implementationState": "FOUNDATION_IMPLEMENTED"
+    },
+    {
+      "id": "S29",
+      "status": "IN_PROGRESS",
+      "dependencies": [
+        "S05",
+        "S19",
+        "S26"
+      ],
+      "optional": false,
+      "acceptedCandidate": null,
+      "notes": "Versioned release artifacts, independent signoff and rollback records implemented; approval is not deployment. X14 manifest slots explicitly unregistered until integrated.",
+      "implementationState": "FOUNDATION_IMPLEMENTED"
+    },
+    {
+      "id": "S32",
+      "status": "IN_PROGRESS",
+      "dependencies": [
+        "S05",
+        "S07",
+        "S16",
+        "S20",
+        "S25"
+      ],
+      "optional": false,
+      "acceptedCandidate": null,
+      "notes": "Operational telemetry, incidents/recovery preparation, real worker kill switches and signed-context dispatcher repair implemented; 015 applied to disposable fixture; service registration ongoing. RTO/RPO unknown until Phase2 drill.",
+      "implementationState": "MODULE_IMPLEMENTED_INTEGRATING"
+    },
+    {
+      "id": "X01",
+      "status": "IMPLEMENTED_UNREVIEWED",
+      "dependencies": [
+        "S00",
+        "S05"
+      ],
+      "optional": false,
+      "acceptedCandidate": null,
+      "notes": "Versioned HarnessTask/context/completion contracts in singular durable workflow owner; review deferred.",
+      "implementationState": "MODULE_IMPLEMENTED"
+    },
+    {
+      "id": "X02",
+      "status": "IMPLEMENTED_UNREVIEWED",
+      "dependencies": [
+        "X01",
+        "S06",
+        "S07"
+      ],
+      "optional": false,
+      "acceptedCandidate": null,
+      "notes": "Bounded pinned read-tool runner, deadlines, progress and budget constraints; no provider calls.",
+      "implementationState": "MODULE_IMPLEMENTED"
+    },
+    {
+      "id": "X03",
+      "status": "IMPLEMENTED_UNREVIEWED",
+      "dependencies": [
+        "X02",
+        "S04",
+        "S09"
+      ],
+      "optional": false,
+      "acceptedCandidate": null,
+      "notes": "Versioned evidence/policy/usage checkpoints and deterministic completion with explicit manual run.",
+      "implementationState": "MODULE_IMPLEMENTED"
+    },
+    {
+      "id": "X04",
+      "status": "IN_PROGRESS",
+      "dependencies": [
+        "S13",
+        "S14",
+        "X01"
+      ],
+      "optional": false,
+      "acceptedCandidate": null,
+      "notes": "Versioned support/uncertainty/prediction-null/utility/risk decisions implemented; policy authority server-side; registration underway.",
+      "implementationState": "SCOPED_MODULE_IMPLEMENTED_INTEGRATING"
+    },
+    {
+      "id": "X06",
+      "status": "IN_PROGRESS",
+      "dependencies": [
+        "X02",
+        "S26"
+      ],
+      "optional": false,
+      "acceptedCandidate": null,
+      "notes": "Inspect NoModel adapter prepares controlled app evaluation execution with no fallback/provider packet; syntax/import checked, optional dependency not installed.",
+      "implementationState": "FOUNDATION_IMPLEMENTED"
+    },
+    {
+      "id": "X07",
+      "status": "IN_PROGRESS",
+      "dependencies": [
+        "X03",
+        "X04",
+        "X06"
+      ],
+      "optional": false,
+      "acceptedCandidate": null,
+      "notes": "H0-H3 variant configuration and matched budget run management implemented; comparative experiment not run in Phase1.",
+      "implementationState": "PARTIAL_FOUNDATION_IMPLEMENTED"
+    },
+    {
+      "id": "X08",
+      "status": "IN_PROGRESS",
+      "dependencies": [
+        "X06",
+        "S09",
+        "S16",
+        "S20"
+      ],
+      "optional": false,
+      "acceptedCandidate": null,
+      "notes": "Versioned actual-application conformance cases/runner implemented; model-order and SMTP effects remain uninstrumented. No comprehensive run in Phase1.",
+      "implementationState": "EXECUTABLE_CONFORMANCE_IMPLEMENTED_UNRUN"
+    },
+    {
+      "id": "X10",
+      "status": "IN_PROGRESS",
+      "dependencies": [
+        "S19",
+        "S20",
+        "S21",
+        "X04"
+      ],
+      "optional": false,
+      "acceptedCandidate": null,
+      "notes": "Owner-approved immutable bounded campaign authorization, exceptions/revocation and internal ticket mint implemented; route/UI integration underway.",
+      "implementationState": "SCOPED_MODULE_IMPLEMENTED_INTEGRATING"
+    },
+    {
+      "id": "X11",
+      "status": "IN_PROGRESS",
+      "dependencies": [
+        "S04",
+        "S17",
+        "S25"
+      ],
+      "optional": false,
+      "acceptedCandidate": null,
+      "notes": "Disabled optional opaque tracking, canonical metric definitions and deduped raw/filtered storage implemented. Missing actual delivery denominator remains unknown; no live tracking.",
+      "implementationState": "MODULE_IMPLEMENTED_INTEGRATING"
+    },
+    {
+      "id": "X12",
+      "status": "IN_PROGRESS",
+      "dependencies": [
+        "S32",
+        "X02",
+        "X04"
+      ],
+      "optional": false,
+      "acceptedCandidate": null,
+      "notes": "One internal allowlisted telemetry route with linked task/decision spans implemented; no external SDK, broad redaction/tenant QA deferred.",
+      "implementationState": "MODULE_IMPLEMENTED_INTEGRATING"
+    },
+    {
+      "id": "X14",
+      "status": "QUEUED",
+      "dependencies": [
+        "X07",
+        "X08",
+        "X10",
+        "X11",
+        "X12",
+        "S29"
+      ],
+      "optional": false,
+      "acceptedCandidate": null,
+      "notes": "Actual calibration/conformance/comparison evidence references and hashes resolve server-side with strict unknown blockers. Internal activation stays default-off; no live or deployment operation.",
+      "implementationState": "EVIDENCE_INTEGRATION_IMPLEMENTED"
+    },
+    {
+      "id": "S12",
+      "status": "IN_PROGRESS",
+      "dependencies": [
+        "S09",
+        "S10",
+        "S11"
+      ],
+      "optional": false,
+      "acceptedCandidate": null,
+      "notes": "Stored-snapshot Opportunity Radar watches/diffs/deduped expiring signals and explicit worker implemented;016 applied synthetic only; UI integration active.",
+      "implementationState": "MODULE_IMPLEMENTED_INTEGRATING"
+    },
+    {
+      "id": "S23",
+      "status": "IMPLEMENTED_UNREVIEWED",
+      "dependencies": [
+        "S03",
+        "S08",
+        "S13",
+        "S21"
+      ],
+      "optional": false,
+      "acceptedCandidate": null,
+      "notes": "Permission-aware temporal memory, contradiction and tombstone support.",
+      "implementationState": "MODULE_IMPLEMENTED"
+    },
+    {
+      "id": "S31",
+      "status": "IN_PROGRESS",
+      "dependencies": [
+        "S03",
+        "S04",
+        "S09",
+        "S17",
+        "S23"
+      ],
+      "optional": false,
+      "acceptedCandidate": null,
+      "notes": "Scoped export artifacts, inventory, retention/deletion plans and anti-resurrection guards implemented;014 applied synthetic only. Physical erasure is plan-only, backup expiry unknown; no claim of full erasure.",
+      "implementationState": "PREPARED_LIFECYCLE_IMPLEMENTED"
+    },
+    {
+      "id": "S33",
+      "status": "QUEUED",
+      "dependencies": [
+        "S01",
+        "S20",
+        "S21",
+        "S22",
+        "S24",
+        "S25",
+        "S26",
+        "S29",
+        "S31",
+        "S32",
+        "X14"
+      ],
+      "optional": false,
+      "acceptedCandidate": null,
+      "notes": ""
+    },
+    {
+      "id": "S27",
+      "status": "IN_PROGRESS",
+      "dependencies": [
+        "S08",
+        "S14",
+        "S26"
+      ],
+      "optional": false,
+      "acceptedCandidate": null,
+      "notes": "Bounded local ranker/Platt calibration and real split metrics implemented, unsupported cohorts manual. Artifact selection computes prediction server-side; no promotions accepted.",
+      "implementationState": "FOUNDATION_IMPLEMENTED"
+    },
+    {
+      "id": "S28",
+      "status": "IN_PROGRESS",
+      "dependencies": [
+        "S01",
+        "S23",
+        "S26"
+      ],
+      "optional": false,
+      "acceptedCandidate": null,
+      "notes": "Versioned bounded optimizer requests implemented. Optional engine/license and S01 egress remain unavailable; no optimizer run fabricated.",
+      "implementationState": "PREPARED_OPTIMIZER_BLOCKED"
+    },
+    {
+      "id": "S34",
+      "status": "QUEUED",
+      "dependencies": [
+        "S25",
+        "S33"
+      ],
+      "optional": false,
+      "acceptedCandidate": null,
+      "notes": ""
+    },
+    {
+      "id": "X05",
+      "status": "IN_PROGRESS",
+      "dependencies": [
+        "X04",
+        "S27",
+        "S24"
+      ],
+      "optional": false,
+      "acceptedCandidate": null,
+      "notes": "Deterministic research priority and seeded exploration with recorded inclusion probabilities implemented; calibrated utility requires approved artifact.",
+      "implementationState": "FOUNDATION_IMPLEMENTED"
+    },
+    {
+      "id": "X09",
+      "status": "IN_PROGRESS",
+      "dependencies": [
+        "S23",
+        "S28",
+        "S29",
+        "X06"
+      ],
+      "optional": false,
+      "acceptedCandidate": null,
+      "notes": "Tenant skill versions, evaluation/release bindings and revocation-aware exact resolver implemented; instructions remain untrusted/non-executable, harness hook pending.",
+      "implementationState": "FOUNDATION_IMPLEMENTED"
+    },
+    {
+      "id": "X13",
+      "status": "QUEUED",
+      "dependencies": [
+        "X07",
+        "X11",
+        "X12",
+        "S07"
+      ],
+      "optional": false,
+      "acceptedCandidate": null,
+      "notes": ""
+    },
+    {
+      "id": "X15",
+      "status": "QUEUED",
+      "dependencies": [
+        "X05",
+        "X09",
+        "X13",
+        "X14"
+      ],
+      "optional": false,
+      "acceptedCandidate": null,
+      "notes": "Actual calibration/conformance/comparison evidence references and hashes resolve server-side with strict unknown blockers. Internal activation stays default-off; no live or deployment operation.",
+      "implementationState": "EVIDENCE_INTEGRATION_IMPLEMENTED"
+    },
+    {
+      "id": "S30",
+      "status": "QUEUED",
+      "dependencies": [
+        "S24",
+        "S25",
+        "S27",
+        "S29"
+      ],
+      "optional": false,
+      "acceptedCandidate": null,
+      "notes": "Finite arm/fixed-lane proposals, verified exposure binding, delayed rewards and overlap/ESS reports prepared; missing DR/randomized/mature evidence remains unavailable, not claimed.",
+      "implementationState": "OFFLINE_FOUNDATION_IMPLEMENTED"
+    },
+    {
+      "id": "S35",
+      "status": "QUEUED",
+      "dependencies": [
+        "S22",
+        "S25",
+        "S33"
+      ],
+      "optional": false,
+      "acceptedCandidate": null,
+      "notes": "Projects/proof/consent and actual offline Ed25519 customer case-signature receipts with independent key enrollment review implemented; no publishing/contact permission implied.",
+      "implementationState": "LOCAL_FEATURE_IMPLEMENTED_INTEGRATING"
+    },
+    {
+      "id": "X16",
+      "status": "QUEUED",
+      "dependencies": [
+        "X04",
+        "X14"
+      ],
+      "optional": true,
+      "acceptedCandidate": null,
+      "notes": ""
+    }
+  ],
+  "releaseReady": false,
+  "activeSessions": {
+    "finalQa": "/root/final_qa_r5",
+    "coverage": "/root/expand_phase2_coverage_r6",
+    "benchmarkRepair": "/root/fix_benchmark_report_r6"
+  },
+  "missingReferencedOriginals": [
+    "E:/ACCEPTANCE_MATRIX.json",
+    "E:/validate_acceptance.py"
+  ],
+  "executionPhase": "PHASE_2_R6_COVERAGE_AND_BENCHMARK_REPAIR",
+  "independentAcceptanceDeferred": true,
+  "dependencyProgression": "Implementation readiness during Phase1; acceptance and full QA deferred to Phase2 by latest owner instruction.",
+  "localPreview": {
+    "console": "http://127.0.0.1:3210",
+    "astra": "http://localhost:3211/astra.html",
+    "data": "Disposable synthetic fixtures only",
+    "externalActions": "disabled",
+    "phase2Started": true,
+    "migrationCount": 31,
+    "auth": "Real application auth with isolated synthetic preview account; separate app/worker database roles",
+    "fixturePersistence": "Preserved across code reloads",
+    "lastHttpCheck": {
+      "capturedAt": "2026-10-24T22:39:54.645Z",
+      "astraPageStatus": 200,
+      "authenticatedTenantContextStatus": 200,
+      "legacyConsoleStatus": 200,
+      "realData": false
+    },
+    "currentCandidate": "astra-r5-7474ca99053ab119",
+    "lastColdStartHttpCheck": {
+      "capturedAt": "2026-10-24T22:56:27.802Z",
+      "pageStatus": 200,
+      "tenantContextStatus": 200,
+      "mode": "synthetic-local-preview",
+      "externalActions": "disabled"
+    }
+  },
+  "lastImplementationCheckpoint": {
+    "phase": "PHASE_1_IMPLEMENTATION",
+    "localPreviewRunning": true,
+    "basicRuntimeEvidence": [
+      "Authenticated tenant context",
+      "Outcome capture and ledger reads",
+      "Uploaded proof bytes and offer approval",
+      "Supplied snapshot capture and evidence listing",
+      "Offline research queue/run completed with hash-validated report"
+    ],
+    "comprehensiveQa": "DEFERRED_PHASE_2",
+    "productionReadinessScore": null,
+    "fullRoadmapFeatureComplete": false,
+    "releaseReady": false,
+    "wave2Generation": "SCOPED_CODE_IMPLEMENTED_SYNTAX_CHECKED",
+    "disposablePgMigrationsThrough": 13,
+    "activeWave": "Evaluation management, feature/API/UI integration, operations enforcement",
+    "syntheticMigrationsApplied": [
+      "001-tenant-foundation.up.sql",
+      "002-ledger.up.sql",
+      "003-workflow.up.sql",
+      "004-gateway.up.sql",
+      "005-research.up.sql",
+      "006-inbox-permissions.up.sql",
+      "007-campaigns.up.sql",
+      "008-insights.up.sql",
+      "009-runtime.up.sql",
+      "010-connectors.up.sql",
+      "011-generation.up.sql",
+      "012-autonomy.up.sql",
+      "013-evaluation.up.sql",
+      "015-operations.up.sql",
+      "014-lifecycle.up.sql",
+      "016-radar.up.sql",
+      "017-learning.up.sql",
+      "018-economics-postsale.up.sql",
+      "019-launch-controls.up.sql",
+      "020-conformance.up.sql",
+      "021-bandits.up.sql",
+      "023-customer-approvals.up.sql",
+      "024-domain-harness.up.sql",
+      "022-memberships.up.sql",
+      "025-source-collection.up.sql",
+      "026-smtp-dispatch.up.sql",
+      "027-release-evidence.up.sql",
+      "029-optimizer-execution.up.sql",
+      "028-benchmark.up.sql"
+    ],
+    "previewAssemblyRepair": "Fixed; actual HTTP GET context/connectors/generation/decisions/evaluation/operations/automation all200.",
+    "previewClockAlignment": {
+      "scope": "disposable PostgreSQL process only",
+      "offsetSeconds": -19800,
+      "systemClockChanged": false,
+      "productionEvidence": false,
+      "authenticationTtlUnchanged": true
+    },
+    "latestResearchStartupCheck": "Fresh authorized synthetic offline research queued201, explicit runner202, persisted workflow completed.",
+    "activeWork": "Final app/UI wiring, bounded optimizer execution029 and real benchmark management028.",
+    "localCodeMilestone": "FROZEN_170_ROUTES_001_029_FOR_LOCAL_QA",
+    "candidateId": "astra-r2-7c748f115a9bd180",
+    "sourceSha256": "7c748f115a9bd180164890454fd517eb0c02131981814e8c0bdad23710dd3653",
+    "repairedCriticals": [
+      "revoked inviter / authoritative expiry and proof clock",
+      "campaign event registry and qualification/draft integration",
+      "snapshot response hash aliases",
+      "research queue idempotency",
+      "experiment immutable read and analysis projection"
+    ]
+  },
+  "lastIndependentQa": {
+    "candidateId": "astra-r17-d3ded6aefb9d86fa",
+    "tests": 495,
+    "pass": 495,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "exitCode": 0,
+    "sourceIntegrity": "695 declared source/test/harness entries match; zero mismatches; source-only archive hash matches",
+    "evidence": ".superpowers/phase2/final-r17/FINAL_QA_REPORT.md",
+    "reviewer": "gpt-6-luna/high",
+    "score": 79,
+    "unroundedScore": 78.5,
+    "scope": "Local synthetic Phase 2 QA and explicit source-bound historical evidence; no formal 52-task or production acceptance",
+    "releaseReady": false
+  },
+  "phase2CurrentRepairs": {
+    "outcomeCorrections": "INDEPENDENT_FOCUSED_PASS",
+    "gatewayFixtureTests": "FOCUSED22_OF_22_AND_INDEPENDENT_R17_FULL_SUITE_PASS_SYNTHETIC_ONLY",
+    "mailFixtureTests": "FOCUSED11_OF_11_AND_INDEPENDENT_R17_FULL_SUITE_PASS_SYNTHETIC_ONLY",
+    "sourceFidelity": "2_OF_2_PASS_228_SELECTED_FILES_30_EXPLICIT_DELTAS_R17_FULL_SUITE",
+    "workflowReplays": "INDEPENDENT_FINAL_SOURCE_PASS",
+    "fullSuiteR3": "HISTORICAL_SUPERSEDED_BY_LATER_REPLAYS",
+    "egressGuard": "R17_SHIPPED_GUARD_SELF_CHECK_EXIT0_SOURCE_HASH_BOUND",
+    "trustControls": "INDEPENDENT_37_OF_37_PASS_FINAL_REPAIR_HASH_BOUND",
+    "portableHarness": "21/21_FOCUSED_PASS_STANDALONE_AND_PRELOAD_INDEPENDENT_GUARD_REVIEW_PASS",
+    "customerProofs": "INDEPENDENT_37_OF_37_PASS",
+    "fullSuiteR4": "HISTORICAL_486_PASS_1_ASYNC_UI_TEST_FAILURE_REPAIRED_R5",
+    "invitationExpiry": "14_SCOPED_INDEPENDENT_CHECKS_PASS_FINAL_SOURCE_HASH_BOUND",
+    "historicalOfferTests": "OWNERSHIP_PRESERVING_FIXTURES_FULL_SUITE_PASS",
+    "migrationRollback": "INDEPENDENT_31_DOWN_31_UP_PASS_UP_HASHES_UNCHANGED",
+    "credentialAudit": "3_FIXTURES_ROTATED_SEQ2_OLD_PASSWORDS_AND_PROOFS_REJECTED_111_CLOSED_FILES_SCANNED",
+    "fullSuiteR5": "487_OF_487_PASS_CONCURRENCY2",
+    "benchmarkReport": "INDEPENDENT_SYNTHETIC_INSUFFICIENT_DATA_REPORT_PASS",
+    "additionalRouteCoverage": "93_WORKING_3_POLICY_BLOCKED_74_INCOMPLETE_UNIQUE_ROUTE_DEFINITIONS",
+    "lifecycleCancellation": "INDEPENDENT_CANCEL_PRESERVES_SUPPRESSION_DIGESTS_PASS",
+    "fullSuiteR6": "TWO_RECORDED_487_OF_488_RUNS_DIFFERENT_HARNESS_FAILURES_REPAIRED_AWAIT_R7_FREEZE",
+    "fullSuiteR7": "493_TOTAL_489_PASS_3_FAIL_1_CANCELLED_0_SKIP_EXIT1_INTERVENTION_RECORDED",
+    "workbenchProofExpiry": "FOCUSED_REAL_FORM_201_AND_PAST_REJECTION_PASS_INDEPENDENT_SPEC_PASS",
+    "testDeterminism": "FOCUSED_AND_INDEPENDENT_R17_FULL_SUITE_PASS_HISTORICAL_FAILURES_RETAINED",
+    "workbenchJourney": "R17_REAL_EDGE_SYNTHETIC_JOURNEY_PASS_NO_SKIP_CORRECTION_API_ONLY_CRM_HELD",
+    "credentialAuditR7": "FINAL418_FILES_8_CLOSED_LOGS_4_ACTIVE_SNAPSHOTS_ZERO_ACTIONABLE_45_METADATA_MATCHES_REPORT_HASHES_RECHECKED",
+    "routeGapReview": "INDEPENDENT_170_UNIQUE_RECONCILED_93_WORKING_3_POLICY_BLOCKED_74_UNPROVEN_POSITIVE",
+    "harnessR8": "SCOPED_HARNESS_REPAIRS_VERIFIED_IN_INDEPENDENT_R17_FULL_SUITE",
+    "fullSuiteR8": "493_TOTAL_492_PASS_1_STALE_PROVENANCE_PIN_FAIL_0_CANCEL_0_SKIP_EXIT1",
+    "fullSuiteR9": "493_TOTAL_492_PASS_1_LINKED_PERSON_EVIDENCE_FAIL_0_CANCEL_0_SKIP_EXIT1",
+    "commercialSourceFingerprint": "EXACT_ONE_KEY_REFRESH_ALL_BLOCKED_UNKNOWN_DECISIONS_PRESERVED_FOCUS_5_OF_5_PASS",
+    "explicitFreezeCoverage": "R9_ADDS_10_EXISTING_PRODUCT_INPUTS_267_TEST_INPUTS_PRIOR_SCOPE_LIMIT_PRESERVED",
+    "discoveryEvidenceR10": "DIAGNOSTIC_ONLY_FOCUS_3_OF_3_FILE_27_OF_27_FIDELITY_2_OF_2_PASS_HISTORICAL_R9_CAUSE_UNRESOLVED",
+    "fullSuiteR11": "493_TOTAL_492_PASS_1_UI_RESPONSE_SYNC_FAIL_0_CANCEL_0_SKIP_EXIT1",
+    "manifestR10": "UNEXECUTED_PACKAGE_119_EQUIVALENT_PATH_ALIASES_PRESERVED_REPLACED_R11_NORMALIZATION",
+    "previewR11": "HTTP200_TENANT200_FROZEN_HTML_MATCH_SAME_SYNTHETIC_COUNTS_EXTERNAL_DISABLED",
+    "retryUiR12": "INDEPENDENT_DIFF_PASS_FOCUS_EDGE13_OF_13_FIDELITY2_OF_2_PASS_EXACT_RESPONSE_AWAIT",
+    "fullSuiteR12": "493_TOTAL_492_PASS_1_RESEARCH_INSPECTION_OVERLAP_FAIL_0_CANCEL_0_SKIP_EXIT1_POSTHASH_ZERO",
+    "researchInspectionR13": "R13_RUNTIME_REVIEW_REJECTED_STALE_CANDIDATES_R14_REJECTED_STALE_ERROR_P3_R15_FOCUSED7_OF_7_E2E1_OF_1_INDEPENDENT2_OF_2_SPEC_QUALITY_ACCEPT",
+    "fullSuiteR15": "495_TOTAL_494_PASS_1_AMBIGUOUS_EMAIL_SOURCE_SELECTION_FAIL_0_CANCEL_0_SKIP_EXIT1_POSTHASH_ZERO",
+    "discoverySelectionR16": "INDEPENDENT_SPEC_QUALITY_ACCEPT_CAUSAL_SOURCE_ID_PROOF_AND_FOCUSED29_OF_29_FULL_RUN_CASE_PASS",
+    "fullSuiteR16": "495_TOTAL_494_PASS_1_EPCH_BULK_REQUEST_CAPTURE_SYNC_FAIL_0_CANCEL_0_SKIP_EXIT1_POSTHASH_ZERO",
+    "discoveryBulkSyncR17": "FOCUSED15_OF_15_PASS_INDEPENDENT_SPEC_QUALITY_ACCEPT_PREARMED_EXACT_RESPONSE_OBSERVERS_AND_REQUEST_CAPTURE_BARRIER",
+    "fullSuiteR17": "495_OF_495_PASS_0_FAIL_0_CANCEL_0_SKIP_EXIT0_PRE_POSTHASH_ZERO",
+    "previewR14": "HTTP200_TENANT200_FROZEN_HTML_AND_JS_MATCH_SAME_SYNTHETIC_COUNTS_EXTERNAL_DISABLED",
+    "previewR15": "HTTP200_TENANT200_FROZEN_HTML_AND_JS_MATCH_SAME_SYNTHETIC_COUNTS_PID22676_EXTERNAL_DISABLED"
+  },
+  "currentCandidate": {
+    "candidateId": "astra-r17-d3ded6aefb9d86fa",
+    "sourceManifest": "orchestration/astra-phase2-source-r17.json",
+    "sourceSha256": "d3ded6aefb9d86fa17a29140bff29f85ff42a765ee6f23835f615c08bb130304",
+    "productSha256": "ef3a47b68da6c11bea7f8e47bcf66eeae0a5a939255e2e987494fb05950e4b7f",
+    "sourceArchiveIndex": ".superpowers/phase2/checkpoints/index-r17.json",
+    "accepted": false,
+    "localQaAccepted": true,
+    "acceptanceScope": "Scoped independent local QA accepted; formal roadmap and release acceptance remain false"
+  },
+  "lastFullRegression": {
+    "candidateId": "astra-r17-d3ded6aefb9d86fa",
+    "sourceSha256": "d3ded6aefb9d86fa17a29140bff29f85ff42a765ee6f23835f615c08bb130304",
+    "status": "PASS_INDEPENDENT_UNINTERRUPTED_FROZEN_CANDIDATE",
+    "tests": 495,
+    "pass": 495,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0,
+    "duration_ms": 291760.2243,
+    "exitCode": 0,
+    "postRunMismatchCount": 0,
+    "evidence": ".superpowers/phase2/suite-r17/",
+    "releaseReady": false
+  },
+  "lastTrustBaseline": {
+    "evidence": ".superpowers/phase2/trust-r3/INDEPENDENT-REVIEW.md",
+    "checks": 37,
+    "pass": 29,
+    "fail": 8,
+    "sourceCandidate": "astra-r3-557cfa3b17869946",
+    "status": "FAIL_REPAIR_IN_PROGRESS",
+    "historical": true
+  },
+  "noNewFeatureWave": true,
+  "lastTrustVerification": {
+    "evidence": ".superpowers/phase2/trust-r3/FINAL-REVIEW.md",
+    "checks": 37,
+    "pass": 37,
+    "fail": 0,
+    "status": "INDEPENDENT_PASS",
+    "scope": "Offline signature and consent boundaries only; no commercial release acceptance"
+  },
+  "currentRuntimeCandidate": {
+    "candidateId": "astra-r15-runtime-ef3a47b68da6c11b",
+    "manifest": "orchestration/astra-phase2-runtime-r15.json",
+    "accepted": false
+  },
+  "phase2ActivePlan": "orchestration/astra-discovery-bulk-sync-r17-ruling.json",
+  "currentRouteEvidence": {
+    "total": 170,
+    "working": 93,
+    "policyBlocked": 3,
+    "incomplete": 74,
+    "evidence": ".superpowers/phase2/coverage-r6/runtime-r7-addendum.json",
+    "method": "Unique route IDs merged across explicitly bound runtime epochs",
+    "fullRoadmapAcceptance": false
+  },
+  "updatedAt": "2026-10-25T18:20:20.684554+00:00",
+  "previousPassingRegression": {
+    "candidateId": "astra-r5-7474ca99053ab119",
+    "sourceSha256": "7474ca99053ab11958a7821b83b8c3f503b98e72d2293bb7b3c4e7c47fc2d628",
+    "status": "PASS_REPLAY_CONCURRENCY_2",
+    "tests": 487,
+    "pass": 487,
+    "fail": 0,
+    "skipped": 0,
+    "firstRun": {
+      "concurrency": 4,
+      "tests": 487,
+      "pass": 486,
+      "fail": 1,
+      "reason": "Transient lead-search browser navigation timeout; focused4/4 and complete replay passed."
+    },
+    "evidence": ".superpowers/phase2/suite-r5/",
+    "releaseReady": false
+  },
+  "regressionHistoryReferences": {
+    "r7": ".superpowers/phase2/suite-r7/run-metadata.json",
+    "r8": ".superpowers/phase2/suite-r8/run-metadata.json",
+    "r9": ".superpowers/phase2/suite-r9/run-metadata.json",
+    "r11": ".superpowers/phase2/suite-r11/run-metadata.json",
+    "r12": ".superpowers/phase2/suite-r12/run-metadata.json",
+    "r15": ".superpowers/phase2/suite-r15/run-metadata.json",
+    "r16": ".superpowers/phase2/suite-r16/run-metadata.json",
+    "r17": ".superpowers/phase2/suite-r17/run-metadata.json"
+  },
+  "qaPackagingNotes": {
+    "r14": {
+      "runtimeManifest": "orchestration/astra-phase2-runtime-r14.json",
+      "globalManifestCreated": false,
+      "executed": false,
+      "reason": "Independent DOM trace confirmed P3 stale failure notice after a newer inspection starts. Evidence/forms/candidates remain correct. Bounded notice repair assigned; no complete R14 suite was run.",
+      "ruling": "orchestration/astra-research-inspection-r15-ruling.json"
+    },
+    "r13": {
+      "runtimeManifest": "orchestration/astra-phase2-runtime-r13.json",
+      "globalManifestCreated": false,
+      "executed": false,
+      "reason": "Independent review found stale candidates for evidence without an account; runtime and focused logs preserved, bounded correction frozen as R14",
+      "ruling": "orchestration/astra-research-inspection-r14-ruling.json"
+    },
+    "r10": {
+      "manifest": "orchestration/astra-phase2-source-r10.json",
+      "executed": false,
+      "reason": "119 equivalent Windows license-path aliases; all hashes agreed; preserved and replaced by unique R11 manifest",
+      "ruling": "orchestration/astra-input-normalization-r11-ruling.json"
+    }
+  },
+  "historicalIndependentQaR2": {
+    "candidateId": "astra-r2-7c748f115a9bd180",
+    "tests": 481,
+    "pass": 461,
+    "fail": 20,
+    "skipped": 0,
+    "exitCode": 1,
+    "sourceIntegrity": "373/373 matching before and after",
+    "evidence": ".superpowers/phase2/suite-r2/luna-independent-review.md",
+    "classification": {
+      "legacyProviderExpectations": 15,
+      "missingMailboxReviewFixtures": 4,
+      "missingImapTestInputs": 1
+    },
+    "score": null,
+    "releaseReady": false
+  },
+  "phase2Status": "LOCAL_QA_COMPLETE_RELEASE_BLOCKED",
+  "phase2FinalQa": {
+    "report": ".superpowers/phase2/final-r17/FINAL_QA_REPORT.md",
+    "machineReadableAssessment": ".superpowers/phase2/final-r17/score-draft.json",
+    "score": 79,
+    "unroundedScore": 78.5,
+    "testsPassed": 495,
+    "testsFailed": 0,
+    "skipped": 0,
+    "cancelled": 0,
+    "independentScopedAcceptance": true,
+    "formal52TaskAcceptance": false,
+    "releaseReady": false,
+    "credentialAudit": {
+      "phase2Files": 418,
+      "closedPreviewLogs": 8,
+      "activeLogSnapshots": 4,
+      "credentialUrlMatches": 0,
+      "currentPrivateLiteralMatches": 0,
+      "rawSensitiveFieldMatches": 45,
+      "reviewedMetadataFalsePositives": 45,
+      "actionableFindings": 0,
+      "evidence": ".superpowers/phase2/credential-audit-r7/SPEC-QUALITY.md",
+      "activeLogLimit": "Stable as-of snapshots; future output not verified"
+    },
+    "missingCanonicalInputs": [
+      "E:/ACCEPTANCE_MATRIX.json",
+      "E:/validate_acceptance.py"
+    ],
+    "remainingLimits": [
+      "74 routes lack positive-operation evidence; route branches partly sampled",
+      "Required external approvals and real provider/CRM/pilot evidence unavailable",
+      "Backup/restore RTO/RPO, physical erasure and backup expiry unverified",
+      "Original R9 raw row-level failure cannot be retrospectively reconstructed; R15 selector cause and R16/R17 regression are evidenced"
+    ]
+  }
+}

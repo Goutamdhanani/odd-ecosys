@@ -1,0 +1,10 @@
+{
+  "id":"ASTRA-R20-STATIC-PRIVACY",
+  "trigger":"Before handing over a local API-key file, source inspection found authenticated static serving accepts arbitrary repository files, including private dot paths",
+  "owner":"/root/r20_static_privacy",
+  "ownedPaths":["server.js","tests/astra-static-privacy.test.mjs",".superpowers/r20/static-privacy/**"],
+  "root":"C:/Users/pooja/.codex/worktrees/astra-foundation/odd-ecosys",
+  "acceptance":["Reproduce with synthetic canary only, never real secrets","Use an explicit public static surface; block private configuration, runtime state, source, tests, migrations, tools and governance files even when authenticated","Preserve all existing public pages/assets, login and exact shared verification module","Preserve every API, auth, CSRF, membership and tenant restriction","GET/HEAD and encoded-path negative behavior checked with enforced authentication and disposable SQLite","No credential contents retained; no source or customer data cleanup"],
+  "restrictions":["Luna/high only","No provider/network egress or outreach","No preview or database migration/restart","No unrelated server refactor","No production readiness claim"],
+  "releaseReady":false
+}

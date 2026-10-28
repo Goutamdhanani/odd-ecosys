@@ -8,10 +8,11 @@
   },
   "bedrock": {
     "region": "us-east-1",
-    "polish_model": "anthropic.claude-3-5-sonnet-20241022-v2:0",
-    "vision_model": "anthropic.claude-3-5-sonnet-20241022-v2:0",
+    "polish_model": "us.anthropic.claude-sonnet-5",
+    "vision_model": "us.anthropic.claude-sonnet-5",
     "enabled": false,
-    "fallback_to_ollama": true
+    "fallback_to_ollama": true,
+    "timeout_ms": 30000
   },
   "guardrails": {
     "max_body_words": 130,

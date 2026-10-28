@@ -1,0 +1,17 @@
+{
+  "planId": "ASTRA-R18A-RADAR-REPEATABILITY-TRIAGE",
+  "authority": "A guarded supplemental run of the existing account X-Ray test failed at positive Radar signal creation despite earlier full-suite success. Current user requests completion; preserve all failures and repair a confirmed product defect without weakening tests.",
+  "writer": "/root/r18a_radar_repair",
+  "ownedPaths": ["pipeline/astra-research.js", "pipeline/astra-radar.js", "tests/astra-xray.test.mjs", ".superpowers/r18a/radar-repair/**"],
+  "transfer": {"from": "/root/r18_research_fixes", "state": "completed_and_released"},
+  "failureEvidence": ".superpowers/r18a/qa-repairs/IMPLEMENTER-REPORT.md",
+  "requirements": [
+    "Investigate and reproduce the exact existing assertion at tests/astra-xray.test.mjs:165. Establish the cause before any product edit; preserve failed runs.",
+    "Inspect prior-audit ordering within long-lived PostgreSQL transactions, ambiguous capture timestamps, exact watched source lineage and metric provenance. Do not randomly choose a baseline or add sleeps/retry-until-pass to tests.",
+    "Make the smallest confirmed correction, preserving append-only evidence, exact canonical URL watches, current rights on both sources, tenant ownership and fail-closed unknowns.",
+    "Keep all existing positive and negative assertions, add meaningful regression coverage if a defect is confirmed, and run guarded checks using the strict approved r18-suite synthetic32 fixture.",
+    "Do not alter migrations, commercial decisions, side-effect inventory, OWNERSHIP.md or frozen R18 evidence. Release exact source hashes so the inventory owner can update provenance after review."
+  ],
+  "constraints": ["Only astra-foundation absolute checkout; never copy into a4a4", "Luna/high only", "No external calls, live actions or real data", "No test/gate weakening", "No git mutations"],
+  "releaseReady": false
+}

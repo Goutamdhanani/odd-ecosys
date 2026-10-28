@@ -1,0 +1,100 @@
+{
+  "phase": "PHASE_1_IMPLEMENTATION",
+  "sourceHead": "f30490bd892dd651fd2fb276b09b510379e27c0d",
+  "model": "gpt-6-luna",
+  "reasoning": "high",
+  "tickets": [
+    {
+      "id": "evaluation",
+      "tasks": [
+        "S26",
+        "S29",
+        "X06",
+        "X07",
+        "X08"
+      ],
+      "owner": "/root/wave3_evaluation",
+      "files": [
+        "pipeline/astra-evaluation.js",
+        "pipeline/astra-eval-routes.js",
+        "pipeline/astra-release-registry.js",
+        "pipeline/astra-inspect-adapter.py",
+        "migrations/astra/013-evaluation.up.sql",
+        "migrations/astra/013-evaluation.down.sql"
+      ],
+      "state": "SCOPED_IMPLEMENTATION_COMPLETE_UNACCEPTED"
+    },
+    {
+      "id": "lifecycle",
+      "tasks": [
+        "S03",
+        "S31"
+      ],
+      "owner": "/root/finish_lifecycle",
+      "files": [
+        "pipeline/astra-lifecycle.js",
+        "pipeline/astra-lifecycle-routes.js",
+        "tools/astra/legacy-migration.mjs",
+        "migrations/astra/014-lifecycle.up.sql",
+        "migrations/astra/014-lifecycle.down.sql"
+      ],
+      "state": "FINISHING_EXISTING_CHECKPOINT"
+    },
+    {
+      "id": "operations",
+      "tasks": [
+        "S32",
+        "X11",
+        "X12"
+      ],
+      "owner": "/root/wave3_operations",
+      "files": [
+        "pipeline/astra-telemetry.js",
+        "pipeline/astra-engagement.js",
+        "pipeline/astra-operations.js",
+        "pipeline/astra-operations-routes.js",
+        "migrations/astra/015-operations.up.sql",
+        "migrations/astra/015-operations.down.sql",
+        "pipeline/astra-dispatcher.js",
+        "pipeline/astra-harness.js",
+        "pipeline/astra-generation.js",
+        "pipeline/astra-workflow.js"
+      ],
+      "baseline": ".superpowers/sdd/fa3710986978fc58/operations-enforcement-before.json",
+      "integrationRequirement": "Enforce kill switches in actual workers and fix dispatcher signed worker tenant context.",
+      "state": "SCOPED_CODE_COMPLETE_MIGRATION_APPLIED_SYNTHETIC_ONLY"
+    },
+    {
+      "id": "feature-integration",
+      "tasks": [
+        "S06",
+        "S15",
+        "S17",
+        "S18",
+        "S19",
+        "S20",
+        "S21",
+        "S22",
+        "X04",
+        "X10"
+      ],
+      "owner": "/root/repair_preview_assembly",
+      "files": [
+        "server.js",
+        "pipeline/astra-api.js",
+        "pipeline/astra-feature-workers.js",
+        "astra.html",
+        "js/astra-workbench.js",
+        "css/astra-workbench.css",
+        "pipeline/astra-autonomy.js"
+      ],
+      "baseline": ".superpowers/sdd/fa3710986978fc58/feature-integration-before.json",
+      "state": "BOOT_ASSEMBLY_REPAIR_IN_PROGRESS"
+    }
+  ],
+  "scope": "Feature implementation, not Phase 2 QA execution",
+  "baseline": ".superpowers/sdd/fa3710986978fc58/feature-wave3-before.json",
+  "releaseReady": false,
+  "externalActions": "disabled",
+  "optionalX16": "deferred"
+}

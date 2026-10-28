@@ -1,0 +1,20 @@
+{
+  "id": "ASTRA-LIVE-ACTUAL-ATLAS-CASES",
+  "owner": "/root/live_atlas_cases",
+  "paths": [".superpowers/astra-live/atlas-cases/**"],
+  "credentialBoundary": "Root alone reads the protected local environment file and launches the released runner with only named settings. Workers must not open protected environment, key, URI, mailbox, or credential files.",
+  "requirements": [
+    "Prepare a guarded real-driver runner for exact frozen ATLAS01-10 purposes, with no product source or matrix edits",
+    "Execute only after root GO in the single explicit astra_test_live_validation_20261026 database with native reviewed persistence/store sources and strict TLS",
+    "Enforce a small bounded operation budget, unique synthetic tenant IDs and run markers; never enumerate or read customer databases or collections",
+    "Record real transaction/index/idempotency/reconnect and cross-tenant behavior where actually exercised; mocks or constructor checks alone cannot satisfy real-service cases",
+    "No production fault injection, database drop, collection drop, credential changes or migrations; failure recovery must use isolated session/client controls or unique synthetic transaction records",
+    "Cleanup may delete only synthetic records created by this exact run and must prove unrelated sentinel records and preexisting records were not changed",
+    "Retain initial failure evidence, measured per-case operations, exact source/runner before-after pins, typed observed assertions, provider operation counts and sanitized reproduction steps",
+    "Report unsupported tests as BLOCKED or NOT_RUN and confirmed defects as FAIL; no route-only or mock PASS claims",
+    "No raw URI, credentials, personal information, secret-value hashes or private fixture fingerprints in evidence or raw driver logs",
+    "Independent review and coordinator scenario binding remain required before any matrix registration"
+  ],
+  "noMailOrModelOrPublicSourceCalls": true,
+  "releaseReady": false
+}

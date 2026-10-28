@@ -1,100 +1,46 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { getDiscoveryStatus, cancelDiscovery, startDiscoveryJob, discoverLeads } from '../pipeline/lead-discovery.js';
-import { scrapeGoogleMapsNative, scrapeWebQueryLeads, scrapeLeadsMultiMethod } from '../pipeline/scraper.js';
-import { enrichLead } from '../pipeline/enricher.js';
-import { getDb } from '../pipeline/database.js';
+import { discoverLeads } from '../pipeline/lead-discovery.js';
+import {
+  GOOGLE_MAPS_SCRAPER_DISABLED,
+  isDockerAvailable,
+  runScraper,
+  scrapeFacebookLeads,
+  scrapeGoogleMapsNative,
+  scrapeLeadsMultiMethod,
+  scrapeWebQueryLeads,
+  ensureDockerImage,
+} from '../pipeline/scraper.js';
 
-test('Lead Discovery Status: initial state is idle', () => {
-  const status = getDiscoveryStatus();
-  assert.equal(typeof status, 'object');
-  assert.equal(typeof status.active, 'boolean');
-  assert.ok(['idle', 'scraping', 'enriching', 'deduping', 'inserting', 'qualifying', 'verifying', 'done'].includes(status.step));
+test('discovery orchestration fails closed before creating a batch', async () => {
+  await assert.rejects(
+    discoverLeads({ niche: 'roofers', geography: 'Ontario', options: { limit: 10 } }),
+    /Automated Google Maps scraping is disabled/,
+  );
 });
 
-test('Lead Discovery: startDiscoveryJob validates input', async () => {
-  assert.equal(typeof startDiscoveryJob, 'function');
-  assert.equal(typeof cancelDiscovery, 'function');
-});
-
-test('Scraper: scrapeGoogleMapsNative parses places without Docker', async () => {
-  const results = await scrapeGoogleMapsNative('dentists in Austin TX', { limit: 3 });
-  assert.ok(Array.isArray(results), 'Expected array of leads');
-  if (results.length > 0) {
-    const lead = results[0];
-    assert.ok(lead.business_name, 'Lead has business name');
-    assert.equal(lead.source, 'google_maps');
+test('legacy scraping and Docker entry points fail before fetching or writing', async () => {
+  const originalFetch = globalThis.fetch;
+  let fetchCalls = 0;
+  globalThis.fetch = async () => { fetchCalls += 1; throw new Error('unexpected outbound request'); };
+  try {
+    await assert.rejects(scrapeGoogleMapsNative('dentists in Ontario'), new RegExp(GOOGLE_MAPS_SCRAPER_DISABLED));
+    await assert.rejects(runScraper('unused-query-file.txt'), new RegExp(GOOGLE_MAPS_SCRAPER_DISABLED));
+    await assert.rejects(ensureDockerImage(), new RegExp(GOOGLE_MAPS_SCRAPER_DISABLED));
+    await assert.rejects(scrapeWebQueryLeads('dentists', 'Ontario'), /Search-engine result scraping is disabled/);
+    await assert.rejects(scrapeFacebookLeads('dentists', 'Ontario'), /Facebook scraping is disabled/);
+    await assert.rejects(scrapeLeadsMultiMethod({ niche: 'dentists', geography: 'Ontario', method: 'combined' }), new RegExp(GOOGLE_MAPS_SCRAPER_DISABLED));
+    await assert.rejects(scrapeLeadsMultiMethod({ niche: 'dentists', geography: 'Ontario', method: 'web_search' }), /Search-engine result scraping is disabled/);
+    assert.equal(await isDockerAvailable(), false);
+    assert.equal(fetchCalls, 0);
+  } finally {
+    globalThis.fetch = originalFetch;
   }
 });
 
-test('Scraper: scrapeWebQueryLeads extracts web listings or handles gracefully', async () => {
-  const results = await scrapeWebQueryLeads('electricians', 'Austin TX', { limit: 3 });
-  assert.ok(Array.isArray(results), 'Expected array of leads');
-});
-
-test('Scraper: scrapeLeadsMultiMethod supports combined and individual methods', async () => {
-  // Method 1: google_maps
-  const mapsResults = await scrapeLeadsMultiMethod({
-    niche: 'roofers',
-    geography: 'Austin TX',
-    method: 'google_maps',
-    limit: 2,
-  });
-  assert.ok(Array.isArray(mapsResults));
-
-  // Method 2: combined
-  const combinedResults = await scrapeLeadsMultiMethod({
-    niche: 'hvac',
-    geography: 'Austin TX',
-    method: 'combined',
-    limit: 2,
-  });
-  assert.ok(Array.isArray(combinedResults));
-  assert.ok(combinedResults.length > 0, 'Expected leads from combined scraping');
-});
-
-test('Enricher: enrichLead extracts or provides DNS MX candidates', async () => {
-  const dummyLead = {
-    business_name: 'Test Business',
-    website_url: 'https://google.com',
-  };
-  const result = await enrichLead(dummyLead);
-  assert.ok(Array.isArray(result.emails), 'Emails should be an array');
-  assert.ok(result.pages_crawled >= 0, 'Crawled pages should be tracked');
-});
-
-test('Pipeline: full 1-click discovery with auto-qualify and auto-verify advances leads', async () => {
-  const summary = await discoverLeads({
-    niche: 'Chiropractors',
-    geography: 'Austin TX',
-    options: {
-      limit: 2,
-      method: 'combined',
-    },
-  });
-
-  assert.ok(summary.batch, 'Batch was created');
-  assert.ok(summary.stats.scraped > 0, 'Leads were scraped');
-
-  const batchId = summary.batch.id;
-
-  // Auto-qualify test
-  const { qualifyBatch } = await import('../pipeline/qualifier.js');
-  const qResult = await qualifyBatch(batchId);
-  assert.ok(qResult, 'Qualification ran');
-
-  // Auto-verify test
-  const { verifyBatch } = await import('../pipeline/email-verifier.js');
-  const vResult = await verifyBatch(batchId);
-  assert.ok(vResult, 'Verification ran');
-
-  // Verify database integrity
-  const db = getDb();
-  const emails = db.prepare(`
-    SELECT le.* FROM lead_emails le
-    JOIN leads l ON le.lead_id = l.id
-    WHERE l.batch_id = ?
-  `).all(batchId);
-
-  assert.ok(Array.isArray(emails), 'Emails array returned');
+test('authorized-source imports remain separate from the legacy scraper surface', async () => {
+  await assert.rejects(
+    discoverLeads({ niche: 'plumbers', geography: 'Ontario' }),
+    /Import a contact CSV from a source you are authorized to use/,
+  );
 });

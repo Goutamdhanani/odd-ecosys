@@ -1,0 +1,3 @@
+ASTRA-LIVE-SOURCE-INTEGRATION
+
+The earlier /root/live_metadata1 assignment is released at the user-turn boundary; its five true-before files remain in .superpowers/astra-live/metadata/before. Fresh /root/live_metadata_finish owns only the paths in astra-live-metadata-plan.json and the same evidence folder. Verify existing before hashes against current untouched metadata before editing. Read and prepare now; final source pins and product/test metadata edits require explicit coordinator GO after the final prospecting verdict. No other source or evidence scope is transferred. Release and roadmap acceptance remain false.

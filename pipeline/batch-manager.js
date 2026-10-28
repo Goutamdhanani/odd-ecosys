@@ -98,6 +98,7 @@ export function getBatchStats(batchId) {
 
   return {
     ...batch,
+    lead_count: statusBreakdown.reduce((sum, row) => sum + row.count, 0),
     status_breakdown: statusBreakdown.reduce((acc, row) => {
       acc[row.status] = row.count;
       return acc;
@@ -115,7 +116,7 @@ export function getBatchStats(batchId) {
  */
 export function listBatches(options = {}) {
   const db = getDb();
-  let query = 'SELECT * FROM batches';
+  let query = 'SELECT b.*, (SELECT COUNT(*) FROM leads l WHERE l.batch_id=b.id) AS lead_count FROM batches b';
   const params = [];
 
   if (options.status) {

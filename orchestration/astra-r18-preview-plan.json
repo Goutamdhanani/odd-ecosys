@@ -1,0 +1,16 @@
+{
+  "planId":"ASTRA-R18-CUSTOMER-PREVIEW",
+  "state":"READY_AFTER_CUSTOMER_CORRECTION_REVIEW",
+  "authority":"User authorized run locally so they can use the implementation, while preserving existing source/data and disabling external actions",
+  "ownedPaths":["tools/astra/local-preview.mjs",".superpowers/r18/preview/**"],
+  "requirements":[
+    "Add explicit support for a strictly validated named disposable synthetic32 QA fixture, read in memory before environment cleanup; preserve default legacy preview behavior",
+    "Use a new dedicated preview fixture and port3212; never migrate or replace the old3211 fixture/session/database",
+    "Use unique new private state output for the R18 instance, preserve old local-preview-astra.json and previous private keys",
+    "Keep loopback-only transport, session/CSRF/origin/CSP/path protections and every external action disabled",
+    "Start hidden only after source validation; prove real workspace API and growth page with actual browser, safe startup status and no private tokens/URLs in diagnostic output",
+    "Persist required preview private state for use; invalidate temporary diagnostic sessions separately; never claim a deployed product"
+  ],
+  "constraints":["Luna/high only","No helpers","No real data or external providers","No other source edits","No git staging/commit/deploy"],
+  "releaseReady":false
+}

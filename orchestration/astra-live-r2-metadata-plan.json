@@ -1,0 +1,15 @@
+{
+  "id": "ASTRA-LIVE-R2-MONGO-ERROR-METADATA",
+  "owner": "/root/live_r2_metadata",
+  "paths": ["docs/astra/s00-source-delta.json", "docs/astra/s00-side-effect-inventory.json", "docs/astra/commercial-gates.json", ".superpowers/astra-live/metadata/r2-error-contract/**"],
+  "requirements": [
+    "Capture true before copies of the exact accepted R1 metadata before editing; preserve all original selected-source and dependency-license histories",
+    "The independently reviewed Mongo error-contract fix changes only store3efbdcad to bed484893d6a5ad5c7ad01ac073d4c1c731f0c0494a2b5987fa7c831f5dbde8e plus its focused test",
+    "Refresh only the current Mongo source fingerprint, its narrow source-authorization history and the derived inventory provenance hash; do not rewrite historical R1 source pins or original228/31/197 and48-boundary records",
+    "Retain50 current static boundaries and all supplemental database guard classifications; no new effects or fake detector exceptions",
+    "Commercial parsed fields must equal accepted R1 except its exact inventory provenance hash; the current163-path dependency manifest and every decision/runtime/approval field stay unchanged",
+    "Do not edit source, tests, migrations, package files, old manifests/archives/reviews or credentials",
+    "Run the existing three guarded metadata checks, report exact hashes/delta, stop for independent review before the new R2 freeze"
+  ],
+  "releaseReady": false
+}

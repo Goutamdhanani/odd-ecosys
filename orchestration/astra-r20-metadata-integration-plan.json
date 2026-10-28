@@ -1,0 +1,17 @@
+{
+  "planId": "ASTRA-R20-SOURCE-AND-BOUNDARY-INTEGRATION",
+  "writer": "/root/r20_metadata_integration",
+  "state": "AUTHORIZED_AFTER_UI_AND_FIXTURE_INDEPENDENT_RELEASE",
+  "latestScopeAddendum": ["UI_CHECKPOINT.json and its independent reports establish final UI product bytes, static privacy server change, and external blank environment-file placement","Preserve prior source authorization and add explicit R20 attribution for the latest UI/server deltas; public setup/template files must be recorded truthfully without ever including the external credential file","All R20 product/helper writers and relevant independent reviewers have released; do not use R19 hash values for changed current sources","Commercial decision values remain unchanged; no readiness or provider approval is inferred"],
+  "ownedPaths": ["docs/astra/s00-source-delta.json", "docs/astra/s00-side-effect-inventory.json", "docs/astra/commercial-gates.json", "tests/astra-source-fidelity.test.mjs", "tests/astra-side-effect-inventory.test.mjs", ".superpowers/r20/metadata-integration/**"],
+  "requirements": [
+    "Preserve the immutable selected-source snapshot, all228 rows,31 enumerated deltas,197 unchanged rows, original base hashes and every prior R18/R19 authorization. Refresh only current ownership fingerprint with explicit supplemental R20 authorization; no source drift waiver",
+    "Keep original static boundary discovery/count/negative probe and the two supplementalDatabaseReads helper assertions. Refresh all hashes/effects for final R20 product; add a separately asserted supplementalDatabaseWrites entry for the new append-only source-rights service rather than mislabeling its writes as reads or injecting fake static markers",
+    "Add exact service/helper guards, destinations, real behavior-test mappings and source hashes. The new table is app SELECT/INSERT and worker SELECT with tenant RLS; source rights never authorize provider or release gates",
+    "Update the R18 validator scratch test to copy only its canonical001–032 UP files and retain the exact32 count and all original positive/negative cases; the current filesystem now contains033, validated separately by strict R20 tests",
+    "Change commercial-gates only at the inventory provenance fingerprint; compare parsed before/after equality of every other decision and provenance field",
+    "Capture actual filesystem before copies before editing even when files are untracked in Git. Run guarded focused fidelity/inventory/commercial tests, preserve all failures/commands/logs/exits/hashes, and release for independent review. No full suite or unowned product/helper/test edits"
+  ],
+  "constraints": ["Only explicit astra-foundation checkout", "Luna/high only", "No migration/provider/preview/production-data/Git actions", "All original R19 artifacts immutable", "releaseReady=false"],
+  "releaseReady": false
+}

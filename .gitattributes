@@ -1,0 +1,3 @@
+# Astra fixtures pin exact historical bytes, including mixed line endings.
+# Never normalize these files during Git add or Windows checkout.
+migrations/astra/*.sql -text

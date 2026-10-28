@@ -1,0 +1,19 @@
+{
+  "id": "ASTRA-ACTUAL-ATLAS-VALIDATION-EXTENSION",
+  "owner": "/root/live_atlas_registry",
+  "paths": ["artifacts/astra-live-validation/**", ".superpowers/astra-live/validation/atlas-extension/**"],
+  "requirements": [
+    "Capture true before copies of active results, assertion contract and changed package reports before modifications; preserve all100 initial attempts and existing8v1/12v2/10v3 accepted rows",
+    "Prepare a version4 typed assertion proposal for only actual independently accepted Atlas cases; no registration before root's exact coordinator binding and GO",
+    "Retain the native R1 ATLAS09 failure as a failed historical registration before the approved fixed PASS, using source-bound immutable public snapshots and sanitized actual evidence",
+    "Real-service PASS requires actual child exit0, exact current tested source hashes, per-case observed predicates and successful scoped cleanup; do not count partial observations or local doubles",
+    "Record ATLAS03/04/08 as NOT_RUN with exact undercoverage/outage reasons if those purposes remain unproven; never keep obsolete missing-URI blockers after real authenticated operations",
+    "Preserve both setup failures, actual root-cause comparison, fixed rerun, request counts and all synthetic cleanup evidence in the failure and repair package",
+    "Catalog requests total3 and inference POSTs total3 with307 tokens; current exact selected identity remains glm-5.3-flash, and specialist gateway integration remains unproven",
+    "No private credentials, URI, personal mailbox details, private fixture fingerprints or raw provider errors in artifacts; no product, registrar, frozen source archive or earlier review edits",
+    "Prepare current readiness and functional-gap reports with an explicit distinction between accepted R1's594-test checkpoint and the new one-line Mongo revision awaiting R2 full regression",
+    "No runtime or remote service execution by this writer; independent evidence/package review remains required"
+  ],
+  "releaseReady": false,
+  "roadmap52Accepted": false
+}

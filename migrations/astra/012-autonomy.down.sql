@@ -1,0 +1,14 @@
+BEGIN;
+SET ROLE astra_owner;
+DROP TABLE IF EXISTS astra.execution_attempts;
+DROP TABLE IF EXISTS astra.execution_tickets;
+DROP TABLE IF EXISTS astra.authorization_exception_approvals;
+DROP TABLE IF EXISTS astra.authorization_exception_requests;
+DROP TABLE IF EXISTS astra.authorization_revocations;
+DROP TABLE IF EXISTS astra.authorization_approvals;
+DROP TABLE IF EXISTS astra.campaign_authorizations;
+DROP TABLE IF EXISTS astra.decisions;
+DROP FUNCTION IF EXISTS astra.execution_ticket_guard();
+DROP FUNCTION IF EXISTS astra.autonomy_immutable_guard();
+RESET ROLE;
+COMMIT;

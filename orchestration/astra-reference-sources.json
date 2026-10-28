@@ -1,0 +1,31 @@
+{
+  "purpose": "Read-only implementation references; no production dependency or release approval implied.",
+  "sources": [
+    {
+      "name": "Inspect AI",
+      "url": "https://github.com/UKGovernmentBEIS/inspect_ai",
+      "commit": "5bfa62473909ff3a79a4964c7dbeb0bd8685e756",
+      "localPath": ".runner/references/inspect_ai",
+      "observedLicense": "MIT",
+      "use": "Read public Task, Solver, Scorer and ModelOutput contracts for a separate OddEcosys offline application adapter.",
+      "installed": false,
+      "upstreamModified": false,
+      "upstreamContribution": false
+    }
+  ],
+  "previewClockRuntime": {
+    "purpose": "Align only disposable PG process with Windows app clock",
+    "package": "libfaketime",
+    "version": "0.9.10-2.1",
+    "packageSha256": "25fc8987f1f700c58603f68edd93ac03a1b7dea35da1e84509f29f444d5b11e9",
+    "librarySha256": "7ac8a1cdff1b627548de11513fddedd75014f5b041e9ae9054a634bb04aa7982",
+    "upstream": "https://github.com/wolfcw/libfaketime",
+    "licenseObserved": "GPL-2.0",
+    "installedGlobally": false,
+    "distributedWithProduct": false,
+    "productionApproval": "unknown",
+    "syntheticOnly": true,
+    "systemClockChanged": false,
+    "authenticationTtlUnchanged": true
+  }
+}

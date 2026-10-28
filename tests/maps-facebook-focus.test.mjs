@@ -7,7 +7,6 @@ import {
   scrapeFacebookLeads,
   scrapeLeadsMultiMethod,
 } from '../pipeline/scraper.js';
-import { extractFacebookUrl, normalizeFacebookUrl } from '../pipeline/enricher.js';
 import { checkFacebookLiveness } from '../pipeline/qualifier.js';
 
 test('Google Maps: getCityCoordinates resolves coordinates across global and regional queries', () => {
@@ -53,97 +52,40 @@ test('Facebook: cleanFacebookUrl standardizes page links and strips tracking', (
   assert.equal(cleanFacebookUrl(null), null);
 });
 
-test('Facebook: extractFacebookUrl detects pages from anchors, JSON-LD, OpenGraph, and widgets', () => {
-  // 1. Anchor tag with tracking
-  const html1 = `<div><a href="https://www.facebook.com/AustinBakery?locale=en_US">Follow Us</a></div>`;
-  assert.equal(extractFacebookUrl(html1), 'https://www.facebook.com/AustinBakery');
-
-  // 2. Schema.org JSON-LD sameAs array
-  const html2 = `
-    <html>
-      <head>
-        <script type="application/ld+json">
-          {
-            "@context": "https://schema.org",
-            "@type": "LocalBusiness",
-            "name": "Austin Dental",
-            "sameAs": [
-              "https://twitter.com/austindental",
-              "https://www.facebook.com/AustinDentalPractice/"
-            ]
-          }
-        </script>
-      </head>
-      <body></body>
-    </html>
-  `;
-  assert.equal(extractFacebookUrl(html2), 'https://www.facebook.com/AustinDentalPractice');
-
-  // 3. OpenGraph meta tag
-  const html3 = `<html><head><meta property="article:publisher" content="https://www.facebook.com/CapitalRoofing"></head></html>`;
-  assert.equal(extractFacebookUrl(html3), 'https://www.facebook.com/CapitalRoofing');
-
-  // 4. Iframe Facebook Page Plugin widget
-  const html4 = `
-    <html><body>
-      <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FModernPlumbingAustin&tabs=timeline"></iframe>
-    </body></html>
-  `;
-  assert.equal(extractFacebookUrl(html4), 'https://www.facebook.com/ModernPlumbingAustin');
-
-  // 5. Shortlink
-  const html5 = `<a href="https://fb.me/ATXElectric">FB</a>`;
-  assert.equal(extractFacebookUrl(html5), 'https://www.facebook.com/ATXElectric');
+test('legacy Google Maps scraping fails closed without contacting the source', async () => {
+  await assert.rejects(scrapeGoogleMapsNative('dentists in Austin TX', { limit: 3 }), /Google Maps scraping is disabled/);
 });
 
-test('Google Maps: scrapeGoogleMapsNative extracts complete B2B data', async () => {
-  const leads = await scrapeGoogleMapsNative('dentists in Austin TX', { limit: 3 });
-  assert.ok(Array.isArray(leads));
-  assert.ok(leads.length > 0, 'Should extract at least 1 lead');
-
-  const first = leads[0];
-  assert.ok(first.business_name, 'Business name is required');
-  assert.equal(first.source, 'google_maps');
-  assert.ok(first.city, 'City is extracted');
-  assert.ok(first.address, 'Address is extracted');
-  if (first.phone) {
-    assert.match(first.phone, /\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}/);
-  }
+test('legacy Facebook scraping fails closed without contacting the source', async () => {
+  await assert.rejects(scrapeFacebookLeads('plumbers', 'Austin TX', { limit: 2 }), /Facebook scraping is disabled/);
 });
 
-test('Facebook: scrapeFacebookLeads returns valid structured prospects', async () => {
-  const fbLeads = await scrapeFacebookLeads('plumbers', 'Austin TX', { limit: 2 });
-  assert.ok(Array.isArray(fbLeads));
-  for (const lead of fbLeads) {
-    assert.ok(lead.business_name);
-    assert.equal(lead.source, 'facebook');
-    assert.ok(lead.city);
-  }
-});
-
-test('Multi-method: scrapeLeadsMultiMethod supports facebook engine and deduplication', async () => {
-  const leads = await scrapeLeadsMultiMethod({
+test('legacy multi-method Facebook discovery fails closed', async () => {
+  await assert.rejects(scrapeLeadsMultiMethod({
     niche: 'dentists',
     geography: 'Austin TX',
     method: 'facebook',
     limit: 2,
-  });
-  assert.ok(Array.isArray(leads));
-  for (const lead of leads) {
-    assert.equal(lead.source, 'facebook');
-  }
+  }), /Facebook scraping is disabled/);
 });
 
 test('Facebook: checkFacebookLiveness handles valid and invalid pages without stalling', async () => {
-  // Null or invalid URL returns null fast
-  const rNull = await checkFacebookLiveness(null);
-  assert.equal(rNull, null);
+  let requests = 0;
+  const missing = await checkFacebookLiveness(null, { fetchPage: async () => { requests += 1; } });
+  assert.deepEqual(missing, { value: null, reason: 'facebook_url_missing' });
+  assert.equal(requests, 0);
 
-  const rInvalid = await checkFacebookLiveness('not-a-url');
-  assert.equal(rInvalid, null);
+  const unavailable = await checkFacebookLiveness('https://www.facebook.com/example-page', {
+    fetchPage: async () => { requests += 1; return { ok: false, status: 404 }; },
+  });
+  assert.deepEqual(unavailable, { value: 0, reason: null });
+  assert.equal(requests, 1);
 
-  const rNonFb = await checkFacebookLiveness('https://example.com');
-  assert.equal(rNonFb, null);
+  const throttled = await checkFacebookLiveness('https://www.facebook.com/example-page', {
+    fetchPage: async () => { requests += 1; return { ok: false, status: 429 }; },
+  });
+  assert.deepEqual(throttled, { value: null, reason: 'facebook_rate_limited_http_429' });
+  assert.equal(requests, 2);
 });
 
 test('Google Maps: getGeoGridCoordinates tiles cardinal quadrants for deep city scan', async () => {

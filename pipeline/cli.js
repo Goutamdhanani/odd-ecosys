@@ -3,7 +3,7 @@
 //  Comprehensive CLI for all 9 pipeline phases & control plane
 //
 //  Usage:
-//    node pipeline/cli.js discover --niche "dentists" --geo "Austin TX"
+//    node pipeline/cli.js discover --niche "dentists" --geo "Austin TX" (disabled until an approved source is configured)
 //    node pipeline/cli.js import --csv ./data/leads.csv --batch-name "Test"
 //    node pipeline/cli.js qualify --batch-id 4
 //    node pipeline/cli.js verify --batch-id 4
@@ -27,7 +27,7 @@ import { verifyBatch, verifyEmail as verifySingleEmail } from './email-verifier.
 import { personalizeBatch } from './personalizer.js';
 import { seedDatabase } from './seed.js';
 import { generateTemplate } from './csv-importer.js';
-import { queueSends, processSendQueue, recomputeHealthScores } from './sending-engine.js';
+import { queueSends, processSendQueue, recomputeHealthScores, getCampaignPreflight } from './sending-engine.js';
 import { ingestInboundReply } from './reply-tracker.js';
 import { suppressEmail, listSuppressed } from './compliance.js';
 import { archiveBatch, getArchiveStats } from './archiver.js';
@@ -78,10 +78,23 @@ async function main() {
     if (command === 'seed' && (process.env.NODE_ENV !== 'test' || !process.env.ODD_DB_PATH)) {
       throw new Error('Seed requires NODE_ENV=test and an explicit ODD_DB_PATH for a fixture database');
     }
+    if (command === 'import' && !args.csv) throw new Error('--csv required');
+    if (command === 'reply' && !args.from) throw new Error('--from email required');
+    if (command === 'suppress' && !args.email) throw new Error('--email required');
+    if (command === 'archive-batch') {
+      const batchId = Number(args['batch-id'] || args.b);
+      if (!Number.isInteger(batchId) || batchId < 1) throw new Error('--batch-id must be a positive integer');
+    }
+    if (command === 'discover') {
+      const niche = args.niche || args.n;
+      const geography = args.geo || args.g;
+      if (!niche || !geography) throw new Error('--niche and --geo required');
+      await discoverLeads({ niche, geography, options: args });
+      return;
+    }
     initDb();
     switch (command) {
       case 'import': {
-        if (!args.csv) throw new Error('--csv required');
         const res = await importLeads({
           csvPath: path.resolve(args.csv),
           batchName: args['batch-name'] || 'CSV import',
@@ -103,15 +116,6 @@ async function main() {
         } else console.table(listBatches());
         break;
       }
-      case 'discover': {
-        const niche = args.niche || args.n;
-        const geography = args.geo || args.g;
-        if (!niche || !geography) throw new Error('--niche and --geo required');
-        const res = await discoverLeads({ niche, geography, options: args });
-        console.log('✅ Discovery complete:', res);
-        break;
-      }
-
       case 'qualify': {
         const batchId = parseInt(args['batch-id'] || args.b || 1);
         const res = await qualifyBatch(batchId, args);
@@ -141,7 +145,10 @@ async function main() {
       case 'queue-sends': {
         const campaignId = parseInt(args['campaign-id'] || args.c || 1);
         const limit = parseInt(args.limit || 50);
-        const res = await queueSends(campaignId, { limit });
+        const review = getCampaignPreflight(campaignId);
+        console.log('Campaign preflight:', review.counts, review.blockers);
+        if (!review.ready) throw new Error('Campaign preflight has blockers; resolve them before queueing.');
+        const res = await queueSends(campaignId, { limit, reviewHash: review.reviewHash });
         console.log('✅ Sends queued:', res);
         break;
       }
@@ -156,7 +163,6 @@ async function main() {
       case 'reply': {
         const fromEmail = args.from;
         const body = args.body || 'Interested, please send more details.';
-        if (!fromEmail) throw new Error('--from email required');
         const res = await ingestInboundReply({ fromEmail, body });
         console.log('✅ Reply ingested & classified:', res);
         break;
@@ -164,7 +170,6 @@ async function main() {
 
       case 'suppress': {
         const email = args.email;
-        if (!email) throw new Error('--email required');
         suppressEmail(email, args.reason || 'cli_manual');
         console.log(`✅ ${email} added to global suppression list`);
         break;
@@ -172,7 +177,6 @@ async function main() {
 
       case 'archive-batch': {
         const batchId = parseInt(args['batch-id'] || args.b);
-        if (!batchId) throw new Error('--batch-id required');
         const res = archiveBatch(batchId);
         console.log('✅ Batch archived & database vacuumed:', res);
         break;
@@ -216,7 +220,7 @@ function printHelp() {
   console.log(`
 ODD-ECOSYS Pipeline CLI
 Commands:
-  discover      --niche "dentists" --geo "Austin TX"
+  discover      disabled: use an authorized source CSV until a permitted provider is configured
   import        --csv ./data/leads.csv --batch-name "My Batch"
                 --skip-enrichment (no external website requests)
   seed          fixture database only: NODE_ENV=test and ODD_DB_PATH required

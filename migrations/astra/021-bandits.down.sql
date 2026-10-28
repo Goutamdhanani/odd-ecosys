@@ -1,0 +1,13 @@
+BEGIN;
+SET ROLE astra_owner;
+DROP TABLE IF EXISTS astra.bandit_evaluation_reports;
+DROP TABLE IF EXISTS astra.bandit_reward_reviews;
+DROP TABLE IF EXISTS astra.bandit_observations;
+DROP TABLE IF EXISTS astra.bandit_lane_proposals;
+DROP TABLE IF EXISTS astra.bandit_evaluation_lanes;
+DROP TABLE IF EXISTS astra.bandit_arm_registry;
+DROP FUNCTION IF EXISTS astra.guard_bandit_append_only();
+DROP FUNCTION IF EXISTS astra.guard_bandit_arm_evidence() RESTRICT;
+DROP FUNCTION IF EXISTS astra.guard_bandit_proposal() RESTRICT;
+DROP FUNCTION IF EXISTS astra.guard_bandit_observation() RESTRICT;
+COMMIT;

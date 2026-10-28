@@ -1,0 +1,40 @@
+{
+  "planId": "ASTRA-R19-QUALIFICATION-PROOF-INTEGRATION",
+  "state": "ACTIVE_AFTER_R18A_509_PASS",
+  "authority": "Current human continuation and accepted R17 mission; R18 acceptance limits explicitly require positive synthetic qualification and trustworthy evidence lineage.",
+  "roadmapScope": [
+    "S13 research claims",
+    "S14 offer-aware qualification",
+    "S19 evidence-bound campaign approval"
+  ],
+  "ownedPaths": [
+    "pipeline/astra-campaigns.js",
+    "pipeline/astra-claims.js",
+    "pipeline/astra-current-claims.js",
+    "tests/astra-qualification-lineage.test.mjs",
+    ".superpowers/r19/qualification-proof/**"
+  ],
+  "targetedObservation": "Current qualification joins claims by subject domain to the contact candidate's evidence/source and emits the candidate evidence/hash for every claim. Latest correction values are read without their replacement proof/source. Reproduce the effect on synthetic data before changing behavior.",
+  "requirements": [
+    "Establish a real positive synthetic qualification with fitCount=1 using approved owned offer, exact literal industry/country claims and an owned email candidate, without implying mailbox verification, permission or delivery eligibility.",
+    "Resolve each claim's actual current proof, including a corrected claim's evidence/hash/excerpt and source, rather than borrowing the contact page's source rights or provenance. Validate current tenant/account domain, exact proof value/excerpt/hash, current rights, expiry, and retraction.",
+    "Return claimRefs tied to the real effective proof; different industry/country/contact pages must retain their own identities. A foreign-domain proof, expired/revoked rights or unsupported replacement cannot qualify an account.",
+    "Keep draft-copy checks, domain applicability, approval/offline-plan and dispatch-lease revalidation consistent with current effective claim proof and eligibility inputs. Stale qualification snapshots must not bypass newly revoked or expired proof. All live transport remains disabled.",
+    "Use actual insertion timestamps for newly persisted corrections if required for causal ordering; latest conflicting timestamp ambiguity must fail closed. Preserve legacy data and all immutable UP migrations.",
+    "Retain existing APIs, tenant/offer ownership, approval hash, suppression, permission and verifier gates. No positive manual verifier promotion, probability claim or fabricated provider result.",
+    "Add meaningful guarded actual PostgreSQL/API regressions for positive split-page provenance, source revocation, corrected proof rights, stale/retracted/ambiguous proof and cross-tenant/account negatives. Preserve failed reproductions and existing assertions.",
+    "Coordinate returned proof usability/shape with the separate customer-console writer through messages; do not edit that writer's HTML/CSS/JS/tests. Release source hashes for independent review and final inventory/source integration."
+  ],
+  "constraints": [
+    "Do not edit frozen R18a inputs until its suite ends",
+    "Only explicit astra-foundation checkout; no a4a4 edits",
+    "Luna/high only",
+    "One writer per file",
+    "No external calls or real data",
+    "No migrations/gate enablement/Git mutations",
+    "Keep releaseReady=false"
+  ],
+  "releaseReady": false,
+  "writer": "/root/r19_qualification_proof",
+  "checkpoint": "astra-r18a-f9faca4783f610a9"
+}

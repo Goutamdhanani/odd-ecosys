@@ -1,0 +1,19 @@
+{
+  "id": "ASTRA-LIVE-PROSPECTING-REVIEW-ROUND3",
+  "owner": "/root/live_prospecting_fix3",
+  "transfersReleasedAssignment": "/root/live_prospecting1",
+  "reviewBaseline": ".superpowers/astra-live/review-prospecting/fix-round2/review.md",
+  "paths": ["pipeline/astra-prospecting.js", "pipeline/astra-source-collection.js", "tests/astra-prospecting.test.mjs", "tests/astra-prospecting-source-gate.test.mjs", ".superpowers/astra-live/prospecting/fix-round3/**"],
+  "requirements": [
+    "Capture exact before copies before writing; preserve all previous implementation and review evidence",
+    "Reproduce the reviewer-owned pause-during-request-admission defect without network access",
+    "A proven pre-transport pause or stale fence must preserve resumability of the same durable SQL source job and its prior run history",
+    "Do not blindly replay external requests after a transport attempt, ambiguous outcome, uncertain Mongo commit, completed or in-flight source job",
+    "Cancellation remains fail-closed; no requests or durable budget consumption after the post-wait guard rejects execution",
+    "Preserve tenant ownership, S01/source rights, SSRF/robots restrictions, request accounting and one-request-per-second admission",
+    "Add deterministic behavioral regressions for pause during admission and resume of the same job; cover cancellation and uncertain/post-transport paths",
+    "Run focused affected checks only; release exact hashes and a frozen report for independent spec and quality review"
+  ],
+  "noLiveServices": true,
+  "releaseReady": false
+}

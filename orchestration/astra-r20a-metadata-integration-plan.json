@@ -1,0 +1,8 @@
+{
+  "id":"ASTRA-R20A-METADATA-INTEGRATION",
+  "owner":"/root/r20a_metadata_writer1",
+  "paths":["docs/astra/s00-source-delta.json","docs/astra/s00-side-effect-inventory.json","docs/astra/commercial-gates.json","tests/astra-source-fidelity.test.mjs","tests/astra-side-effect-inventory.test.mjs",".superpowers/r20a/metadata-integration/**"],
+  "dependencies":["Released and independently accepted expiry and workspace corrections from astra-r20a-qa-corrections-plan.json"],
+  "requirements":["True before copies; preserve selected228/31/197 baseline and immutable prior authorizations","Refresh actual changed fingerprints with additive R20a review provenance; preserve all46 existing paths and detector/negative assertions","Commercial registry only inventory provenance may change; parsed equality of every other field against accepted before and original preR20","Do not weaken source-rights, forced-RLS, ownership, test coverage or exact-count assertions","Guarded focused checks then independent review; no product edits, privateenv/fixture reads, schema/provider/Git operations"],
+  "releaseReady":false
+}

@@ -1,0 +1,12 @@
+{
+  "id":"ASTRA-R20-PRODUCTION-QA-CONTINUATION",
+  "sourceRoot":"C:/Users/pooja/.codex/worktrees/astra-foundation/odd-ecosys",
+  "baseHead":"f30490bd892dd651fd2fb276b09b510379e27c0d",
+  "predecessors":["astra-r19-5da52dcb18e51f40","astra-r20-ui-b6f981a21eaa912b"],
+  "sequence":["Integrate released R20 source/provenance and side-effect metadata","Independently accept metadata and fixture compatibility corrections","Freeze current candidate without changing historic candidates","Run complete source-bound suite with strict synthetic33 fixture and enforced egress guard","Fix reproduced defects under bounded ownership and freeze a new successor rather than rewrite failed candidates","Run current route/tenant security, synthetic end-to-end journey, migration/rollback and retained-secret checks","Reconcile actual feature acceptance and external dependencies, obtain independent Luna acceptance, report evidence-backed score without rounding gaps away"],
+  "latestUiScope":"Seven sections,16 forms,61 named fields; guided and Pro modes independently accepted; preserve product hashes in UI_CHECKPOINT unless a reproduced defect requires correction",
+  "qaDatabase":"Canonical .runner/astra-qa/r20-source-rights/pg.json only for current33 integration; legacy validators/fixtures remain independently strict",
+  "privateCredentialFile":"E:/OddEcosysSandbox/.env.astra-sandbox.local; do not read or hash as part of repository QA",
+  "constraints":["Luna coding/review only; coordinator orchestration/helpers only","One writer per named path; record before copies and independent review","No live outreach/provider calls/production deployment/migration","Do not replace or weaken tenant ownership, CSRF, source rights, approval or egress gates","No whole-roadmap or100-percent claim based on routes or a green suite alone","No Git staging/commit/push or protected a4a4 edits","Keep historical reports/failures immutable; new artifacts in new folders"],
+  "releaseReady":false
+}

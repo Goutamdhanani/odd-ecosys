@@ -1,0 +1,12 @@
+BEGIN;
+SET ROLE astra_owner;
+DROP TABLE IF EXISTS astra.campaign_dispatch_claims;
+DROP TABLE IF EXISTS astra.campaign_dispatch_plans;
+DROP TABLE IF EXISTS astra.campaign_approvals;
+DROP TABLE IF EXISTS astra.campaign_verification_records;
+DROP TABLE IF EXISTS astra.campaign_qualifications;
+DROP TABLE IF EXISTS astra.campaigns;
+DROP FUNCTION IF EXISTS astra.campaign_row_guard();
+DROP FUNCTION IF EXISTS astra.campaign_immutable_guard();
+RESET ROLE;
+COMMIT;

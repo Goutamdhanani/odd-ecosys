@@ -1,0 +1,17 @@
+{
+  "planId": "ASTRA-R18A-PREVIEW-CSP-HARDENING",
+  "authority": "Independent R18 preview review identified a bounded P2 script CSP concern; current user authorizes continued completion and fixes.",
+  "writer": "/root/r18a_preview_hardening",
+  "ownedPaths": ["tools/astra/local-preview.mjs", ".superpowers/r18a/preview-hardening/**"],
+  "transfer": {"from": "/root/r18_preview", "state": "completed_and_released"},
+  "requirements": [
+    "Remove blanket unsafe-inline script permission on the new customer preview and give the authorized local opener bootstrap a per-response nonce or same-origin external script with a suitable CSP.",
+    "Preserve customer and advanced workspace behavior, origin/host/CSRF/path/egress guards, dedicated synthetic fixture selection, and disabled external actions.",
+    "Preserve before copy and exact reviewed source hashes; do not rewrite frozen R18 reports or helper files.",
+    "Restart only the new dedicated port3212 preview after checking exact PID and command ownership. Preserve old port3211 PID22676, its data, state and credentials. Reuse the approved new preview fixture privately; do not seed fake business records.",
+    "Guarded browser validation must prove the real opener/customer seven sections and advanced owner access work, arbitrary inline script is blocked, same-origin module scripts load, and no browser errors or external requests occur.",
+    "Record exact result, source hash and process metadata in redacted diagnostics without key/token/session/connection-string exposure. Release paths for an independent Luna review."
+  ],
+  "constraints": ["Luna/high only", "No other product/test edits", "No production actions or real data", "No external calls", "Do not stop old3211", "Do not expose private preview state", "No git mutations", "Keep releaseReady=false"],
+  "releaseReady": false
+}

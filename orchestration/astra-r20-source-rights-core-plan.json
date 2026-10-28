@@ -1,0 +1,18 @@
+{
+  "planId": "ASTRA-R20-DURABLE-SOURCE-RIGHTS-REVOCATION",
+  "authority": "Dependency-ready source authorization gap identified by the independently reviewed R19 implementation; current user requests continued complete implementation",
+  "writer": "/root/r20_source_rights_core",
+  "ownedPaths": ["pipeline/astra-source-rights.js", "pipeline/astra-research-routes.js", "migrations/astra/033-source-rights-revocations.up.sql", "migrations/astra/033-source-rights-revocations.down.sql", "tests/support/astra-r20-fixture.mjs", "tests/astra-source-rights.test.mjs", ".superpowers/r20/source-rights-core/**"],
+  "requirements": [
+    "Implement a dedicated additive append-only tenant/source revocation record with source FK, actor/reason, immutable timestamp and idempotency safeguards; immutable source evidence and historical observations must remain unchanged",
+    "Prepare migration033 UP/DOWN without executing it. Original001-032 files stay byte-identical. Use current RLS/context and least-privileged app/worker grants; no privileged runtime, UPDATE/DELETE/TRUNCATE rights, trigger bypass or restoration shortcut",
+    "Expose GET /research/sources/:sourceId/rights and owner/admin-only POST /research/sources/:sourceId/rights-revocations in existing research route assembly. Derive tenant/user from verified actor; unknown/foreign sources return404; reject body identity spoofing, malformed or unbounded reasons, and conflicting idempotent retries",
+    "Provide readAstraSourceRights(client, tenantId, sourceIds): Map keyed by source UUID, values including sourceId, found, usable, status (permitted/revoked/expired/unavailable), sourceUrl, rightsPolicy, rightsExpiresAt, revokedAt, revocationEventId and reason. Missing/foreign/uncertain sources are not usable; caller-supplied timestamps/rights may never override persisted status",
+    "A revoked captured source stays revoked. A separately supplied new capture still requires a new explicit rights attestation; do not imply it restores an older source grant. Historical evidence remains readable as history; do not use generic ledger event aliases to evade its enforced event-type schema",
+    "Prepare strict task-scoped synthetic33 fixture validation with canonical contained named r20-source-rights fixture, distinct loopback app/worker roles, realData=false and pinned all33 UP hashes. Do not weaken or edit the existing strict31/32 validator",
+    "Add meaningful actual API/PostgreSQL tests for owner/admin success, operator/reviewer/foreign denial, CSRF, retries/conflicts/concurrency, read-only worker visibility and append-only/RLS constraints. Wait for root to prepare a fresh explicit synthetic33 fixture before DB tests. No changes to old QA/preview/customer databases",
+    "Publish the route response contract and helper availability before consumer integration. Preserve before copies, failed runs, raw logs and exact hashes; release for independent review. No full suite during feature implementation"
+  ],
+  "constraints": ["Only explicit astra-foundation checkout; no a4a4 edits", "Luna/high only", "No migration execution, live providers, outreach, deployment, real data, preview restart, policy enablement or Git mutations", "No existing schema/helper or unowned consumer edits", "Original R19 manifests/reports/logs stay immutable", "releaseReady=false"],
+  "releaseReady": false
+}

@@ -1,0 +1,2993 @@
+{
+  "schemaVersion": 1,
+  "artifactType": "locally-derived-acceptance-requirements-map",
+  "provenance": {
+    "derivedBy": "tools/astra/derive-acceptance.mjs",
+    "sources": {
+      "acceptanceMatrix": {
+        "path": "E:/ACCEPTANCE_MATRIX.md",
+        "sha256": "e2879c157b60651e5eeaccff70ea6f0fdafeeac46c1a6488041a9f1801450ecf"
+      },
+      "continuousExecutionContract": {
+        "path": "E:/ASTRA_LUNA_CONTINUOUS_EXECUTION.md",
+        "sha256": "c368303885c9ae68f1a2074d12160aaf5c38cda4ffb4348f1045507a3e5585cf"
+      },
+      "authoritativeBacklog": {
+        "path": "docs/astra/combined-backlog.json",
+        "sha256": "dd488744f647baf03e6dac1fdcd1ed3ea095b65c78b72554f50019d736acc042"
+      }
+    },
+    "missingOriginalCompanions": [
+      "E:/ACCEPTANCE_MATRIX.json",
+      "E:/validate_acceptance.py"
+    ],
+    "disclaimer": "This derived map is not either missing original companion and cannot authenticate a Luna reviewer or establish task acceptance."
+  },
+  "taskCount": 52,
+  "taskIds": [
+    "S00",
+    "S01",
+    "S02",
+    "S03",
+    "S04",
+    "S05",
+    "S06",
+    "S07",
+    "S08",
+    "S09",
+    "S10",
+    "S11",
+    "S12",
+    "S13",
+    "S14",
+    "S15",
+    "S16",
+    "S17",
+    "S18",
+    "S19",
+    "S20",
+    "S21",
+    "S22",
+    "S23",
+    "S24",
+    "S25",
+    "S26",
+    "S27",
+    "S28",
+    "S29",
+    "S30",
+    "S31",
+    "S32",
+    "S33",
+    "S34",
+    "S35",
+    "X01",
+    "X02",
+    "X03",
+    "X04",
+    "X05",
+    "X06",
+    "X07",
+    "X08",
+    "X09",
+    "X10",
+    "X11",
+    "X12",
+    "X13",
+    "X14",
+    "X15",
+    "X16"
+  ],
+  "taskDAG": {
+    "S00": [],
+    "S01": [
+      "S00"
+    ],
+    "S02": [
+      "S00"
+    ],
+    "S03": [
+      "S00"
+    ],
+    "S04": [
+      "S03"
+    ],
+    "S05": [
+      "S03",
+      "S04"
+    ],
+    "S06": [
+      "S01",
+      "S03"
+    ],
+    "S07": [
+      "S04",
+      "S06"
+    ],
+    "S08": [
+      "S03",
+      "S04"
+    ],
+    "S09": [
+      "S03",
+      "S05"
+    ],
+    "S10": [
+      "S01",
+      "S09"
+    ],
+    "S11": [
+      "S09"
+    ],
+    "S13": [
+      "S04",
+      "S06",
+      "S09"
+    ],
+    "S14": [
+      "S02",
+      "S10",
+      "S11",
+      "S13"
+    ],
+    "S15": [
+      "S01",
+      "S03",
+      "S10"
+    ],
+    "S16": [
+      "S03",
+      "S04",
+      "S08"
+    ],
+    "S17": [
+      "S03",
+      "S04",
+      "S16"
+    ],
+    "S18": [
+      "S02",
+      "S06",
+      "S13",
+      "S14",
+      "S15"
+    ],
+    "S19": [
+      "S02",
+      "S04",
+      "S16",
+      "S18"
+    ],
+    "S20": [
+      "S05",
+      "S07",
+      "S16",
+      "S17",
+      "S19"
+    ],
+    "S21": [
+      "S06",
+      "S08",
+      "S16",
+      "S17"
+    ],
+    "S22": [
+      "S04",
+      "S08",
+      "S17"
+    ],
+    "S24": [
+      "S04",
+      "S08",
+      "S19"
+    ],
+    "S25": [
+      "S07",
+      "S08",
+      "S20",
+      "S21",
+      "S22",
+      "S24"
+    ],
+    "S26": [
+      "S06",
+      "S13",
+      "S18",
+      "S21"
+    ],
+    "S29": [
+      "S05",
+      "S19",
+      "S26"
+    ],
+    "S32": [
+      "S05",
+      "S07",
+      "S16",
+      "S20",
+      "S25"
+    ],
+    "X01": [
+      "S00",
+      "S05"
+    ],
+    "X02": [
+      "X01",
+      "S06",
+      "S07"
+    ],
+    "X03": [
+      "X02",
+      "S04",
+      "S09"
+    ],
+    "X04": [
+      "S13",
+      "S14",
+      "X01"
+    ],
+    "X06": [
+      "X02",
+      "S26"
+    ],
+    "X07": [
+      "X03",
+      "X04",
+      "X06"
+    ],
+    "X08": [
+      "X06",
+      "S09",
+      "S16",
+      "S20"
+    ],
+    "X10": [
+      "S19",
+      "S20",
+      "S21",
+      "X04"
+    ],
+    "X11": [
+      "S04",
+      "S17",
+      "S25"
+    ],
+    "X12": [
+      "S32",
+      "X02",
+      "X04"
+    ],
+    "X14": [
+      "X07",
+      "X08",
+      "X10",
+      "X11",
+      "X12",
+      "S29"
+    ],
+    "S12": [
+      "S09",
+      "S10",
+      "S11"
+    ],
+    "S23": [
+      "S03",
+      "S08",
+      "S13",
+      "S21"
+    ],
+    "S31": [
+      "S03",
+      "S04",
+      "S09",
+      "S17",
+      "S23"
+    ],
+    "S33": [
+      "S01",
+      "S20",
+      "S21",
+      "S22",
+      "S24",
+      "S25",
+      "S26",
+      "S29",
+      "S31",
+      "S32",
+      "X14"
+    ],
+    "S27": [
+      "S08",
+      "S14",
+      "S26"
+    ],
+    "S28": [
+      "S01",
+      "S23",
+      "S26"
+    ],
+    "S34": [
+      "S25",
+      "S33"
+    ],
+    "X05": [
+      "X04",
+      "S27",
+      "S24"
+    ],
+    "X09": [
+      "S23",
+      "S28",
+      "S29",
+      "X06"
+    ],
+    "X13": [
+      "X07",
+      "X11",
+      "X12",
+      "S07"
+    ],
+    "X15": [
+      "X05",
+      "X09",
+      "X13",
+      "X14"
+    ],
+    "S30": [
+      "S24",
+      "S25",
+      "S27",
+      "S29"
+    ],
+    "S35": [
+      "S22",
+      "S25",
+      "S33"
+    ],
+    "X16": [
+      "X04",
+      "X14"
+    ]
+  },
+  "topologicalOrder": [
+    "S00",
+    "S01",
+    "S02",
+    "S03",
+    "S04",
+    "S05",
+    "S06",
+    "S07",
+    "S08",
+    "S09",
+    "S10",
+    "S11",
+    "S13",
+    "S14",
+    "S15",
+    "S16",
+    "S17",
+    "S18",
+    "S19",
+    "S20",
+    "S21",
+    "S22",
+    "S24",
+    "S25",
+    "S26",
+    "S29",
+    "S32",
+    "X01",
+    "X02",
+    "X03",
+    "X04",
+    "X06",
+    "X07",
+    "X08",
+    "X10",
+    "X11",
+    "X12",
+    "X14",
+    "S12",
+    "S23",
+    "S31",
+    "S33",
+    "S27",
+    "S28",
+    "S34",
+    "X05",
+    "X09",
+    "X13",
+    "X15",
+    "S30",
+    "S35",
+    "X16"
+  ],
+  "requiredEdges": [
+    {
+      "from": "X14",
+      "to": "S33",
+      "source": "combined-backlog.json"
+    }
+  ],
+  "optionalOutsideInitialLaunch": [
+    "X16"
+  ],
+  "importIssues": [],
+  "tasks": [
+    {
+      "id": "S00",
+      "title": "Map the updated application",
+      "priority": "P0",
+      "dependencies": [],
+      "backlogStatusAtImport": "needs_improvement",
+      "desiredCapability": "Confirm current commit; map each target capability to real code and write retain/extend/replace ADRs. Do not import old audit findings.",
+      "acceptanceRule": "Every capability has observed evidence or an explicit unknown; owner can review migration implications.",
+      "originalBacklogCases": [
+        {
+          "id": "S00-B01",
+          "kind": "original-backlog-test",
+          "requirement": "Trace one synthetic research-to-outcome flow. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s00"
+        },
+        {
+          "id": "S00-B02",
+          "kind": "original-backlog-test",
+          "requirement": "inventory all side-effect boundaries. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s00"
+        }
+      ],
+      "supplementalCases": [
+        {
+          "id": "S00-01",
+          "kind": "supplemental-contract-case",
+          "title": "source fidelity",
+          "requirement": "Given selected commit plus 228-file overlay and stored snapshot, compare source-only paths/hashes; any divergence is enumerated and explained instead of replacing source with remote main.",
+          "sourceReference": "ASTRA_LUNA_CONTINUOUS_EXECUTION.md#4"
+        },
+        {
+          "id": "S00-02",
+          "kind": "supplemental-contract-case",
+          "title": "existing behavior",
+          "requirement": "Run actual selected auth, membership, campaign, sequence and reply/suppression tests; capture commands and unchanged historical fixture IDs/hashes; distinguish missing integration from pass.",
+          "sourceReference": "ASTRA_LUNA_CONTINUOUS_EXECUTION.md#4"
+        },
+        {
+          "id": "S00-03",
+          "kind": "supplemental-contract-case",
+          "title": "synthetic trace",
+          "requirement": "Given a synthetic approved offer/account/contact, trace discovery → source evidence → qualification → campaign intent → reply → CRM outcome across actual call sites; identify every stop and unknown. Do **not** count incomplete research-to-revenue as success.",
+          "sourceReference": "ASTRA_LUNA_CONTINUOUS_EXECUTION.md#4"
+        }
+      ],
+      "matrixReviewDeliverable": "changed code/manifest digest, exact test logs, regression result, migration and rollback evidence when applicable, security/privacy effects, reviewer session, and explicit independent verdict",
+      "statusAtImport": "NOT_ACCEPTED"
+    },
+    {
+      "id": "S01",
+      "title": "Resolve provider and source commercial gates",
+      "priority": "P0",
+      "dependencies": [
+        "S00"
+      ],
+      "backlogStatusAtImport": "unknown",
+      "desiredCapability": "Record GLM downstream-use/optimization/disclosure clarification, DPA, source resale/retention rights, OAuth requirements and license inventory.",
+      "acceptanceRule": "Approved launch-scope register; prohibited or unresolved use stays disabled. Architecture work may continue independently.",
+      "originalBacklogCases": [
+        {
+          "id": "S01-B01",
+          "kind": "original-backlog-test",
+          "requirement": "Review exact pinned licenses and vendor contract scope. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s01"
+        },
+        {
+          "id": "S01-B02",
+          "kind": "original-backlog-test",
+          "requirement": "no live inference with private data before permitted. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s01"
+        }
+      ],
+      "supplementalCases": [],
+      "matrixReviewDeliverable": "changed code/manifest digest, exact test logs, regression result, migration and rollback evidence when applicable, security/privacy effects, reviewer session, and explicit independent verdict",
+      "statusAtImport": "NOT_ACCEPTED"
+    },
+    {
+      "id": "S02",
+      "title": "Define offer and customer policy contracts",
+      "priority": "P0",
+      "dependencies": [
+        "S00"
+      ],
+      "backlogStatusAtImport": "new_development",
+      "desiredCapability": "Implement versioned offers, real proof assets, audience exclusions, approved price boundaries, capacity and jurisdiction/egress settings.",
+      "acceptanceRule": "Invalid or unapproved offers cannot enter campaigns; changes create new versions.",
+      "originalBacklogCases": [
+        {
+          "id": "S02-B01",
+          "kind": "original-backlog-test",
+          "requirement": "Boundary prices. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s02"
+        },
+        {
+          "id": "S02-B02",
+          "kind": "original-backlog-test",
+          "requirement": "revoked proof. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s02"
+        },
+        {
+          "id": "S02-B03",
+          "kind": "original-backlog-test",
+          "requirement": "missing geography and stale policy. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s02"
+        }
+      ],
+      "supplementalCases": [
+        {
+          "id": "S02-01",
+          "kind": "supplemental-contract-case",
+          "title": "version immutability",
+          "requirement": "Given approved offer v1, when revising terms then v2 is created and v1 campaign reference remains byte-identical; history is immutable.",
+          "sourceReference": "ASTRA_LUNA_CONTINUOUS_EXECUTION.md#4"
+        },
+        {
+          "id": "S02-02",
+          "kind": "supplemental-contract-case",
+          "title": "price/capacity",
+          "requirement": "Given outside-boundary price or depleted capacity, when campaign preflight or dispatch attempts use then execution is blocked and structured reason is logged; concurrent capacity claims cannot exceed limit.",
+          "sourceReference": "ASTRA_LUNA_CONTINUOUS_EXECUTION.md#4"
+        },
+        {
+          "id": "S02-03",
+          "kind": "supplemental-contract-case",
+          "title": "proof/authorization",
+          "requirement": "Given a revoked, expired, wrong-tenant, source-bytes-mismatched or unverifiable proof, attempt campaign binding and final dispatch: both fail closed; do not mark proof valid just because URL string exists.",
+          "sourceReference": "ASTRA_LUNA_CONTINUOUS_EXECUTION.md#4"
+        },
+        {
+          "id": "S02-04",
+          "kind": "supplemental-contract-case",
+          "title": "geography/egress",
+          "requirement": "Given missing or denied jurisdiction, prohibited model egress, stale offer policy or forbidden segment, block qualify/personalize/preflight/dispatch where policy applies.",
+          "sourceReference": "ASTRA_LUNA_CONTINUOUS_EXECUTION.md#4"
+        },
+        {
+          "id": "S02-05",
+          "kind": "supplemental-contract-case",
+          "title": "legacy compatibility",
+          "requirement": "Existing unbound campaigns remain unbound, preserve byte-identical original launch snapshot/hash and continue to obey previous suppression, sequence and idempotency gates. Tests must not rewrite historical material.",
+          "sourceReference": "ASTRA_LUNA_CONTINUOUS_EXECUTION.md#4"
+        }
+      ],
+      "matrixReviewDeliverable": "changed code/manifest digest, exact test logs, regression result, migration and rollback evidence when applicable, security/privacy effects, reviewer session, and explicit independent verdict",
+      "statusAtImport": "NOT_ACCEPTED"
+    },
+    {
+      "id": "S03",
+      "title": "Establish tenant-scoped storage and migration plan",
+      "priority": "P0",
+      "dependencies": [
+        "S00"
+      ],
+      "backlogStatusAtImport": "new_development",
+      "desiredCapability": "Map reference models to target database; enforce tenant compound references and RLS or equivalent; design reversible migration.",
+      "acceptanceRule": "Two-tenant negative tests pass across API, jobs, caches, objects and exports; app role cannot bypass isolation.",
+      "originalBacklogCases": [
+        {
+          "id": "S03-B01",
+          "kind": "original-backlog-test",
+          "requirement": "Forged IDs. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s03"
+        },
+        {
+          "id": "S03-B02",
+          "kind": "original-backlog-test",
+          "requirement": "pool context reuse. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s03"
+        },
+        {
+          "id": "S03-B03",
+          "kind": "original-backlog-test",
+          "requirement": "background job substitution. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s03"
+        },
+        {
+          "id": "S03-B04",
+          "kind": "original-backlog-test",
+          "requirement": "export leakage. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s03"
+        }
+      ],
+      "supplementalCases": [
+        {
+          "id": "S03-01",
+          "kind": "supplemental-contract-case",
+          "title": "isolation baseline",
+          "requirement": "create tenant A/B, same-shaped IDs and role variants; tenant A's valid access succeeds, B's access to A's record yields no information about A.",
+          "sourceReference": "ASTRA_LUNA_CONTINUOUS_EXECUTION.md#4"
+        },
+        {
+          "id": "S03-02",
+          "kind": "supplemental-contract-case",
+          "title": "forged foreign object ID",
+          "requirement": "API GET/POST/PATCH/DELETE with other-tenant ID cannot read, modify, infer or enqueue work for it; test associated counts and error bodies too.",
+          "sourceReference": "ASTRA_LUNA_CONTINUOUS_EXECUTION.md#4"
+        },
+        {
+          "id": "S03-03",
+          "kind": "supplemental-contract-case",
+          "title": "compound references",
+          "requirement": "insert reference pairing tenant B with tenant A object: DB constraints/policies reject; historical globally scoped legacy data is mapped explicitly or quarantined.",
+          "sourceReference": "ASTRA_LUNA_CONTINUOUS_EXECUTION.md#4"
+        },
+        {
+          "id": "S03-04",
+          "kind": "supplemental-contract-case",
+          "title": "app DB role",
+          "requirement": "the actual application/worker database role, **not only privileged test role**, cannot `SELECT`, `UPDATE` or join foreign-tenant records, including join and export paths.",
+          "sourceReference": "ASTRA_LUNA_CONTINUOUS_EXECUTION.md#4"
+        },
+        {
+          "id": "S03-05",
+          "kind": "supplemental-contract-case",
+          "title": "connection pool reuse",
+          "requirement": "run A request then B request on reused pooled connection after exception/cancellation; tenant context cannot bleed into B.",
+          "sourceReference": "ASTRA_LUNA_CONTINUOUS_EXECUTION.md#4"
+        },
+        {
+          "id": "S03-06",
+          "kind": "supplemental-contract-case",
+          "title": "job substitution",
+          "requirement": "worker receives authorized job for A but payload references B: reject pre-execution; no B side effects or leaks in error/logs.",
+          "sourceReference": "ASTRA_LUNA_CONTINUOUS_EXECUTION.md#4"
+        },
+        {
+          "id": "S03-07",
+          "kind": "supplemental-contract-case",
+          "title": "cache and stored object",
+          "requirement": "identical cache key/URL/bucket path across tenants cannot cross-leak; object signed URL must enforce tenant authorization and expiry.",
+          "sourceReference": "ASTRA_LUNA_CONTINUOUS_EXECUTION.md#4"
+        },
+        {
+          "id": "S03-08",
+          "kind": "supplemental-contract-case",
+          "title": "exports and analytics",
+          "requirement": "cross-tenant IDs in filter/CSV/PDF/API export are denied; A's aggregate totals must not include B.",
+          "sourceReference": "ASTRA_LUNA_CONTINUOUS_EXECUTION.md#4"
+        },
+        {
+          "id": "S03-09",
+          "kind": "supplemental-contract-case",
+          "title": "unknown ownership",
+          "requirement": "migration fixture contains one unowned/ambiguous record; it lands in explicit quarantine, never default tenant; report exact IDs and remediation workflow.",
+          "sourceReference": "ASTRA_LUNA_CONTINUOUS_EXECUTION.md#4"
+        },
+        {
+          "id": "S03-10",
+          "kind": "supplemental-contract-case",
+          "title": "reversible migration",
+          "requirement": "upgrade synthetic production-shaped fixture then back out using documented reversible operations; counts, ID mappings, campaign snapshot bytes and suppression references match initial manifest.",
+          "sourceReference": "ASTRA_LUNA_CONTINUOUS_EXECUTION.md#4"
+        },
+        {
+          "id": "S03-11",
+          "kind": "supplemental-contract-case",
+          "title": "concurrent migration/recovery",
+          "requirement": "interrupt migration after each committed boundary, rerun idempotently, verify no duplicate owner bindings, partial exposure or lost records.",
+          "sourceReference": "ASTRA_LUNA_CONTINUOUS_EXECUTION.md#4"
+        },
+        {
+          "id": "S03-12",
+          "kind": "supplemental-contract-case",
+          "title": "negative privilege escalation",
+          "requirement": "owner/admin/operator/reviewer/session role combinations cannot bypass tenant isolation via forged claims, inherited sessions or cross-workspace membership.",
+          "sourceReference": "ASTRA_LUNA_CONTINUOUS_EXECUTION.md#4"
+        }
+      ],
+      "matrixReviewDeliverable": "changed code/manifest digest, exact test logs, regression result, migration and rollback evidence when applicable, security/privacy effects, reviewer session, and explicit independent verdict",
+      "statusAtImport": "NOT_ACCEPTED"
+    },
+    {
+      "id": "S04",
+      "title": "Create immutable event and outcome ledger",
+      "priority": "P0",
+      "dependencies": [
+        "S03"
+      ],
+      "backlogStatusAtImport": "new_development",
+      "desiredCapability": "Add schema-versioned events, transactional outbox, consumer receipts, correction/reversal lineage and rebuildable projections.",
+      "acceptanceRule": "Duplicate/reordered events do not duplicate effects; historical projections rebuild identically.",
+      "originalBacklogCases": [
+        {
+          "id": "S04-B01",
+          "kind": "original-backlog-test",
+          "requirement": "Crash between state/outbox. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s04"
+        },
+        {
+          "id": "S04-B02",
+          "kind": "original-backlog-test",
+          "requirement": "replay. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s04"
+        },
+        {
+          "id": "S04-B03",
+          "kind": "original-backlog-test",
+          "requirement": "duplicate invoices. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s04"
+        },
+        {
+          "id": "S04-B04",
+          "kind": "original-backlog-test",
+          "requirement": "corrected meeting/deal events. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s04"
+        }
+      ],
+      "supplementalCases": [
+        {
+          "id": "S04-01",
+          "kind": "supplemental-contract-case",
+          "title": "commit atomicity",
+          "requirement": "crash between domain mutation and outbox persist; either both committed or neither visible; reconcile no hidden dual writes.",
+          "sourceReference": "ASTRA_LUNA_CONTINUOUS_EXECUTION.md#4"
+        },
+        {
+          "id": "S04-02",
+          "kind": "supplemental-contract-case",
+          "title": "idempotency",
+          "requirement": "inject duplicates, out-of-order events and repeated consumer delivery; projection equals exactly-once logical result and consumer receipts prevent double effects.",
+          "sourceReference": "ASTRA_LUNA_CONTINUOUS_EXECUTION.md#4"
+        },
+        {
+          "id": "S04-03",
+          "kind": "supplemental-contract-case",
+          "title": "rebuild",
+          "requirement": "rebuild from event stream twice with separate state; serialized deterministic projections match; correction/reversal history preserved.",
+          "sourceReference": "ASTRA_LUNA_CONTINUOUS_EXECUTION.md#4"
+        },
+        {
+          "id": "S04-04",
+          "kind": "supplemental-contract-case",
+          "title": "version migration",
+          "requirement": "read older event schema versions after additive upgrade; malformed/unrecognized versions go to dead-letter/repair without silent drop.",
+          "sourceReference": "ASTRA_LUNA_CONTINUOUS_EXECUTION.md#4"
+        },
+        {
+          "id": "S04-05",
+          "kind": "supplemental-contract-case",
+          "title": "no fact rewrite",
+          "requirement": "correcting a held meeting, refunded invoice or changed opportunity appends a correction event, not in-place replacement.",
+          "sourceReference": "ASTRA_LUNA_CONTINUOUS_EXECUTION.md#4"
+        }
+      ],
+      "matrixReviewDeliverable": "changed code/manifest digest, exact test logs, regression result, migration and rollback evidence when applicable, security/privacy effects, reviewer session, and explicit independent verdict",
+      "statusAtImport": "NOT_ACCEPTED"
+    },
+    {
+      "id": "S05",
+      "title": "Select and implement durable execution",
+      "priority": "P0",
+      "dependencies": [
+        "S03",
+        "S04"
+      ],
+      "backlogStatusAtImport": "needs_improvement",
+      "desiredCapability": "Conformance-test current engine; adopt Temporal or another justified mechanism if needed; add leases, cancellation and fair task classes.",
+      "acceptanceRule": "Jobs survive restarts; high-priority suppression cannot starve; workflow ownership is singular.",
+      "originalBacklogCases": [
+        {
+          "id": "S05-B01",
+          "kind": "original-backlog-test",
+          "requirement": "Worker crash. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s05"
+        },
+        {
+          "id": "S05-B02",
+          "kind": "original-backlog-test",
+          "requirement": "poison job. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s05"
+        },
+        {
+          "id": "S05-B03",
+          "kind": "original-backlog-test",
+          "requirement": "queue saturation. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s05"
+        },
+        {
+          "id": "S05-B04",
+          "kind": "original-backlog-test",
+          "requirement": "cancellation and version upgrade. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s05"
+        }
+      ],
+      "supplementalCases": [
+        {
+          "id": "S05-01",
+          "kind": "supplemental-contract-case",
+          "title": "crash/retry",
+          "requirement": "kill worker during lease, restart, assert resumed exactly-once logical side effects and visible uncertainty when external delivery is unknown.",
+          "sourceReference": "ASTRA_LUNA_CONTINUOUS_EXECUTION.md#4"
+        },
+        {
+          "id": "S05-02",
+          "kind": "supplemental-contract-case",
+          "title": "poison job",
+          "requirement": "invalid payload does not create infinite retry/stall and records bounded terminal failure.",
+          "sourceReference": "ASTRA_LUNA_CONTINUOUS_EXECUTION.md#4"
+        },
+        {
+          "id": "S05-03",
+          "kind": "supplemental-contract-case",
+          "title": "priority fairness",
+          "requirement": "under sustained discovery workload a suppression/stop task runs within documented priority bound; no starvation.",
+          "sourceReference": "ASTRA_LUNA_CONTINUOUS_EXECUTION.md#4"
+        },
+        {
+          "id": "S05-04",
+          "kind": "supplemental-contract-case",
+          "title": "cancel/version",
+          "requirement": "cancel job and upgrade worker schema; running and queued state reconcile without retry-after-cancel.",
+          "sourceReference": "ASTRA_LUNA_CONTINUOUS_EXECUTION.md#4"
+        }
+      ],
+      "matrixReviewDeliverable": "changed code/manifest digest, exact test logs, regression result, migration and rollback evidence when applicable, security/privacy effects, reviewer session, and explicit independent verdict",
+      "statusAtImport": "NOT_ACCEPTED"
+    },
+    {
+      "id": "S06",
+      "title": "Build the sole GLM gateway and egress guard",
+      "priority": "P0",
+      "dependencies": [
+        "S01",
+        "S03"
+      ],
+      "backlogStatusAtImport": "needs_improvement",
+      "desiredCapability": "Use GLM-5.3 only; task allowlists, minimization, placeholder mapping, schema validation, model settings and provider usage records.",
+      "acceptanceRule": "Synthetic contract suite confirms correct endpoint, mandatory reasoning, output parsing, token usage and no hidden model fallback.",
+      "originalBacklogCases": [
+        {
+          "id": "S06-B01",
+          "kind": "original-backlog-test",
+          "requirement": "Redaction misses. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s06"
+        },
+        {
+          "id": "S06-B02",
+          "kind": "original-backlog-test",
+          "requirement": "unknown placeholders. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s06"
+        },
+        {
+          "id": "S06-B03",
+          "kind": "original-backlog-test",
+          "requirement": "malformed JSON. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s06"
+        },
+        {
+          "id": "S06-B04",
+          "kind": "original-backlog-test",
+          "requirement": "truncated outputs. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s06"
+        },
+        {
+          "id": "S06-B05",
+          "kind": "original-backlog-test",
+          "requirement": "429/auth errors. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s06"
+        }
+      ],
+      "supplementalCases": [
+        {
+          "id": "S06-01",
+          "kind": "supplemental-contract-case",
+          "title": "egress fail closed",
+          "requirement": "with provider permission disabled, no raw contact/customer packet or model call leaves process; unauthorized fields never appear in debug/error logs.",
+          "sourceReference": "ASTRA_LUNA_CONTINUOUS_EXECUTION.md#4"
+        },
+        {
+          "id": "S06-02",
+          "kind": "supplemental-contract-case",
+          "title": "approved packet",
+          "requirement": "with synthetic allowed packet, assert exact outgoing request fields, task allowlist, validated model ID, reasoning accounting and provider usage capture through a **fake adapter**.",
+          "sourceReference": "ASTRA_LUNA_CONTINUOUS_EXECUTION.md#4"
+        },
+        {
+          "id": "S06-03",
+          "kind": "supplemental-contract-case",
+          "title": "output failures",
+          "requirement": "malformed JSON, schema mismatch, truncated response, injected instruction and unknown placeholder return typed errors/abstention, not trusted content.",
+          "sourceReference": "ASTRA_LUNA_CONTINUOUS_EXECUTION.md#4"
+        },
+        {
+          "id": "S06-04",
+          "kind": "supplemental-contract-case",
+          "title": "hidden fallback",
+          "requirement": "intentionally remove configured GLM adapter; no alternate provider/model/grader is contacted, including SDK defaults.",
+          "sourceReference": "ASTRA_LUNA_CONTINUOUS_EXECUTION.md#4"
+        },
+        {
+          "id": "S06-05",
+          "kind": "supplemental-contract-case",
+          "title": "rate/auth",
+          "requirement": "simulated 429/timeout/auth failure obey bounded retry/circuit behavior and yields recorded failure; no surprise paid requests.",
+          "sourceReference": "ASTRA_LUNA_CONTINUOUS_EXECUTION.md#4"
+        }
+      ],
+      "matrixReviewDeliverable": "changed code/manifest digest, exact test logs, regression result, migration and rollback evidence when applicable, security/privacy effects, reviewer session, and explicit independent verdict",
+      "statusAtImport": "NOT_ACCEPTED"
+    },
+    {
+      "id": "S07",
+      "title": "Add usage reservations and cost circuit breakers",
+      "priority": "P0",
+      "dependencies": [
+        "S04",
+        "S06"
+      ],
+      "backlogStatusAtImport": "needs_improvement",
+      "desiredCapability": "Reserve upper-bound model/search budgets before requests; reconcile actual usage; meter tenant operations and enforce quotas.",
+      "acceptanceRule": "Concurrent runs cannot overspend reserved tenant limit; missing usage remains reserved until reconciliation.",
+      "originalBacklogCases": [
+        {
+          "id": "S07-B01",
+          "kind": "original-backlog-test",
+          "requirement": "Concurrent reservation. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s07"
+        },
+        {
+          "id": "S07-B02",
+          "kind": "original-backlog-test",
+          "requirement": "timeout billing. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s07"
+        },
+        {
+          "id": "S07-B03",
+          "kind": "original-backlog-test",
+          "requirement": "duplicate usage event. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s07"
+        },
+        {
+          "id": "S07-B04",
+          "kind": "original-backlog-test",
+          "requirement": "cache-price changes. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s07"
+        }
+      ],
+      "supplementalCases": [
+        {
+          "id": "S07-01",
+          "kind": "supplemental-contract-case",
+          "title": "atomic reservation",
+          "requirement": "launch two concurrent calls with combined worst-case cost over quota; at most permissible reservations are granted before network invocation.",
+          "sourceReference": "ASTRA_LUNA_CONTINUOUS_EXECUTION.md#4"
+        },
+        {
+          "id": "S07-02",
+          "kind": "supplemental-contract-case",
+          "title": "late/missing usage",
+          "requirement": "mock timeout/lost response, hold reservation until authenticated reconciliation or bounded policy disposition; do not treat unknown bill as free.",
+          "sourceReference": "ASTRA_LUNA_CONTINUOUS_EXECUTION.md#4"
+        },
+        {
+          "id": "S07-03",
+          "kind": "supplemental-contract-case",
+          "title": "duplicate accounting",
+          "requirement": "duplicate provider receipt/retry/replay cannot double-bill or underbill; measured requests and output-row counts are separate quantities.",
+          "sourceReference": "ASTRA_LUNA_CONTINUOUS_EXECUTION.md#4"
+        }
+      ],
+      "matrixReviewDeliverable": "changed code/manifest digest, exact test logs, regression result, migration and rollback evidence when applicable, security/privacy effects, reviewer session, and explicit independent verdict",
+      "statusAtImport": "NOT_ACCEPTED"
+    },
+    {
+      "id": "S08",
+      "title": "Capture CRM outcomes before optimization",
+      "priority": "P0",
+      "dependencies": [
+        "S03",
+        "S04"
+      ],
+      "backlogStatusAtImport": "needs_improvement",
+      "desiredCapability": "Implement canonical meeting, opportunity, revenue and correction events plus manual labels with provenance and field authority.",
+      "acceptanceRule": "Booked/held/qualified/won/paid/refunded remain separate and auditable.",
+      "originalBacklogCases": [
+        {
+          "id": "S08-B01",
+          "kind": "original-backlog-test",
+          "requirement": "Duplicate webhook. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s08"
+        },
+        {
+          "id": "S08-B02",
+          "kind": "original-backlog-test",
+          "requirement": "merged deal. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s08"
+        },
+        {
+          "id": "S08-B03",
+          "kind": "original-backlog-test",
+          "requirement": "refund. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s08"
+        },
+        {
+          "id": "S08-B04",
+          "kind": "original-backlog-test",
+          "requirement": "currency correction. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s08"
+        },
+        {
+          "id": "S08-B05",
+          "kind": "original-backlog-test",
+          "requirement": "human override. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s08"
+        }
+      ],
+      "supplementalCases": [
+        {
+          "id": "S08-01",
+          "kind": "supplemental-contract-case",
+          "title": "outcome separation",
+          "requirement": "record meeting booked then held, opportunity won, payment received, then refund; each state and correction has distinct source evidence/time; aggregates reconcile.",
+          "sourceReference": "ASTRA_LUNA_CONTINUOUS_EXECUTION.md#4"
+        },
+        {
+          "id": "S08-02",
+          "kind": "supplemental-contract-case",
+          "title": "webhook replay",
+          "requirement": "duplicate, reordered CRM webhooks or merged deals produce one canonical outcome, with human override provenance and conflicts visible.",
+          "sourceReference": "ASTRA_LUNA_CONTINUOUS_EXECUTION.md#4"
+        }
+      ],
+      "matrixReviewDeliverable": "changed code/manifest digest, exact test logs, regression result, migration and rollback evidence when applicable, security/privacy effects, reviewer session, and explicit independent verdict",
+      "statusAtImport": "NOT_ACCEPTED"
+    },
+    {
+      "id": "S09",
+      "title": "Implement isolated evidence collection",
+      "priority": "P0",
+      "dependencies": [
+        "S03",
+        "S05"
+      ],
+      "backlogStatusAtImport": "needs_improvement",
+      "desiredCapability": "HTTP-first crawler, public-address egress rules, capped pages/bytes, robots/source policy, raw hash and secured object snapshots.",
+      "acceptanceRule": "Each extraction has timestamp, source, content hash, coverage and version; private-network access blocked.",
+      "originalBacklogCases": [
+        {
+          "id": "S09-B01",
+          "kind": "original-backlog-test",
+          "requirement": "Redirect/rebinding SSRF. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s09"
+        },
+        {
+          "id": "S09-B02",
+          "kind": "original-backlog-test",
+          "requirement": "huge files. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s09"
+        },
+        {
+          "id": "S09-B03",
+          "kind": "original-backlog-test",
+          "requirement": "injection. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s09"
+        },
+        {
+          "id": "S09-B04",
+          "kind": "original-backlog-test",
+          "requirement": "redirects to login. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s09"
+        },
+        {
+          "id": "S09-B05",
+          "kind": "original-backlog-test",
+          "requirement": "source denial. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s09"
+        }
+      ],
+      "supplementalCases": [],
+      "matrixReviewDeliverable": "changed code/manifest digest, exact test logs, regression result, migration and rollback evidence when applicable, security/privacy effects, reviewer session, and explicit independent verdict",
+      "statusAtImport": "NOT_ACCEPTED"
+    },
+    {
+      "id": "S10",
+      "title": "Add discovery and identity resolution",
+      "priority": "P0",
+      "dependencies": [
+        "S01",
+        "S09"
+      ],
+      "backlogStatusAtImport": "needs_improvement",
+      "desiredCapability": "Integrate permitted search/data adapters; normalize domains and entities; keep uncertain matches reviewable and reversible.",
+      "acceptanceRule": "Every account has a source; no fabricated businesses; ambiguous merges do not proceed automatically.",
+      "originalBacklogCases": [
+        {
+          "id": "S10-B01",
+          "kind": "original-backlog-test",
+          "requirement": "Same-name businesses. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s10"
+        },
+        {
+          "id": "S10-B02",
+          "kind": "original-backlog-test",
+          "requirement": "subsidiaries. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s10"
+        },
+        {
+          "id": "S10-B03",
+          "kind": "original-backlog-test",
+          "requirement": "redirects. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s10"
+        },
+        {
+          "id": "S10-B04",
+          "kind": "original-backlog-test",
+          "requirement": "duplicate records and stale sources. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s10"
+        }
+      ],
+      "supplementalCases": [],
+      "matrixReviewDeliverable": "changed code/manifest digest, exact test logs, regression result, migration and rollback evidence when applicable, security/privacy effects, reviewer session, and explicit independent verdict",
+      "statusAtImport": "NOT_ACCEPTED"
+    },
+    {
+      "id": "S11",
+      "title": "Implement Business X-Ray audits",
+      "priority": "P0",
+      "dependencies": [
+        "S09"
+      ],
+      "backlogStatusAtImport": "new_development",
+      "desiredCapability": "Add deterministic checks and selective Lighthouse/Playwright; preserve tool version, test configuration and sampled coverage.",
+      "acceptanceRule": "Reports distinguish measured results from hypotheses and do not estimate unsupported financial loss.",
+      "originalBacklogCases": [
+        {
+          "id": "S11-B01",
+          "kind": "original-backlog-test",
+          "requirement": "Known audit fixtures. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s11"
+        },
+        {
+          "id": "S11-B02",
+          "kind": "original-backlog-test",
+          "requirement": "repeatability. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s11"
+        },
+        {
+          "id": "S11-B03",
+          "kind": "original-backlog-test",
+          "requirement": "partial crawl. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s11"
+        },
+        {
+          "id": "S11-B04",
+          "kind": "original-backlog-test",
+          "requirement": "browser failure and inaccessible pages. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s11"
+        }
+      ],
+      "supplementalCases": [],
+      "matrixReviewDeliverable": "changed code/manifest digest, exact test logs, regression result, migration and rollback evidence when applicable, security/privacy effects, reviewer session, and explicit independent verdict",
+      "statusAtImport": "NOT_ACCEPTED"
+    },
+    {
+      "id": "S13",
+      "title": "Build claim provenance and abstention engine",
+      "priority": "P0",
+      "dependencies": [
+        "S04",
+        "S06",
+        "S09"
+      ],
+      "backlogStatusAtImport": "needs_improvement",
+      "desiredCapability": "Store atomic claims/evidence spans; deterministic support checks and bounded semantic critic; separate observation, inference, confidence and action.",
+      "acceptanceRule": "Missing/contradicted/stale essential evidence blocks factual outreach; unknown is a first-class result.",
+      "originalBacklogCases": [
+        {
+          "id": "S13-B01",
+          "kind": "original-backlog-test",
+          "requirement": "Unsupported premise. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s13"
+        },
+        {
+          "id": "S13-B02",
+          "kind": "original-backlog-test",
+          "requirement": "conflicting sources. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s13"
+        },
+        {
+          "id": "S13-B03",
+          "kind": "original-backlog-test",
+          "requirement": "false absence. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s13"
+        },
+        {
+          "id": "S13-B04",
+          "kind": "original-backlog-test",
+          "requirement": "malicious instructions and fake citations. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s13"
+        }
+      ],
+      "supplementalCases": [],
+      "matrixReviewDeliverable": "changed code/manifest digest, exact test logs, regression result, migration and rollback evidence when applicable, security/privacy effects, reviewer session, and explicit independent verdict",
+      "statusAtImport": "NOT_ACCEPTED"
+    },
+    {
+      "id": "S14",
+      "title": "Add offer-aware qualification",
+      "priority": "P0",
+      "dependencies": [
+        "S02",
+        "S10",
+        "S11",
+        "S13"
+      ],
+      "backlogStatusAtImport": "needs_improvement",
+      "desiredCapability": "Build transparent fit rules and evidence-linked opportunity packets; separate fit from permission and future calibrated probability.",
+      "acceptanceRule": "Customer can inspect score inputs and reasons; no probability shown before calibration.",
+      "originalBacklogCases": [
+        {
+          "id": "S14-B01",
+          "kind": "original-backlog-test",
+          "requirement": "Wrong offer. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s14"
+        },
+        {
+          "id": "S14-B02",
+          "kind": "original-backlog-test",
+          "requirement": "delivery capacity exceeded. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s14"
+        },
+        {
+          "id": "S14-B03",
+          "kind": "original-backlog-test",
+          "requirement": "missing evidence. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s14"
+        },
+        {
+          "id": "S14-B04",
+          "kind": "original-backlog-test",
+          "requirement": "industry mismatch. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s14"
+        }
+      ],
+      "supplementalCases": [],
+      "matrixReviewDeliverable": "changed code/manifest digest, exact test logs, regression result, migration and rollback evidence when applicable, security/privacy effects, reviewer session, and explicit independent verdict",
+      "statusAtImport": "NOT_ACCEPTED"
+    },
+    {
+      "id": "S15",
+      "title": "Add email discovery and verification adapters",
+      "priority": "P0",
+      "dependencies": [
+        "S01",
+        "S03",
+        "S10"
+      ],
+      "backlogStatusAtImport": "needs_improvement",
+      "desiredCapability": "Capture literal source addresses, DNS and contracted verification; expose catch-all/unknown/stale; prohibit default pattern invention.",
+      "acceptanceRule": "Only addresses meeting source, verification and permission policies become eligible; suppression always wins.",
+      "originalBacklogCases": [
+        {
+          "id": "S15-B01",
+          "kind": "original-backlog-test",
+          "requirement": "Catch-all. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s15"
+        },
+        {
+          "id": "S15-B02",
+          "kind": "original-backlog-test",
+          "requirement": "greylisting. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s15"
+        },
+        {
+          "id": "S15-B03",
+          "kind": "original-backlog-test",
+          "requirement": "changed MX. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s15"
+        },
+        {
+          "id": "S15-B04",
+          "kind": "original-backlog-test",
+          "requirement": "disposable/domain alias. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s15"
+        },
+        {
+          "id": "S15-B05",
+          "kind": "original-backlog-test",
+          "requirement": "stale verdict. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s15"
+        }
+      ],
+      "supplementalCases": [],
+      "matrixReviewDeliverable": "changed code/manifest digest, exact test logs, regression result, migration and rollback evidence when applicable, security/privacy effects, reviewer session, and explicit independent verdict",
+      "statusAtImport": "NOT_ACCEPTED"
+    },
+    {
+      "id": "S16",
+      "title": "Implement permission and suppression service",
+      "priority": "P0",
+      "dependencies": [
+        "S03",
+        "S04",
+        "S08"
+      ],
+      "backlogStatusAtImport": "needs_improvement",
+      "desiredCapability": "Version jurisdiction decisions and consent evidence; immediate local suppression and asynchronous connector propagation.",
+      "acceptanceRule": "Opt-out blocks future leases independent of model/CRM availability; minimal suppression survives ordinary contact deletion as policy allows.",
+      "originalBacklogCases": [
+        {
+          "id": "S16-B01",
+          "kind": "original-backlog-test",
+          "requirement": "Unsubscribe before send. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s16"
+        },
+        {
+          "id": "S16-B02",
+          "kind": "original-backlog-test",
+          "requirement": "webhook duplication. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s16"
+        },
+        {
+          "id": "S16-B03",
+          "kind": "original-backlog-test",
+          "requirement": "ambiguous opt-out. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s16"
+        },
+        {
+          "id": "S16-B04",
+          "kind": "original-backlog-test",
+          "requirement": "imported suppression and domain scope. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s16"
+        }
+      ],
+      "supplementalCases": [],
+      "matrixReviewDeliverable": "changed code/manifest digest, exact test logs, regression result, migration and rollback evidence when applicable, security/privacy effects, reviewer session, and explicit independent verdict",
+      "statusAtImport": "NOT_ACCEPTED"
+    },
+    {
+      "id": "S17",
+      "title": "Implement mailbox capability and unified inbox layer",
+      "priority": "P0",
+      "dependencies": [
+        "S03",
+        "S04",
+        "S16"
+      ],
+      "backlogStatusAtImport": "needs_improvement",
+      "desiredCapability": "Reuse/map providers; preserve sender identity, OAuth scopes, thread IDs, cursors, webhook renewal and reconciliation.",
+      "acceptanceRule": "All mailbox messages visible with source identity; expired cursors recover without duplicate processing.",
+      "originalBacklogCases": [
+        {
+          "id": "S17-B01",
+          "kind": "original-backlog-test",
+          "requirement": "Out-of-order notifications. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s17"
+        },
+        {
+          "id": "S17-B02",
+          "kind": "original-backlog-test",
+          "requirement": "cursor expiry. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s17"
+        },
+        {
+          "id": "S17-B03",
+          "kind": "original-backlog-test",
+          "requirement": "auth revoke. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s17"
+        },
+        {
+          "id": "S17-B04",
+          "kind": "original-backlog-test",
+          "requirement": "references-chain threading and provider outage. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s17"
+        }
+      ],
+      "supplementalCases": [],
+      "matrixReviewDeliverable": "changed code/manifest digest, exact test logs, regression result, migration and rollback evidence when applicable, security/privacy effects, reviewer session, and explicit independent verdict",
+      "statusAtImport": "NOT_ACCEPTED"
+    },
+    {
+      "id": "S18",
+      "title": "Implement constrained personalization",
+      "priority": "P0",
+      "dependencies": [
+        "S02",
+        "S06",
+        "S13",
+        "S14",
+        "S15"
+      ],
+      "backlogStatusAtImport": "needs_improvement",
+      "desiredCapability": "Generate drafts from approved offers and supported claims; output sentence-to-claim map and validate placeholders, links and promises.",
+      "acceptanceRule": "Every factual personalized assertion is supported; model cannot choose recipient or broaden offer.",
+      "originalBacklogCases": [
+        {
+          "id": "S18-B01",
+          "kind": "original-backlog-test",
+          "requirement": "Invented metrics. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s18"
+        },
+        {
+          "id": "S18-B02",
+          "kind": "original-backlog-test",
+          "requirement": "wrong-company leakage. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s18"
+        },
+        {
+          "id": "S18-B03",
+          "kind": "original-backlog-test",
+          "requirement": "hidden placeholders. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s18"
+        },
+        {
+          "id": "S18-B04",
+          "kind": "original-backlog-test",
+          "requirement": "unsupported prices and invalid citations. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s18"
+        }
+      ],
+      "supplementalCases": [],
+      "matrixReviewDeliverable": "changed code/manifest digest, exact test logs, regression result, migration and rollback evidence when applicable, security/privacy effects, reviewer session, and explicit independent verdict",
+      "statusAtImport": "NOT_ACCEPTED"
+    },
+    {
+      "id": "S19",
+      "title": "Implement immutable campaign approvals",
+      "priority": "P0",
+      "dependencies": [
+        "S02",
+        "S04",
+        "S16",
+        "S18"
+      ],
+      "backlogStatusAtImport": "needs_improvement",
+      "desiredCapability": "Bind audience, offer, content/variant, evidence policy, mailbox scope, schedule, geography and spend to approval hash; revoke on material changes.",
+      "acceptanceRule": "Customer can authorize bounded autosend; changed scope cannot inherit prior approval.",
+      "originalBacklogCases": [
+        {
+          "id": "S19-B01",
+          "kind": "original-backlog-test",
+          "requirement": "Stale version. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s19"
+        },
+        {
+          "id": "S19-B02",
+          "kind": "original-backlog-test",
+          "requirement": "approval expiry/revoke. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s19"
+        },
+        {
+          "id": "S19-B03",
+          "kind": "original-backlog-test",
+          "requirement": "changed recipient segment and budget increase. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s19"
+        }
+      ],
+      "supplementalCases": [
+        {
+          "id": "S19-01",
+          "kind": "supplemental-contract-case",
+          "title": "approval binding",
+          "requirement": "approved audience/offer/mailbox/template/schedule/budget/geography gets immutable envelope hash; changing any material input revokes use of old ticket/envelope.",
+          "sourceReference": "ASTRA_LUNA_CONTINUOUS_EXECUTION.md#4"
+        }
+      ],
+      "matrixReviewDeliverable": "changed code/manifest digest, exact test logs, regression result, migration and rollback evidence when applicable, security/privacy effects, reviewer session, and explicit independent verdict",
+      "statusAtImport": "NOT_ACCEPTED"
+    },
+    {
+      "id": "S20",
+      "title": "Implement resilient send dispatcher",
+      "priority": "P0",
+      "dependencies": [
+        "S05",
+        "S07",
+        "S16",
+        "S17",
+        "S19"
+      ],
+      "backlogStatusAtImport": "needs_improvement",
+      "desiredCapability": "Transactional intent, unique enrollment step, lease/fence, final policy check, provider adapter and submission-unknown reconciliation.",
+      "acceptanceRule": "Crash after possible acceptance never causes blind retry; pause prevents new leases; thread sender remains stable.",
+      "originalBacklogCases": [
+        {
+          "id": "S20-B01",
+          "kind": "original-backlog-test",
+          "requirement": "Crash at each boundary. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s20"
+        },
+        {
+          "id": "S20-B02",
+          "kind": "original-backlog-test",
+          "requirement": "lost acknowledgement. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s20"
+        },
+        {
+          "id": "S20-B03",
+          "kind": "original-backlog-test",
+          "requirement": "duplicate task. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s20"
+        },
+        {
+          "id": "S20-B04",
+          "kind": "original-backlog-test",
+          "requirement": "opt-out race. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s20"
+        },
+        {
+          "id": "S20-B05",
+          "kind": "original-backlog-test",
+          "requirement": "block and auth expiry. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s20"
+        }
+      ],
+      "supplementalCases": [
+        {
+          "id": "S20-01",
+          "kind": "supplemental-contract-case",
+          "title": "submission ambiguity",
+          "requirement": "kill dispatcher after network submission but before acknowledgement; requeue must reconcile with provider or mark unknown, never blindly send again.",
+          "sourceReference": "ASTRA_LUNA_CONTINUOUS_EXECUTION.md#4"
+        },
+        {
+          "id": "S20-02",
+          "kind": "supplemental-contract-case",
+          "title": "opt-out race",
+          "requirement": "opt-out arrives immediately before final send; send cannot obtain next lease/dispatch; model suggestion never overrides suppression.",
+          "sourceReference": "ASTRA_LUNA_CONTINUOUS_EXECUTION.md#4"
+        },
+        {
+          "id": "S20-03",
+          "kind": "supplemental-contract-case",
+          "title": "pause/kill",
+          "requirement": "campaign/tenant/mailbox pause and global emergency stop prevent new leases; in-flight uncertainty is explicitly reconciled.",
+          "sourceReference": "ASTRA_LUNA_CONTINUOUS_EXECUTION.md#4"
+        }
+      ],
+      "matrixReviewDeliverable": "changed code/manifest digest, exact test logs, regression result, migration and rollback evidence when applicable, security/privacy effects, reviewer session, and explicit independent verdict",
+      "statusAtImport": "NOT_ACCEPTED"
+    },
+    {
+      "id": "S21",
+      "title": "Implement reply intelligence and safe tasks",
+      "priority": "P0",
+      "dependencies": [
+        "S06",
+        "S08",
+        "S16",
+        "S17"
+      ],
+      "backlogStatusAtImport": "needs_improvement",
+      "desiredCapability": "Multi-label intent, explicit opt-out rules first, bounded thread context, objection memory and draft suggestions; high-impact replies require review.",
+      "acceptanceRule": "Any reply stops pending sequence per policy; unknown intent does not trigger aggressive follow-up.",
+      "originalBacklogCases": [
+        {
+          "id": "S21-B01",
+          "kind": "original-backlog-test",
+          "requirement": "Quoted unsubscribe. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s21"
+        },
+        {
+          "id": "S21-B02",
+          "kind": "original-backlog-test",
+          "requirement": "OOO. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s21"
+        },
+        {
+          "id": "S21-B03",
+          "kind": "original-backlog-test",
+          "requirement": "referral. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s21"
+        },
+        {
+          "id": "S21-B04",
+          "kind": "original-backlog-test",
+          "requirement": "price objection. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s21"
+        },
+        {
+          "id": "S21-B05",
+          "kind": "original-backlog-test",
+          "requirement": "complaint. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s21"
+        },
+        {
+          "id": "S21-B06",
+          "kind": "original-backlog-test",
+          "requirement": "attachment injection and unrelated thread. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s21"
+        }
+      ],
+      "supplementalCases": [
+        {
+          "id": "S21-01",
+          "kind": "supplemental-contract-case",
+          "title": "reply thread",
+          "requirement": "reply/complaint/opt-out/OOO/referral/quoted unsubscribe/attachment injection in a real-shaped *synthetic* MIME/thread fixture are labeled correctly; sequence stops when applicable; uncertain cases route to review.",
+          "sourceReference": "ASTRA_LUNA_CONTINUOUS_EXECUTION.md#4"
+        }
+      ],
+      "matrixReviewDeliverable": "changed code/manifest digest, exact test logs, regression result, migration and rollback evidence when applicable, security/privacy effects, reviewer session, and explicit independent verdict",
+      "statusAtImport": "NOT_ACCEPTED"
+    },
+    {
+      "id": "S22",
+      "title": "Implement one CRM synchronization adapter",
+      "priority": "P0",
+      "dependencies": [
+        "S04",
+        "S08",
+        "S17"
+      ],
+      "backlogStatusAtImport": "needs_improvement",
+      "desiredCapability": "Map field authority, IDs, revisions, merge/delete behavior and echo suppression; reconcile missing events.",
+      "acceptanceRule": "CRM/tenant-authorized sources control stages and revenue; visible lag/conflict queue.",
+      "originalBacklogCases": [
+        {
+          "id": "S22-B01",
+          "kind": "original-backlog-test",
+          "requirement": "Bidirectional echo. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s22"
+        },
+        {
+          "id": "S22-B02",
+          "kind": "original-backlog-test",
+          "requirement": "offline CRM. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s22"
+        },
+        {
+          "id": "S22-B03",
+          "kind": "original-backlog-test",
+          "requirement": "deleted deal. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s22"
+        },
+        {
+          "id": "S22-B04",
+          "kind": "original-backlog-test",
+          "requirement": "concurrent edit and duplicate remote ID. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s22"
+        }
+      ],
+      "supplementalCases": [],
+      "matrixReviewDeliverable": "changed code/manifest digest, exact test logs, regression result, migration and rollback evidence when applicable, security/privacy effects, reviewer session, and explicit independent verdict",
+      "statusAtImport": "NOT_ACCEPTED"
+    },
+    {
+      "id": "S24",
+      "title": "Implement fixed account-level experiments",
+      "priority": "P0",
+      "dependencies": [
+        "S04",
+        "S08",
+        "S19"
+      ],
+      "backlogStatusAtImport": "needs_improvement",
+      "desiredCapability": "Sticky assignment, strata, frozen variants/hypotheses, propensities, control lane, primary horizon and maturation rules.",
+      "acceptanceRule": "All contacts at an account share assignment; pending outcomes remain pending; sample-size limits visible.",
+      "originalBacklogCases": [
+        {
+          "id": "S24-B01",
+          "kind": "original-backlog-test",
+          "requirement": "Assignment replay. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s24"
+        },
+        {
+          "id": "S24-B02",
+          "kind": "original-backlog-test",
+          "requirement": "account merge. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s24"
+        },
+        {
+          "id": "S24-B03",
+          "kind": "original-backlog-test",
+          "requirement": "late outcome. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s24"
+        },
+        {
+          "id": "S24-B04",
+          "kind": "original-backlog-test",
+          "requirement": "concurrent enrollment and arm removal. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s24"
+        }
+      ],
+      "supplementalCases": [],
+      "matrixReviewDeliverable": "changed code/manifest digest, exact test logs, regression result, migration and rollback evidence when applicable, security/privacy effects, reviewer session, and explicit independent verdict",
+      "statusAtImport": "NOT_ACCEPTED"
+    },
+    {
+      "id": "S25",
+      "title": "Build funnel, attribution and experiment analytics",
+      "priority": "P0",
+      "dependencies": [
+        "S07",
+        "S08",
+        "S20",
+        "S21",
+        "S22",
+        "S24"
+      ],
+      "backlogStatusAtImport": "needs_improvement",
+      "desiredCapability": "Expose raw denominators, delivery ambiguity, costs, held meetings, opportunities, collected/refunded revenue and confidence intervals.",
+      "acceptanceRule": "Attribution is labeled separately from causal lift; totals reconcile to ledgers.",
+      "originalBacklogCases": [
+        {
+          "id": "S25-B01",
+          "kind": "original-backlog-test",
+          "requirement": "Duplicate contacts. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s25"
+        },
+        {
+          "id": "S25-B02",
+          "kind": "original-backlog-test",
+          "requirement": "refunds. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s25"
+        },
+        {
+          "id": "S25-B03",
+          "kind": "original-backlog-test",
+          "requirement": "multi-touch deals. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s25"
+        },
+        {
+          "id": "S25-B04",
+          "kind": "original-backlog-test",
+          "requirement": "missing outcomes and matured cohort filtering. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s25"
+        }
+      ],
+      "supplementalCases": [],
+      "matrixReviewDeliverable": "changed code/manifest digest, exact test logs, regression result, migration and rollback evidence when applicable, security/privacy effects, reviewer session, and explicit independent verdict",
+      "statusAtImport": "NOT_ACCEPTED"
+    },
+    {
+      "id": "S26",
+      "title": "Build frozen evaluation and adversarial harness",
+      "priority": "P0",
+      "dependencies": [
+        "S06",
+        "S13",
+        "S18",
+        "S21"
+      ],
+      "backlogStatusAtImport": "new_development",
+      "desiredCapability": "Create authorized/synthetic gold sets, account/time splits, annotation/adjudication and deterministic safety fixtures.",
+      "acceptanceRule": "Baseline report includes risk/coverage, class metrics, cost, subgroup uncertainty and source manifest.",
+      "originalBacklogCases": [
+        {
+          "id": "S26-B01",
+          "kind": "original-backlog-test",
+          "requirement": "Holdout leakage. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s26"
+        },
+        {
+          "id": "S26-B02",
+          "kind": "original-backlog-test",
+          "requirement": "duplicated accounts. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s26"
+        },
+        {
+          "id": "S26-B03",
+          "kind": "original-backlog-test",
+          "requirement": "evaluator disagreement and malicious external content. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s26"
+        }
+      ],
+      "supplementalCases": [],
+      "matrixReviewDeliverable": "changed code/manifest digest, exact test logs, regression result, migration and rollback evidence when applicable, security/privacy effects, reviewer session, and explicit independent verdict",
+      "statusAtImport": "NOT_ACCEPTED"
+    },
+    {
+      "id": "S29",
+      "title": "Add learning release registry and rollback",
+      "priority": "P0",
+      "dependencies": [
+        "S05",
+        "S19",
+        "S26"
+      ],
+      "backlogStatusAtImport": "new_development",
+      "desiredCapability": "Version prompts/policies/features/calibration; approval record, shadow run, staged rollout, kill switch and prior-stable pointer.",
+      "acceptanceRule": "New runs can revert without erasing outcomes; incompatible unsent drafts are invalidated.",
+      "originalBacklogCases": [
+        {
+          "id": "S29-B01",
+          "kind": "original-backlog-test",
+          "requirement": "Rollback during active runs. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s29"
+        },
+        {
+          "id": "S29-B02",
+          "kind": "original-backlog-test",
+          "requirement": "bad prompt. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s29"
+        },
+        {
+          "id": "S29-B03",
+          "kind": "original-backlog-test",
+          "requirement": "missing artifact and deployment incompatibility. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s29"
+        }
+      ],
+      "supplementalCases": [],
+      "matrixReviewDeliverable": "changed code/manifest digest, exact test logs, regression result, migration and rollback evidence when applicable, security/privacy effects, reviewer session, and explicit independent verdict",
+      "statusAtImport": "NOT_ACCEPTED"
+    },
+    {
+      "id": "S32",
+      "title": "Add operational telemetry and recovery drills",
+      "priority": "P0",
+      "dependencies": [
+        "S05",
+        "S07",
+        "S16",
+        "S20",
+        "S25"
+      ],
+      "backlogStatusAtImport": "needs_improvement",
+      "desiredCapability": "Queue/resource alerts, provider circuit breakers, tenant/campaign/mailbox kill switches, backup restore and incident runbooks.",
+      "acceptanceRule": "Measured recovery objectives and no raw secrets/PII in ordinary logs; suppression retains priority under load.",
+      "originalBacklogCases": [
+        {
+          "id": "S32-B01",
+          "kind": "original-backlog-test",
+          "requirement": "Provider outage. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s32"
+        },
+        {
+          "id": "S32-B02",
+          "kind": "original-backlog-test",
+          "requirement": "database failover. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s32"
+        },
+        {
+          "id": "S32-B03",
+          "kind": "original-backlog-test",
+          "requirement": "overloaded queue. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s32"
+        },
+        {
+          "id": "S32-B04",
+          "kind": "original-backlog-test",
+          "requirement": "kill switch and restore rehearsal. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s32"
+        }
+      ],
+      "supplementalCases": [
+        {
+          "id": "S32-01",
+          "kind": "supplemental-contract-case",
+          "title": "operations",
+          "requirement": "simulate queue overload, provider outage, kill switch and backup restore; measure recovery, verify redacted logs and suppression priority.",
+          "sourceReference": "ASTRA_LUNA_CONTINUOUS_EXECUTION.md#4"
+        }
+      ],
+      "matrixReviewDeliverable": "changed code/manifest digest, exact test logs, regression result, migration and rollback evidence when applicable, security/privacy effects, reviewer session, and explicit independent verdict",
+      "statusAtImport": "NOT_ACCEPTED"
+    },
+    {
+      "id": "X01",
+      "title": "Harness ownership and context contract",
+      "priority": "P0",
+      "dependencies": [
+        "S00",
+        "S05"
+      ],
+      "backlogStatusAtImport": "needs_improvement",
+      "desiredCapability": "Define HarnessTask/Result, one workflow-state owner, immutable context manifest and version mapping; preserve existing domain identities.",
+      "acceptanceRule": "No duplicate workflow owner; all task inputs and completion checks trace to structured records.",
+      "originalBacklogCases": [
+        {
+          "id": "X01-B01",
+          "kind": "original-backlog-test",
+          "requirement": "Cross-tenant IDs. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#x01"
+        },
+        {
+          "id": "X01-B02",
+          "kind": "original-backlog-test",
+          "requirement": "stale context. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#x01"
+        },
+        {
+          "id": "X01-B03",
+          "kind": "original-backlog-test",
+          "requirement": "missing required output and conflicting state owners. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#x01"
+        }
+      ],
+      "supplementalCases": [
+        {
+          "id": "X01-01",
+          "kind": "supplemental-contract-case",
+          "title": "single owner",
+          "requirement": "attempt to register two workflow writers for same task; reject and prove only one durable state machine owns terminal transitions.",
+          "sourceReference": "ASTRA_LUNA_CONTINUOUS_EXECUTION.md#4"
+        },
+        {
+          "id": "X01-02",
+          "kind": "supplemental-contract-case",
+          "title": "typed output",
+          "requirement": "feed missing field/stale context/cross-tenant payload to HarnessTask/Result validation; reject before executing tools.",
+          "sourceReference": "ASTRA_LUNA_CONTINUOUS_EXECUTION.md#4"
+        },
+        {
+          "id": "X01-03",
+          "kind": "supplemental-contract-case",
+          "title": "manifest mapping",
+          "requirement": "every harness operation records original tenant/account/contact/campaign IDs, policy+context+workflow version, proof and completion rubric.",
+          "sourceReference": "ASTRA_LUNA_CONTINUOUS_EXECUTION.md#4"
+        }
+      ],
+      "matrixReviewDeliverable": "changed code/manifest digest, exact test logs, regression result, migration and rollback evidence when applicable, security/privacy effects, reviewer session, and explicit independent verdict",
+      "statusAtImport": "NOT_ACCEPTED"
+    },
+    {
+      "id": "X02",
+      "title": "Bounded execution and progress detection",
+      "priority": "P0",
+      "dependencies": [
+        "X01",
+        "S06",
+        "S07"
+      ],
+      "backlogStatusAtImport": "needs_improvement",
+      "desiredCapability": "Wrap the selected runtime with call/tool/cost/deadline limits, allowed-tool schemas, no-progress detection and one bounded repair.",
+      "acceptanceRule": "Repeated equivalent research terminates; forbidden tools never execute; GLM-only route enforced.",
+      "originalBacklogCases": [
+        {
+          "id": "X02-B01",
+          "kind": "original-backlog-test",
+          "requirement": "Looping model. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#x02"
+        },
+        {
+          "id": "X02-B02",
+          "kind": "original-backlog-test",
+          "requirement": "malformed tool args. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#x02"
+        },
+        {
+          "id": "X02-B03",
+          "kind": "original-backlog-test",
+          "requirement": "budget exhaustion. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#x02"
+        },
+        {
+          "id": "X02-B04",
+          "kind": "original-backlog-test",
+          "requirement": "timeout and hidden provider fallback. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#x02"
+        }
+      ],
+      "supplementalCases": [
+        {
+          "id": "X02-01",
+          "kind": "supplemental-contract-case",
+          "title": "loop stop",
+          "requirement": "model emits repeated equivalent search requests forever; progress detector stops at bounded calls/cost/deadline and emits `NO_PROGRESS`.",
+          "sourceReference": "ASTRA_LUNA_CONTINUOUS_EXECUTION.md#4"
+        },
+        {
+          "id": "X02-02",
+          "kind": "supplemental-contract-case",
+          "title": "malicious tools",
+          "requirement": "wrong schema or disallowed tool requests fail before invocation; one bounded repair maximum.",
+          "sourceReference": "ASTRA_LUNA_CONTINUOUS_EXECUTION.md#4"
+        },
+        {
+          "id": "X02-03",
+          "kind": "supplemental-contract-case",
+          "title": "checkpoint limits",
+          "requirement": "exhaustion during repair or reasoning returns recorded partial/unknown, never unsupported `SUCCESS`.",
+          "sourceReference": "ASTRA_LUNA_CONTINUOUS_EXECUTION.md#4"
+        }
+      ],
+      "matrixReviewDeliverable": "changed code/manifest digest, exact test logs, regression result, migration and rollback evidence when applicable, security/privacy effects, reviewer session, and explicit independent verdict",
+      "statusAtImport": "NOT_ACCEPTED"
+    },
+    {
+      "id": "X03",
+      "title": "Recovery and completion evidence",
+      "priority": "P0",
+      "dependencies": [
+        "X02",
+        "S04",
+        "S09"
+      ],
+      "backlogStatusAtImport": "needs_improvement",
+      "desiredCapability": "Checkpoint versioned evidence/usage/policy refs; reconcile attempts; run deterministic completion rubric before terminal event.",
+      "acceptanceRule": "Worker resume retains constraints and does not duplicate effects or declare incomplete artifacts complete.",
+      "originalBacklogCases": [
+        {
+          "id": "X03-B01",
+          "kind": "original-backlog-test",
+          "requirement": "Crash each boundary. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#x03"
+        },
+        {
+          "id": "X03-B02",
+          "kind": "original-backlog-test",
+          "requirement": "stale approval after resume. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#x03"
+        },
+        {
+          "id": "X03-B03",
+          "kind": "original-backlog-test",
+          "requirement": "lost model response and compaction omission. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#x03"
+        }
+      ],
+      "supplementalCases": [
+        {
+          "id": "X03-01",
+          "kind": "supplemental-contract-case",
+          "title": "resume fidelity",
+          "requirement": "interrupt after every durable boundary including lost model response/context compaction; restore exact tenant/policy/budget/evidence refs and avoid duplicate effects.",
+          "sourceReference": "ASTRA_LUNA_CONTINUOUS_EXECUTION.md#4"
+        }
+      ],
+      "matrixReviewDeliverable": "changed code/manifest digest, exact test logs, regression result, migration and rollback evidence when applicable, security/privacy effects, reviewer session, and explicit independent verdict",
+      "statusAtImport": "NOT_ACCEPTED"
+    },
+    {
+      "id": "X04",
+      "title": "Decision record and state migration",
+      "priority": "P0",
+      "dependencies": [
+        "S13",
+        "S14",
+        "X01"
+      ],
+      "backlogStatusAtImport": "needs_improvement",
+      "desiredCapability": "Implement separate support, uncertainty, prediction, utility, risk, reversibility and policy fields; migrate ACT/BLOCK semantics explicitly.",
+      "acceptanceRule": "No self-reported confidence used as probability; denied policy cannot produce an execution ticket.",
+      "originalBacklogCases": [
+        {
+          "id": "X04-B01",
+          "kind": "original-backlog-test",
+          "requirement": "Unknown probabilities. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#x04"
+        },
+        {
+          "id": "X04-B02",
+          "kind": "original-backlog-test",
+          "requirement": "mismatched action/horizon. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#x04"
+        },
+        {
+          "id": "X04-B03",
+          "kind": "original-backlog-test",
+          "requirement": "expired evidence and malformed legacy state. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#x04"
+        }
+      ],
+      "supplementalCases": [],
+      "matrixReviewDeliverable": "changed code/manifest digest, exact test logs, regression result, migration and rollback evidence when applicable, security/privacy effects, reviewer session, and explicit independent verdict",
+      "statusAtImport": "NOT_ACCEPTED"
+    },
+    {
+      "id": "X06",
+      "title": "Inspect application adapter and evaluator governance",
+      "priority": "P0",
+      "dependencies": [
+        "X02",
+        "S26"
+      ],
+      "backlogStatusAtImport": "new_development",
+      "desiredCapability": "Run actual harness test endpoint through Inspect; keep dataset/scorer write permissions separate; whitelist all target/grader models.",
+      "acceptanceRule": "Evaluation uses controlled inputs and no alternate model; raw packets stay out of standard logs, including errors.",
+      "originalBacklogCases": [
+        {
+          "id": "X06-B01",
+          "kind": "original-backlog-test",
+          "requirement": "Default grader dependency. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#x06"
+        },
+        {
+          "id": "X06-B02",
+          "kind": "original-backlog-test",
+          "requirement": "provider mismatch. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#x06"
+        },
+        {
+          "id": "X06-B03",
+          "kind": "original-backlog-test",
+          "requirement": "log leakage and candidate modifying gold labels. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#x06"
+        }
+      ],
+      "supplementalCases": [
+        {
+          "id": "X06-01",
+          "kind": "supplemental-contract-case",
+          "title": "evaluator segregation",
+          "requirement": "candidate cannot edit gold labels/scorers; default model/grader cannot call a different provider; standard/error logs contain no raw packets.",
+          "sourceReference": "ASTRA_LUNA_CONTINUOUS_EXECUTION.md#4"
+        }
+      ],
+      "matrixReviewDeliverable": "changed code/manifest digest, exact test logs, regression result, migration and rollback evidence when applicable, security/privacy effects, reviewer session, and explicit independent verdict",
+      "statusAtImport": "NOT_ACCEPTED"
+    },
+    {
+      "id": "X07",
+      "title": "Matched-budget harness experiment",
+      "priority": "P0",
+      "dependencies": [
+        "X03",
+        "X04",
+        "X06"
+      ],
+      "backlogStatusAtImport": "new_development",
+      "desiredCapability": "Implement H0–H3, frozen sources, account-level splits, budget-equivalent ceilings, paired results and full metric dictionary.",
+      "acceptanceRule": "Results contain success/risk/coverage/cost/interventions; expensive variants adopted only with measured benefit.",
+      "originalBacklogCases": [
+        {
+          "id": "X07-B01",
+          "kind": "original-backlog-test",
+          "requirement": "Cache contamination. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#x07"
+        },
+        {
+          "id": "X07-B02",
+          "kind": "original-backlog-test",
+          "requirement": "duplicate accounts. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#x07"
+        },
+        {
+          "id": "X07-B03",
+          "kind": "original-backlog-test",
+          "requirement": "noisy scorers. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#x07"
+        },
+        {
+          "id": "X07-B04",
+          "kind": "original-backlog-test",
+          "requirement": "timeouts and incomplete outcomes. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#x07"
+        }
+      ],
+      "supplementalCases": [
+        {
+          "id": "X07-01",
+          "kind": "supplemental-contract-case",
+          "title": "H0–H3 fairness",
+          "requirement": "use frozen companies/time split, fixed cache state and matched budgets; paired metrics include success, critical harm, abstention/coverage, latency/cost and reviewer interventions.",
+          "sourceReference": "ASTRA_LUNA_CONTINUOUS_EXECUTION.md#4"
+        }
+      ],
+      "matrixReviewDeliverable": "changed code/manifest digest, exact test logs, regression result, migration and rollback evidence when applicable, security/privacy effects, reviewer session, and explicit independent verdict",
+      "statusAtImport": "NOT_ACCEPTED"
+    },
+    {
+      "id": "X08",
+      "title": "Adversarial application conformance",
+      "priority": "P0",
+      "dependencies": [
+        "X06",
+        "S09",
+        "S16",
+        "S20"
+      ],
+      "backlogStatusAtImport": "needs_improvement",
+      "desiredCapability": "Build injection/exfiltration/fake-approval/cross-tenant fixtures; optionally run allowlisted garak/AgentDojo patterns in a fake environment.",
+      "acceptanceRule": "Critical prohibited effects remain absent in fixtures; benign task completion reported; no real mailbox/secret exposed.",
+      "originalBacklogCases": [
+        {
+          "id": "X08-B01",
+          "kind": "original-backlog-test",
+          "requirement": "Poisoned page. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#x08"
+        },
+        {
+          "id": "X08-B02",
+          "kind": "original-backlog-test",
+          "requirement": "skill. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#x08"
+        },
+        {
+          "id": "X08-B03",
+          "kind": "original-backlog-test",
+          "requirement": "tool reply. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#x08"
+        },
+        {
+          "id": "X08-B04",
+          "kind": "original-backlog-test",
+          "requirement": "email. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#x08"
+        },
+        {
+          "id": "X08-B05",
+          "kind": "original-backlog-test",
+          "requirement": "SSRF destination and suppression override. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#x08"
+        }
+      ],
+      "supplementalCases": [
+        {
+          "id": "X08-01",
+          "kind": "supplemental-contract-case",
+          "title": "adversarial safety",
+          "requirement": "poisoned page/email/tool output/skill or spoofed approval attempts exfiltration, SSRF, suppression override, tenant crossing; prove **zero prohibited effects** in synthetic fixture and report benign success separately.",
+          "sourceReference": "ASTRA_LUNA_CONTINUOUS_EXECUTION.md#4"
+        }
+      ],
+      "matrixReviewDeliverable": "changed code/manifest digest, exact test logs, regression result, migration and rollback evidence when applicable, security/privacy effects, reviewer session, and explicit independent verdict",
+      "statusAtImport": "NOT_ACCEPTED"
+    },
+    {
+      "id": "X10",
+      "title": "Campaign-scoped autonomy and execution tickets",
+      "priority": "P0",
+      "dependencies": [
+        "S19",
+        "S20",
+        "S21",
+        "X04"
+      ],
+      "backlogStatusAtImport": "needs_improvement",
+      "desiredCapability": "Implement envelope, optional draft mode, routine autosend, exception routing and server-issued action tickets tied to exact intent.",
+      "acceptanceRule": "Valid routine messages need no per-message approval; scope changes revoke eligibility; dispatcher rechecks hard rules.",
+      "originalBacklogCases": [
+        {
+          "id": "X10-B01",
+          "kind": "original-backlog-test",
+          "requirement": "Prompt/offer change. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#x10"
+        },
+        {
+          "id": "X10-B02",
+          "kind": "original-backlog-test",
+          "requirement": "opt-out race. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#x10"
+        },
+        {
+          "id": "X10-B03",
+          "kind": "original-backlog-test",
+          "requirement": "revoked envelope. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#x10"
+        },
+        {
+          "id": "X10-B04",
+          "kind": "original-backlog-test",
+          "requirement": "ticket replay and ambiguous submission. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#x10"
+        }
+      ],
+      "supplementalCases": [
+        {
+          "id": "X10-01",
+          "kind": "supplemental-contract-case",
+          "title": "ticket replay",
+          "requirement": "server-issued action ticket for exact intent cannot be reused for modified recipient, offer, mailbox, body hash, schedule or budget, and expires correctly.",
+          "sourceReference": "ASTRA_LUNA_CONTINUOUS_EXECUTION.md#4"
+        }
+      ],
+      "matrixReviewDeliverable": "changed code/manifest digest, exact test logs, regression result, migration and rollback evidence when applicable, security/privacy effects, reviewer session, and explicit independent verdict",
+      "statusAtImport": "NOT_ACCEPTED"
+    },
+    {
+      "id": "X11",
+      "title": "Engagement events and metric definitions",
+      "priority": "P0",
+      "dependencies": [
+        "S04",
+        "S17",
+        "S25"
+      ],
+      "backlogStatusAtImport": "needs_improvement",
+      "desiredCapability": "Implement optional opaque pixel/redirect tracking, provider capabilities, raw/filtered diagnostics, unique counts and late-event projections.",
+      "acceptanceRule": "Open/click denominators explicit; missing delivery data is unknown; analytics reconcile to canonical events.",
+      "originalBacklogCases": [
+        {
+          "id": "X11-B01",
+          "kind": "original-backlog-test",
+          "requirement": "Duplicate webhooks. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#x11"
+        },
+        {
+          "id": "X11-B02",
+          "kind": "original-backlog-test",
+          "requirement": "proxy opens. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#x11"
+        },
+        {
+          "id": "X11-B03",
+          "kind": "original-backlog-test",
+          "requirement": "scanner clicks. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#x11"
+        },
+        {
+          "id": "X11-B04",
+          "kind": "original-backlog-test",
+          "requirement": "disabled tracking. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#x11"
+        },
+        {
+          "id": "X11-B05",
+          "kind": "original-backlog-test",
+          "requirement": "account merge. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#x11"
+        },
+        {
+          "id": "X11-B06",
+          "kind": "original-backlog-test",
+          "requirement": "refunds and time-zone boundaries. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#x11"
+        }
+      ],
+      "supplementalCases": [],
+      "matrixReviewDeliverable": "changed code/manifest digest, exact test logs, regression result, migration and rollback evidence when applicable, security/privacy effects, reviewer session, and explicit independent verdict",
+      "statusAtImport": "NOT_ACCEPTED"
+    },
+    {
+      "id": "X12",
+      "title": "One telemetry route and privacy filters",
+      "priority": "P0",
+      "dependencies": [
+        "S32",
+        "X02",
+        "X04"
+      ],
+      "backlogStatusAtImport": "needs_improvement",
+      "desiredCapability": "Reuse controlled telemetry; add standard task/decision spans and redaction tests. Pilot Langfuse only if justified; do not add AgentOps app without license clarity.",
+      "acceptanceRule": "One operational trace route; costs/outcomes remain canonical; mandatory events unsampled; payload collection controlled.",
+      "originalBacklogCases": [
+        {
+          "id": "X12-B01",
+          "kind": "original-backlog-test",
+          "requirement": "Error/debug logs. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#x12"
+        },
+        {
+          "id": "X12-B02",
+          "kind": "original-backlog-test",
+          "requirement": "SDK default egress. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#x12"
+        },
+        {
+          "id": "X12-B03",
+          "kind": "original-backlog-test",
+          "requirement": "provider request IDs. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#x12"
+        },
+        {
+          "id": "X12-B04",
+          "kind": "original-backlog-test",
+          "requirement": "sampling gaps and viewer tenant access. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#x12"
+        }
+      ],
+      "supplementalCases": [],
+      "matrixReviewDeliverable": "changed code/manifest digest, exact test logs, regression result, migration and rollback evidence when applicable, security/privacy effects, reviewer session, and explicit independent verdict",
+      "statusAtImport": "NOT_ACCEPTED"
+    },
+    {
+      "id": "X14",
+      "title": "Extension release gates and rollback",
+      "priority": "P0",
+      "dependencies": [
+        "X07",
+        "X08",
+        "X10",
+        "X11",
+        "X12",
+        "S29"
+      ],
+      "backlogStatusAtImport": "needs_improvement",
+      "desiredCapability": "Extend manifests to harness/decision/skill/metric versions; shadow/canary policy, owner signoff, backwards-compatible events and rollback.",
+      "acceptanceRule": "Only evaluated releases activate; rollback preserves send/suppression/outcome facts; routine autonomy stays inside current envelope.",
+      "originalBacklogCases": [
+        {
+          "id": "X14-B01",
+          "kind": "original-backlog-test",
+          "requirement": "Version mismatch. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#x14"
+        },
+        {
+          "id": "X14-B02",
+          "kind": "original-backlog-test",
+          "requirement": "rollout interruption. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#x14"
+        },
+        {
+          "id": "X14-B03",
+          "kind": "original-backlog-test",
+          "requirement": "metric drift. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#x14"
+        },
+        {
+          "id": "X14-B04",
+          "kind": "original-backlog-test",
+          "requirement": "stale tasks and emergency stop. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#x14"
+        }
+      ],
+      "supplementalCases": [
+        {
+          "id": "X14-01",
+          "kind": "supplemental-contract-case",
+          "title": "release rollback",
+          "requirement": "with staged skill/decision/harness/metric versions, interrupt canary and roll back; preserved send, suppression, outcome and event histories remain identical.",
+          "sourceReference": "ASTRA_LUNA_CONTINUOUS_EXECUTION.md#4"
+        }
+      ],
+      "matrixReviewDeliverable": "changed code/manifest digest, exact test logs, regression result, migration and rollback evidence when applicable, security/privacy effects, reviewer session, and explicit independent verdict",
+      "statusAtImport": "NOT_ACCEPTED"
+    },
+    {
+      "id": "S12",
+      "title": "Implement Opportunity Radar",
+      "priority": "P1",
+      "dependencies": [
+        "S09",
+        "S10",
+        "S11"
+      ],
+      "backlogStatusAtImport": "new_development",
+      "desiredCapability": "Watch permitted sources with adaptive cadence, content diffs, source lineage, signal dedupe and freshness.",
+      "acceptanceRule": "A repeated syndicated event is not counted as multiple independent confirmations; stale signals expire.",
+      "originalBacklogCases": [
+        {
+          "id": "S12-B01",
+          "kind": "original-backlog-test",
+          "requirement": "No-change pages. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s12"
+        },
+        {
+          "id": "S12-B02",
+          "kind": "original-backlog-test",
+          "requirement": "cosmetic changes. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s12"
+        },
+        {
+          "id": "S12-B03",
+          "kind": "original-backlog-test",
+          "requirement": "deleted pages. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s12"
+        },
+        {
+          "id": "S12-B04",
+          "kind": "original-backlog-test",
+          "requirement": "source outage and duplicate news. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s12"
+        }
+      ],
+      "supplementalCases": [],
+      "matrixReviewDeliverable": "changed code/manifest digest, exact test logs, regression result, migration and rollback evidence when applicable, security/privacy effects, reviewer session, and explicit independent verdict",
+      "statusAtImport": "NOT_ACCEPTED"
+    },
+    {
+      "id": "S23",
+      "title": "Add tenant-scoped temporal memory",
+      "priority": "P1",
+      "dependencies": [
+        "S03",
+        "S08",
+        "S13",
+        "S21"
+      ],
+      "backlogStatusAtImport": "new_development",
+      "desiredCapability": "SQL/full-text facts, episodes, preferences and tested strategies with validity, source and supersession; optional semantic store only after evaluation.",
+      "acceptanceRule": "Corrections override stale summaries; delete/permission changes propagate to all retrieval paths.",
+      "originalBacklogCases": [
+        {
+          "id": "S23-B01",
+          "kind": "original-backlog-test",
+          "requirement": "Temporal updates. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s23"
+        },
+        {
+          "id": "S23-B02",
+          "kind": "original-backlog-test",
+          "requirement": "conflicting facts. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s23"
+        },
+        {
+          "id": "S23-B03",
+          "kind": "original-backlog-test",
+          "requirement": "forgotten preferences. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s23"
+        },
+        {
+          "id": "S23-B04",
+          "kind": "original-backlog-test",
+          "requirement": "cross-tenant query and deleted-source retrieval. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s23"
+        }
+      ],
+      "supplementalCases": [],
+      "matrixReviewDeliverable": "changed code/manifest digest, exact test logs, regression result, migration and rollback evidence when applicable, security/privacy effects, reviewer session, and explicit independent verdict",
+      "statusAtImport": "NOT_ACCEPTED"
+    },
+    {
+      "id": "S31",
+      "title": "Implement export, deletion and retention lifecycle",
+      "priority": "P0",
+      "dependencies": [
+        "S03",
+        "S04",
+        "S09",
+        "S17",
+        "S23"
+      ],
+      "backlogStatusAtImport": "needs_improvement",
+      "desiredCapability": "Inventory raw objects, summaries, indexes, caches, logs, connector state and backups; cancel tasks and prevent resurrection.",
+      "acceptanceRule": "User receives complete export/deletion receipt with documented backup expiry and necessary suppression retention.",
+      "originalBacklogCases": [
+        {
+          "id": "S31-B01",
+          "kind": "original-backlog-test",
+          "requirement": "Deletion during run. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s31"
+        },
+        {
+          "id": "S31-B02",
+          "kind": "original-backlog-test",
+          "requirement": "restore from backup. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s31"
+        },
+        {
+          "id": "S31-B03",
+          "kind": "original-backlog-test",
+          "requirement": "derived memory reappearance and cross-tenant export. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s31"
+        }
+      ],
+      "supplementalCases": [
+        {
+          "id": "S31-01",
+          "kind": "supplemental-contract-case",
+          "title": "delete and restore",
+          "requirement": "delete tenant data during running job, restore a snapshot in isolated rehearsal; deleted/private facts cannot resurrect in indexes, memories, exports or active tasks; retain only justified suppression tombstones.",
+          "sourceReference": "ASTRA_LUNA_CONTINUOUS_EXECUTION.md#4"
+        }
+      ],
+      "matrixReviewDeliverable": "changed code/manifest digest, exact test logs, regression result, migration and rollback evidence when applicable, security/privacy effects, reviewer session, and explicit independent verdict",
+      "statusAtImport": "NOT_ACCEPTED"
+    },
+    {
+      "id": "S33",
+      "title": "Run authorized pilot and migration cutover",
+      "priority": "P0",
+      "dependencies": [
+        "S01",
+        "S20",
+        "S21",
+        "S22",
+        "S24",
+        "S25",
+        "S26",
+        "S29",
+        "S31",
+        "S32",
+        "X14"
+      ],
+      "backlogStatusAtImport": "new_development",
+      "desiredCapability": "Shadow first; map IDs/checkpoints; one approved tenant cohort; verify economic and operational targets before broader rollout.",
+      "acceptanceRule": "Owner-approved pilot scope, rollback manifest and daily exception review; no unresolved critical test failures.",
+      "originalBacklogCases": [
+        {
+          "id": "S33-B01",
+          "kind": "original-backlog-test",
+          "requirement": "End-to-end synthetic rehearsal. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s33"
+        },
+        {
+          "id": "S33-B02",
+          "kind": "original-backlog-test",
+          "requirement": "live approved canary. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s33"
+        },
+        {
+          "id": "S33-B03",
+          "kind": "original-backlog-test",
+          "requirement": "ledger reconciliation and rollback. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s33"
+        }
+      ],
+      "supplementalCases": [
+        {
+          "id": "S33-01",
+          "kind": "supplemental-contract-case",
+          "title": "pilot guard",
+          "requirement": "without explicit owner, provider, commercial, privacy and X14 authorization, even green local tests cannot set `releaseReady=true`, use a real mailbox or initiate canary.",
+          "sourceReference": "ASTRA_LUNA_CONTINUOUS_EXECUTION.md#4"
+        }
+      ],
+      "matrixReviewDeliverable": "changed code/manifest digest, exact test logs, regression result, migration and rollback evidence when applicable, security/privacy effects, reviewer session, and explicit independent verdict",
+      "statusAtImport": "NOT_ACCEPTED"
+    },
+    {
+      "id": "S27",
+      "title": "Evaluate calibration and small rankers",
+      "priority": "P1",
+      "dependencies": [
+        "S08",
+        "S14",
+        "S26"
+      ],
+      "backlogStatusAtImport": "new_development",
+      "desiredCapability": "Train optional non-generative models on authorized human/CRM labels; calibrate out of sample and compare simple rules.",
+      "acceptanceRule": "Promote only with improved reviewed-budget utility and acceptable subgroup risk; unsupported cohorts remain manual.",
+      "originalBacklogCases": [
+        {
+          "id": "S27-B01",
+          "kind": "original-backlog-test",
+          "requirement": "Time leakage. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s27"
+        },
+        {
+          "id": "S27-B02",
+          "kind": "original-backlog-test",
+          "requirement": "drift. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s27"
+        },
+        {
+          "id": "S27-B03",
+          "kind": "original-backlog-test",
+          "requirement": "rare class. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s27"
+        },
+        {
+          "id": "S27-B04",
+          "kind": "original-backlog-test",
+          "requirement": "missingness and calibration degradation. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s27"
+        }
+      ],
+      "supplementalCases": [],
+      "matrixReviewDeliverable": "changed code/manifest digest, exact test logs, regression result, migration and rollback evidence when applicable, security/privacy effects, reviewer session, and explicit independent verdict",
+      "statusAtImport": "NOT_ACCEPTED"
+    },
+    {
+      "id": "S28",
+      "title": "Implement offline prompt optimization",
+      "priority": "P1",
+      "dependencies": [
+        "S01",
+        "S23",
+        "S26"
+      ],
+      "backlogStatusAtImport": "new_development",
+      "desiredCapability": "Bound GEPA/DSPy candidate runs on development data with sole GLM, hard budget and invariant checks.",
+      "acceptanceRule": "Candidate cannot see holdout; reproducible baseline comparison and no automatic production promotion.",
+      "originalBacklogCases": [
+        {
+          "id": "S28-B01",
+          "kind": "original-backlog-test",
+          "requirement": "Prompt memorization. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s28"
+        },
+        {
+          "id": "S28-B02",
+          "kind": "original-backlog-test",
+          "requirement": "metric gaming. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s28"
+        },
+        {
+          "id": "S28-B03",
+          "kind": "original-backlog-test",
+          "requirement": "private data spill. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s28"
+        },
+        {
+          "id": "S28-B04",
+          "kind": "original-backlog-test",
+          "requirement": "excess tokens and optimizer failure. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s28"
+        }
+      ],
+      "supplementalCases": [],
+      "matrixReviewDeliverable": "changed code/manifest digest, exact test logs, regression result, migration and rollback evidence when applicable, security/privacy effects, reviewer session, and explicit independent verdict",
+      "statusAtImport": "NOT_ACCEPTED"
+    },
+    {
+      "id": "S34",
+      "title": "Measure unit economics and finalize quotas",
+      "priority": "P1",
+      "dependencies": [
+        "S25",
+        "S33"
+      ],
+      "backlogStatusAtImport": "needs_improvement",
+      "desiredCapability": "Benchmark 500–1,000 permitted accounts; replace token/CPU/review assumptions with p50/p95 telemetry and vendor quotes.",
+      "acceptanceRule": "Pricing has explicit usage ceilings, headroom and complete cost exclusions; no unlimited low-price research.",
+      "originalBacklogCases": [
+        {
+          "id": "S34-B01",
+          "kind": "original-backlog-test",
+          "requirement": "Heavy reasoning. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s34"
+        },
+        {
+          "id": "S34-B02",
+          "kind": "original-backlog-test",
+          "requirement": "high render rate. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s34"
+        },
+        {
+          "id": "S34-B03",
+          "kind": "original-backlog-test",
+          "requirement": "low-yield segment and tenant burst scenarios. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s34"
+        }
+      ],
+      "supplementalCases": [],
+      "matrixReviewDeliverable": "changed code/manifest digest, exact test logs, regression result, migration and rollback evidence when applicable, security/privacy effects, reviewer session, and explicit independent verdict",
+      "statusAtImport": "NOT_ACCEPTED"
+    },
+    {
+      "id": "X05",
+      "title": "Research allocation and expected utility",
+      "priority": "P1",
+      "dependencies": [
+        "X04",
+        "S27",
+        "S24"
+      ],
+      "backlogStatusAtImport": "new_development",
+      "desiredCapability": "Start deterministic priority plus logged exploration; compare calibrated ranking and value-of-information estimates only after labels.",
+      "acceptanceRule": "Allocation obeys spend/source policy; predicted response is not labeled causal lift; all inclusion probabilities recorded.",
+      "originalBacklogCases": [
+        {
+          "id": "X05-B01",
+          "kind": "original-backlog-test",
+          "requirement": "No-overlap cohorts. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#x05"
+        },
+        {
+          "id": "X05-B02",
+          "kind": "original-backlog-test",
+          "requirement": "missing calibration. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#x05"
+        },
+        {
+          "id": "X05-B03",
+          "kind": "original-backlog-test",
+          "requirement": "cost tails. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#x05"
+        },
+        {
+          "id": "X05-B04",
+          "kind": "original-backlog-test",
+          "requirement": "delayed outcomes and false precision. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#x05"
+        }
+      ],
+      "supplementalCases": [],
+      "matrixReviewDeliverable": "changed code/manifest digest, exact test logs, regression result, migration and rollback evidence when applicable, security/privacy effects, reviewer session, and explicit independent verdict",
+      "statusAtImport": "NOT_ACCEPTED"
+    },
+    {
+      "id": "X09",
+      "title": "Validated procedural skill registry",
+      "priority": "P1",
+      "dependencies": [
+        "S23",
+        "S28",
+        "S29",
+        "X06"
+      ],
+      "backlogStatusAtImport": "new_development",
+      "desiredCapability": "Add candidate/evaluating/approved/canary/active/revoked lifecycle, version pinning, test manifests, scope and license/provenance.",
+      "acceptanceRule": "Only approved skill versions enter tasks; corrections and revocations invalidate retrieval; no cross-tenant private promotion.",
+      "originalBacklogCases": [
+        {
+          "id": "X09-B01",
+          "kind": "original-backlog-test",
+          "requirement": "Untrusted skill instructions. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#x09"
+        },
+        {
+          "id": "X09-B02",
+          "kind": "original-backlog-test",
+          "requirement": "stale lessons. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#x09"
+        },
+        {
+          "id": "X09-B03",
+          "kind": "original-backlog-test",
+          "requirement": "concurrent versions. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#x09"
+        },
+        {
+          "id": "X09-B04",
+          "kind": "original-backlog-test",
+          "requirement": "deletion and default model leakage. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#x09"
+        }
+      ],
+      "supplementalCases": [],
+      "matrixReviewDeliverable": "changed code/manifest digest, exact test logs, regression result, migration and rollback evidence when applicable, security/privacy effects, reviewer session, and explicit independent verdict",
+      "statusAtImport": "NOT_ACCEPTED"
+    },
+    {
+      "id": "X13",
+      "title": "Incremental economics and autonomy dashboard",
+      "priority": "P1",
+      "dependencies": [
+        "X07",
+        "X11",
+        "X12",
+        "S07"
+      ],
+      "backlogStatusAtImport": "needs_improvement",
+      "desiredCapability": "Measure per-task tokens, challenge fraction, trace bytes, reviewer minutes and cost per verified outcome; enforce tier quotas.",
+      "acceptanceRule": "No double-counting existing critic cost; publish p95 costs and intervention categories; pricing includes extra infrastructure.",
+      "originalBacklogCases": [
+        {
+          "id": "X13-B01",
+          "kind": "original-backlog-test",
+          "requirement": "Heavy reasoning. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#x13"
+        },
+        {
+          "id": "X13-B02",
+          "kind": "original-backlog-test",
+          "requirement": "high exception rate. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#x13"
+        },
+        {
+          "id": "X13-B03",
+          "kind": "original-backlog-test",
+          "requirement": "duplicate bills and low-yield sources. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#x13"
+        }
+      ],
+      "supplementalCases": [],
+      "matrixReviewDeliverable": "changed code/manifest digest, exact test logs, regression result, migration and rollback evidence when applicable, security/privacy effects, reviewer session, and explicit independent verdict",
+      "statusAtImport": "NOT_ACCEPTED"
+    },
+    {
+      "id": "X15",
+      "title": "Controlled learning validation",
+      "priority": "P1",
+      "dependencies": [
+        "X05",
+        "X09",
+        "X13",
+        "X14"
+      ],
+      "backlogStatusAtImport": "new_development",
+      "desiredCapability": "Compare ranker/skill/prompt candidates against frozen baselines, held-out companies/time and mature CRM outcomes.",
+      "acceptanceRule": "No private cross-tenant training or auto-production edits; measured utility and risk justify promotion.",
+      "originalBacklogCases": [
+        {
+          "id": "X15-B01",
+          "kind": "original-backlog-test",
+          "requirement": "Proxy gaming. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#x15"
+        },
+        {
+          "id": "X15-B02",
+          "kind": "original-backlog-test",
+          "requirement": "missing outcomes. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#x15"
+        },
+        {
+          "id": "X15-B03",
+          "kind": "original-backlog-test",
+          "requirement": "leakage. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#x15"
+        },
+        {
+          "id": "X15-B04",
+          "kind": "original-backlog-test",
+          "requirement": "subgroup failure and rollback after bad feedback. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#x15"
+        }
+      ],
+      "supplementalCases": [],
+      "matrixReviewDeliverable": "changed code/manifest digest, exact test logs, regression result, migration and rollback evidence when applicable, security/privacy effects, reviewer session, and explicit independent verdict",
+      "statusAtImport": "NOT_ACCEPTED"
+    },
+    {
+      "id": "S30",
+      "title": "Evaluate delayed-reward contextual bandits",
+      "priority": "P2",
+      "dependencies": [
+        "S24",
+        "S25",
+        "S27",
+        "S29"
+      ],
+      "backlogStatusAtImport": "new_development",
+      "desiredCapability": "Finite approved arms, valid propensities, exploration constraints, pending-reward handling, IPS/DR and fixed evaluation lane.",
+      "acceptanceRule": "Offline overlap/ESS checks and randomized confirmation required; no uplift claim from proxy alone.",
+      "originalBacklogCases": [
+        {
+          "id": "S30-B01",
+          "kind": "original-backlog-test",
+          "requirement": "Zero propensity. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s30"
+        },
+        {
+          "id": "S30-B02",
+          "kind": "original-backlog-test",
+          "requirement": "high weights. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s30"
+        },
+        {
+          "id": "S30-B03",
+          "kind": "original-backlog-test",
+          "requirement": "delayed revenue. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s30"
+        },
+        {
+          "id": "S30-B04",
+          "kind": "original-backlog-test",
+          "requirement": "drifting cohort and unsafe arm exclusion. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s30"
+        }
+      ],
+      "supplementalCases": [],
+      "matrixReviewDeliverable": "changed code/manifest digest, exact test logs, regression result, migration and rollback evidence when applicable, security/privacy effects, reviewer session, and explicit independent verdict",
+      "statusAtImport": "NOT_ACCEPTED"
+    },
+    {
+      "id": "S35",
+      "title": "Add post-sale proof and retention loop",
+      "priority": "P2",
+      "dependencies": [
+        "S22",
+        "S25",
+        "S33"
+      ],
+      "backlogStatusAtImport": "new_development",
+      "desiredCapability": "Authorized delivery/analytics adapters, project milestones, customer-approved case studies and evidence-backed renewal signals.",
+      "acceptanceRule": "Outcome evidence tied to actual delivery; expansion recommendations obey separate contact/permission policies.",
+      "originalBacklogCases": [
+        {
+          "id": "S35-B01",
+          "kind": "original-backlog-test",
+          "requirement": "Missing analytics baseline. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s35"
+        },
+        {
+          "id": "S35-B02",
+          "kind": "original-backlog-test",
+          "requirement": "revoked access. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s35"
+        },
+        {
+          "id": "S35-B03",
+          "kind": "original-backlog-test",
+          "requirement": "attribution confusion and unapproved case-study claims. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#s35"
+        }
+      ],
+      "supplementalCases": [],
+      "matrixReviewDeliverable": "changed code/manifest digest, exact test logs, regression result, migration and rollback evidence when applicable, security/privacy effects, reviewer session, and explicit independent verdict",
+      "statusAtImport": "NOT_ACCEPTED"
+    },
+    {
+      "id": "X16",
+      "title": "Domain-neutral interface review",
+      "priority": "P2",
+      "dependencies": [
+        "X04",
+        "X14"
+      ],
+      "backlogStatusAtImport": "new_development",
+      "desiredCapability": "Extract only reusable evidence/decision/evaluation types; document sales-specific policy boundary and future paper-simulation requirements.",
+      "acceptanceRule": "No broker, order execution, financial model or live market integration enters launch scope.",
+      "originalBacklogCases": [
+        {
+          "id": "X16-B01",
+          "kind": "original-backlog-test",
+          "requirement": "Sales permission cannot authorize another domain. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#x16"
+        },
+        {
+          "id": "X16-B02",
+          "kind": "original-backlog-test",
+          "requirement": "domain enums and policy versions reject cross-use. Record fixture, action, expected safeguard, actual assertion, command and log.",
+          "sourceReference": "ACCEPTANCE_MATRIX.md#x16"
+        }
+      ],
+      "supplementalCases": [],
+      "matrixReviewDeliverable": "changed code/manifest digest, exact test logs, regression result, migration and rollback evidence when applicable, security/privacy effects, reviewer session, and explicit independent verdict",
+      "statusAtImport": "NOT_ACCEPTED"
+    }
+  ]
+}

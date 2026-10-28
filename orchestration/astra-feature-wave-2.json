@@ -1,0 +1,17 @@
+{
+  "phase": "PHASE_1_IMPLEMENTATION",
+  "sourceHead": "f30490bd892dd651fd2fb276b09b510379e27c0d",
+  "priority": "Complete actual feature integrations before comprehensive QA; no task acceptance inferred.",
+  "sourceWorkspace": "C:/Users/pooja/.codex/worktrees/astra-foundation/odd-ecosys",
+  "model": "gpt-6-luna",
+  "reasoning": "high",
+  "tickets": [
+    {"id":"connectors","tasks":["S15","S17","S20","S22"],"owned":["pipeline/astra-connectors.js","pipeline/astra-mailbox-provider.js","pipeline/astra-verifier-adapter.js","pipeline/astra-crm-adapter.js","pipeline/astra-connector-routes.js","migrations/astra/010-connectors.up.sql","migrations/astra/010-connectors.down.sql"]},
+    {"id":"generation","tasks":["S06","S18","S21"],"owned":["pipeline/astra-glm-gateway.js","pipeline/astra-egress.js","pipeline/astra-ai-routes.js","pipeline/astra-generation.js","pipeline/astra-generation-routes.js","migrations/astra/011-generation.up.sql","migrations/astra/011-generation.down.sql"]},
+    {"id":"decisions-autonomy","tasks":["X04","X10","S19","S20"],"owned":["pipeline/astra-campaigns.js","pipeline/astra-dispatcher.js","pipeline/astra-decisions.js","pipeline/astra-autonomy.js","pipeline/astra-autonomy-routes.js","migrations/astra/012-autonomy.up.sql","migrations/astra/012-autonomy.down.sql"]}
+  ],
+  "sharedInterfaces": ["Verified tenant actor and PostgreSQL client per request", "Immutable offer proof and policy from explicit SQLite bridge", "Generation calls existing saveAstraCampaignDraft without changing its signature", "Connectors expose gated injected transports; dispatch owner rechecks before every side effect"],
+  "liveExternalActions": "disabled",
+  "realDataMigration": "forbidden",
+  "releaseReady": false
+}

@@ -1,0 +1,14 @@
+{
+  "id": "ASTRA-LIVE-VALIDATION-APP-EXTENSION-OPERATOR",
+  "operator": "/root",
+  "writerReleased": "/root/live_validation_extension",
+  "reason": "The Luna writer completed its exact unsigned proposal. Coordinator acts only as registrar operator for already reviewed results; the writer remains responsible for the later report refresh.",
+  "allowedOperations": [
+    "Promote the unchanged d8525fa1 version2 contract prepared by the released Luna writer, preserving version1 before bytes",
+    "Prepare twelve sanitized receipt envelopes from the unchanged proposed actual texts and root's exact signed coordinator binding",
+    "Invoke the unchanged hardened registrar and its validate command; preserve all attempt histories and failures"
+  ],
+  "rootMayEditProductOrRegistrar": false,
+  "newServiceExecutionAuthorized": false,
+  "releaseReady": false
+}

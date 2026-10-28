@@ -1,17 +1,700 @@
 {
   "schemaVersion": 1,
   "projectRoot": "E:\\project\\odd-ecosys",
-  "isolatedWorkspace": "C:\\Users\\pooja\\.codex\\odd-ecosys-runtime\\workspace",
-  "gitScope": "E:/",
+  "isolatedWorkspace": "E:\\odd-ecosys-sol-luna-20261020",
+  "gitScope": "E:/project/odd-ecosys",
   "phase": "P00",
-  "task": "baseline-inventory-and-runner-validation",
+  "task": "verifier-milestone1-input-and-offline-implementation",
   "architecture": "Warmbly candidate; unverified",
   "releaseReady": false,
   "lastVerifiedRevision": null,
-  "nextAction": "Validate isolated environment and complete P00 inventory/gates; then remaining P01 defects",
+  "nextAction": "Finish independent-review corrections in new verifier checkout; preserve serving preview. Transfer core only after INPUT ACCEPT, complete offline API/history/UI integration, review exact own delta. Then next single defect is Reacher bypass of local DNS implicit/NullMX/transient safeguards; no unrelated backlog.",
+  "developmentAuthorization": {
+    "kind": "human_override",
+    "authorizedAt": "2026-10-09",
+    "source": "LUNA_CONTINUOUS_PRODUCT_BUILD_20261009 (1).md",
+    "scope": "Isolated product development across L02-L25",
+    "supersedes": "Historical P02-only development-sequencing restriction",
+    "phaseAcceptanceChanged": false,
+    "releaseReady": false
+  },
   "blockers": [
     "FreeInference key not configured",
-    "Live provider/integration credentials and release validation pending"
+    "Default local Ollama endpoint is unreachable from the current host",
+    "Live provider/integration credentials and release validation pending",
+    "ALL-LEAD-022 EEPC adapter blocked before page access: robots.txt returned the HTML app shell (200 text/html), so no directory records were fetched",
+    "ALL-LEAD-042 CBAM directory source is skipped: guarded robots preflight could not resolve cbam.eepcindia.org; no directory records were requested",
+    "EPCH: only a one-page live pilot has been measured; broader source pagination and the 120-business acceptance evaluation remain incomplete",
+    "Public deployment is human-owned; actual public HTTPS/Google origins and host operational acceptance remain unverified, not a local development blocker",
+    "One shared workspace has no unrelated-organization tenant isolation; require separate instance/database per organization or complete tenant scoping before multi-organization access",
+    "Actual deployment TLS/Google-origin acceptance, private operator configuration and live Reacher SMTP capability remain unverified",
+    "Original DB preserved and backed up; reviewed migration5 not applied to live data; scoped reviews do not accept all prior uncommitted work or outstanding phase gates"
   ],
-  "updatedAt": "2026-10-06T12:30:23.290Z"
+  "updatedAt": "2026-10-22T15:49:56.786142+00:00",
+  "checkpointHistory": [
+    {
+      "at": "2026-10-22T15:49:56.786142+00:00",
+      "ticket": "LOCAL-PREVIEW-001",
+      "status": "independently_accepted_running_local",
+      "review": "E:\\odd-ecosys-sol-luna-20261020\\orchestration\\evidence\\LOCAL-PREVIEW-001-independent-review.md",
+      "reviewSHA256": "dca46b85e872b6ef3e12d02c8a1496e561d78597bb6a7eef2f1581a78ad113e7",
+      "spec": "ACCEPT",
+      "quality": "ACCEPT",
+      "url": "http://127.0.0.1:3000/#campaigns",
+      "host": "127.0.0.1",
+      "port": 3000,
+      "processId": 22896,
+      "source": "E:\\odd-ecosys-sol-luna-20261020",
+      "database": "X:\\odd-ecosys-runtime\\reviewed-preview-20261022\\data\\pipeline.db",
+      "baselineBackup": "X:\\odd-ecosys-runtime\\reviewed-preview-20261022\\original-before-initialization.db",
+      "ownerEmail": "goutamdhanani@gmail.com",
+      "privateSignInInstructions": "X:\\odd-ecosys-runtime\\reviewed-preview-20261022\\SIGN-IN.txt",
+      "counts": {
+        "contacts": 63,
+        "emailRecords": 59,
+        "historicalAcceptedSends": 2,
+        "campaigns": 1
+      },
+      "normalBootstrap": true,
+      "normalPasswordLogin": true,
+      "sessionSurvivedRestart": true,
+      "sendingPaused": true,
+      "automaticImapSync": false,
+      "additionalOutboundSubmissions": 0,
+      "originalSourceApplied": false,
+      "originalDatabasesMutated": false,
+      "publicDeployment": false,
+      "releaseReady": false,
+      "browserOpenStatus": "queued",
+      "privateSignInFileOpenStatus": "queued",
+      "sourceSnapshot": ".superpowers/sdd/80822741b1d4b3cb/all-seven-after-final.json",
+      "bindings": {
+        "E:\\odd-ecosys-sol-luna-20261020\\orchestration\\plans\\local-reviewed-preview-20261022.md": "0b3e7e4e3b0c220c4ce7c465f3175cfc07cc85b911598cec207df39b963b054a",
+        "E:\\odd-ecosys-sol-luna-20261020\\orchestration\\evidence\\LOCAL-PREVIEW-001-independent-review.md": "dca46b85e872b6ef3e12d02c8a1496e561d78597bb6a7eef2f1581a78ad113e7",
+        "E:\\odd-ecosys-sol-luna-20261020\\orchestration\\evidence\\LOCAL-PREVIEW-001-preparation.json": "7f6e1a357058dd1b1f9c4eeda0860e2c5709c9d2da33917301790fa94d689923",
+        "E:\\odd-ecosys-sol-luna-20261020\\orchestration\\evidence\\LOCAL-PREVIEW-001-prestart.json": "5c969c202eea5d63cec0613264080b1a222d8f7d00559deb37803ee3e4f7c30c",
+        "E:\\odd-ecosys-sol-luna-20261020\\orchestration\\evidence\\LOCAL-PREVIEW-001-smoke-initial.json": "2daeef784470f1d9f54b5346ecdf6a742e4306d702fb0ee042c3e4c9d1a02045",
+        "E:\\odd-ecosys-sol-luna-20261020\\orchestration\\evidence\\LOCAL-PREVIEW-001-browser.json": "9205b0c7cca6795d1f9e6e856e31e897bb9f0f18fd0ce03ffb1b1f393f452277",
+        "E:\\odd-ecosys-sol-luna-20261020\\orchestration\\evidence\\LOCAL-PREVIEW-001-restart.json": "c16f1e8c36eff6b7c94566f75b4236c4e4f4465c303f7ea7281ece954a6b49a0",
+        "E:\\odd-ecosys-sol-luna-20261020\\orchestration\\evidence\\LOCAL-PREVIEW-001-restart-launch.log": "fa2596159fd604c4210d33db6c58d029ae86b5bebd5b30d3f0238f051bf5aac7",
+        "E:\\odd-ecosys-sol-luna-20261020\\orchestration\\evidence\\LOCAL-PREVIEW-001-smoke-restart.json": "e0b3990a84a4d1698ddd671e4e5fb772479822b754649f6dffc955a86e03296e",
+        "E:\\odd-ecosys-sol-luna-20261020\\orchestration\\evidence\\LOCAL-PREVIEW-001-listener.json": "0ee72ebfaa832b6f2b447a9732a2e2391253a4f016f4bb835f583977f315ed05",
+        "E:\\project\\odd-ecosys\\orchestration\\evidence\\LOCAL-PREVIEW-001-original-preservation.json": "8c6547a620837ba3e0a133598bb535e88bfcd4b66d410de314970fcdac78b920",
+        "X:\\odd-ecosys-runtime\\reviewed-preview-20261022\\Start-Preview.ps1": "df335fb67bc51c2560ce27891cf954453d83ace400a2381c697e970d05cf4165",
+        "X:\\odd-ecosys-runtime\\reviewed-preview-20261022\\launch.mjs": "f381b9544ffa8f69ead3fb7305de158fb7f8e0b16931093702c61892aefd381c"
+      },
+      "report": "E:\\odd-ecosys-sol-luna-20261020\\LOCAL_PREVIEW_20261022.md",
+      "limits": [
+        "Loopback local only; no public hosting configured",
+        "Google authentication not externally accepted; password works",
+        "Working preview data persists in its X: clone, not the original E: DB",
+        "Mobile transition screenshot is not usability acceptance",
+        "Listener is not a Windows boot service; restart launcher after PC restart",
+        "No whole-branch, phase or production release acceptance"
+      ]
+    },
+    {
+      "checkedAt": "2026-10-22T08:25:29.740350+00:00",
+      "ticket": "COPY-EDIT-GUARDS-001",
+      "status": "independently_accepted_isolated",
+      "sourceRevision": "a67413efb07cc462386249ded63fda829e269559 plus isolated dirty overlay",
+      "review": "E:\\odd-ecosys-sol-luna-20261020\\orchestration\\evidence\\COPY-EDIT-GUARDS-001-independent-review-r2.md",
+      "reviewSHA256": "82b94a3f2b696ffa72503db05c8248df3287a94ced3afa2581c018bbbcadbc46",
+      "verdicts": {
+        "spec": "ACCEPT",
+        "quality": "ACCEPT",
+        "finalOwnFourFileDelta": "ACCEPT"
+      },
+      "frozenSource": "E:\\odd-ecosys-sol-luna-20261020\\.superpowers\\sdd\\80822741b1d4b3cb\\after-r2.json",
+      "sourceHashes": {
+        "pipeline/personalizer.js": "833b9ef65d24750d7cae43e434be7b1f6ee91ece7031a1dd69a63390373e52a2",
+        "js/personalization.js": "1ea495c5294bca7553450445ab75f563f373079e433eae40a9c167e617f2591f",
+        "server.js": "05d1e620e26fb09e4855ba1be4c97f9cd7fa437d763065fe5086870fd550b3dc",
+        "tests/personalization-edit-guards.test.mjs": "0bbfab1bf16fada40453623de8b3a5dd0196d555e3f16c00047addf3ac3feafd"
+      },
+      "allSevenFinalSnapshot": "E:\\odd-ecosys-sol-luna-20261020\\.superpowers\\sdd\\80822741b1d4b3cb\\all-seven-after-final.json",
+      "allSevenFinalSnapshotSHA256": "0b05c128a98c4e5eca424b67fb34617afd094214658ef55ce380357ccbbe5277",
+      "patches": [
+        {
+          "patch": "E:\\odd-ecosys-sol-luna-20261020\\.superpowers\\sdd\\80822741b1d4b3cb\\COPY-EDIT-GUARDS-001-r2.patch",
+          "sha256": "1cbd3afbce40c1dea4e40c857622b88704777771c6233edaef463043f75f68ae",
+          "changedFiles": 4,
+          "exitCode": 0,
+          "applied": false
+        },
+        {
+          "patch": "E:\\odd-ecosys-sol-luna-20261020\\.superpowers\\sdd\\80822741b1d4b3cb\\sol-luna-pipeline-seven-20261022.patch",
+          "sha256": "842fcf0d017feedfbe7ac4ee56630bc9e82fdd477acaede78ef5c2c4113f258e",
+          "changedFiles": 31,
+          "exitCode": 0,
+          "applied": false
+        }
+      ],
+      "preservation": "E:\\project\\odd-ecosys\\orchestration\\evidence\\copy-edit-final-preservation-20261022.json",
+      "preservationSHA256": "ead1e8cb903f5b4846e23fd83c54b6c220694bf38c1b9f1819b142be60e000e6",
+      "focusedCommand": "node --test --test-reporter=tap tests/personalization-edit-guards.test.mjs",
+      "focusedTests": {
+        "passed": 6,
+        "failed": 0,
+        "exitCode": 0
+      },
+      "independentCommands": [
+        {
+          "command": "node orchestration/evidence/COPY-EDIT-GUARDS-001/independent-r2-probe.mjs",
+          "exitCode": 0
+        },
+        {
+          "command": "node orchestration/evidence/COPY-EDIT-GUARDS-001/independent-r2-eligibility.mjs",
+          "exitCode": 0
+        }
+      ],
+      "controlledSyntheticEvidenceOnly": true,
+      "additionalLiveSends": 0,
+      "sourceAppliedToOriginal": false,
+      "deployed": false,
+      "persistentPreviewRunning": false,
+      "releaseReady": false,
+      "lastVerifiedRevision": null,
+      "nextSingleTicket": "CAMPAIGN-APPROVED-COPY-001: simplify the duplicate contact-copy and sequence-copy preparation; first establish the explicit saved-copy/preview/actual-send contract in a bounded owned plan. No source assignment or implementation started yet; preserve launch snapshots and sending guards.",
+      "limitations": [
+        "Own-delta review only; earlier scoped reviews do not accept the entire inherited dirty branch or public release.",
+        "Before proof for this legacy editor ticket is frozen source only, not an old-version runtime result.",
+        "Legacy approved/fact-pass rows are disclosed synthetic setup, not real verification or first-copy creation proof.",
+        "Original R1 author Node egress proof was inadequate; strict R2 transport guards and independent probes supersede that claim.",
+        "An initial author screenshot was overwritten during early R2; that missing hash is not claimed preserved. Independent R1 evidence remains.",
+        "Root preservation harness first failed on git lookup and then its default output buffer; absolute git and larger capture corrected only evidence code. Final exit0; no live mutation.",
+        "Existing sequence text still controls actual messages; per-contact reviewed text is a separate eligibility gate.",
+        "Unsaved guided editor buffers are memory-only. Workspace Inbox and timing remain shared.",
+        "Automatic approval review rejected recursive deletion of an old disposable fixture; folder remains, listener stopped; no retry."
+      ]
+    },
+    {
+      "checkedAt": "2026-10-22T07:43:22.985692+00:00",
+      "ticket": "GUIDED-CAMPAIGN-001",
+      "status": "independently_accepted_isolated",
+      "review": "E:\\odd-ecosys-sol-luna-20261020\\orchestration\\evidence\\GUIDED-CAMPAIGN-001-final-review-r2.md",
+      "reviewSHA256": "26db275fde11cd907201b67dbcf0648c863f69647e6f801d68b7eac26ad9e5b0",
+      "verdicts": {
+        "spec": "ACCEPT",
+        "quality": "ACCEPT",
+        "finalOwn12Delta": "ACCEPT"
+      },
+      "frozenSource": "E:\\odd-ecosys-sol-luna-20261020\\.superpowers\\sdd\\af17c7fad1785d7e\\after-full-r2.json",
+      "entry": "E:\\odd-ecosys-sol-luna-20261020\\GUIDED_CAMPAIGN_WORKSPACE_20261022.md",
+      "patches": {
+        "guided": {
+          "path": "E:\\odd-ecosys-sol-luna-20261020\\.superpowers\\sdd\\af17c7fad1785d7e\\GUIDED-CAMPAIGN-001-r2.patch",
+          "sha256": "ba50473d6f975f6491005e1573501338ca6801adddceb5135898ae212823526b",
+          "changedFiles": 12,
+          "exactDependencyBaselineCheckExit": 0
+        },
+        "combinedSix": {
+          "path": "E:\\odd-ecosys-sol-luna-20261020\\.superpowers\\sdd\\af17c7fad1785d7e\\sol-luna-product-six-20261022.patch",
+          "sha256": "501108d340da88a7e23f883618f615a288419cedd008157154630619cbf3c1b1",
+          "changedFiles": 30,
+          "originalBaselineMismatches": [],
+          "mainApplyCheckExit": 0
+        }
+      },
+      "preservation": "E:/project/odd-ecosys/orchestration/evidence/guided-pipeline-final-preservation-20261022.json",
+      "additionalLiveSends": 0,
+      "sourceAppliedToOriginal": false,
+      "deployed": false,
+      "releaseReady": false,
+      "nextSingleTicket": "COPY-EDIT-GUARDS-001: re-evaluate stale guardrail flag after legacy message edit; preserve explicit approval/fact-unavailable/sending protections"
+    },
+    {
+      "at": "2026-10-22T07:16:21.113571+00:00",
+      "ticket": "GUIDED-CAMPAIGN-001",
+      "status": "independent_r1_changes_required",
+      "review": "E:/odd-ecosys-sol-luna-20261020/orchestration/evidence/GUIDED-CAMPAIGN-001-final-review-r1.md",
+      "actualLoopbackJourney": "SMTP sink DATA250; reply cancels followup; freshworker0",
+      "blockingFindings": [
+        "unsaved editor loss/cross-campaign risk",
+        "dirty editor silently rebased to newer expected token",
+        "guardrail reasons and saved fact status unavailable after rerender"
+      ],
+      "originalPreservation": "orchestration/evidence/guided-pipeline-preservation-20261022.json",
+      "additionalLiveSends": 0,
+      "releaseReady": false
+    },
+    {
+      "at": "2026-10-21T19:07:00.390354+00:00",
+      "ticket": "PAID-ADMISSION-001",
+      "status": "independently_accepted_isolated",
+      "sourceFilesChanged": [
+        "pipeline/ai-spend-admission.js",
+        "pipeline/database.js",
+        "pipeline/personalizer.js",
+        "server.js",
+        "tests/ai-spend-admission.test.mjs",
+        "tests/ai-spend-admission-api.test.mjs",
+        "tests/personalization-bedrock.test.mjs",
+        "js/ai-budget.js",
+        "js/api.js",
+        "js/settings.js",
+        "js/personalization.js",
+        "css/ai-budget.css",
+        "index.html",
+        "tests/ai-spend-admission-ui.test.mjs",
+        "tests/database-migrations.test.mjs"
+      ],
+      "review": "E:/odd-ecosys-sol-luna-20261020/orchestration/evidence/PAID-ADMISSION-001-final-review.md",
+      "reviewSHA256": "326e8760a04190e1bd798c6350d65f38453c834b012865574854583ce11dda6e",
+      "entry": "E:/odd-ecosys-sol-luna-20261020/PAID_ADMISSION_FEATURE_20261022.md",
+      "combinedFourPatch": "E:/odd-ecosys-sol-luna-20261020/.superpowers/sdd/d26f9c4a0b60b397/sol-luna-quality-20261020-all-four.patch",
+      "combinedPatchSHA256": "44aa3bcf9bb85aa24e559fa78532c840bf0ef87cb59b64b630bd1c3304eae9b8",
+      "mainApplyCheck": {
+        "command": "git apply --check --verbose 'E:/odd-ecosys-sol-luna-20261020/.superpowers/sdd/d26f9c4a0b60b397/sol-luna-quality-20261020-all-four.patch'",
+        "cwd": "E:/project/odd-ecosys",
+        "exitCode": 0,
+        "changedFiles": 19,
+        "applied": false
+      },
+      "liveMigrationApplied": false,
+      "paidCalls": 0,
+      "additionalLiveSends": 0,
+      "releaseReady": false,
+      "limitations": [
+        "Workspace Bedrock subject-writing only; prior usage and other operations excluded",
+        "Approved maximum-rate cost is not an invoice",
+        "Full-context conservative hold, cache/ambiguous/pretransport holds remain indefinite; no hold-release endpoint",
+        "No unrelated-organization isolation or broad public-release acceptance"
+      ]
+    },
+    {
+      "at": "2026-10-21T18:26:35.653344+00:00",
+      "ticket": "SOL-LUNA-THREE-FIXES-20261020",
+      "status": "independently_accepted_isolated",
+      "tickets": [
+        "CSV-BP-001",
+        "AUTH-RACE-001",
+        "AUTH-ORIGIN-002"
+      ],
+      "sourceFiles": [
+        "server.js",
+        "pipeline/auth-manager.js",
+        "tests/list-export-backpressure.test.mjs",
+        "tests/auth-concurrency.test.mjs",
+        "tests/auth-origin-boundary.test.mjs"
+      ],
+      "review": "E:\\odd-ecosys-sol-luna-20261020\\orchestration\\evidence\\SOL-LUNA-20261020-final-review.md",
+      "reviewSHA256": "f6581acd23d5d0d358774104bda6bd27edb07e360da0adf5be2274c5a0636073",
+      "reviewIndependentChecks": 58,
+      "patch": "E:\\odd-ecosys-sol-luna-20261020\\.superpowers\\sdd\\4115c9528f3f6cbe\\sol-luna-quality-20261020-all3.patch",
+      "patchSHA256": "14eb6351dbbd7686af8d54daefbf5e2e66b24682128e3f1b5ab02605637328a2",
+      "originalApplicationModified": false,
+      "patchAppliedToOriginal": false,
+      "preservation": "orchestration/evidence/sol-luna-resume-preservation-20261021.json",
+      "releaseReady": false
+    },
+    {
+      "at": "2026-10-19T21:53:11.413217+00:00",
+      "ticket": "SOL-LUNA-SETUP-20261020",
+      "skillInstalledAndValidated": true,
+      "originalUploadPreserved": true,
+      "modelDispatchesExplicit": true,
+      "publicProductGoal": true,
+      "releaseReady": false
+    },
+    {
+      "at": "2026-10-19T19:14:38.042628+00:00",
+      "ticket": "SAAS-AUDIT-20261019",
+      "artifacts": "reports/saas-audit-20261019/README.md",
+      "sourceChanged": false,
+      "financialRowsValidated": 161280,
+      "financialAndBudgetTests": 12,
+      "workflowTests": 30,
+      "additionalLiveSends": 0,
+      "realVpsCapacityVerified": false,
+      "liveYieldMeasured": false,
+      "independentFinancialAcceptance": false,
+      "releaseReady": false,
+      "authenticatedCsvRows": 3000,
+      "remainingProductFinding": "CSV export backpressure: MaxListenersExceededWarning, unremoved error listeners; data intact; source unchanged"
+    },
+    {
+      "updatedAt": "2026-10-14T18:40:00+05:30",
+      "task": "B23-static-file-allowlist",
+      "gitScope": "E:/",
+      "nextAction": "B23 default body caps, same-origin CORS, and static asset allowlist are verified locally; combined archive/migration/security tests passed 36/36. Schema inventory confirms one shared workspace with no workspace_id on core data, so unrelated customer tenancy is not isolated. Do not claim multi-tenant SaaS readiness; keep each organization's data in its own deployment/database until a separately reviewed tenant model exists. Public TLS/reverse-proxy validation and independent review remain pending; releaseReady=false"
+    },
+    {
+      "updatedAt": "2026-10-19T08:40:21.394Z",
+      "task": "V1-verifier-and-private-google-owner-setup",
+      "nextAction": "Continue bounded release-blocker implementation within ownership. Public deployment target was explicitly deferred by owner on 2026-10-19. Do not rerun already-passing suites without a new change. Do not enable unrelated organizations in the shared database. Before deployment: choose organization isolation model, privately configure owner/encryption/public unsubscribe address, then validate actual HTTPS/Google origins and live verifier capability. Existing phase gates remain unchanged; no live sending."
+    },
+    {
+      "updatedAt": "2026-10-19T13:58:11.293Z",
+      "task": "core-native-warmup-activity-handoff",
+      "nextAction": "Implement bounded read-only native Warmbly account/activity integration with durable verified mapping and truthful unavailable state. No new scheduler, warm-up activation, real emails, live mutations or phase acceptance. Completed reviewed discovery patches await safe runtime deployment; old Ontario preview is a distinct offline source/database."
+    },
+    {
+      "updatedAt": "2026-10-19T16:13:22.364Z",
+      "task": "saleshandy-style-functional-audit-sidebar-counter-reviewed",
+      "nextAction": "Restore/reconcile the original persisted Ontario preview/job4 with its actual source/database and consistent backup, supported owner auth and applicable deployment/reviewer gate. No fresh replacement job, credential copying, real email, new warm-up/send scheduler or unrelated backlog phase. Reviewed local discovery and read-only native activity slices are complete; release approval remains false."
+    },
+    {
+      "updatedAt": "2026-10-19T16:49:46.898Z",
+      "task": "comfortable-ui-and-3000-lead-cost-report",
+      "baseRevision": "a67413efb07cc462386249ded63fda829e269559",
+      "outcome": "Completed bounded local UI patch and 14-page cost PDF; independent UI review accepted at frozen hashes.",
+      "independentTests": {
+        "passed": 5,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0,
+        "review": "orchestration/evidence/comfortable-ui-independent-review-20261019.md"
+      },
+      "costReport": {
+        "pages": 14,
+        "folder": "reports/lead-costs-20261019",
+        "validation": "reports/lead-costs-20261019/validation.json",
+        "measuredLiveLeadYield": false
+      },
+      "preservationEvidence": "orchestration/evidence/comfortable-ui-data-preservation-20261019.json",
+      "liveMutations": false,
+      "additionalRealSends": 0,
+      "persistentPreviewDeployed": false,
+      "releaseReady": false
+    }
+  ],
+  "validation": {
+    "baselineRevision": "a67413efb07cc462386249ded63fda829e269559",
+    "workingTree": "Existing staged/unstaged work preserved; no release commit or clean-tree acceptance",
+    "broadSuite": {
+      "passed": 420,
+      "failed": 0,
+      "skipped": 0,
+      "exitCode": 0,
+      "log": "orchestration/evidence/v1-release-candidate-suite-20261019.log"
+    },
+    "finalSmtpIndependent": {
+      "passed": 21,
+      "exitCode": 0,
+      "review": "orchestration/evidence/v1-smtp-safety-review-20261019.md"
+    },
+    "finalGoogleOwner": {
+      "passed": 8,
+      "exitCode": 0,
+      "independentPassed": 9,
+      "independentClientPassed": 1,
+      "independentAdversarialScenarios": 14,
+      "review": "orchestration/evidence/v1-google-owner-review-20261019.md"
+    },
+    "sourceManifest": "orchestration/evidence/v1-source-manifest-20261019.json",
+    "preservation": "orchestration/evidence/v1-preservation-20261019.json",
+    "additionalLiveSends": 0,
+    "note": "Broad sweep preceded final owner-setup change; final relevant auth/SMTP slices were independently rerun. Overlapping totals must not be added or treated as live-provider evidence.",
+    "coreWorkflow": {
+      "report": "CORE_WORKFLOW_CHECK_20261019.md",
+      "localSearchReview": "orchestration/evidence/core-local-search-independent-review-20261019.md",
+      "contactHandoffReview": "orchestration/evidence/core-observed-contact-independent-review-20261019.md",
+      "sourceManifest": "orchestration/evidence/core-source-manifest-20261019.json",
+      "preservation": "orchestration/evidence/core-native-warmup-preservation-20261019.json",
+      "additionalLiveSends": 0,
+      "previewDeployed": false,
+      "nativeActivity": {
+        "passed": 20,
+        "exitCode": 0,
+        "independentlyPassed": 20,
+        "review": "orchestration/evidence/core-native-warmup-independent-review-20261019.md",
+        "log": "orchestration/evidence/core-native-warmup-final-20261019.log",
+        "sourceManifest": "orchestration/evidence/core-native-warmup-source-manifest-20261019.json",
+        "liveMigrationApplied": false,
+        "liveWorkerVerified": false
+      },
+      "realMailServer": {
+        "trustedTls": [
+          25,
+          465,
+          993,
+          443
+        ],
+        "smtpAuthenticated": true,
+        "imapAuthenticated": true,
+        "readOnlyInboxMessages": 8,
+        "sourceDatabase": "X:/odd-ecosys-runtime/mail-app-data/odd-ecosys.db",
+        "evidence": "orchestration/evidence/core-live-mail-auth-readonly-20261019.json",
+        "emailsSubmitted": 0,
+        "appMessagesImported": 0,
+        "publicDeliveryProven": false
+      }
+    },
+    "productFunctionalAudit": {
+      "at": "2026-10-19T16:13:22.364Z",
+      "report": "PRODUCT_FUNCTIONAL_AUDIT_20261019.md",
+      "broadDiagnostic": {
+        "passed": 446,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0,
+        "scope": "Before sidebar delta; controlled current-source diagnostic",
+        "log": "orchestration/evidence/product-function-audit-suite-20261019.log"
+      },
+      "finalFocused": {
+        "passed": 6,
+        "exitCode": 0,
+        "log": "orchestration/evidence/product-sidebar-after-20261019.log"
+      },
+      "independentFinal": {
+        "passed": 7,
+        "exitCode": 0,
+        "countProbes": 17,
+        "review": "orchestration/evidence/product-sidebar-independent-review-20261019.md"
+      },
+      "continuousJourney": {
+        "synthetic": true,
+        "smtpAcceptedPerRun": 1,
+        "publicDelivery": "not_tested",
+        "freshWorkerAfterReplySubmissions": 0,
+        "contactsExported": 2,
+        "verificationExported": 2
+      },
+      "preservation": "orchestration/evidence/product-function-audit-preservation-20261019.json",
+      "additionalLiveSends": 0,
+      "previewDeployed": false,
+      "sourceManifest": "orchestration/evidence/product-function-source-manifest-20261019.json"
+    },
+    "comfortableUiAndCostReport": {
+      "updatedAt": "2026-10-19T16:49:46.898Z",
+      "task": "comfortable-ui-and-3000-lead-cost-report",
+      "baseRevision": "a67413efb07cc462386249ded63fda829e269559",
+      "outcome": "Completed bounded local UI patch and 14-page cost PDF; independent UI review accepted at frozen hashes.",
+      "independentTests": {
+        "passed": 5,
+        "failed": 0,
+        "skipped": 0,
+        "exitCode": 0,
+        "review": "orchestration/evidence/comfortable-ui-independent-review-20261019.md"
+      },
+      "costReport": {
+        "pages": 14,
+        "folder": "reports/lead-costs-20261019",
+        "validation": "reports/lead-costs-20261019/validation.json",
+        "measuredLiveLeadYield": false
+      },
+      "preservationEvidence": "orchestration/evidence/comfortable-ui-data-preservation-20261019.json",
+      "liveMutations": false,
+      "additionalRealSends": 0,
+      "persistentPreviewDeployed": false,
+      "releaseReady": false
+    },
+    "solLunaThreeFixes": {
+      "at": "2026-10-21T18:26:35.653344+00:00",
+      "ticket": "SOL-LUNA-THREE-FIXES-20261020",
+      "status": "independently_accepted_isolated",
+      "tickets": [
+        "CSV-BP-001",
+        "AUTH-RACE-001",
+        "AUTH-ORIGIN-002"
+      ],
+      "sourceFiles": [
+        "server.js",
+        "pipeline/auth-manager.js",
+        "tests/list-export-backpressure.test.mjs",
+        "tests/auth-concurrency.test.mjs",
+        "tests/auth-origin-boundary.test.mjs"
+      ],
+      "review": "E:\\odd-ecosys-sol-luna-20261020\\orchestration\\evidence\\SOL-LUNA-20261020-final-review.md",
+      "reviewSHA256": "f6581acd23d5d0d358774104bda6bd27edb07e360da0adf5be2274c5a0636073",
+      "reviewIndependentChecks": 58,
+      "patch": "E:\\odd-ecosys-sol-luna-20261020\\.superpowers\\sdd\\4115c9528f3f6cbe\\sol-luna-quality-20261020-all3.patch",
+      "patchSHA256": "14eb6351dbbd7686af8d54daefbf5e2e66b24682128e3f1b5ab02605637328a2",
+      "originalApplicationModified": false,
+      "patchAppliedToOriginal": false,
+      "preservation": "orchestration/evidence/sol-luna-resume-preservation-20261021.json",
+      "releaseReady": false
+    },
+    "paidAdmission": {
+      "at": "2026-10-21T19:07:00.390354+00:00",
+      "ticket": "PAID-ADMISSION-001",
+      "status": "independently_accepted_isolated",
+      "sourceFilesChanged": [
+        "pipeline/ai-spend-admission.js",
+        "pipeline/database.js",
+        "pipeline/personalizer.js",
+        "server.js",
+        "tests/ai-spend-admission.test.mjs",
+        "tests/ai-spend-admission-api.test.mjs",
+        "tests/personalization-bedrock.test.mjs",
+        "js/ai-budget.js",
+        "js/api.js",
+        "js/settings.js",
+        "js/personalization.js",
+        "css/ai-budget.css",
+        "index.html",
+        "tests/ai-spend-admission-ui.test.mjs",
+        "tests/database-migrations.test.mjs"
+      ],
+      "review": "E:/odd-ecosys-sol-luna-20261020/orchestration/evidence/PAID-ADMISSION-001-final-review.md",
+      "reviewSHA256": "326e8760a04190e1bd798c6350d65f38453c834b012865574854583ce11dda6e",
+      "entry": "E:/odd-ecosys-sol-luna-20261020/PAID_ADMISSION_FEATURE_20261022.md",
+      "combinedFourPatch": "E:/odd-ecosys-sol-luna-20261020/.superpowers/sdd/d26f9c4a0b60b397/sol-luna-quality-20261020-all-four.patch",
+      "combinedPatchSHA256": "44aa3bcf9bb85aa24e559fa78532c840bf0ef87cb59b64b630bd1c3304eae9b8",
+      "mainApplyCheck": {
+        "command": "git apply --check --verbose 'E:/odd-ecosys-sol-luna-20261020/.superpowers/sdd/d26f9c4a0b60b397/sol-luna-quality-20261020-all-four.patch'",
+        "cwd": "E:/project/odd-ecosys",
+        "exitCode": 0,
+        "changedFiles": 19,
+        "applied": false
+      },
+      "liveMigrationApplied": false,
+      "paidCalls": 0,
+      "additionalLiveSends": 0,
+      "releaseReady": false,
+      "limitations": [
+        "Workspace Bedrock subject-writing only; prior usage and other operations excluded",
+        "Approved maximum-rate cost is not an invoice",
+        "Full-context conservative hold, cache/ambiguous/pretransport holds remain indefinite; no hold-release endpoint",
+        "No unrelated-organization isolation or broad public-release acceptance"
+      ]
+    }
+  },
+  "modelRouting": {
+    "coordinator": {
+      "model": "gpt-6.1-sol",
+      "effort": "xhigh"
+    },
+    "focusedImplementer": {
+      "model": "gpt-6-luna",
+      "effort": "high"
+    },
+    "mechanicalImplementer": {
+      "model": "gpt-6-luna",
+      "effort": "medium"
+    },
+    "complexImplementer": {
+      "model": "gpt-6.1-sol",
+      "effort": "xhigh"
+    },
+    "independentReviewer": {
+      "model": "gpt-6.1-sol",
+      "effort": "xhigh"
+    },
+    "activeChatChanged": false,
+    "skill": "C:/Users/pooja/.codex/skills/subagent-driven-development/SKILL.md",
+    "parallelism": "disjoint owned files, four total active slots"
+  },
+  "deploymentOwnership": {
+    "owner": "human",
+    "localDevelopmentBlocked": false,
+    "source": "Human: no that will i do you just add features that needed polish ui fix bugs and all"
+  },
+  "activeBoundedPlan": {
+    "plan": "E:\\odd-ecosys-sol-luna-20261020\\orchestration\\plans\\local-reviewed-preview-20261022.md",
+    "status": "independently_accepted_running_local",
+    "review": "E:\\odd-ecosys-sol-luna-20261020\\orchestration\\evidence\\LOCAL-PREVIEW-001-independent-review.md",
+    "sourceAssignments": "no application edits; runtime operation complete",
+    "publicDeployment": false,
+    "releaseReady": false
+  },
+  "localPreview": {
+    "at": "2026-10-22T15:49:56.786142+00:00",
+    "ticket": "LOCAL-PREVIEW-001",
+    "status": "independently_accepted_running_local",
+    "review": "E:\\odd-ecosys-sol-luna-20261020\\orchestration\\evidence\\LOCAL-PREVIEW-001-independent-review.md",
+    "reviewSHA256": "dca46b85e872b6ef3e12d02c8a1496e561d78597bb6a7eef2f1581a78ad113e7",
+    "spec": "ACCEPT",
+    "quality": "ACCEPT",
+    "url": "http://127.0.0.1:3000/#campaigns",
+    "host": "127.0.0.1",
+    "port": 3000,
+    "processId": 22896,
+    "source": "E:\\odd-ecosys-sol-luna-20261020",
+    "database": "X:\\odd-ecosys-runtime\\reviewed-preview-20261022\\data\\pipeline.db",
+    "baselineBackup": "X:\\odd-ecosys-runtime\\reviewed-preview-20261022\\original-before-initialization.db",
+    "ownerEmail": "goutamdhanani@gmail.com",
+    "privateSignInInstructions": "X:\\odd-ecosys-runtime\\reviewed-preview-20261022\\SIGN-IN.txt",
+    "counts": {
+      "contacts": 63,
+      "emailRecords": 59,
+      "historicalAcceptedSends": 2,
+      "campaigns": 1
+    },
+    "normalBootstrap": true,
+    "normalPasswordLogin": true,
+    "sessionSurvivedRestart": true,
+    "sendingPaused": true,
+    "automaticImapSync": false,
+    "additionalOutboundSubmissions": 0,
+    "originalSourceApplied": false,
+    "originalDatabasesMutated": false,
+    "publicDeployment": false,
+    "releaseReady": false,
+    "browserOpenStatus": "queued",
+    "privateSignInFileOpenStatus": "queued",
+    "sourceSnapshot": ".superpowers/sdd/80822741b1d4b3cb/all-seven-after-final.json",
+    "bindings": {
+      "E:\\odd-ecosys-sol-luna-20261020\\orchestration\\plans\\local-reviewed-preview-20261022.md": "0b3e7e4e3b0c220c4ce7c465f3175cfc07cc85b911598cec207df39b963b054a",
+      "E:\\odd-ecosys-sol-luna-20261020\\orchestration\\evidence\\LOCAL-PREVIEW-001-independent-review.md": "dca46b85e872b6ef3e12d02c8a1496e561d78597bb6a7eef2f1581a78ad113e7",
+      "E:\\odd-ecosys-sol-luna-20261020\\orchestration\\evidence\\LOCAL-PREVIEW-001-preparation.json": "7f6e1a357058dd1b1f9c4eeda0860e2c5709c9d2da33917301790fa94d689923",
+      "E:\\odd-ecosys-sol-luna-20261020\\orchestration\\evidence\\LOCAL-PREVIEW-001-prestart.json": "5c969c202eea5d63cec0613264080b1a222d8f7d00559deb37803ee3e4f7c30c",
+      "E:\\odd-ecosys-sol-luna-20261020\\orchestration\\evidence\\LOCAL-PREVIEW-001-smoke-initial.json": "2daeef784470f1d9f54b5346ecdf6a742e4306d702fb0ee042c3e4c9d1a02045",
+      "E:\\odd-ecosys-sol-luna-20261020\\orchestration\\evidence\\LOCAL-PREVIEW-001-browser.json": "9205b0c7cca6795d1f9e6e856e31e897bb9f0f18fd0ce03ffb1b1f393f452277",
+      "E:\\odd-ecosys-sol-luna-20261020\\orchestration\\evidence\\LOCAL-PREVIEW-001-restart.json": "c16f1e8c36eff6b7c94566f75b4236c4e4f4465c303f7ea7281ece954a6b49a0",
+      "E:\\odd-ecosys-sol-luna-20261020\\orchestration\\evidence\\LOCAL-PREVIEW-001-restart-launch.log": "fa2596159fd604c4210d33db6c58d029ae86b5bebd5b30d3f0238f051bf5aac7",
+      "E:\\odd-ecosys-sol-luna-20261020\\orchestration\\evidence\\LOCAL-PREVIEW-001-smoke-restart.json": "e0b3990a84a4d1698ddd671e4e5fb772479822b754649f6dffc955a86e03296e",
+      "E:\\odd-ecosys-sol-luna-20261020\\orchestration\\evidence\\LOCAL-PREVIEW-001-listener.json": "0ee72ebfaa832b6f2b447a9732a2e2391253a4f016f4bb835f583977f315ed05",
+      "E:\\project\\odd-ecosys\\orchestration\\evidence\\LOCAL-PREVIEW-001-original-preservation.json": "8c6547a620837ba3e0a133598bb535e88bfcd4b66d410de314970fcdac78b920",
+      "X:\\odd-ecosys-runtime\\reviewed-preview-20261022\\Start-Preview.ps1": "df335fb67bc51c2560ce27891cf954453d83ace400a2381c697e970d05cf4165",
+      "X:\\odd-ecosys-runtime\\reviewed-preview-20261022\\launch.mjs": "f381b9544ffa8f69ead3fb7305de158fb7f8e0b16931093702c61892aefd381c"
+    },
+    "report": "E:\\odd-ecosys-sol-luna-20261020\\LOCAL_PREVIEW_20261022.md",
+    "limits": [
+      "Loopback local only; no public hosting configured",
+      "Google authentication not externally accepted; password works",
+      "Working preview data persists in its X: clone, not the original E: DB",
+      "Mobile transition screenshot is not usability acceptance",
+      "Listener is not a Windows boot service; restart launcher after PC restart",
+      "No whole-branch, phase or production release acceptance"
+    ],
+    "servingSourceFrozenWhileRunning": true
+  },
+  "activeVerifierMandate": {
+    "requestFile": "C:/Users/pooja/.codex/attachments/c2b16ba5-451e-4847-af9e-4db9a04de8dc/Pasted text.txt",
+    "checkout": "E:/odd-ecosys-verifier-20261022",
+    "servingSourceFrozen": "E:/odd-ecosys-sol-luna-20261020",
+    "inputTicket": {
+      "id": "VERIFIER-M1-INPUT-001",
+      "review": "ACCEPT_R3",
+      "round": 3,
+      "finding": "Numeric URL-host/IDNA coercion still rewrites original domain",
+      "writer": "released/frozen",
+      "reviewSha256": "0923a811af54edad6dd1d230eb127e48890563c8c5fa5e6c0e2cc8c9dc5e55b4"
+    },
+    "offlineTicket": {
+      "id": "VERIFIER-M1-OFFLINE-001",
+      "review": "ACCEPT_FINAL_OWN9",
+      "round": 2,
+      "writer": "released/frozen",
+      "coreIntegration": "COMPLETE_AND_INDEPENDENTLY_ACCEPTED",
+      "reviewSha256": "99a931fa440b173f95ddfcc7062b62fbc4cf1984c5debb9d1d4252fa7eb0b3f1"
+    },
+    "sourceReviewers": [
+      "verifier_input_review gpt-6.1-sol/xhigh",
+      "verifier_offline_review gpt-6.1-sol/xhigh"
+    ],
+    "releaseReady": false,
+    "entireMilestoneAccepted": false,
+    "gmailCapabilityEvidence": "E:/odd-ecosys-verifier-20261022/orchestration/evidence/gmail-capability-check-20261023-v2.json",
+    "gmailMailboxConfirmed": false,
+    "localPreviewUpdate": {
+      "status": "INDEPENDENTLY_ACCEPTED_LOCAL_ONLY",
+      "source": "E:/odd-ecosys-sol-luna-20261020",
+      "pid": 18824,
+      "url": "http://127.0.0.1:3000/#verification",
+      "database": "X:/odd-ecosys-runtime/reviewed-preview-20261022/data/pipeline.db",
+      "sourceFilesVerified": 314,
+      "reviewSha256": "c4c94c5532e81bb5e66510da1be0a98fa0eefc02581b66d6e75463462c058860",
+      "contacts": 63,
+      "emailRows": 59,
+      "historicalSends": 2,
+      "additionalSends": 0,
+      "sendingPaused": true,
+      "liveAuthenticatedSmoke": false
+    },
+    "mailboxVerificationBlocker": "Primary+twoalternateGoogleIPv4 andprimaryIPv6TCP25timeouts; Reacherdefaultunavailable;443controlworks; exactcauseunknown",
+    "nextSingleImplementationTicket": "Reacher/localDNSprecedence (notstarted)"
+  }
 }

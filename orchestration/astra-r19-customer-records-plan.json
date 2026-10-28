@@ -1,0 +1,42 @@
+{
+  "planId": "ASTRA-R19-CUSTOMER-RECORDS-INTEGRATION",
+  "state": "ACTIVE_AFTER_R18A_509_PASS",
+  "authority": "Continue the accepted R17 implementation mission and current human completion request. Target the concrete customer setup gaps observed in the current seven-section console, without restarting its redesign.",
+  "roadmapScope": [
+    "S17 manual inbox setup and ingest",
+    "S22 local CRM mapping and durable proposals",
+    "S08 customer/account lineage"
+  ],
+  "ownedPaths": [
+    "growth.html",
+    "css/astra-growth.css",
+    "js/astra-growth.js",
+    "pipeline/astra-crm.js",
+    "tests/astra-growth-ui.test.mjs",
+    "tests/astra-customer-records.test.mjs",
+    ".superpowers/r19/customer-records/**"
+  ],
+  "requirements": [
+    "Let an authorized customer create a named manual-ingest mailbox from Inbox using the existing mailbox API. Preserve manual-ingest-only and send-disabled capabilities. Do not request provider credentials or claim a provider connection.",
+    "Provide a plain form to import an operator-supplied inbox message with stable message/thread references and actual persistence/idempotency/error feedback. Select the named mailbox; no internal UUID or JSON entry. Do not fabricate incoming messages or auto-run providers.",
+    "Expose actual tenant CRM mappings and outbox proposal statuses, with independent loading/empty/error states. Let a customer select an evidence-backed business, record a manually asserted external CRM identity, and prepare a durable company proposal through existing APIs. Display returned held/conflict/queued states and disabled transport honestly.",
+    "Add an explicit research-account association to those existing CRM write contracts: resolve supplied accountId under actor tenant and reject foreign/missing accounts and conflicting entity IDs before any write. Preserve supported legacy opaque company references and existing routes; never use a caller tenant/user identity or imply a manually asserted mapping is provider-verified.",
+    "Capture tenant/epoch before every asynchronous read/write/hash and stop stale follow-up requests and UI results on workspace switch. Preserve role gates, CSRF, text-only rendering, all seven sections and existing console behavior.",
+    "Add meaningful actual API/PostgreSQL integration coverage for mailbox/import and CRM mapping/proposal persistence, duplicate/conflict behavior, foreign account association, and closed external gates. Keep existing UI checks and extend relevant interaction coverage. Use only approved synthetic32 fixtures and guards.",
+    "Preserve before copies, failed runs and exact hashes. Independent Luna must verify the working browser/API journey on released bytes. This scope does not complete external CRM sync, verified delivery, provider operation or the whole 52-task roadmap."
+  ],
+  "constraints": [
+    "Wait until R18a frozen suite finishes before editing its inputs",
+    "Only explicit astra-foundation absolute checkout; protected a4a4 never edited",
+    "Luna/high only",
+    "One writer per file",
+    "No live provider calls, outreach, deployment or real-data migration",
+    "No commercial/policy gate enablement",
+    "No Git mutations",
+    "No new route count claimed without actual registry capture",
+    "Keep releaseReady=false"
+  ],
+  "releaseReady": false,
+  "writer": "/root/r19_customer_records",
+  "checkpoint": "astra-r18a-f9faca4783f610a9"
+}

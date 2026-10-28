@@ -1,0 +1,21 @@
+import { AstraTenantContextError } from './astra-tenant-context.js';
+import { enrollAstraCustomerApprovalKey,confirmAstraCustomerApprovalKey,revokeAstraCustomerApprovalKey,revokeAstraCustomerProjectConsent,createAstraCustomerApprovalChallenge,submitAstraCustomerApprovalSignature,getAstraCustomerApprovalStatus } from './astra-customer-approvals.js';
+
+const BASE='^/api/astra/tenants/(?<tenantId>[0-9a-fA-F-]{36})';
+function assertTenant(actor,params){if(!actor?.tenantId||String(actor.tenantId).toLowerCase()!==String(params.tenantId).toLowerCase())throw new AstraTenantContextError('Verified tenant membership is required.',403,'tenant_membership_required');}
+const respond=(body,status=200)=>({body,status});
+
+/** Register all customer approval endpoints through the native authenticated Astra API registrar. */
+export function registerAstraCustomerApprovalRoutes(registrar){
+  const registerAstraApiRoute=typeof registrar==='function'?registrar:registrar?.registerAstraApiRoute;
+  if(typeof registerAstraApiRoute!=='function')throw new TypeError('registerAstraApiRoute is required.');
+  const register=(method,suffix,handler,allowedRoles)=>registerAstraApiRoute({method,path:new RegExp(`${BASE}${suffix}$`),handler,...(allowedRoles?{allowedRoles}:{})});
+  register('POST','/customer-approvals/keys',async(req,_res,{actor,params,db,readJson})=>{assertTenant(actor,params);return respond({key:await enrollAstraCustomerApprovalKey(db,actor,await readJson(req,200000))},201);},['owner','admin']);
+  register('POST','/customer-approvals/keys/(?<keyId>[0-9a-fA-F-]{36})/confirm',async(_req,_res,{actor,params,db})=>{assertTenant(actor,params);return {key:await confirmAstraCustomerApprovalKey(db,actor,params.keyId)};},['reviewer']);
+  register('POST','/customer-approvals/keys/(?<keyId>[0-9a-fA-F-]{36})/revoke',async(req,_res,{actor,params,db,readJson})=>{assertTenant(actor,params);const body=await readJson(req,4096);if(Object.keys(body||{}).some(k=>k!=='reason'))throw new AstraTenantContextError('Unsupported revocation fields were supplied.',400,'customer_approval_invalid');return {key:await revokeAstraCustomerApprovalKey(db,actor,params.keyId,body)};},['owner','admin']);
+  register('POST','/post-sale/projects/(?<projectId>[0-9a-fA-F-]{36})/customer-consent/revoke',async(req,_res,{actor,params,db,readJson})=>{assertTenant(actor,params);const body=await readJson(req,4096);if(Object.keys(body||{}).some(k=>k!=='reason'))throw new AstraTenantContextError('Unsupported revocation fields were supplied.',400,'customer_approval_invalid');return {consent:await revokeAstraCustomerProjectConsent(db,actor,params.projectId,body)};},['owner','admin']);
+  register('POST','/customer-approvals/challenges',async(req,_res,{actor,params,db,readJson})=>{assertTenant(actor,params);return respond({challenge:await createAstraCustomerApprovalChallenge(db,actor,await readJson(req,32768))},201);},['owner','admin','operator']);
+  register('POST','/customer-approvals/challenges/(?<challengeId>[0-9a-fA-F-]{36})/signature',async(req,_res,{actor,params,db,readJson})=>{assertTenant(actor,params);const body=await readJson(req,4096);if(Object.keys(body||{}).some(k=>k!=='signature'))throw new AstraTenantContextError('Unsupported signature submission fields were supplied.',400,'customer_approval_invalid');return respond({receipt:await submitAstraCustomerApprovalSignature(db,actor,{challengeId:params.challengeId,signature:body.signature})},201);},['owner','admin','operator']);
+  register('GET','/post-sale/case-studies/(?<caseStudyId>[0-9a-fA-F-]{36})/customer-approval',async(_req,_res,{actor,params,db})=>{assertTenant(actor,params);return getAstraCustomerApprovalStatus(db,actor.tenantId,params.caseStudyId);});
+  return {registered:['POST /api/astra/tenants/:tenantId/customer-approvals/keys','POST /api/astra/tenants/:tenantId/customer-approvals/keys/:keyId/confirm','POST /api/astra/tenants/:tenantId/customer-approvals/keys/:keyId/revoke','POST /api/astra/tenants/:tenantId/post-sale/projects/:projectId/customer-consent/revoke','POST /api/astra/tenants/:tenantId/customer-approvals/challenges','POST /api/astra/tenants/:tenantId/customer-approvals/challenges/:challengeId/signature','GET /api/astra/tenants/:tenantId/post-sale/case-studies/:caseStudyId/customer-approval'],releaseReady:false};
+}

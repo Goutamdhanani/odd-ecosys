@@ -1,0 +1,29 @@
+{
+  "rulingId": "ASTRA-PHASE2-RESEARCH-INSPECTION-R14",
+  "parentPlan": "orchestration/astra-research-inspection-r13-plan.json",
+  "reviewRound": 2,
+  "finding": "Independent review found that a current inspection without a matching account retains candidates and count from the prior inspection because rendering was conditional on account existence.",
+  "rejectedRuntime": "orchestration/astra-phase2-runtime-r13.json",
+  "rejectedRuntimeId": "astra-r13-runtime-be3ac94ce0d91972",
+  "rejectedRuntimePreserved": true,
+  "globalR13Executed": false,
+  "owner": "/root/research_inspection_r13",
+  "authorizedPurpose": "Within the original latest-inspection requirement, render the candidate state on every committed inspection, including the empty state when no account exists. Add a deterministic account-to-no-account regression and preserve all overlap and tenant-switch checks.",
+  "ownedPaths": [
+    "js/astra-workbench.js",
+    "tests/astra-research-inspection-ui.test.mjs",
+    "tests/astra-workbench-e2e.test.mjs",
+    "docs/astra/s00-side-effect-inventory.json",
+    "docs/astra/commercial-gates.json",
+    ".superpowers/phase2/fixes/research-inspection-r13/**"
+  ],
+  "requirements": [
+    "Preserve the rejected R13 runtime, focused logs and independent finding; do not overwrite source manifests or report a full R13 regression.",
+    "Retain all earlier same-evidence, out-of-order and tenant-switch assertions; no weaker selectors, skipped cases, or expanded timeouts.",
+    "Only two provenance fingerprints may follow the JS bytes; all commercial and release decisions remain unchanged.",
+    "Root freezes runtime R14 after product files are relinquished; writer then binds the existing strict E2E runtime checks to R14 and completes its actual guarded journey.",
+    "Require independent re-review and a new complete automated suite on immutable global R14 inputs."
+  ],
+  "independentAcceptance": false,
+  "releaseReady": false
+}

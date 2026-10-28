@@ -1,0 +1,11 @@
+{
+  "id":"ASTRA-R20-UI-ARTIFACT-ISOLATION",
+  "owner":"/root/r20_ui_first",
+  "root":"C:/Users/pooja/.codex/worktrees/astra-foundation/odd-ecosys",
+  "ownedPaths":["tests/astra-growth-design.test.mjs",".superpowers/r20/ui-first/artifact-isolation/**"],
+  "trigger":"Independent reviewer disclosed copied design test retained hardcoded upstream screenshot paths and regenerated captures outside reviewer ownership",
+  "ruling":"Preserve the disclosure and hash comparisons. Do not restore or claim original timestamps. Current PNG content matches final release copies; this supports current visual review, not historical filesystem immutability. Original failing review source/logs remain unchanged. Product SPEC/QUALITY acceptance is separate from this artifact-output defect.",
+  "requiredFix":"Each design test run must write all screenshots to a fresh temporary artifact directory, report only that nonsecret output location, and never write historical evidence paths. Keep all behavior assertions intact; no product changes.",
+  "acceptance":["Real before copy of design test","Focused design test passes with all eleven captures under one fresh run directory","Prior evidence paths are not written by new test","Independent bounded artifact-path re-review; no need to rerun unchanged DB/UI services"],
+  "releaseReady":false
+}

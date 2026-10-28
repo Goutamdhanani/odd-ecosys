@@ -1,0 +1,18 @@
+{
+  "id": "ASTRA-LIVE-DEPENDENCY-PROVENANCE-REFRESH",
+  "owner": "/root/live_metadata_finish",
+  "paths": ["docs/astra/commercial-gates.json", "docs/astra/s00-source-delta.json", "tests/astra-source-fidelity.test.mjs", "tests/astra-commercial-gates.test.mjs", ".superpowers/astra-live/metadata/license-refresh/**"],
+  "supersededNarrowRule": "The prior metadata task allowed only the inventory provenance hash. The authorized native Mongo driver changed package-lock.json, so this supplemental task also permits a factual dependencyLicenseManifest refresh. No commercial decision or activation status may change.",
+  "requirements": [
+    "Capture exact before files, preserve the prior metadata report and all original dependency-license observations",
+    "Recompute exact lock hash, package-path coverage, integrity, versions, direct-dependency attribution and installed package metadata/license-text hashes from current local primary files",
+    "Retain explicit unknown and needs-human-review license states; missing files never imply a grant and root MIT never overrides dependency licenses",
+    "Record the prior dependency manifest and audit provenance as historical evidence; any current observation must identify the current isolated checkout without rewriting the old host's observations as current",
+    "Change only dependencyLicenseManifest and the already authorized inventory provenance field within the commercial registry; prove all other parsed registry data equals accepted R20a and original pre-R20",
+    "Update focused assertions to verify current actual package facts, complete lock coverage, historical provenance and denied gates; do not relax licensing or activation checks",
+    "Do not edit package files, installed dependencies, runtime gate helpers, migrations, user data or any live flags; this is factual metadata synchronization",
+    "Run source-fidelity, side-effect-inventory and commercial-gates checks together, then release exact hashes and a minimal delta report for independent review"
+  ],
+  "releaseReady": false,
+  "roadmap52Accepted": false
+}

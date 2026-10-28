@@ -6,6 +6,8 @@
 
 import fs from 'fs';
 import { parse } from 'csv-parse/sync';
+import { parse as createCsvParser } from 'csv-parse';
+import { Readable } from 'node:stream';
 
 /**
  * Column mapping profiles for different CSV formats.
@@ -38,6 +40,11 @@ const COLUMN_MAPS = {
     website_url:   ['website', 'website_url', 'url', 'site', 'web'],
     facebook_url:  ['facebook', 'facebook_url', 'fb', 'fb_url', 'facebook_page'],
     email:         ['email', 'email_address', 'contact_email', 'emails'],
+    source_details: ['source_details', 'lead_source', 'source_notes'],
+    source_url:     ['source_url', 'source_reference_url', 'source_page'],
+    consent_recorded_at: ['consent_recorded_at', 'consent_evidence_date', 'consent_date'],
+    consent_method: ['consent_method', 'consent_channel', 'consent_context'],
+    consent_evidence_url: ['consent_evidence_url', 'consent_proof_url', 'consent_url'],
     rating:        ['rating', 'stars', 'review_rating', 'score'],
     reviews:       ['reviews', 'review_count', 'num_reviews', 'review_num'],
   },
@@ -53,15 +60,19 @@ const COLUMN_MAPS = {
  * @returns {{ leads: object[], errors: string[], stats: object }}
  */
 export function importFromCsv(csvPath, options = {}) {
-  const { format = 'auto', defaults = {}, columnMap = {} } = options;
-
   if (!fs.existsSync(csvPath)) {
     throw new Error(`CSV file not found: ${csvPath}`);
   }
 
-  const csvContent = fs.readFileSync(csvPath, 'utf-8').trim();
+  return parseCsvContent(fs.readFileSync(csvPath, 'utf-8'), options);
+}
+
+export function parseCsvContent(csvContent, options = {}) {
+  const { format = 'auto', defaults = {}, columnMap = {} } = options;
+  if (typeof csvContent !== 'string') throw new TypeError('CSV content must be text.');
+  csvContent = csvContent.trim();
   if (!csvContent) {
-    return { leads: [], errors: ['CSV file is empty'], stats: { total: 0, valid: 0, invalid: 0 } };
+    return { leads: [], errors: ['CSV file is empty'], rejectedRows: [], stats: { total: 0, valid: 0, invalid: 0 } };
   }
 
   let records;
@@ -74,11 +85,11 @@ export function importFromCsv(csvPath, options = {}) {
       bom: true, // Handle BOM
     });
   } catch (error) {
-    return { leads: [], errors: [`CSV parse error: ${error.message}`], stats: { total: 0, valid: 0, invalid: 0 } };
+    return { leads: [], errors: [`CSV parse error: ${error.message}`], rejectedRows: [], stats: { total: 0, valid: 0, invalid: 0 } };
   }
 
   if (records.length === 0) {
-    return { leads: [], errors: ['No records found in CSV'], stats: { total: 0, valid: 0, invalid: 0 } };
+    return { leads: [], errors: ['No records found in CSV'], rejectedRows: [], stats: { total: 0, valid: 0, invalid: 0 } };
   }
 
   // Detect format if auto
@@ -89,15 +100,20 @@ export function importFromCsv(csvPath, options = {}) {
 
   const leads = [];
   const errors = [];
+  const rejectedRows = [];
 
   for (let i = 0; i < records.length; i++) {
     const record = records[i];
     try {
       const lead = mapRecord(record, map, defaults);
+      lead._row_number = i + 2;
+      lead._original_record = { ...record };
 
       // Validate: must have a business name at minimum
       if (!lead.business_name || lead.business_name === 'Unknown') {
-        errors.push(`Row ${i + 2}: Missing business name`);
+        const reason = 'Missing business name';
+        errors.push(`Row ${i + 2}: ${reason}`);
+        rejectedRows.push({ row: i + 2, reason, fields: { ...record } });
         continue;
       }
 
@@ -105,18 +121,86 @@ export function importFromCsv(csvPath, options = {}) {
       leads.push(lead);
     } catch (error) {
       errors.push(`Row ${i + 2}: ${error.message}`);
+      rejectedRows.push({ row: i + 2, reason: error.message, fields: { ...record } });
     }
   }
 
   return {
     leads,
     errors,
+    rejectedRows,
     stats: {
       total: records.length,
       valid: leads.length,
       invalid: records.length - leads.length,
     },
   };
+}
+
+export function previewCsvContent(csvContent, { columnMap = {} } = {}) {
+  if (typeof csvContent !== 'string') throw new TypeError('CSV content must be text.');
+  const clean = csvContent.trim();
+  if (!clean) throw new Error('Choose a non-empty CSV file.');
+  const records = parse(clean, {
+    columns: true,
+    skip_empty_lines: true,
+    relax_column_count: true,
+    trim: true,
+    bom: true,
+  });
+  if (!records.length) throw new Error('No records found in CSV.');
+  if (!columnMap || typeof columnMap !== 'object' || Array.isArray(columnMap)) throw new Error('Column mapping must be an object.');
+
+  return buildPreview(Object.keys(records[0]), records, columnMap, records.length);
+}
+
+export async function previewCsvSampleContent(csvContent, { columnMap = {} } = {}) {
+  if (typeof csvContent !== 'string') throw new TypeError('CSV content must be text.');
+  if (!csvContent.trim()) throw new Error('Choose a non-empty CSV file.');
+  if (!columnMap || typeof columnMap !== 'object' || Array.isArray(columnMap)) throw new Error('Column mapping must be an object.');
+  const records = [];
+  for await (const record of Readable.from([csvContent]).pipe(createCsvParser({
+    columns: true, skip_empty_lines: true, relax_column_count: true, trim: true, bom: true, to: 5,
+  }))) {
+    records.push(record);
+  }
+  if (!records.length) throw new Error('No complete data rows were found in the preview sample.');
+  return buildPreview(Object.keys(records[0]), records, columnMap, null);
+}
+
+function buildPreview(headers, records, columnMap, totalRows) {
+  if (!columnMap || typeof columnMap !== 'object' || Array.isArray(columnMap)) throw new Error('Column mapping must be an object.');
+  const detectedFormat = detectFormat(headers);
+  const profile = { ...COLUMN_MAPS.generic, ...(COLUMN_MAPS[detectedFormat] || {}) };
+  const mapping = {};
+  for (const [field, aliases] of Object.entries(profile)) {
+    const selected = Object.hasOwn(columnMap, field)
+      ? columnMap[field]
+      : headers.find(header => aliases.some(alias => header.toLowerCase() === alias.toLowerCase())) || '';
+    if (typeof selected !== 'string' || (selected && !headers.includes(selected))) {
+      throw new Error(`Choose a CSV column that exists for ${field.replaceAll('_', ' ')}.`);
+    }
+    mapping[field] = selected;
+  }
+  for (const [field, header] of Object.entries(columnMap)) {
+    if (!field.startsWith('custom__')) continue;
+    if (!/^custom__[a-z\d_]{1,40}$/.test(field) || typeof header !== 'string' || (header && !headers.includes(header))) {
+      throw new Error('Custom field mapping must reference an existing CSV column.');
+    }
+    mapping[field] = header;
+  }
+  const selectedMap = Object.fromEntries(Object.entries(mapping).map(([field, header]) => [field, header]));
+  const sample = records.slice(0, 5).map(record => {
+    const lead = mapRecord(record, selectedMap, {});
+    return Object.fromEntries([...Object.keys(profile), ...Object.keys(mapping).filter(field => field.startsWith('custom__'))]
+      .map(field => [field, lead[field] ?? '']));
+  });
+  return { headers, mapping, totalRows, sample };
+}
+
+/** Map a single streamed CSV record using a reviewed field-to-header mapping. */
+export function mapCsvRecord(record, columnMap = {}) {
+  return mapRecord(record, columnMap, {});
 }
 
 /**
@@ -146,8 +230,10 @@ function mapRecord(record, map, defaults) {
   const lead = { ...defaults };
 
   for (const [field, possibleColumns] of Object.entries(map)) {
-    if (Array.isArray(possibleColumns)) {
-      for (const col of possibleColumns) {
+    const columns = Array.isArray(possibleColumns) ? possibleColumns
+      : typeof possibleColumns === 'string' ? [possibleColumns] : [];
+    if (columns.length) {
+      for (const col of columns) {
         // Case-insensitive column matching
         const matchedKey = Object.keys(record).find(k => k.toLowerCase() === col.toLowerCase());
         if (matchedKey && record[matchedKey]) {

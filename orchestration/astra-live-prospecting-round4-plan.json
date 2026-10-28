@@ -1,0 +1,21 @@
+{
+  "id": "ASTRA-LIVE-PROSPECTING-REVIEW-ROUND4",
+  "owner": "/root/live_prospecting_fix4",
+  "freshWorkerReason": "Round4 uses a fresh Luna worker under the user's Luna-only preference.",
+  "transfersReleasedAssignment": "/root/live_prospecting_fix3",
+  "reviewBaseline": ".superpowers/astra-live/review-prospecting/fix-round3/review.md",
+  "paths": ["pipeline/astra-prospecting.js", "pipeline/astra-source-collection.js", "tests/astra-prospecting.test.mjs", "tests/astra-prospecting-source-gate.test.mjs", "tests/astra-prospecting-recovery.test.mjs", ".superpowers/astra-live/prospecting/fix-round4/**"],
+  "supersededLocalAcceptanceDetail": "Round3 required requeue of the exact SQL source job. Native025 deliberately makes its state/run binding one-way. Preserve that invariant: the same customer prospecting job may continue via an explicit idempotent successor source attempt linked to the proven pre-dispatch terminal attempt. No migration or trigger relaxation is authorized.",
+  "requirements": [
+    "Capture exact before files; reproduce the native strict33 trigger failure before repair",
+    "Repair pre-dispatch pause recovery with a schema-compatible durable protocol, preserving immutable source job and run history and the logical parent prospecting job",
+    "Only explicit durable proof that neither reservation nor transport was attempted may authorize a successor; cancellation, uncertain commit, reservation attempt, robots already fetched, completed or in-flight jobs may not be automatically replayed",
+    "Successor creation and pointer recovery must be idempotent and tenant-scoped across crashes, concurrent workers, stale parent leases and lost acknowledgements; preserve all old attempt identifiers and provenance",
+    "Do not change migrations, database triggers, tenant ownership, permissions, RLS, S01/source-rights/SSRF/robots guards or global egress flags",
+    "Add a native synthetic strict33 behavioral regression using actual collector methods, tenant store and DB triggers; mock-only tests cannot accept this fix",
+    "Verify positive pause/resume and negative cancellation, ambiguous/post-transport, foreign tenant and duplicate successor cases without external HTTP",
+    "Run focused affected checks; release exact source hashes and honest limits for independent SPEC and QUALITY review"
+  ],
+  "noLiveServices": true,
+  "releaseReady": false
+}

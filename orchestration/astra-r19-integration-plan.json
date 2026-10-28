@@ -1,0 +1,18 @@
+{
+  "planId": "ASTRA-R19-SOURCE-INTEGRATION",
+  "state": "ACTIVE_AFTER_PRODUCT_RELEASE_AND_INDEPENDENT_PROOF_FIX_ACCEPTANCE",
+  "authority": "Current human continuation request and ownership entry for R19; preserve source-bound R18a checkpoint while integrating the next real feature group.",
+  "ownedPaths": ["docs/astra/s00-source-delta.json", "docs/astra/s00-side-effect-inventory.json", "docs/astra/commercial-gates.json", "tests/astra-source-fidelity.test.mjs", "tests/astra-side-effect-inventory.test.mjs", ".superpowers/r19/integration/**"],
+  "requirements": [
+    "Preserve the immutable selected-source snapshot, all 31 authorized delta paths and original base hashes; refresh only the current OWNERSHIP fingerprint with explicit supplemental R19 governance authorization, retaining the R18 authorization and all other historical evidence.",
+    "Keep strict source fidelity and drift-negative assertions. Extend only the supplemental R19 authorization assertion. Set unchanged-count metadata to the actual snapshot-minus-delta count if the existing field is null.",
+    "After product release, refresh the complete static boundary inventory, accurate effects/guards/tests and exact current hashes. Add any newly detected module; never exempt it from static detection or weaken the negative probe.",
+    "Keep the original static detector/count/negative assertions unchanged. Add separately validated supplementalDatabaseReads entries with exact current hashes, tenant/proof guards and behavior-test mappings for pipeline/astra-current-claims.js and pipeline/astra-campaign-audience.js.",
+    "Change commercial-gates only at the inventory provenance fingerprint. Prove parsed equality of every other decision/provenance field to its before copy.",
+    "Keep synthetic fixture selection, pinned migration 032 and all immutable migration hashes unchanged. No migration execution is needed because this feature group changes no schema.",
+    "Run guarded focused fidelity/inventory/commercial checks and the released new feature checks as appropriate; preserve failures and before hashes. Do not run a full suite or alter another writer's product/test paths.",
+    "Release exact source/input hashes for independent review and the root's new source-bound R19 candidate. Do not claim a past checkpoint verifies newly edited product files."
+  ],
+  "constraints": ["Only explicit astra-foundation checkout; no a4a4 edits", "Luna/high only", "One writer per file", "No Git mutations or external actions", "No commercial/policy enablement", "No edits to frozen R18/R18a artifacts", "Keep releaseReady=false"],
+  "releaseReady": false
+}

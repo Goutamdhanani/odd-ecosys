@@ -1,0 +1,36 @@
+{
+  "id": "ASTRA-R20-UI-FIRST",
+  "status": "bounded_ui_handoff_independently_accepted",
+  "checkpoint": ".superpowers/r20/UI_CHECKPOINT.json",
+  "wholePlatformAcceptance": false,
+  "sourceRoot": "C:/Users/pooja/.codex/worktrees/astra-foundation/odd-ecosys",
+  "baselineHead": "f30490bd892dd651fd2fb276b09b510379e27c0d",
+  "releaseReady": false,
+  "priority": "UI workflow map, usable visual redesign, Pro presentation, safe integration environment handoff",
+  "confirmedUserPreferences": ["Clean light interface, restrained color and clear typography", "Balanced discovery and inbox dashboard", "Default experience for nontechnical and low technical users; Pro for full technical users; implementation choices delegated to agent"],
+  "presentationDecision": "Light content with dark navigation rail; guided everyday tasks by default; Pro reveals technical context and the existing authorized advanced workspace without changing permissions",
+  "map": [
+    {"section":"Overview","purpose":"Current real workspace counts, pending work and useful next actions"},
+    {"section":"Discover","purpose":"Capture permitted source, inspect evidence, save supported facts; source rights remain accessible"},
+    {"section":"Campaigns","purpose":"Offer and mailbox prerequisites, campaign setup, qualification, supported copy, approval, offline plan"},
+    {"section":"Inbox","purpose":"Messages first; manual inbox creation and imports as explicit tasks"},
+    {"section":"Customers","purpose":"Account records, local CRM mapping and held CRM proposals"},
+    {"section":"Analytics","purpose":"Observed outcomes and persisted analytics; no fabricated lift or activity"},
+    {"section":"Settings","purpose":"Workspace setup and truthful capability/connection state"}
+  ],
+  "uiWriterOwnedPaths": ["growth.html","css/astra-growth.css","js/astra-growth.js","tests/astra-growth-ui.test.mjs","tests/astra-source-rights-ui.test.mjs","tests/astra-growth-design.test.mjs",".superpowers/r20/ui-first/**"],
+  "environmentWriterOwnedPaths": [".env.example",".env.astra-sandbox.local","E:/OddEcosysSandbox/.env.astra-sandbox.local","docs/astra/INTEGRATION_SETUP.md",".superpowers/r20/environment-handoff/**"],
+  "acceptance": [
+    "Map workflows and preserve every existing form/action and real API contract before visual changes",
+    "Distinct coherent sidebar/topbar/content hierarchy, readable responsive layouts at 375, 768 and 1440 pixels",
+    "One clear primary task per section; supporting forms reachable through named task controls or accessible disclosures",
+    "Pro mode is reversible presentation only; no capability, tenant, CSRF, approval or provider authority expansion",
+    "Keyboard focus, tab navigation, deep links, readable status and loading/error/empty states work",
+    "Workspace changes synchronously clear tenant drafts and reject stale completions; preserve existing security regressions",
+    "No external fonts, packages, fake metrics, placeholder interactive controls or credential inputs in browser",
+    "Environment template contains only verified existing variable names, blank credentials and disabled live/external flags",
+    "Local env file created only if absent and proven ignored; never overwrite or print private configuration",
+    "Focused browser behavior plus independent Luna review on released bytes before bounded UI acceptance"
+  ],
+  "restrictions": ["Luna coding/review only", "one writer per owned path", "no provider calls or outreach", "no production migration/deploy", "no preview restart or database writes", "no Git staging/commit/push", "no edits to protected a4a4 checkout", "historical R19/R20 evidence immutable", "R20 source freeze and metadata integration remain on hold"]
+}

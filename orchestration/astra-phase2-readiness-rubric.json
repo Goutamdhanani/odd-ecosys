@@ -1,0 +1,150 @@
+{
+  "schemaVersion": 1,
+  "scope": "Conservative evidence-backed production-readiness assessment, separate from canonical task acceptance.",
+  "definedAt": "2026-10-25T04:04:23.697Z",
+  "unknownEvidencePoints": 0,
+  "rounding": "Round the final total to nearest integer; show category scores and evidence.",
+  "releaseReady": false,
+  "categories": [
+    {
+      "id": "functional_flow",
+      "weight": 20,
+      "criteria": [
+        {
+          "name": "Nine requested synthetic API end-to-end stages",
+          "points": 14,
+          "rule": "14 * number of independently working stages / 9; mark offline CRM proposal as partial, not a completed external CRM integration."
+        },
+        {
+          "name": "170 route functional verification",
+          "points": 6,
+          "rule": "6 * independently working route definitions / actual total; policy-blocked and incomplete positive functionality earn no functional points."
+        }
+      ]
+    },
+    {
+      "id": "tenant_security",
+      "weight": 25,
+      "criteria": [
+        {
+          "name": "Authentication and CSRF across registry",
+          "points": 5
+        },
+        {
+          "name": "Role authorization across registry",
+          "points": 5
+        },
+        {
+          "name": "Cross-tenant and object ownership isolation",
+          "points": 7
+        },
+        {
+          "name": "Invitation expiry, single-use, revocation and replay",
+          "points": 5
+        },
+        {
+          "name": "RLS and least-privileged app/worker roles",
+          "points": 3
+        }
+      ]
+    },
+    {
+      "id": "reliability",
+      "weight": 15,
+      "criteria": [
+        {
+          "name": "Workflow lease fencing, checkpoints, cancellation, idempotency and recovery",
+          "points": 6
+        },
+        {
+          "name": "Ledger immutability, correction/reversal, correction-aware analytics, memory tombstones",
+          "points": 5
+        },
+        {
+          "name": "Transactional migration failure and supported rollback/reapply",
+          "points": 4
+        }
+      ]
+    },
+    {
+      "id": "validation",
+      "weight": 15,
+      "criteria": [
+        {
+          "name": "Complete automated suite on exact frozen inputs",
+          "points": 6
+        },
+        {
+          "name": "Reproducible safe QA harness and source provenance",
+          "points": 3
+        },
+        {
+          "name": "Full Astra browser end-to-end workflow",
+          "points": 3
+        },
+        {
+          "name": "Independent reviews on the final product bytes",
+          "points": 3
+        }
+      ]
+    },
+    {
+      "id": "operations_privacy",
+      "weight": 15,
+      "criteria": [
+        {
+          "name": "QA credential rotation, invalidation and retained evidence sanitization",
+          "points": 4
+        },
+        {
+          "name": "Kill switches, suppression and failure incident controls",
+          "points": 4
+        },
+        {
+          "name": "Backup restore, measured RTO/RPO and recovery drills",
+          "points": 4
+        },
+        {
+          "name": "Export, retention, physical erasure and backup expiry",
+          "points": 3
+        }
+      ]
+    },
+    {
+      "id": "external_release",
+      "weight": 10,
+      "criteria": [
+        {
+          "name": "Commercial, vendor, privacy and source approvals",
+          "points": 4
+        },
+        {
+          "name": "Authorized real GLM/provider integration",
+          "points": 2
+        },
+        {
+          "name": "Complete evaluation, calibration, conformance and customer release evidence chain",
+          "points": 3
+        },
+        {
+          "name": "Real pilot and mature benchmark outcomes",
+          "points": 1
+        }
+      ]
+    }
+  ],
+  "scoringRules": [
+    "Every awarded point must cite exact evidence and candidate product hashes.",
+    "Partial credit must state the tested fraction or concrete subset; do not award for route existence alone.",
+    "Unknown, missing, blocked positive operation or unexecuted validation earns zero for that criterion.",
+    "A high numerical assessment never bypasses hard gates.",
+    "Canonical acceptance JSON/validator absence prevents formal 52-task acceptance; it does not justify inventing a score or pass."
+  ],
+  "hardReleaseGates": [
+    "No unresolved critical correctness or security defects",
+    "All required independent acceptance and canonical validator checks passed",
+    "Required legal/privacy/provider approvals available",
+    "Real-data migration and production deployment separately authorized",
+    "External actions remain disabled in this task"
+  ]
+}

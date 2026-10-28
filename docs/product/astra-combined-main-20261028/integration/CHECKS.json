@@ -1,0 +1,196 @@
+{
+  "focusedBeforeContractPort": {
+    "command": "node --test --test-concurrency=1 <the 21 paths in focusedFiles>",
+    "focusedFiles": [
+      "tests/combined-legacy-migration.test.mjs",
+      "tests/database-migrations.test.mjs",
+      "tests/ai-spend-admission.test.mjs",
+      "tests/api-client-errors.test.mjs",
+      "tests/astra-static-privacy.test.mjs",
+      "tests/static-file-allowlist.test.mjs",
+      "tests/auth-concurrency.test.mjs",
+      "tests/auth-origin-boundary.test.mjs",
+      "tests/disify-domain-check.test.mjs",
+      "tests/discovery-contact-verification.test.mjs",
+      "tests/email-verifier-storage.test.mjs",
+      "tests/smtp-probe-safety.test.mjs",
+      "tests/smtp-probe.test.mjs",
+      "tests/verification-result-view.test.mjs",
+      "tests/verification-classification-view.test.mjs",
+      "tests/verifier-evidence-regression.test.mjs",
+      "tests/verifier-offline-integration.test.mjs",
+      "tests/verifier-domain-input.test.mjs",
+      "tests/searxng-local-workflow.test.mjs",
+      "tests/guided-campaign-journey.test.mjs",
+      "tests/mailbox-warmup-review.test.mjs"
+    ],
+    "exitCode": 1,
+    "tests": 98,
+    "passed": 93,
+    "failed": 5,
+    "durationMs": 173729.612,
+    "log": ".runner/combined-legacy-final.log",
+    "logSha256": "1120897c9de5653333f829c417d72cf24b3d548d53642194bc20821de6d52a00",
+    "failures": "All five discovery-contact-verification scenarios expected single-candidate/automatic-primary behavior. The independent reviewer ordered a complete scenario-preserving port to the current per-email/no-implicit-promotion contract. See contractPort for closure."
+  },
+  "contractPort": {
+    "command": "node --test --test-concurrency=1 tests/discovery-contact-verification.test.mjs tests/email-verifier-storage.test.mjs tests/verification-jobs.test.mjs",
+    "exitCode": 0,
+    "tests": 13,
+    "passed": 13,
+    "failed": 0,
+    "durationMs": 2745.8054,
+    "log": ".runner/combined-legacy-contract-port.log",
+    "logSha256": "a82fbdbcab901eeef7aae43e9b6a7d68afc51fa749aa3bb68c12f50557444dfa",
+    "decision": "Independent reviewer /root/sol_final_combined_review, conveyed by coordinator /root, authorized porting all five scenarios. Product behavior was not weakened or changed."
+  },
+  "syntax": {
+    "command": "node .runner/combined-syntax-check.mjs",
+    "checked": 441,
+    "failures": [],
+    "exitCode": 0,
+    "evidence": ".runner/combined-syntax-final.json",
+    "evidenceSha256": "be8f0c27145dd86a6cd8c9716bdda2b1b3e6bbebdd879a4890060bc979290d11",
+    "finalChangedTestRecheck": {
+      "command": "node --check tests/discovery-contact-verification.test.mjs",
+      "exitCode": 0
+    }
+  },
+  "whitespace": {
+    "command": "git -c core.whitespace=cr-at-eol diff --check",
+    "exitCode": 0,
+    "evidence": ".runner/combined-whitespace-final.log",
+    "evidenceSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "privateIgnoreHygiene": {
+    "command": "git check-ignore --no-index .superpowers/example.json .codex/config.toml .kimi-inputs/example.txt .runner/example.log node_modules/example.js",
+    "exitCode": 0,
+    "result": "All five paths ignored; no original private directory was copied or changed."
+  },
+  "priorLatestVerification": {
+    "log": ".runner/combined-legacy-5.log",
+    "tests": 17,
+    "passed": 17,
+    "failed": 0,
+    "logSha256": "ea57e8685005f520ca17a6bb42480d940357939f3f8e04f25a97c935e3926ebc"
+  },
+  "broadLegacyFollowup": {
+    "baseline": {
+      "log": ".runner/combined-full.tap",
+      "tests": 847,
+      "passed": 788,
+      "failed": 54,
+      "skipped": 5,
+      "identifiedLegacyFailures": 40
+    },
+    "statement": "All 40 identified legacy failures are closed by the affected-path reruns. Three failures in the intermediate workflow run were followed by a corrected validated fixture-path offer rerun and the final target rerun. This is not a fresh whole-suite pass or acceptance of historical provenance gates.",
+    "suites": [
+      {
+        "name": "productRepairs",
+        "files": [
+          "tests/campaign-launch-archive.test.mjs",
+          "tests/archiver-lifecycle.test.mjs",
+          "tests/email-idn-validation.test.mjs"
+        ],
+        "command": "node --test --test-concurrency=1 tests/campaign-launch-archive.test.mjs tests/archiver-lifecycle.test.mjs tests/email-idn-validation.test.mjs",
+        "exitCode": 0,
+        "tests": 19,
+        "passed": 19,
+        "failed": 0,
+        "skipped": 0,
+        "log": ".runner/combined-legacy-broad-products.log",
+        "logSha256": "9581d5829f7014ddfa90e5d9b4c278a7eac70c040a67e598e3a8e6836d1086a9"
+      },
+      {
+        "name": "coreReconciliation",
+        "files": [
+          "tests/campaign-analytics.test.mjs",
+          "tests/campaign-created-at-migration.test.mjs",
+          "tests/native-warmup-activity.test.mjs",
+          "tests/searxng-search-migration.test.mjs",
+          "tests/offer-contracts.test.mjs",
+          "tests/searxng-search.test.mjs",
+          "tests/email-verifier.test.mjs",
+          "tests/sender-rotation.test.mjs"
+        ],
+        "command": "node --test --test-concurrency=1 tests/campaign-analytics.test.mjs tests/campaign-created-at-migration.test.mjs tests/native-warmup-activity.test.mjs tests/searxng-search-migration.test.mjs tests/offer-contracts.test.mjs tests/searxng-search.test.mjs tests/email-verifier.test.mjs tests/sender-rotation.test.mjs",
+        "exitCode": 0,
+        "tests": 35,
+        "passed": 35,
+        "failed": 0,
+        "skipped": 0,
+        "log": ".runner/combined-legacy-broad-core.log",
+        "logSha256": "af172f7881eb474d4d0a81480f7dcc7d0e6f00acb278d91f72f1e846b11d1e1a"
+      },
+      {
+        "name": "workflowsBeforeLastFixtureCorrections",
+        "files": [
+          "tests/auth-session.test.mjs",
+          "tests/campaign-audience.test.mjs",
+          "tests/campaign-preflight.test.mjs",
+          "tests/campaign-senders.test.mjs",
+          "tests/click-tracking.test.mjs",
+          "tests/send-claims.test.mjs",
+          "tests/sending-capacity.test.mjs",
+          "tests/sending-control.test.mjs",
+          "tests/sending-pacing.test.mjs",
+          "tests/sending.test.mjs",
+          "tests/unsubscribe-api.test.mjs",
+          "tests/verifier-offline-integration.test.mjs",
+          "tests/personalization-edit-guards.test.mjs",
+          "tests/product-customer-journey.test.mjs",
+          "tests/lead-search.test.mjs",
+          "tests/ui-route-audit.test.mjs",
+          "tests/offer-contracts-api.test.mjs"
+        ],
+        "command": "node --test --test-concurrency=1 tests/auth-session.test.mjs tests/campaign-audience.test.mjs tests/campaign-preflight.test.mjs tests/campaign-senders.test.mjs tests/click-tracking.test.mjs tests/send-claims.test.mjs tests/sending-capacity.test.mjs tests/sending-control.test.mjs tests/sending-pacing.test.mjs tests/sending.test.mjs tests/unsubscribe-api.test.mjs tests/verifier-offline-integration.test.mjs tests/personalization-edit-guards.test.mjs tests/product-customer-journey.test.mjs tests/lead-search.test.mjs tests/ui-route-audit.test.mjs tests/offer-contracts-api.test.mjs",
+        "environment": {
+          "ASTRA_QA_FIXTURE_PATH": ".runner/astra-preview/pg.json",
+          "note": "Wrong named fixture path caused the intermediate offer failure; corrected and rerun separately without weakening validation."
+        },
+        "exitCode": 1,
+        "tests": 54,
+        "passed": 51,
+        "failed": 3,
+        "skipped": 0,
+        "log": ".runner/combined-legacy-broad-workflows.log",
+        "logSha256": "ad8e9965ce6590b9db9a926381178a95b1715742cd06cf0bf8bf4702ab5a7194"
+      },
+      {
+        "name": "validatedTenantOfferApi",
+        "files": [
+          "tests/offer-contracts-api.test.mjs"
+        ],
+        "command": "node --test tests/offer-contracts-api.test.mjs",
+        "environment": {
+          "ASTRA_QA_FIXTURE_PATH": ".runner/astra-qa/r20-source-rights/pg.json"
+        },
+        "exitCode": 0,
+        "tests": 1,
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "log": ".runner/combined-legacy-offer-api.log",
+        "logSha256": "d856045bc7a54d5a72423591d136a43702b5e1b8f78261e05896cdc5979ee261"
+      },
+      {
+        "name": "finalTargets",
+        "files": [
+          "tests/product-customer-journey.test.mjs",
+          "tests/ui-route-audit.test.mjs",
+          "tests/sending-schedule.test.mjs",
+          "tests/campaign-launch-archive.test.mjs",
+          "tests/mailbox-warmup-review.test.mjs"
+        ],
+        "command": "node --test --test-concurrency=1 --test-reporter=tap tests/product-customer-journey.test.mjs tests/ui-route-audit.test.mjs tests/sending-schedule.test.mjs tests/campaign-launch-archive.test.mjs tests/mailbox-warmup-review.test.mjs",
+        "exitCode": 0,
+        "tests": 11,
+        "passed": 11,
+        "failed": 0,
+        "skipped": 0,
+        "log": ".runner/combined-legacy-broad-final-targets.tap",
+        "logSha256": "9e37c5260712329ef7d680c05ff03bccf1760f1622c7fb657eedb096b7d3c1ec"
+      }
+    ]
+  }
+}

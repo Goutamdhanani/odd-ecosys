@@ -1,0 +1,24 @@
+BEGIN;
+SET ROLE astra_owner;
+DROP TRIGGER astra_campaign_verification_receipt_guard ON astra.campaign_verification_records;
+DROP FUNCTION astra.guard_campaign_verification_receipt();
+DROP TABLE astra.crm_webhook_receipts;
+ALTER TABLE astra.campaign_verification_records DROP CONSTRAINT campaign_verification_positive_requires_receipt;
+ALTER TABLE astra.campaign_verification_records DROP CONSTRAINT campaign_verification_adapter_receipt_fk;
+ALTER TABLE astra.campaign_verification_records DROP COLUMN address_sha256;
+ALTER TABLE astra.campaign_verification_records DROP COLUMN adapter_receipt_id;
+ALTER TABLE astra.campaign_verification_records DROP CONSTRAINT campaign_verification_records_classification_check;
+ALTER TABLE astra.campaign_verification_records ADD CONSTRAINT campaign_verification_records_classification_check
+  CHECK (classification IN ('unknown','catch_all','stale','invalid','manual_review_pending'));
+DROP TABLE astra.verification_adapter_receipts;
+DROP TABLE astra.mailbox_connectors;
+DROP TABLE astra.connector_jobs;
+DROP TABLE astra.connector_evidence;
+DROP TABLE astra.connector_configs;
+DROP FUNCTION astra.connector_config_guard();
+DROP FUNCTION astra.connector_job_guard();
+DROP FUNCTION astra.connector_append_only_guard();
+ALTER TABLE astra.mailboxes DROP CONSTRAINT mailboxes_provider_check;
+ALTER TABLE astra.mailboxes ADD CONSTRAINT mailboxes_provider_check CHECK (provider IN ('manual','unknown'));
+RESET ROLE;
+COMMIT;

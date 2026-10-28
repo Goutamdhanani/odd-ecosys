@@ -1,0 +1,20 @@
+{
+  "realData": false,
+  "migrations": 37,
+  "checks": [
+    {
+      "case": "037-up",
+      "status": "PASS"
+    },
+    {
+      "case": "037-down-empty-usage",
+      "status": "PASS"
+    },
+    {
+      "case": "037-up-final",
+      "status": "PASS"
+    }
+  ],
+  "clockOffsetSeconds": 2,
+  "scope": "Only the newly created candidate disposable QA cluster. No production/customer migration."
+}

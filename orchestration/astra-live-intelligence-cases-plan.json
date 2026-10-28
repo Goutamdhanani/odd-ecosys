@@ -1,0 +1,18 @@
+{
+  "id": "ASTRA-LIVE-NATIVE-INTELLIGENCE-CASES",
+  "owner": "/root/live_intelligence_cases",
+  "paths": [".superpowers/astra-live/intelligence-cases/**"],
+  "requirements": [
+    "Execute exactly the existing QUAL01-10 and MEM01-10 scenario purposes where supported by actual current application components; do not alter the frozen100 matrix",
+    "Use the canonical validated strict33 disposable PostgreSQL fixture and isolated temporary SQLite state where required; unique synthetic tenant/data only",
+    "Preload the native egress guard and strip unrelated environment credentials before importing application modules; no Atlas, model, public source or mail calls",
+    "Use real module, repository and HTTP behavior; no mock provider responses or fabricated research presented as real evidence",
+    "Capture exact source-before and source-after hashes, measured duration around actual case operations, typed assertions and sanitized reproduction paths",
+    "Report unsupported or externally dependent assertions as NOT_RUN or BLOCKED, confirmed behavior defects as FAIL; no tests that merely assert code text or duplicate implementation",
+    "No private fixture digests, credential values, sensitive-value hashes, customer PII or private configuration in public receipts",
+    "No product edits or matrix registration; preserve failures and report exact source repair suggestions for a separately owned fix",
+    "Use disposable per-run state and revoke temporary sessions; verify cleanup and do not delete shared fixtures or retained customer/source data"
+  ],
+  "releaseReady": false,
+  "roadmap52Accepted": false
+}

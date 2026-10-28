@@ -1,0 +1,3 @@
+ASTRA-LIVE-DEPENDENCY-PROVENANCE-REFRESH
+
+The original metadata implementation is released. /root/live_metadata_finish now owns only the four source/test paths and new license-refresh evidence folder in astra-live-license-refresh-plan.json. This includes explicit transfer of tests/astra-commercial-gates.test.mjs for factual dependency assertions. The source inventory file and unrelated metadata, product, registry decisions, gate helpers, package files and installed dependencies are read-only. The previous one-provenance-field exception remains in history; this plan narrowly adds the current dependency license manifest and historical audit record. Independent review is required before a source freeze.

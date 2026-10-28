@@ -1,0 +1,22 @@
+{
+  "rulingId": "ASTRA-PHASE2-DISCOVERY-UI-SYNC-R12",
+  "phase": "Phase 2 test synchronization repair only",
+  "baselineManifest": "orchestration/astra-phase2-source-r11.json",
+  "path": "tests/website-discovery-ui.test.mjs",
+  "baselineSha256": "ef0d3f64945f1ccf97df4f4259219e6aa2df9d22de1f0b57df9168e7421ccb8a",
+  "owner": "/root/discovery_ui_retry_r12",
+  "ownedPaths": ["tests/website-discovery-ui.test.mjs", "tests/astra-source-fidelity.test.mjs", "docs/astra/s00-source-delta.json", ".superpowers/phase2/fixes/discovery-ui-sync-r12/**"],
+  "finding": "R11 full run observed explicit directory retry click followed by an immediate server request counter assertion: actual zero vs expected one. The click promise does not establish that the HTTP response was received.",
+  "authorizedPurpose": "Await the exact synthetic retry API request/response before asserting server-side count and UI completion, preserving explicit-action-only and exactly-once behavior.",
+  "requirements": [
+    "Reproduce or instrument the request timing; do not call an application retry defect fixed solely by a later pass.",
+    "Limit synchronization changes to the same immediate retry-counter pattern in this file; no product, route or worker changes.",
+    "Preserve all no-automatic-retry, cooldown, exactly-once, verification, result and error assertions; no skipped cases or increased deadlines.",
+    "Preserve the selected 228-file source snapshot and all existing 29 deltas; append one explicitly authorized test-only provenance delta and strict fidelity path checks.",
+    "Use guarded fresh synthetic browser fixtures only; no real directory, mailbox, provider, customer data or live outreach.",
+    "Require focused Edge checks, independent review, a new frozen candidate and complete automated suite."
+  ],
+  "workerReport": ".superpowers/phase2/fixes/discovery-ui-sync-r12/REPORT.md",
+  "independentAcceptance": false,
+  "releaseReady": false
+}

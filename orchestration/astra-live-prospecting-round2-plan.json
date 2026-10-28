@@ -1,0 +1,8 @@
+{
+  "id":"ASTRA-LIVE-PROSPECTING-REVIEW-ROUND2",
+  "owner":"/root/live_prospecting1",
+  "supersedesReleasedWriter":true,
+  "paths":["pipeline/astra-prospecting.js","pipeline/astra-prospecting-routes.js","tools/astra/run-prospecting-once.mjs","tests/astra-prospecting.test.mjs","server.js","growth.html","js/astra-growth.js","pipeline/astra-source-collection.js","tests/astra-prospecting-source-gate.test.mjs",".superpowers/astra-live/prospecting/fix-round2/**"],
+  "requirements":["True before copies and preserve all round1 evidence","Fix shared one-request-per-second admission before each actual source HTTP request, including robots and HTML; do not infer request limits from outer-job sleeps","Allow only trusted server request-admission/AbortSignal propagation through the existing source collector; retain every S01, URL, DNS, SSRF, rights, robots, redirect, size and timeout guard","Persist request budget reservations before each dispatch and reconcile uncertain Mongo writes before repeating any external action","Resume must consult a candidate's own durable page reservation before dedupe filtering; completed/failed/inflight/unknown external jobs must not be blindly resubmitted","Add focused regression evidence for inner request timing/admission and pause/resume/reconciliation; no live public-source or Atlas requests without existing setup gates","Independent re-review and final metadata/source integration remain required"],
+  "releaseReady":false
+}

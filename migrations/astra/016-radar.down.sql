@@ -1,0 +1,10 @@
+BEGIN;
+SET ROLE astra_owner;
+DROP TABLE IF EXISTS astra.radar_signals;
+DROP TABLE IF EXISTS astra.radar_event_sources;
+DROP TABLE IF EXISTS astra.radar_events;
+DROP TABLE IF EXISTS astra.radar_watch_events;
+DROP TABLE IF EXISTS astra.radar_watches;
+DROP FUNCTION IF EXISTS astra.radar_append_only_guard();
+RESET ROLE;
+COMMIT;

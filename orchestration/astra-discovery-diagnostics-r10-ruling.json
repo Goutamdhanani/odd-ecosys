@@ -1,0 +1,22 @@
+{
+  "rulingId": "ASTRA-PHASE2-DISCOVERY-DIAGNOSTICS-R10",
+  "phase": "Phase 2 QA investigation only",
+  "baselineManifest": "orchestration/astra-phase2-source-r9.json",
+  "baselineTestSha256": "50ebaf29c51045c1abfb7546d080317f87b15b1b4c8edd46d5af6d89e92bc195",
+  "owner": "/root/discovery_evidence_r10",
+  "ownedPaths": ["tests/website-discovery-jobs.test.mjs", "docs/astra/s00-source-delta.json", ".superpowers/phase2/fixes/discovery-evidence-r10/**"],
+  "authorization": "Human request to complete full QA, investigate failures and preserve working functionality; bounded diagnostic enhancement after the frozen R9 run exited with zero source mismatches.",
+  "purpose": "Capture stable evidence IDs, all matching API rows and corresponding persisted source/contact associations if the synthetic linked-Person assertion recurs under full-suite execution.",
+  "requirements": [
+    "Preserve every existing expected contact point, CSV assertion, verification boundary and test deadline.",
+    "No product, parser, worker, database schema, permission or provider changes.",
+    "Diagnostics contain only this disposable synthetic fixture's allowlisted metadata; no credentials, auth headers or private configuration.",
+    "Retain the immutable 228-file selected-source snapshot; update only the existing website-test delta's current hash/bytes and add this diagnostic provenance. Preserve its base hash and earlier authorization fields, and all other 28 deltas.",
+    "A focused pass or subsequent full pass does not establish the historical missing metadata cause or declare the finding resolved.",
+    "Require independent review, a new frozen test-input candidate and full replay; preserve all historical failed runs."
+  ],
+  "historicalFinding": "R9 full suite: 493 total, 492 passed, one linked-Person sales contact-point assertion failed; focused 1/1 and file 27/27 replayed successfully, cause unknown.",
+  "workerReport": ".superpowers/phase2/fixes/discovery-evidence-r10/REPORT.md",
+  "independentAcceptance": false,
+  "releaseReady": false
+}

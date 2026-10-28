@@ -8,16 +8,20 @@
 import crypto from 'crypto';
 import { getDb } from './database.js';
 
-const SECRET_KEY = process.env.COMPLIANCE_SECRET || 'oddecosys-compliance-secret-key-2026';
-const PHYSICAL_ADDRESS = process.env.COMPANY_PHYSICAL_ADDRESS || '100 Outreach Way, Suite 400, Austin, TX 78701, USA';
+const LEGACY_SECRET_MIN_BYTES = 32;
+const TEST_PHYSICAL_ADDRESS = '100 Test Loopback Lane, Testville, ZZ 00001';
 
 /**
  * Generate a cryptographically signed unsubscribe token for a lead.
  */
-export function generateUnsubscribeToken(email, leadId) {
-  const data = `${email.toLowerCase()}:${leadId}:${SECRET_KEY}`;
-  const hash = crypto.createHash('sha256').update(data).digest('hex').slice(0, 16);
-  return Buffer.from(`${email}:${leadId}:${hash}`).toString('base64url');
+export function generateUnsubscribeToken(email, leadId, sendId = null) {
+  const cleanEmail = String(email || '').trim().toLowerCase();
+  const cleanLeadId = Number(leadId);
+  if (!cleanEmail || !Number.isSafeInteger(cleanLeadId) || cleanLeadId < 1) throw new TypeError('A recipient email and contact id are required for unsubscribe tokens.');
+  const token = crypto.randomBytes(32).toString('base64url');
+  const tokenHash = crypto.createHash('sha256').update(token).digest('hex');
+  getDb().prepare('INSERT INTO unsubscribe_tokens (token_hash,email,lead_id,send_id) VALUES (?,?,?,?)').run(tokenHash, cleanEmail, cleanLeadId, sendId);
+  return token;
 }
 
 /**
@@ -25,12 +29,29 @@ export function generateUnsubscribeToken(email, leadId) {
  */
 export function verifyUnsubscribeToken(token) {
   try {
+    if (typeof token !== 'string' || token.length < 20 || token.length > 512 || !/^[A-Za-z0-9_-]+$/.test(token)) {
+      return { valid: false, email: null, leadId: null };
+    }
+    const tokenHash = crypto.createHash('sha256').update(token).digest('hex');
+    const stored = getDb().prepare('SELECT email,lead_id,send_id,used_at FROM unsubscribe_tokens WHERE token_hash = ?').get(tokenHash);
+    if (stored) return { valid: true, email: stored.email, leadId: stored.lead_id, sendId: stored.send_id, usedAt: stored.used_at, stored: true };
+
+    // Accept links sent by older versions while they are still in recipients' inboxes.
+    const legacySecret = process.env.COMPLIANCE_SECRET;
+    if (typeof legacySecret !== 'string' || Buffer.byteLength(legacySecret) < LEGACY_SECRET_MIN_BYTES) {
+      return { valid: false, email: null, leadId: null };
+    }
     const raw = Buffer.from(token, 'base64url').toString('utf-8');
-    const [email, leadIdStr, hash] = raw.split(':');
-    const leadId = parseInt(leadIdStr);
-    const expected = crypto.createHash('sha256').update(`${email.toLowerCase()}:${leadId}:${SECRET_KEY}`).digest('hex').slice(0, 16);
-    if (hash === expected) {
-      return { valid: true, email: email.toLowerCase(), leadId };
+    const match = raw.match(/^([^:\s]+):([1-9]\d*):([a-f0-9]{16})$/i);
+    if (!match) return { valid: false, email: null, leadId: null };
+    const email = match[1].toLowerCase();
+    const leadId = Number(match[2]);
+    if (!Number.isSafeInteger(leadId) || leadId < 1) return { valid: false, email: null, leadId: null };
+    const expected = crypto.createHash('sha256').update(`${email}:${leadId}:${legacySecret}`).digest('hex').slice(0, 16);
+    const suppliedHash = Buffer.from(match[3].toLowerCase());
+    const expectedHash = Buffer.from(expected);
+    if (crypto.timingSafeEqual(suppliedHash, expectedHash)) {
+      return { valid: true, email, leadId, stored: false };
     }
   } catch {
     // Invalid encoding
@@ -38,32 +59,95 @@ export function verifyUnsubscribeToken(token) {
   return { valid: false, email: null, leadId: null };
 }
 
+function getHttpsPublicBaseUrl() {
+  const configured = process.env.APP_URL || process.env.ODD_PUBLIC_BASE_URL
+    || (process.env.NODE_ENV === 'test' ? 'https://mail.test.invalid' : null);
+  if (!configured) return null;
+  try {
+    const url = new URL(configured);
+    if (url.protocol !== 'https:' || url.username || url.password || url.search || url.hash) return null;
+    return url.href.replace(/\/$/, '');
+  } catch {
+    return null;
+  }
+}
+
+function getPhysicalAddress() {
+  const configured = process.env.COMPANY_PHYSICAL_ADDRESS?.trim();
+  if (configured) return configured;
+  return process.env.NODE_ENV === 'test' ? TEST_PHYSICAL_ADDRESS : null;
+}
+
+function physicalAddressIsPlausiblyConfigured(address) {
+  return Boolean(address && address.length >= 12
+    && !/(?:placeholder|outreach way|your (?:business )?address|change\s*me|todo|example address)/i.test(address));
+}
+
+export function getComplianceReadiness() {
+  const baseUrl = getHttpsPublicBaseUrl();
+  const physicalAddress = getPhysicalAddress();
+  const blockers = [];
+  if (!baseUrl) blockers.push('https_unsubscribe_endpoint_not_configured');
+  if (!physicalAddressIsPlausiblyConfigured(physicalAddress)) blockers.push('physical_mailing_address_not_configured');
+  return {
+    ok: blockers.length === 0,
+    blockers,
+    unsubscribeEndpointConfigured: Boolean(baseUrl),
+    physicalAddressConfigured: physicalAddressIsPlausiblyConfigured(physicalAddress),
+    configurationFingerprint: crypto.createHash('sha256').update(JSON.stringify([baseUrl, physicalAddress])).digest('hex'),
+  };
+}
+
+/** Build the one-click headers and human footer from the same stored capability token. */
+export function buildComplianceEnvelope(leadEmail, leadId, domain, sendId = null) {
+  const readiness = getComplianceReadiness();
+  if (!readiness.ok) return { ok: false, blockers: readiness.blockers };
+  const baseUrl = getHttpsPublicBaseUrl();
+  const physicalAddress = getPhysicalAddress();
+  const token = generateUnsubscribeToken(leadEmail, leadId, sendId);
+  const unsubscribeUrl = `${baseUrl}/api/unsubscribe?token=${encodeURIComponent(token)}`;
+  const unsubscribeMailto = `mailto:unsubscribe@${domain || 'outreach.local'}?subject=unsubscribe`;
+  return {
+    ok: true,
+    headers: {
+      'List-Unsubscribe': `<${unsubscribeUrl}>, <${unsubscribeMailto}>`,
+      'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click',
+      'X-Entity-Ref-ID': `lead-${leadId}-${Date.now()}`,
+      'X-Compliant-CAN-SPAM': 'true',
+    },
+    textFooter: `\n\n---\n${physicalAddress}\nTo stop receiving these emails, use: ${unsubscribeUrl}`,
+  };
+}
+
 /**
  * Generate RFC 8058 compliant headers for an outgoing send.
  */
-export function getComplianceHeaders(leadEmail, leadId, domain) {
-  const token = generateUnsubscribeToken(leadEmail, leadId);
-  const baseUrl = process.env.APP_URL || `http://${domain || 'localhost:3000'}`;
-  const unsubUrl = `${baseUrl}/api/unsubscribe?token=${token}`;
-  const unsubMailto = `mailto:unsubscribe@${domain || 'outreach.local'}?subject=unsubscribe-${token}`;
-
-  return {
-    'List-Unsubscribe': `<${unsubUrl}>, <${unsubMailto}>`,
-    'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click',
+export function getComplianceHeaders(leadEmail, leadId, domain, sendId = null) {
+  const baseUrl = getHttpsPublicBaseUrl();
+  const unsubMailto = `mailto:unsubscribe@${domain || 'outreach.local'}?subject=unsubscribe`;
+  const physicalAddress = getPhysicalAddress();
+  const headers = {
+    'List-Unsubscribe': baseUrl
+      ? `<${baseUrl}/api/unsubscribe?token=${generateUnsubscribeToken(leadEmail, leadId, sendId)}>, <${unsubMailto}>`
+      : `<${unsubMailto}>`,
     'X-Entity-Ref-ID': `lead-${leadId}-${Date.now()}`,
-    'X-Compliant-CAN-SPAM': 'true',
   };
+  if (baseUrl) headers['List-Unsubscribe-Post'] = 'List-Unsubscribe=One-Click';
+  if (physicalAddressIsPlausiblyConfigured(physicalAddress)) headers['X-Compliant-CAN-SPAM'] = 'true';
+  return headers;
 }
 
 /**
  * Append standard physical address and unsubscribe footer to body.
  */
 export function appendComplianceFooter(bodyText, leadEmail, leadId, domain) {
-  const token = generateUnsubscribeToken(leadEmail, leadId);
-  const baseUrl = process.env.APP_URL || 'http://localhost:3000';
-  const unsubUrl = `${baseUrl}/api/unsubscribe?token=${token}`;
-
-  const footer = `\n\n---\n${PHYSICAL_ADDRESS}\nTo stop receiving these emails, click here: ${unsubUrl}`;
+  const baseUrl = getHttpsPublicBaseUrl();
+  const physicalAddress = getPhysicalAddress();
+  if (!physicalAddressIsPlausiblyConfigured(physicalAddress)) throw new Error('A real COMPANY_PHYSICAL_ADDRESS is required before sending compliant email.');
+  const unsubscribe = baseUrl
+    ? `${baseUrl}/api/unsubscribe?token=${generateUnsubscribeToken(leadEmail, leadId)}`
+    : `mailto:unsubscribe@${domain || 'outreach.local'}?subject=unsubscribe`;
+  const footer = `\n\n---\n${physicalAddress}\nTo stop receiving these emails, use: ${unsubscribe}`;
   return bodyText + footer;
 }
 
@@ -86,7 +170,7 @@ export function suppressEmail(email, reason = 'unsubscribed', leadId = null) {
   const cleanEmail = email.toLowerCase().trim();
 
   db.prepare(`
-    INSERT OR REPLACE INTO suppression_list (email, reason, added_at)
+    INSERT OR IGNORE INTO suppression_list (email, reason, added_at)
     VALUES (?, ?, datetime('now'))
   `).run(cleanEmail, reason);
 
@@ -106,6 +190,44 @@ export function suppressEmail(email, reason = 'unsubscribed', leadId = null) {
   `).run(leadId || null, JSON.stringify({ email: cleanEmail, reason }));
 
   return true;
+}
+
+export function unsubscribeFromToken(token) {
+  const verified = verifyUnsubscribeToken(token);
+  if (!verified.valid) return { ok: false, status: 'invalid_token' };
+  const db = getDb();
+  const cleanEmail = verified.email.toLowerCase().trim();
+
+  return db.transaction(() => {
+    const existingSuppression = db.prepare('SELECT 1 FROM suppression_list WHERE lower(trim(email)) = ?').get(cleanEmail);
+    const existingToken = verified.stored
+      ? db.prepare('SELECT used_at FROM unsubscribe_tokens WHERE token_hash = ?').get(crypto.createHash('sha256').update(token).digest('hex'))
+      : null;
+    if (existingToken?.used_at) return { ok: true, status: 'already_unsubscribed' };
+
+    db.prepare('INSERT OR IGNORE INTO suppression_list (email,reason,added_at) VALUES (?,?,datetime(\'now\'))')
+      .run(cleanEmail, 'one_click_unsubscribe');
+    if (verified.leadId) {
+      const lead = db.prepare('SELECT email FROM leads WHERE id = ?').get(verified.leadId);
+      if (lead && lead.email?.trim().toLowerCase() === cleanEmail) {
+        db.prepare("UPDATE leads SET status='disqualified',disqualification_reason='suppressed:one_click_unsubscribe',updated_at=datetime('now') WHERE id=?")
+          .run(verified.leadId);
+      }
+      db.prepare("UPDATE sends SET status='cancelled',sent_at=NULL,error_message='Recipient unsubscribed.' WHERE lead_id=? AND status='scheduled'")
+        .run(verified.leadId);
+      db.prepare("UPDATE campaign_enrollments SET status='stopped' WHERE lead_id=? AND status='active'")
+        .run(verified.leadId);
+    }
+    if (!existingSuppression) {
+      db.prepare("INSERT INTO events (lead_id,send_id,event_type,event_at,meta_json) VALUES (?,?, 'unsubscribed',datetime('now'),?)")
+        .run(verified.leadId || null, verified.sendId || null, JSON.stringify({ reason: 'one_click_unsubscribe', source: 'list_unsubscribe' }));
+    }
+    if (verified.stored) {
+      db.prepare('UPDATE unsubscribe_tokens SET used_at = COALESCE(used_at,datetime(\'now\')) WHERE token_hash = ?')
+        .run(crypto.createHash('sha256').update(token).digest('hex'));
+    }
+    return { ok: true, status: existingSuppression ? 'already_unsubscribed' : 'unsubscribed' };
+  })();
 }
 
 /**
